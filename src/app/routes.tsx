@@ -6,12 +6,16 @@ import { DashboardPage } from '@/features/dashboard/DashboardPage';
 import { PlannedModulePage } from '@/features/planned/PlannedModulePage';
 import { ProfilePage } from '@/features/profile/ProfilePage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
-import { NAV_ITEMS, type NavItem, type NavKey, type PlannedModuleKey } from './navigation';
+import { IMPLEMENTED_PAGES, NAV_ITEMS, type NavItem, type NavKey, type PlannedModuleKey } from './navigation';
+import { AcademiesPage } from '@/features/university/AcademiesPage';
+import { FacultiesPage } from '@/features/university/FacultiesPage';
 import { NotFound } from './NotFound';
 
-/** Implemented pages. Any nav item not listed here renders its "planned" page. */
+/** Components for the pages listed in IMPLEMENTED_PAGES. Others render their "planned" page. */
 const IMPLEMENTED: Partial<Record<NavKey, ComponentType>> = {
   dashboard: DashboardPage,
+  faculties: FacultiesPage,
+  academies: AcademiesPage,
   profile: ProfilePage,
   settings: SettingsPage,
   backup: BackupPage,
@@ -22,7 +26,7 @@ export const routes: RouteObject[] = [
     element: <AppShell />,
     children: [
       ...NAV_ITEMS.map((item): RouteObject => {
-        const Page = IMPLEMENTED[item.key];
+        const Page = IMPLEMENTED_PAGES.has(item.key) ? IMPLEMENTED[item.key] : undefined;
         return {
           path: item.path,
           element: Page ? <Page /> : <PlannedModulePage item={item as NavItem & { key: PlannedModuleKey }} />,
@@ -32,3 +36,8 @@ export const routes: RouteObject[] = [
     ],
   },
 ];
+
+// Fail fast in development if the two lists drift apart.
+for (const key of IMPLEMENTED_PAGES) {
+  if (!IMPLEMENTED[key]) throw new Error(`routes: no component for implemented page "${key}"`);
+}

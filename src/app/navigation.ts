@@ -79,5 +79,11 @@ export const NAV_ITEMS: NavItem[] = [
 
 export const NAV_GROUPS: NavGroup[] = ['overview', 'university', 'learning', 'assessment', 'work', 'student', 'system'];
 
-/** The phase currently delivered. Items with a higher phase show a "planned" page. */
-export const CURRENT_PHASE = 1;
+/** The phase currently being delivered. */
+export const CURRENT_PHASE = 2;
+
+/**
+ * Pages that are functional. Everything else shows its honest "planned for Phase N" page
+ * and a phase badge in the sidebar. `routes.tsx` must provide a component for each key.
+ */
+export const IMPLEMENTED_PAGES: ReadonlySet<NavKey> = new Set<NavKey>(['dashboard', 'faculties', 'academies', 'profile', 'settings', 'backup']);

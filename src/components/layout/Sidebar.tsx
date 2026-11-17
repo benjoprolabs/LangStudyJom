@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { GraduationCap, X } from 'lucide-react';
-import { CURRENT_PHASE, NAV_GROUPS, NAV_ITEMS } from '@/app/navigation';
+import { IMPLEMENTED_PAGES, NAV_GROUPS, NAV_ITEMS } from '@/app/navigation';
 import { useI18n } from '@/i18n/I18nProvider';
 import { cn } from '@/lib/cn';
 import { APP_VERSION } from '@/db/backup/backup';
@@ -31,7 +31,7 @@ export function Sidebar({ onNavigate, onClose }: { onNavigate?: () => void; onCl
             <ul className="space-y-0.5">
               {NAV_ITEMS.filter((i) => i.group === group).map((item) => {
                 const Icon = item.icon;
-                const planned = item.phase > CURRENT_PHASE;
+                const planned = !IMPLEMENTED_PAGES.has(item.key);
                 return (
                   <li key={item.key}>
                     <NavLink
