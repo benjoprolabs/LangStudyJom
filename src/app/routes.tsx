@@ -9,6 +9,7 @@ import { SettingsPage } from '@/features/settings/SettingsPage';
 import { IMPLEMENTED_PAGES, NAV_ITEMS, type NavItem, type NavKey, type PlannedModuleKey } from './navigation';
 import { AcademiesPage } from '@/features/university/AcademiesPage';
 import { FacultiesPage } from '@/features/university/FacultiesPage';
+import { ProgrammesPage } from '@/features/university/ProgrammesPage';
 import { NotFound } from './NotFound';
 
 /** Components for the pages listed in IMPLEMENTED_PAGES. Others render their "planned" page. */
@@ -16,6 +17,7 @@ const IMPLEMENTED: Partial<Record<NavKey, ComponentType>> = {
   dashboard: DashboardPage,
   faculties: FacultiesPage,
   academies: AcademiesPage,
+  programmes: ProgrammesPage,
   profile: ProfilePage,
   settings: SettingsPage,
   backup: BackupPage,
