@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.3: Phase 2 Step 0, database and application safety
+
+- **Schema v2** (index-only migration): reverse-reference indexes for delete protection.
+  Tested v1 → v2 with a pre-migration recovery point, both in unit tests and in a real browser
+  against the actual 0.1.2 build.
+- **Delete protection**: referenced records cannot be deleted. Owned children (empty semesters, a
+  course's own prerequisite links) are removed with their parent.
+- **Save-time validation** for every university-management write: field validation, unique codes,
+  reference, consistency and cycle checks, plus a transaction guard that rolls back any write
+  introducing a new integrity issue. Parent links are immutable where dependants rely on them.
+- **Prerequisite cycles** are rejected before saving.
+- **Bug fix (data safety)**: the splash screen's settings query could auto-open the database
+  before bootstrap, so the migration ran *without* its pre-migration recovery point. The database
+  now has `autoOpen: false`, and pre-boot screens never query it. Covered by unit and e2e regression
+  tests; the e2e test was shown to fail without the fix.
+- Student Profile: **bio** input added.
+- i18n: the pop-up close button is labelled via `common.close` (was a hard-coded "×").
+
 ## 0.1.2: Phase 1.2 integrity completion
 
 - Integrity items 4–10 closed (see `docs/INTEGRITY.md`):

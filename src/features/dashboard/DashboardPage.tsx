@@ -20,6 +20,11 @@ import { countAllRecords, getUniversityStats } from '@/db/repositories/stats';
 import { CURRENT_SCHEMA_VERSION } from '@/db/schema';
 import { useSettings } from '@/hooks/useSettings';
 import { useStudent } from '@/hooks/useStudent';
+import type { ActivityLogEntry } from '@/db/types';
+import { ms as msDict } from '@/i18n/locales/ms';
+
+const ENTITY_KEYS = msDict.entities;
+type EntityKey = keyof typeof ENTITY_KEYS;
 import { useI18n } from '@/i18n/I18nProvider';
 import { daysSince } from '@/lib/time';
 import { Button } from '@/components/ui/Button';
@@ -50,6 +55,11 @@ export function DashboardPage() {
   const { status: storage } = useStorageStatus();
 
   const hours = (min: number) => formatNumber(min / 60, 1);
+  const activityLabel = (a: ActivityLogEntry) => {
+    const d = a.details ?? {};
+    const entity = typeof d.entity === 'string' && d.entity in ENTITY_KEYS ? t(`entities.${d.entity as EntityKey}`) : '';
+    return t(`activity.${a.type}`, { code: String(d.code ?? ''), entity });
+  };
   const weeklyGoal = settings?.weeklyStudyGoalMinutes ?? 0;
 
   const checklist = [
@@ -163,7 +173,7 @@ export function DashboardPage() {
               {activity.map((a) => (
                 <li key={a.id} className="flex items-start gap-3 text-sm">
                   <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent" aria-hidden />
-                  <span className="flex-1">{t(`activity.${a.type}`)}</span>
+                  <span className="flex-1">{activityLabel(a)}</span>
                   <time className="shrink-0 text-xs text-muted" dateTime={a.timestamp}>
                     {formatDate(a.timestamp, true)}
                   </time>

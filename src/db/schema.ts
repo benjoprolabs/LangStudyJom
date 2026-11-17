@@ -68,6 +68,21 @@ export const SCHEMA_VERSIONS: SchemaVersion[] = [
       achievements: 'id, studentId, &[studentId+code], earnedAt',
     },
   },
+  {
+    version: 2,
+    description:
+      'Reverse-reference indexes so a record can be checked for dependants before deletion (Phase 2 Step 0). ' +
+      'Index-only change: no row is transformed.',
+    stores: {
+      enrollments: 'id, studentId, programmeId, status, &[studentId+programmeId], currentSemesterId',
+      exerciseAttempts: 'id, exerciseId, studentId, submittedAt, status, assessmentId',
+      assessments: 'id, courseId, type, dueAt, *exerciseIds',
+      studySessions: 'id, studentId, startedAt, activityType, academyId, programmeId, semesterId, courseId, lectureId',
+      progress: 'id, studentId, &[studentId+entityType+entityId], entityType, status, [entityType+entityId]',
+      notes: 'id, studentId, entityType, entityId, kind, updatedAt, *tags, [entityType+entityId]',
+      bookmarks: 'id, studentId, &[studentId+entityType+entityId], [entityType+entityId]',
+    },
+  },
 ];
 
 export const CURRENT_SCHEMA_VERSION = SCHEMA_VERSIONS[SCHEMA_VERSIONS.length - 1]!.version;

@@ -24,6 +24,7 @@ function ProfileEditor({ student }: { student: Student }) {
     fullName: student.fullName,
     preferredName: student.preferredName,
     email: student.email ?? '',
+    bio: student.bio ?? '',
     goals: student.goals ?? '',
   });
   const errors = useMemo(() => validateStudentInput(value), [value]);

@@ -38,10 +38,21 @@ function cachedLanguage(): LanguageCode {
  * Language comes from the persisted settings row in IndexedDB (source of truth).
  * A localStorage copy is used only to render the right language before the DB loads.
  */
-export function I18nProvider({ children, override }: { children: ReactNode; override?: LanguageCode }) {
+export function I18nProvider({ children }: { children: ReactNode }) {
   const settings = useSettings();
-  const lang: LanguageCode = override ?? settings?.language ?? cachedLanguage();
+  return <LanguageProvider lang={settings?.language ?? cachedLanguage()}>{children}</LanguageProvider>;
+}
 
+/**
+ * For screens shown BEFORE the database is open (splash, startup errors).
+ * Never queries IndexedDB — a premature query would open (and upgrade) the database
+ * before `bootstrapDatabase()` could take its pre-migration recovery point.
+ */
+export function PreBootI18nProvider({ children }: { children: ReactNode }) {
+  return <LanguageProvider lang={cachedLanguage()}>{children}</LanguageProvider>;
+}
+
+function LanguageProvider({ children, lang }: { children: ReactNode; lang: LanguageCode }) {
   useEffect(() => {
     document.documentElement.lang = lang;
     try {

@@ -28,6 +28,48 @@ const consoleErrors = [];
 let step = 0;
 const log = (msg) => console.log(`  ✓ ${++step}. ${msg}`);
 
+/** Schema v1 store definitions, read from src/db/schema.ts (the first `stores` block). */
+function v1Stores() {
+  const src = readFileSync(new URL('../src/db/schema.ts', import.meta.url), 'utf-8');
+  const v1 = src.slice(src.indexOf('version: 1,'), src.indexOf('version: 2,'));
+  const block = v1.slice(v1.indexOf('stores: {'));
+  return Object.fromEntries([...block.matchAll(/^\s+(\w+): '([^']+)',/gm)].map((m) => [m[1], m[2]]));
+}
+
+/** Runs in the page: create the exact on-disk layout of a Phase 1.2 install, with a student. */
+function createV1Database({ stores, now }) {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open('qhaze-tech-university', 10); // Dexie version 1 = IndexedDB version 10
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      for (const [name, spec] of Object.entries(stores)) {
+        const [pk, ...indexes] = spec.split(',').map((x) => x.trim());
+        const store = db.createObjectStore(name, { keyPath: pk });
+        for (const raw of indexes) {
+          const unique = raw.startsWith('&');
+          const multiEntry = raw.startsWith('*');
+          const name = raw.replace(/^[&*]/, '');
+          const keyPath = name.startsWith('[') ? name.slice(1, -1).split('+') : name;
+          store.createIndex(name, keyPath, { unique, multiEntry });
+        }
+      }
+    };
+    req.onsuccess = () => {
+      const db = req.result;
+      const tx = db.transaction(['students', 'settings', 'meta'], 'readwrite');
+      tx.objectStore('students').put({ id: 'v1-student', studentNumber: 'QTU-2026-0000V1', fullName: 'Pelajar Lama', preferredName: 'Lama', bio: 'Rekod Fasa 1', timezone: 'UTC', enrolledAt: now, createdAt: now, updatedAt: now });
+      tx.objectStore('settings').put({ id: 'app', language: 'ms', theme: 'dark', dailyStudyGoalMinutes: 60, weeklyStudyGoalMinutes: 420, autoSnapshotRetention: 10, backupReminderDays: 0, updatedAt: now });
+      tx.objectStore('meta').put({ key: 'schemaVersion', value: 1 });
+      tx.oncomplete = () => {
+        db.close();
+        resolve();
+      };
+      tx.onerror = () => reject(tx.error);
+    };
+    req.onerror = () => reject(req.error);
+  });
+}
+
 async function startServer() {
   // Run vite directly (not via npx) in its own process group so it can be killed reliably.
   const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--host', '127.0.0.1', '--port', String(PORT), '--strictPort'], {
@@ -131,6 +173,12 @@ async function main() {
     assert.equal(await page.getByLabel(/Learning Goals/).inputValue(), 'Quick edit');
     log('Pending autosave flushed when navigating away');
 
+    await page.getByLabel(/^Bio/).fill('Pelajar sepenuh masa yang meminati AI.');
+    await page.getByRole('status').filter({ hasText: 'Saved' }).waitFor();
+    await page.reload();
+    assert.equal(await page.getByLabel(/^Bio/).inputValue(), 'Pelajar sepenuh masa yang meminati AI.');
+    log('Student Profile bio input saves and persists');
+
     // ── Settings validation ──────────────────────────────────────────────
     await page.getByRole('link', { name: 'Settings' }).click();
     const daily = page.getByLabel('Daily goal (minutes)');
@@ -140,6 +188,8 @@ async function main() {
     await daily.fill('90');
     await daily.press('Enter');
     await page.getByText('Settings saved').first().waitFor();
+    // Pop-up close button is labelled through i18n (was a hard-coded "×").
+    assert.ok(await page.getByRole('button', { name: 'Close', exact: true }).first().isVisible());
     await page.reload();
     assert.equal(await page.getByLabel('Daily goal (minutes)').inputValue(), '90');
     log('Settings validate input and persist');
@@ -345,6 +395,37 @@ async function main() {
     // Restored settings are English, so the dashboard appears in English.
     await page.getByRole('heading', { name: 'Welcome back, Aisyah' }).waitFor();
     log('Fresh device: restoring a backup from onboarding recovers the whole university');
+    await context.close();
+
+    // ── Schema migration: a schema-v1 (Phase 1.2) database is upgraded safely ─
+    rmSync(profileDir, { recursive: true, force: true });
+    ({ context, page } = await launch());
+    await page.goto(`${BASE}favicon.svg`); // same origin, app not loaded yet
+    await page.evaluate(createV1Database, { stores: v1Stores(), now: new Date().toISOString() });
+    await page.goto(BASE);
+    await page.getByRole('heading', { name: 'Selamat kembali, Lama' }).waitFor();
+    await page.getByRole('link', { name: 'Sandaran & Pemulihan' }).click();
+    await page.getByTestId('snapshot-list').getByText('Sebelum naik taraf').waitFor();
+    const migrated = await page.evaluate(
+      () =>
+        new Promise((resolve) => {
+          const q = indexedDB.open('qhaze-tech-university');
+          q.onsuccess = () => {
+            const db = q.result;
+            const r = db.transaction('students').objectStore('students').getAll();
+            r.onsuccess = () => {
+              resolve({ version: db.version, student: r.result[0], hasNewIndex: db.transaction('studySessions').objectStore('studySessions').indexNames.contains('programmeId') });
+              db.close();
+            };
+          };
+        }),
+    );
+    assert.equal(migrated.version, 20);
+    assert.equal(migrated.student.bio, 'Rekod Fasa 1');
+    assert.ok(migrated.hasNewIndex);
+    await page.getByRole('button', { name: 'Jalankan semakan' }).click();
+    await page.getByText(/Tiada isu ditemui/).waitFor();
+    log('Schema v1 database migrates to v2 with a pre-migration recovery point; student data intact');
     await context.close();
 
     const relevantErrors = consoleErrors.filter((e) => !/favicon/i.test(e));

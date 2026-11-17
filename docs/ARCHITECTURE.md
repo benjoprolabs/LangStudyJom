@@ -77,7 +77,7 @@ Quiz, assignment and examination are assessment types, not exercise types. A qui
 questions (exercises), and an assignment many tasks. The same exercise can appear in practice and in
 several assessments without duplication.
 
-## Table inventory (schema v1: 28 tables)
+## Table inventory (28 tables; schema v2 adds indexes only)
 
 The brief's 24 suggested entities map onto **22 tables**, because Quiz and Assignment are
 `assessments.type` values (an approved design decision). There are **6 supporting tables**:
@@ -103,6 +103,22 @@ in the design from the first commit and was approved in Phase 1.1.
    so older backup files can still be restored.
 3. Add a test in `src/db/__tests__/migrations.test.ts`.
 
+### Version history
+
+| Version | Release | Change |
+|---|---|---|
+| 1 | 0.1.0 | Initial 28 tables |
+| 2 | 0.1.3 | Index-only, no row transformed. Adds reverse-reference indexes so delete protection can find a record's dependants: `enrollments.currentSemesterId`, `exerciseAttempts.assessmentId`, `assessments.*exerciseIds`, `studySessions.programmeId` / `.semesterId`, and `[entityType+entityId]` on `progress`, `notes` and `bookmarks`. A test enforces that every reference used by delete protection is indexed |
+
+### Boot safety: the database never opens itself
+
+`db/client.ts` creates the database with `autoOpen: false`. **Only** `bootstrapDatabase()` may open it,
+because opening runs migrations and bootstrap must first take the pre-migration recovery point. Screens
+shown before the database is ready (splash, startup errors) use `PreBootI18nProvider`, which reads the
+cached language and never queries IndexedDB. Before 0.1.3, the splash screen's settings query could
+auto-open and upgrade the database before bootstrap ran. That skipped the recovery point. It was found
+in Phase 2 Step 0 browser testing and is now covered by a unit test and an end-to-end test.
+
 At startup, `bootstrapDatabase()` runs these steps:
 
 1. Reads the on-disk version without upgrading it.
@@ -121,6 +137,8 @@ At startup, `bootstrapDatabase()` runs these steps:
 | Import validation | `validateBackup()`: JSON → structure (Zod) → format → version → checksum → migrations → IDs → referential integrity |
 | Restore | `replace` (needs the typed word RESTORE / PULIHKAN) or `merge` (newer `updatedAt` wins, nothing deleted). Runs as one transaction |
 | Recovery points | Created automatically before every restore and upgrade, or manually. Automatic ones are pruned to the configured retention. Manual ones are never pruned |
+| Delete protection | `guards.ts`: `planDelete` / `deleteRecord` block deletion while any record references the target, through foreign-key, array or polymorphic references. Owned children are removed with their parent only if nothing else references them: a programme's empty semesters, and a course's own prerequisite links |
+| Guarded writes | `guardedWrite`: every university-management write runs in one transaction that compares the integrity report before and after. Any newly introduced issue rolls back the whole write |
 | Integrity check | One rule engine checks foreign keys, array and polymorphic references, curriculum-chain and structural consistency, semester ranges and circular prerequisites. It runs on the live database, on backups, and on single records at write time (`assertValidReferences`). See [INTEGRITY.md](INTEGRITY.md) |
 | Persistent storage | `navigator.storage.persist()` is requested from a user action on the Backup page |
 | Confirmation | Every destructive action (replace-restore, restoring a recovery point, deleting a recovery point) opens a confirmation dialog |

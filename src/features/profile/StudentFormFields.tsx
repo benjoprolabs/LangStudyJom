@@ -34,6 +34,11 @@ export function StudentFormFields({
         </Field>
       </div>
       <div className="sm:col-span-2">
+        <Field label={t('profile.bio')} optionalLabel={t('common.optional')} error={err('bio')}>
+          {(p) => <Textarea id={p.id} aria-describedby={p.describedBy} invalid={p.invalid} value={value.bio ?? ''} onChange={set('bio')} placeholder={t('profile.bioPlaceholder')} maxLength={2000} />}
+        </Field>
+      </div>
+      <div className="sm:col-span-2">
         <Field label={t('profile.goals')} optionalLabel={t('common.optional')} error={err('goals')}>
           {(p) => <Textarea id={p.id} aria-describedby={p.describedBy} invalid={p.invalid} value={value.goals ?? ''} onChange={set('goals')} placeholder={t('profile.goalsPlaceholder')} maxLength={2000} />}
         </Field>

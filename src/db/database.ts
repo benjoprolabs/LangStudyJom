@@ -1,4 +1,4 @@
-import Dexie, { type Table } from 'dexie';
+import Dexie, { type DexieOptions, type Table } from 'dexie';
 import { DB_NAME, SCHEMA_VERSIONS } from './schema';
 import type {
   AcademicGrade,
@@ -65,8 +65,8 @@ export class QhazeDatabase extends Dexie {
   bookmarks!: Table<Bookmark, string>;
   achievements!: Table<Achievement, string>;
 
-  constructor(name: string = DB_NAME) {
-    super(name);
+  constructor(name: string = DB_NAME, options?: DexieOptions) {
+    super(name, options);
     for (const v of SCHEMA_VERSIONS) {
       const version = this.version(v.version).stores(v.stores);
       if (v.upgrade) version.upgrade(v.upgrade);

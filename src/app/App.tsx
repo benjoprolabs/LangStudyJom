@@ -4,7 +4,7 @@ import { DatabaseZap, Download, GraduationCap, RefreshCw } from 'lucide-react';
 import { bootstrapDatabase, type BootstrapResult } from '@/db/bootstrap';
 import { db } from '@/db/client';
 import { useStudent } from '@/hooks/useStudent';
-import { I18nProvider, useI18n } from '@/i18n/I18nProvider';
+import { I18nProvider, PreBootI18nProvider, useI18n } from '@/i18n/I18nProvider';
 import { downloadText } from '@/lib/download';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -25,18 +25,19 @@ export function App() {
     };
   }, []);
 
+  // Before the database is open, nothing may query it (see db/client.ts).
   if (!boot) {
     return (
-      <I18nProvider>
+      <PreBootI18nProvider>
         <Splash />
-      </I18nProvider>
+      </PreBootI18nProvider>
     );
   }
   if (boot.status === 'error') {
     return (
-      <I18nProvider>
+      <PreBootI18nProvider>
         <BootError result={boot} />
-      </I18nProvider>
+      </PreBootI18nProvider>
     );
   }
   return (

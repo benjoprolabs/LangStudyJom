@@ -416,7 +416,12 @@ export type ActivityLogType =
   | 'backup.restored'
   | 'snapshot.created'
   | 'snapshot.deleted'
-  | 'database.migrated';
+  | 'database.migrated'
+  | 'curriculum.created'
+  | 'curriculum.updated'
+  | 'curriculum.archived'
+  | 'curriculum.restored'
+  | 'curriculum.deleted';
 
 export interface ActivityLogEntry {
   id: ID;

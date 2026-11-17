@@ -82,13 +82,15 @@ records". Missing or duplicate primary keys are fatal errors.
 check, by backup validation and by the write-time guard. They are covered by automated tests,
 including a run against real IndexedDB records in Chromium (see `scripts/e2e-smoke.mjs`).
 
-## Still to do in Phase 2 (not integrity gaps in existing data)
+## Prevention (Phase 2 Step 0, 0.1.3)
 
-- **Delete and archive guards.** Before a faculty, academy, programme, semester, course, module,
-  lecture or exercise is deleted, find the records that reference it, and block the delete or
-  require archiving instead. Today, deleting a referenced record is *detected afterwards* by the
-  integrity check. Phase 2 will *prevent* it.
-- **Reverse indexes** for those lookups, for example `studySessions.programmeId`,
-  `studySessions.semesterId` and `enrollments.currentSemesterId`. This is schema v2 with a tested
-  migration and a pre-migration recovery point.
-- **Wire `assertValidReferences`** into every new Phase 2 repository.
+| Guard | Where | Behaviour |
+|---|---|---|
+| Delete protection | `guards.ts` `planDelete` / `deleteRecord` | Blocked (`ReferencedRecordError`, nothing deleted) while any record references the target, including student progress, notes, bookmarks, study sessions, grades and enrolments. Each blocking record is listed once |
+| Owned children | `OWNED` in `guards.ts` | Deleting a programme removes its *empty* semesters; deleting a course removes its *own* prerequisite links. A child that is referenced elsewhere blocks the delete |
+| Save-time validation | `repositories/university.ts` | Field validation (`ValidationError`), code uniqueness, then `assertValidReferences` (foreign keys, consistency, cycles) |
+| Transaction guard | `guardedWrite` | The integrity report is compared before and after each write; a new issue rolls back the whole transaction, which catches effects on *other* records (e.g. moving a course that a study session points to) |
+| Immutable parents | University repositories | `programme.academyId`, `semester.programmeId` and a course's programme cannot change after creation. A course may move only between semesters of its own programme |
+| Archive instead of delete | `setStatus` | Soft-hide that keeps every link |
+
+All reverse lookups use the schema-v2 indexes. A test enforces that every reference rule has one.

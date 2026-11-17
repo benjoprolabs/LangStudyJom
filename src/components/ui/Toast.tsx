@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
 import { CheckCircle2, Info, X, XCircle } from 'lucide-react';
 import { cn } from '@/lib/cn';
+import { useI18n } from '@/i18n/I18nProvider';
 
 type ToastTone = 'success' | 'error' | 'info';
 interface ToastItem {
@@ -25,6 +26,7 @@ const TONES: Record<ToastTone, string> = {
 };
 
 export function ToastProvider({ children }: { children: ReactNode }) {
+  const { t } = useI18n();
   const [items, setItems] = useState<ToastItem[]>([]);
   const nextId = useRef(1);
 
@@ -64,7 +66,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             >
               <Icon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
               <p className="flex-1 text-sm text-fg">{item.message}</p>
-              <button type="button" onClick={() => dismiss(item.id)} className="text-muted hover:text-fg" aria-label="×">
+              <button type="button" onClick={() => dismiss(item.id)} className="text-muted hover:text-fg" aria-label={t('common.close')} title={t('common.close')}>
                 <X className="h-4 w-4" />
               </button>
             </div>

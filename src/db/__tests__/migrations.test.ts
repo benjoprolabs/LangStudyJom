@@ -4,14 +4,17 @@ import { bootstrapDatabase } from '@/db/bootstrap';
 import { checkDatabaseIntegrity, dumpTables } from '@/db/integrity';
 import { migrateBackupData } from '@/db/backup/migrations';
 import { createStudent } from '@/db/repositories/student';
+import { CURRENT_SCHEMA_VERSION } from '@/db/schema';
 import { freshDb } from '@/test/helpers';
+
+const NEXT = CURRENT_SCHEMA_VERSION + 1;
 
 /** A hypothetical next schema version, used to exercise the real upgrade path. */
 class NextVersionDb extends QhazeDatabase {
   constructor(name: string) {
     super(name);
-    this.version(2)
-      .stores({ notes: 'id, studentId, entityType, entityId, kind, updatedAt, *tags, pinned' })
+    this.version(NEXT)
+      .stores({ notes: 'id, studentId, entityType, entityId, kind, updatedAt, *tags, [entityType+entityId], pinned' })
       .upgrade((tx) =>
         tx
           .table('notes')
@@ -34,8 +37,8 @@ describe('schema migration', () => {
 
     const v2 = new NextVersionDb(v1.name);
     const result = await bootstrapDatabase(v2);
-    expect(result).toMatchObject({ status: 'ready', migratedFrom: 1 });
-    expect(v2.verno).toBe(2);
+    expect(result).toMatchObject({ status: 'ready', migratedFrom: CURRENT_SCHEMA_VERSION });
+    expect(v2.verno).toBe(NEXT);
 
     // Data intact + upgrade applied.
     expect(await v2.students.get(student.id)).toEqual(before.students![0]);
@@ -46,10 +49,10 @@ describe('schema migration', () => {
     const snaps = await v2.snapshots.where('reason').equals('pre-migration').toArray();
     expect(snaps).toHaveLength(1);
     const payload = JSON.parse((await v2.snapshotPayloads.get(snaps[0]!.id))!.payload);
-    expect(payload.schemaVersion).toBe(1);
+    expect(payload.schemaVersion).toBe(CURRENT_SCHEMA_VERSION);
     expect(payload.data.notes).toEqual(before.notes);
     expect(await v2.activityLog.where('type').equals('database.migrated').count()).toBe(1);
-    expect((await v2.meta.get('schemaVersion'))?.value).toBe(2);
+    expect((await v2.meta.get('schemaVersion'))?.value).toBe(NEXT);
   });
 
   it('does not snapshot on a fresh install or when already current', async () => {

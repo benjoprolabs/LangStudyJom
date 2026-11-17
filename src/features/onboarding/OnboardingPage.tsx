@@ -12,7 +12,7 @@ import { useToast } from '@/components/ui/Toast';
 import { StudentFormFields } from '@/features/profile/StudentFormFields';
 import { RestoreCard } from '@/features/backup/RestoreCard';
 
-const EMPTY: StudentInput = { fullName: '', preferredName: '', email: '', goals: '' };
+const EMPTY: StudentInput = { fullName: '', preferredName: '', email: '', bio: '', goals: '' };
 
 /** First-run enrolment: shown when no student profile exists. */
 export function OnboardingPage() {

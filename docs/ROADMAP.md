@@ -5,6 +5,7 @@
 | 1 | Core foundation: app shell, navigation, design system, i18n, student profile, database, persistence, backup and restore | ✅ Complete |
 | 1.1 | Data integrity patch: study session and project reference checks, chain consistency, write-time guard, assessment model | ✅ Complete |
 | 1.2 | Integrity completion: items 4–10 (assessment–exercise, progress, notes and bookmarks, curriculum consistency, prerequisite cycles, semester range) | ✅ Complete |
+| 2.0 | Step 0, safety: schema v2, delete protection, save-time validation, cycle prevention, boot-safety fix, bio input, toast label | ✅ Complete |
 | 2 | University management: faculties, academies, programmes, semesters, courses, curriculum, prerequisites. Integrity gate ✅ satisfied; delete guards and reverse indexes are part of this phase ([INTEGRITY.md](INTEGRITY.md)) | ⏳ Awaiting approval |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | Planned |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | Planned |
