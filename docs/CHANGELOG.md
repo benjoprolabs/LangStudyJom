@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.2.0: Phase 2 University Management (structure; no curriculum seeded)
+
+- **M1 Faculties and Academies**: live lists, bilingual create and edit forms (Malay required,
+  English optional), archive and restore, filter by faculty, and delete with a dry run that shows
+  blocking records and offers "archive instead".
+- **M2 Academic Programmes**: each programme sets its own semester count (semesters 1..N are
+  created automatically), entry and exit levels, and bilingual completion requirements. The
+  academy is locked after creation. The semester count can grow but cannot drop below existing
+  semesters.
+- **M3 Semesters, Courses and Prerequisites** (`/semesters`): the curriculum of one programme.
+  Semesters (next free number suggested, range and uniqueness enforced), courses inside semesters
+  (code, bilingual title and description, credit hours, difficulty, bilingual learning
+  objectives, references), credit totals, moving a course within its programme, and a
+  prerequisite manager (also across programmes) that rejects cycles before saving.
+- The curriculum database is the existing versioned IndexedDB tables, written only through the
+  validated repositories in `src/db/repositories/university.ts`. No curriculum data is seeded.
+- UI fixes: "archive instead" dialog did not close; `Card` ignored padding overrides; at most 3
+  toasts visible.
+- Tests: 123 unit and integration tests; end-to-end suites with 22 + 24 checks.
+
 ## 0.1.3: Phase 2 Step 0, database and application safety
 
 - **Schema v2** (index-only migration): reverse-reference indexes for delete protection.

@@ -6,7 +6,7 @@
 | 1.1 | Data integrity patch: study session and project reference checks, chain consistency, write-time guard, assessment model | ✅ Complete |
 | 1.2 | Integrity completion: items 4–10 (assessment–exercise, progress, notes and bookmarks, curriculum consistency, prerequisite cycles, semester range) | ✅ Complete |
 | 2.0 | Step 0, safety: schema v2, delete protection, save-time validation, cycle prevention, boot-safety fix, bio input, toast label | ✅ Complete |
-| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum, prerequisites. Integrity gate ✅ satisfied; delete guards and reverse indexes are part of this phase ([INTEGRITY.md](INTEGRITY.md)) | ⏳ Awaiting approval |
+| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Structure complete. **Curriculum seeding awaits approval** |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | Planned |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | Planned |
 | 5 | Practice Center: exercises, coding challenges, quizzes, assignments, examinations, evaluation | Planned |
@@ -16,8 +16,8 @@
 | 9 | Projects and portfolio | Planned |
 | 10 | PWA, offline support, performance, accessibility audit, full testing, documentation | Planned |
 
-When a phase is delivered, raise `CURRENT_PHASE` in `src/app/navigation.ts` and register the new pages
-in `IMPLEMENTED` in `src/app/routes.tsx`.
+When a page becomes functional, add its key to `IMPLEMENTED_PAGES` in `src/app/navigation.ts` and its
+component to `IMPLEMENTED` in `src/app/routes.tsx`. A startup check fails if the two disagree.
 
 ## Phase 1 test record
 
@@ -57,3 +57,13 @@ in `IMPLEMENTED` in `src/app/routes.tsx`.
   curriculum in Chromium (no issues reported), injects 9 violations covering rules 4–10 (all
   shown in the Integrity Check UI), and removes them (clean again, student profile untouched).
 - Upgrade check: data created with the 0.1.1 build was byte-identical after opening with 0.1.2.
+
+## Phase 2 test record
+
+- Step 0: schema v2 migration, tested in unit tests, against the real 0.1.2 build in Chromium,
+  and in a permanent e2e scenario. Delete protection, guarded writes, cycle prevention, and a
+  boot-safety regression test that was shown to fail without its fix.
+- M1–M3: `scripts/e2e-university.mjs`, 24 checks in real Chromium. Validation messages,
+  bilingual display, blocked, cascading and archive-instead deletes, immutable parents, the
+  semester range, credit totals, prerequisites with cycle rejection, persistence after a browser
+  restart and reload, a clean integrity check, a 390px phone layout, and zero console errors.

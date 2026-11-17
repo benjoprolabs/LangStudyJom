@@ -187,12 +187,116 @@ async function main() {
     await page.getByTestId('programme-list').getByText('Python Diploma').waitFor();
     log('Deleting an academy with a programme is blocked; academy → programmes link filters');
 
+    // ── M3: Semester, course and prerequisite management ─────────────────
+    await page.getByRole('link', { name: 'Curriculum' }).first().click();
+    await page.getByRole('heading', { name: 'Semester Management' }).waitFor();
+    const summary = page.getByTestId('curriculum-summary');
+    await summary.getByText('4 semesters · 0 courses · 0 credit hours').waitFor();
+    await page.getByRole('button', { name: 'Add semester' }).click();
+    d = page.getByRole('dialog');
+    assert.equal(await d.getByLabel('Semester number').inputValue(), '5', 'next free number is suggested');
+    await d.getByLabel('Semester number').fill('4');
+    await d.getByRole('button', { name: 'Create' }).click();
+    await d.getByText('This semester number already exists in the programme.').waitFor();
+    await d.getByLabel('Semester number').fill('7');
+    await d.getByRole('button', { name: 'Create' }).click();
+    await d.getByText('Please enter a number within the allowed range.').waitFor();
+    await d.getByLabel('Semester number').fill('5');
+    await d.getByRole('button', { name: 'Create' }).click();
+    await summary.getByText('5 semesters · 0 courses · 0 credit hours').waitFor();
+    log('Semesters: next free number suggested; duplicates and numbers beyond the programme total rejected');
+
+    await page.getByRole('button', { name: 'Edit: Semester 1 — Semester 1' }).click();
+    d = page.getByRole('dialog');
+    await d.locator('[data-field="title.ms"]').fill('Asas Python');
+    await d.locator('[data-field="title.en"]').fill('Python Foundations');
+    await d.getByRole('button', { name: 'Save' }).click();
+    await page.getByTestId('semester-1').getByRole('heading', { name: 'Python Foundations' }).waitFor();
+    log('Semester titles are bilingual and editable');
+
+    const addCourse = async (semester, code, ms, en, credits = '3') => {
+      await page.getByTestId(`semester-${semester}`).getByRole('button', { name: 'Add course' }).click();
+      const f = page.getByRole('dialog');
+      await f.getByLabel('Code').fill(code);
+      await f.locator('[data-field="title.ms"]').fill(ms);
+      if (en) await f.locator('[data-field="title.en"]').fill(en);
+      await f.getByLabel('Credit hours').fill(credits);
+      await f.getByRole('button', { name: 'Create' }).click();
+      return f;
+    };
+    let f = await addCourse(1, 'PY101', 'Pengenalan Python', 'Introduction to Python');
+    await page.getByText('Course created').first().waitFor();
+    await addCourse(1, 'PY102', 'Pemboleh Ubah dan Jenis Data', 'Variables and Data Types', '4');
+    await page.getByText('Course created').first().waitFor();
+    await addCourse(2, 'PY201', 'Struktur Data Python', 'Python Data Structures');
+    await page.getByText('Course created').first().waitFor();
+    await summary.getByText('5 semesters · 3 courses · 10 credit hours').waitFor();
+    f = await addCourse(2, 'py101', 'Pendua', '');
+    await f.getByText('This code is already in use.').waitFor();
+    await f.getByRole('button', { name: 'Cancel' }).click();
+    log('Courses created inside semesters; credit totals update; duplicate course code rejected');
+
+    await page.getByRole('button', { name: 'Edit: PY201 Python Data Structures' }).click();
+    f = page.getByRole('dialog');
+    const prereq = f.getByTestId('prerequisites');
+    assert.equal(await prereq.getByRole('option', { name: /PY201/ }).count(), 0, 'a course is never offered as its own prerequisite');
+    await prereq.getByLabel('Select a course').selectOption({ label: 'PY101 — Introduction to Python' });
+    await prereq.getByRole('button', { name: 'Add prerequisite' }).click();
+    await page.getByText('Prerequisite added').first().waitFor();
+    await prereq.getByText('Introduction to Python').waitFor();
+    await f.getByRole('button', { name: 'Cancel' }).click();
+    await page.getByTestId('prereqs-PY201').getByText('Prerequisites: PY101').waitFor();
+    log('Prerequisite PY201 ← PY101 added and shown on the course row');
+
+    await page.getByRole('button', { name: 'Edit: PY101 Introduction to Python' }).click();
+    f = page.getByRole('dialog');
+    await f.getByTestId('prerequisites').getByText('Required by: PY201').waitFor();
+    await f.getByTestId('prerequisites').getByLabel('Select a course').selectOption({ label: 'PY201 — Python Data Structures' });
+    await f.getByTestId('prerequisites').getByRole('button', { name: 'Add prerequisite' }).click();
+    await page.getByText('Rejected: this prerequisite would create a cycle.').waitFor();
+    assert.ok(await f.getByTestId('prerequisites').getByText('No prerequisites.').isVisible(), 'nothing was saved');
+    await f.getByRole('button', { name: 'Cancel' }).click();
+    log('Circular prerequisite PY101 ← PY201 rejected before saving');
+
+    await page.getByRole('button', { name: 'Edit: PY102 Variables and Data Types' }).click();
+    f = page.getByRole('dialog');
+    await f.getByLabel('Semester', { exact: true }).selectOption({ index: 2 });
+    await f.getByRole('button', { name: 'Save' }).click();
+    await page.getByTestId('semester-3').getByText('Variables and Data Types').waitFor();
+    log('A course moves to another semester of the same programme');
+
+    await page.getByRole('button', { name: 'Delete: PY101 Introduction to Python' }).click();
+    await page.getByTestId('delete-blocked').getByText('1 × Prerequisite links').waitFor();
+    await page.getByRole('dialog').getByRole('button', { name: 'Cancel' }).click();
+    await page.getByRole('button', { name: 'Delete: Semester 2 — Semester 2' }).click();
+    await page.getByTestId('delete-blocked').getByText('1 × Courses').waitFor();
+    assert.equal(await page.getByRole('dialog').getByRole('button', { name: 'Archive instead' }).count(), 0, 'semesters have no archive state');
+    await page.getByRole('dialog').getByRole('button', { name: 'Cancel' }).click();
+    await page.getByRole('button', { name: 'Delete: Semester 5 — Semester 5' }).click();
+    await page.getByRole('dialog').getByRole('button', { name: 'Delete' }).click();
+    await page.getByText('Semester deleted').first().waitFor();
+    await summary.getByText('4 semesters · 3 courses · 10 credit hours').waitFor();
+    log('Course required by another and semester with courses cannot be deleted; empty semester can');
+
+    await page.getByRole('button', { name: 'Delete: PY201 Python Data Structures' }).click();
+    await page.getByText('These owned records will also be deleted:').waitFor();
+    await page.getByRole('dialog').getByText('1 × Prerequisite links').waitFor();
+    await page.getByRole('dialog').getByRole('button', { name: 'Delete' }).click();
+    await page.getByText('Course deleted').first().waitFor();
+    await summary.getByText('4 semesters · 2 courses · 7 credit hours').waitFor();
+    log('Deleting a course removes its own prerequisite links with it');
+
+    await page.reload();
+    await page.getByTestId('semester-1').getByRole('heading', { name: 'Python Foundations' }).waitFor();
+    await page.getByTestId('semester-3').getByText('Variables and Data Types').waitFor();
+    log('Curriculum persists after reload');
+
     // Integrity + mobile.
     await page.goto(`${base}#/backup`);
     await page.getByRole('button', { name: 'Run check' }).click();
     await page.getByText(/No issues found in/).waitFor();
     await page.setViewportSize({ width: 390, height: 844 });
-    for (const path of ['faculties', 'academies', 'programmes']) {
+    for (const path of ['faculties', 'academies', 'programmes', 'semesters']) {
       await page.goto(`${base}#/${path}`);
       await page.waitForTimeout(200);
       assert.ok((await horizontalOverflow(page)) <= 0, `overflow on /${path}`);
@@ -202,7 +306,7 @@ async function main() {
     assert.ok(await page.getByRole('dialog').getByLabel('Code').isVisible());
     assert.ok((await horizontalOverflow(page)) <= 0, 'overflow with dialog open');
     await page.getByRole('dialog').getByRole('button', { name: 'Cancel' }).click();
-    log('Integrity check clean; faculty/academy/programme pages and form fit a 390px phone');
+    log('Integrity check clean; all university pages and forms fit a 390px phone');
 
     await context.close();
     assert.deepEqual(consoleErrors, [], `console errors:\n${consoleErrors.join('\n')}`);

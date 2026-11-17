@@ -34,7 +34,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const push = useCallback(
     (tone: ToastTone, message: string) => {
       const id = nextId.current++;
-      setItems((xs) => [...xs.slice(-3), { id, tone, message }]);
+      setItems((xs) => [...xs.slice(-2), { id, tone, message }]); // at most 3 visible
       setTimeout(() => dismiss(id), tone === 'error' ? 8000 : 4000);
     },
     [dismiss],

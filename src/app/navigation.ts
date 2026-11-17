@@ -86,4 +86,4 @@ export const CURRENT_PHASE = 2;
  * Pages that are functional. Everything else shows its honest "planned for Phase N" page
  * and a phase badge in the sidebar. `routes.tsx` must provide a component for each key.
  */
-export const IMPLEMENTED_PAGES: ReadonlySet<NavKey> = new Set<NavKey>(['dashboard', 'faculties', 'academies', 'programmes', 'profile', 'settings', 'backup']);
+export const IMPLEMENTED_PAGES: ReadonlySet<NavKey> = new Set<NavKey>(['dashboard', 'faculties', 'academies', 'programmes', 'semesters', 'profile', 'settings', 'backup']);

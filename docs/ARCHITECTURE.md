@@ -64,6 +64,17 @@ attempts, assessments, grading scales, grades, study sessions, progress, project
 bookmarks, achievements, plus the system tables `meta`, `activityLog`, `snapshots` and
 `snapshotPayloads`. Later phases add data and features, and the existing structure stays as it is.
 
+## University management (Phase 2)
+
+| Layer | Location | Notes |
+|---|---|---|
+| Write API | `src/db/repositories/university.ts` | `create/update` for faculties, academies, programmes, semesters and courses; `addPrerequisite` / `removePrerequisite`; `setStatus` (archive and restore); `previewDelete` / `deleteCurriculumRecord`. Every write is validated and guarded (see Data safety) |
+| Pages | `src/features/university/` | Faculties, Academies (filter `?faculty=`), Programmes (filter `?academy=`), Semester Management (`?programme=`, which also manages courses and prerequisites) |
+| Shared UI | `components/ui/Modal`, `LocalizedField`, `LocalizedListField`; `features/university/shared.tsx` | `useRunner` turns `ValidationError` into field messages, `IntegrityError` into a toast, and `ReferencedRecordError` into the delete dialog's blocker list |
+
+Codes are upper-case (`A–Z`, `0–9`, `-`, at most 20 characters) and unique per table. Malay text is
+required and English is optional. The UI falls back to Malay when English is missing.
+
 ## Assessment model (approved in Phase 1.1)
 
 | Record | Table | Role |

@@ -6,7 +6,7 @@ a coding laboratory, study tracking, GPA and a project portfolio.
 
 Bahasa Melayu is the primary language and English the secondary one. Programming terms stay in English.
 
-> **Status: Phase 1 (Core Foundation) and the Phase 1.1–1.2 integrity patches are complete.** Later modules show which phase delivers them.
+> **Status: Phase 2 University Management is complete (structure only; no curriculum has been seeded yet).** Later modules show which phase delivers them.
 > See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Run it

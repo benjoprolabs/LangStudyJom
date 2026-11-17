@@ -1,8 +1,12 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
+/** A padding class passed in `className` (p-0, p-4…) replaces the default p-5 instead of fighting it. */
+const HAS_PADDING = /(^|\s)p-\d/;
+
 export function Card({ className, ...rest }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn('rounded-xl border border-border bg-surface/80 p-5 backdrop-blur-sm', className)} {...rest} />;
+  const padding = className && HAS_PADDING.test(className) ? '' : 'p-5';
+  return <div className={cn('rounded-xl border border-border bg-surface/80 backdrop-blur-sm', padding, className)} {...rest} />;
 }
 
 export function CardHeader({
