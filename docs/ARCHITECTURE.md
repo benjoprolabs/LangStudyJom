@@ -64,6 +64,19 @@ attempts, assessments, grading scales, grades, study sessions, progress, project
 bookmarks, achievements, plus the system tables `meta`, `activityLog`, `snapshots` and
 `snapshotPayloads`. Later phases add data and features, and the existing structure stays as it is.
 
+## Assessment model (approved in Phase 1.1)
+
+| Record | Table | Role |
+|---|---|---|
+| Exercise | `exercises` | One practical learning activity or question, stored **once** |
+| Assessment | `assessments` | A graded container: `quiz`, `assignment`, `examination`, `practical_test` or `project`. It references exercises through `exerciseIds` and never copies them |
+| Submission | `exerciseAttempts` | One student attempt at one exercise. `assessmentId` is set when the attempt was made inside an assessment, and absent for free practice |
+| Grade | `grades` | The graded result per assessment and/or course |
+
+Quiz, assignment and examination are assessment types, not exercise types. A quiz can hold many
+questions (exercises), and an assignment many tasks. The same exercise can appear in practice and in
+several assessments without duplication.
+
 ## Database versioning and migrations
 
 `src/db/schema.ts` holds an append-only list of schema versions. To change the schema:
@@ -91,7 +104,7 @@ At startup, `bootstrapDatabase()` runs these steps:
 | Import validation | `validateBackup()`: JSON → structure (Zod) → format → version → checksum → migrations → IDs → referential integrity |
 | Restore | `replace` (needs the typed word RESTORE / PULIHKAN) or `merge` (newer `updatedAt` wins, nothing deleted). Runs as one transaction |
 | Recovery points | Created automatically before every restore and upgrade, or manually. Automatic ones are pruned to the configured retention. Manual ones are never pruned |
-| Integrity check | `checkIntegrity()` checks every foreign-key relation, duplicate IDs and self-prerequisites |
+| Integrity check | One rule engine checks foreign keys, curriculum-chain consistency, duplicate IDs and self-prerequisites, for the live database, for backups, and for single records at write time (`assertValidReferences`). See [INTEGRITY.md](INTEGRITY.md) |
 | Persistent storage | `navigator.storage.persist()` is requested from a user action on the Backup page |
 | Confirmation | Every destructive action (replace-restore, restoring a recovery point, deleting a recovery point) opens a confirmation dialog |
 

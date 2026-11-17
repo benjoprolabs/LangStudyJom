@@ -226,7 +226,20 @@ export interface Enrollment extends BaseEntity {
 }
 
 // ─── Practice & assessment (Phase 5+) ──────────────────────────────────────
+//
+// Approved model (Phase 1.1) — four logically separate record types:
+//
+//   Exercise         one practical learning activity / question. Stored ONCE.
+//   Assessment       a graded container: quiz | assignment | examination | practical_test | project.
+//                    It REFERENCES exercises via `exerciseIds` (never copies them), so one
+//                    exercise can appear in practice and in several assessments without duplication.
+//   ExerciseAttempt  the student's SUBMISSION for one exercise; `assessmentId` is set when the
+//                    attempt was made inside an assessment, absent for free practice.
+//   AcademicGrade    the graded result for an assessment and/or course.
+//
+// Quiz, assignment and examination are assessment types — not exercise types.
 
+/** Kinds of individual practical activity. (Quiz/assignment/examination are AssessmentTypes.) */
 export type ExerciseType =
   | 'basic'
   | 'intermediate'
@@ -236,9 +249,6 @@ export type ExerciseType =
   | 'debugging'
   | 'problem_solving'
   | 'multiple_choice'
-  | 'quiz'
-  | 'assignment'
-  | 'practical_exam'
   | 'mini_project'
   | 'final_project';
 
@@ -262,9 +272,12 @@ export interface Exercise extends BaseEntity {
   solutionExplanation?: LocalizedText;
 }
 
+/** A submission: one student attempt at one exercise. */
 export interface ExerciseAttempt extends BaseEntity {
   exerciseId: ID;
   studentId: ID;
+  /** Set when submitted as part of an assessment (quiz, assignment, examination…). */
+  assessmentId?: ID;
   submission: string;
   submittedAt: ISODateString;
   status: 'in_progress' | 'submitted' | 'graded';
@@ -282,6 +295,7 @@ export interface Assessment extends BaseEntity {
   /** Weight in the course grade, 0–100. */
   weight: number;
   dueAt?: ISODateString;
+  /** Ordered references to existing exercises (questions / tasks). Never duplicated copies. */
   exerciseIds: ID[];
 }
 

@@ -203,6 +203,44 @@ async function main() {
     log('Manual recovery point created; integrity check passes');
     await shot(page, '04-backup');
 
+    // ── Phase 1.1: integrity checker detects broken curriculum references ─
+    const idb = (op) =>
+      page.evaluate(
+        (op) =>
+          new Promise((resolve, reject) => {
+            const req = indexedDB.open('qhaze-tech-university');
+            req.onerror = () => reject(req.error);
+            req.onsuccess = () => {
+              const db = req.result;
+              const tx = db.transaction(['studySessions', 'students'], 'readwrite');
+              const sessions = tx.objectStore('studySessions');
+              if (op === 'inject') {
+                tx.objectStore('students').getAll().onsuccess = (e) => {
+                  const studentId = e.target.result[0].id;
+                  sessions.put({ id: 'e2e-orphan', studentId, academyId: 'missing-academy', semesterId: 'missing-semester', startedAt: '2026-01-01T00:00:00.000Z', endedAt: '2026-01-01T00:30:00.000Z', durationMinutes: 30, activityType: 'other', completed: true, source: 'manual', createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' });
+                };
+              } else {
+                sessions.delete('e2e-orphan');
+              }
+              tx.oncomplete = () => {
+                db.close();
+                resolve();
+              };
+              tx.onerror = () => reject(tx.error);
+            };
+          }),
+        op,
+      );
+    await idb('inject');
+    await page.getByRole('button', { name: 'Run check' }).click();
+    await page.getByText('2 issues found:').waitFor();
+    assert.ok(await page.getByText('academyId=missing-academy not found in academies').isVisible());
+    assert.ok(await page.getByText('semesterId=missing-semester not found in semesters').isVisible());
+    await idb('remove');
+    await page.getByRole('button', { name: 'Run check' }).click();
+    await page.getByText(/No issues found in/).waitFor();
+    log('Integrity check UI reports dangling study-session references (Phase 1.1)');
+
     // ── Mobile layout ────────────────────────────────────────────────────
     await page.setViewportSize({ width: 390, height: 844 });
     await page.getByRole('button', { name: 'Open menu' }).click();
