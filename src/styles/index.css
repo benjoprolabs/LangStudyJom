@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens (RGB triplets so Tailwind can apply opacity: bg-primary/20).
+ * Light is the base; `.dark` on <html> switches to the purple + cyan dark theme.
+ */
+@layer base {
+  :root {
+    --bg: 247 246 252;
+    --surface: 255 255 255;
+    --surface-2: 242 239 251;
+    --border: 224 219 240;
+    --fg: 24 18 43;
+    --muted: 95 87 122;
+    --primary: 124 58 237;
+    --primary-fg: 255 255 255;
+    --accent: 8 145 178;
+    --success: 5 150 105;
+    --warning: 180 83 9;
+    --danger: 220 38 38;
+    color-scheme: light;
+  }
+
+  .dark {
+    --bg: 11 8 22;
+    --surface: 20 15 36;
+    --surface-2: 30 23 53;
+    --border: 50 40 82;
+    --fg: 236 233 250;
+    --muted: 162 154 192;
+    --primary: 139 92 246;
+    --primary-fg: 255 255 255;
+    --accent: 34 211 238;
+    --success: 52 211 153;
+    --warning: 251 191 36;
+    --danger: 248 113 113;
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-fg font-sans antialiased;
+    min-height: 100dvh;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(1200px 600px at 100% -10%, rgb(var(--primary) / 0.12), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgb(var(--accent) / 0.08), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg;
+  }
+
+  ::selection {
+    background: rgb(var(--primary) / 0.35);
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
