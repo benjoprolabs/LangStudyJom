@@ -4,7 +4,8 @@
 |---|---|---|
 | 1 | Core foundation: app shell, navigation, design system, i18n, student profile, database, persistence, backup and restore | ✅ Complete |
 | 1.1 | Data integrity patch: study session and project reference checks, chain consistency, write-time guard, assessment model | ✅ Complete |
-| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum, prerequisites. **Gate:** close integrity items 4–10 in [INTEGRITY.md](INTEGRITY.md) before seeding curriculum data | ⏳ Awaiting approval |
+| 1.2 | Integrity completion: items 4–10 (assessment–exercise, progress, notes and bookmarks, curriculum consistency, prerequisite cycles, semester range) | ✅ Complete |
+| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum, prerequisites. Integrity gate ✅ satisfied; delete guards and reverse indexes are part of this phase ([INTEGRITY.md](INTEGRITY.md)) | ⏳ Awaiting approval |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | Planned |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | Planned |
 | 5 | Practice Center: exercises, coding challenges, quizzes, assignments, examinations, evaluation | Planned |
@@ -44,3 +45,14 @@ in `IMPLEMENTED` in `src/app/routes.tsx`.
 - Upgrade check: data created by the Phase 1 build (0.1.0) and opened with the 0.1.1 build was
   byte-identical in every table. No schema migration was needed, the recovery points were kept,
   and a 0.1.0 backup file still validates.
+
+## Phase 1.2 test record
+
+- 96 unit and integration tests (63 before, plus 33 new). The new tests cover every rule in items
+  4–10 with valid and invalid cases, a complete valid curriculum with zero false positives,
+  write-time validation (including cycle checks for new versus existing edges), and restoring a
+  backup containing violations without losing any records.
+- End-to-end test with 20 checks. It seeds 25 real IndexedDB records forming a complete valid
+  curriculum in Chromium (no issues reported), injects 9 violations covering rules 4–10 (all
+  shown in the Integrity Check UI), and removes them (clean again, student profile untouched).
+- Upgrade check: data created with the 0.1.1 build was byte-identical after opening with 0.1.2.

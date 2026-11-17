@@ -203,25 +203,26 @@ async function main() {
     log('Manual recovery point created; integrity check passes');
     await shot(page, '04-backup');
 
-    // ── Phase 1.1: integrity checker detects broken curriculum references ─
-    const idb = (op) =>
+    // ── Integrity rules against REAL browser IndexedDB records ───────────
+    /** Apply put/delete operations directly to the app's IndexedDB. "__STUDENT__" is replaced by the student id. */
+    const idb = (ops) =>
       page.evaluate(
-        (op) =>
+        (ops) =>
           new Promise((resolve, reject) => {
             const req = indexedDB.open('qhaze-tech-university');
             req.onerror = () => reject(req.error);
             req.onsuccess = () => {
               const db = req.result;
-              const tx = db.transaction(['studySessions', 'students'], 'readwrite');
-              const sessions = tx.objectStore('studySessions');
-              if (op === 'inject') {
-                tx.objectStore('students').getAll().onsuccess = (e) => {
-                  const studentId = e.target.result[0].id;
-                  sessions.put({ id: 'e2e-orphan', studentId, academyId: 'missing-academy', semesterId: 'missing-semester', startedAt: '2026-01-01T00:00:00.000Z', endedAt: '2026-01-01T00:30:00.000Z', durationMinutes: 30, activityType: 'other', completed: true, source: 'manual', createdAt: '2026-01-01T00:00:00.000Z', updatedAt: '2026-01-01T00:00:00.000Z' });
-                };
-              } else {
-                sessions.delete('e2e-orphan');
-              }
+              const stores = [...new Set([...ops.map((o) => o.store), 'students'])];
+              const tx = db.transaction(stores, 'readwrite');
+              tx.objectStore('students').getAll().onsuccess = (e) => {
+                const sid = e.target.result[0].id;
+                for (const o of ops) {
+                  const st = tx.objectStore(o.store);
+                  if (o.del) st.delete(o.del);
+                  else st.put(JSON.parse(JSON.stringify(o.put).replaceAll('__STUDENT__', sid)));
+                }
+              };
               tx.oncomplete = () => {
                 db.close();
                 resolve();
@@ -229,17 +230,89 @@ async function main() {
               tx.onerror = () => reject(tx.error);
             };
           }),
-        op,
+        ops,
       );
-    await idb('inject');
-    await page.getByRole('button', { name: 'Run check' }).click();
+    const runCheck = async () => {
+      await page.getByRole('button', { name: 'Run check' }).click();
+      await page.waitForTimeout(150);
+    };
+    const T = '2026-01-01T00:00:00.000Z';
+    const r = (store, put) => ({ store, put: { createdAt: T, updatedAt: T, ...put } });
+    const L = (s) => ({ ms: s, en: s });
+
+    // Phase 1.1: dangling study-session references.
+    await idb([r('studySessions', { id: 'e2e-orphan', studentId: '__STUDENT__', academyId: 'missing-academy', semesterId: 'missing-semester', startedAt: T, endedAt: T, durationMinutes: 30, activityType: 'other', completed: true, source: 'manual' })]);
+    await runCheck();
     await page.getByText('2 issues found:').waitFor();
     assert.ok(await page.getByText('academyId=missing-academy not found in academies').isVisible());
     assert.ok(await page.getByText('semesterId=missing-semester not found in semesters').isVisible());
-    await idb('remove');
-    await page.getByRole('button', { name: 'Run check' }).click();
+    await idb([{ store: 'studySessions', del: 'e2e-orphan' }]);
+    await runCheck();
     await page.getByText(/No issues found in/).waitFor();
     log('Integrity check UI reports dangling study-session references (Phase 1.1)');
+
+    // Integrity items 4–10: a complete VALID curriculum first (no false positives)…
+    const curriculum = [
+      r('faculties', { id: 'e2e-f1', code: 'E2E-F1', name: L('Fakulti'), description: L(''), order: 1, status: 'active' }),
+      r('academies', { id: 'e2e-a1', facultyId: 'e2e-f1', code: 'E2E-A1', name: L('Akademi'), description: L(''), order: 1, status: 'active' }),
+      r('programmes', { id: 'e2e-p1', academyId: 'e2e-a1', code: 'E2E-P1', name: L('P1'), description: L(''), totalSemesters: 2, entryLevel: 'beginner', exitLevel: 'advanced', completionRequirements: [], status: 'active' }),
+      r('programmes', { id: 'e2e-p2', academyId: 'e2e-a1', code: 'E2E-P2', name: L('P2'), description: L(''), totalSemesters: 1, entryLevel: 'beginner', exitLevel: 'advanced', completionRequirements: [], status: 'active' }),
+      r('semesters', { id: 'e2e-s1', programmeId: 'e2e-p1', number: 1, title: L('S1'), description: L('') }),
+      r('semesters', { id: 'e2e-s2', programmeId: 'e2e-p1', number: 2, title: L('S2'), description: L('') }),
+      r('semesters', { id: 'e2e-s3', programmeId: 'e2e-p2', number: 1, title: L('S3'), description: L('') }),
+      ...['1', '2', '3'].map((n) => r('courses', { id: `e2e-c${n}`, programmeId: 'e2e-p1', semesterId: n === '1' ? 'e2e-s1' : 'e2e-s2', code: `E2E-C${n}`, title: L(`C${n}`), description: L(''), creditHours: 3, difficulty: 'beginner', learningObjectives: [], references: [], status: 'active' })),
+      r('coursePrerequisites', { id: 'e2e-q1', courseId: 'e2e-c2', prerequisiteCourseId: 'e2e-c1', kind: 'required' }),
+      r('coursePrerequisites', { id: 'e2e-q2', courseId: 'e2e-c3', prerequisiteCourseId: 'e2e-c2', kind: 'required' }),
+      r('modules', { id: 'e2e-m1', courseId: 'e2e-c1', order: 1, title: L('M1'), description: L('') }),
+      r('modules', { id: 'e2e-m2', courseId: 'e2e-c2', order: 1, title: L('M2'), description: L('') }),
+      r('lectures', { id: 'e2e-l1', moduleId: 'e2e-m1', courseId: 'e2e-c1', order: 1, title: L('L1'), estimatedMinutes: 30, difficulty: 'beginner', sections: [] }),
+      r('lectures', { id: 'e2e-l2', moduleId: 'e2e-m2', courseId: 'e2e-c2', order: 1, title: L('L2'), estimatedMinutes: 30, difficulty: 'beginner', sections: [] }),
+      r('learningMaterials', { id: 'e2e-mat1', lectureId: 'e2e-l1', kind: 'markdown', title: L('Nota'), content: '# x' }),
+      r('exercises', { id: 'e2e-e1', code: 'E2E-E1', academyId: 'e2e-a1', courseId: 'e2e-c1', type: 'coding_challenge', difficulty: 'beginner', title: L('E1'), instructions: L(''), learningObjective: L(''), hints: [], assessmentCriteria: [], maxScore: 10 }),
+      r('exercises', { id: 'e2e-e2', code: 'E2E-E2', academyId: 'e2e-a1', courseId: 'e2e-c1', type: 'multiple_choice', difficulty: 'beginner', title: L('E2'), instructions: L(''), learningObjective: L(''), hints: [], assessmentCriteria: [], maxScore: 10 }),
+      r('assessments', { id: 'e2e-quiz', courseId: 'e2e-c1', type: 'quiz', title: L('Kuiz'), weight: 10, exerciseIds: ['e2e-e1', 'e2e-e2'] }),
+      r('assessments', { id: 'e2e-asg', courseId: 'e2e-c1', type: 'assignment', title: L('Tugasan'), weight: 20, exerciseIds: ['e2e-e2'] }),
+      r('exerciseAttempts', { id: 'e2e-att1', exerciseId: 'e2e-e1', studentId: '__STUDENT__', assessmentId: 'e2e-quiz', submission: 'print(1)', submittedAt: T, status: 'submitted', hintsUsed: 0 }),
+      r('progress', { id: 'e2e-pg1', studentId: '__STUDENT__', entityType: 'lecture', entityId: 'e2e-l1', status: 'in_progress', percent: 50 }),
+      r('notes', { id: 'e2e-n1', studentId: '__STUDENT__', entityType: 'lecture', entityId: 'e2e-l1', kind: 'lecture_note', title: 'Nota', body: 'x', tags: [] }),
+      r('bookmarks', { id: 'e2e-b1', studentId: '__STUDENT__', entityType: 'material', entityId: 'e2e-mat1' }),
+    ];
+    await idb(curriculum);
+    await runCheck();
+    await page.getByText(/No issues found in/).waitFor();
+    log(`Valid curriculum (${curriculum.length} real IndexedDB records) passes all integrity rules — no false positives`);
+
+    // …then one violation per rule 4–10.
+    const violations = [
+      [r('assessments', { id: 'e2e-bad-asm', courseId: 'e2e-c1', type: 'quiz', title: L('x'), weight: 0, exerciseIds: ['e2e-e1', 'e2e-missing-ex'] }), 'exerciseIds contains e2e-missing-ex, not found in exercises'],
+      [r('exerciseAttempts', { id: 'e2e-bad-att', exerciseId: 'e2e-e1', studentId: '__STUDENT__', assessmentId: 'e2e-asg', submission: '', submittedAt: T, status: 'submitted', hintsUsed: 0 }), 'exerciseId=e2e-e1 is not part of assessmentId=e2e-asg'],
+      [r('progress', { id: 'e2e-bad-pg', studentId: '__STUDENT__', entityType: 'module', entityId: 'e2e-missing-mod', status: 'in_progress', percent: 0 }), 'entityId=e2e-missing-mod not found in modules (entityType=module)'],
+      [r('notes', { id: 'e2e-bad-note', studentId: '__STUDENT__', entityType: 'course', entityId: 'e2e-missing-course', kind: 'note', title: 'x', body: '', tags: [] }), 'entityId=e2e-missing-course not found in courses (entityType=course)'],
+      [r('bookmarks', { id: 'e2e-bad-bm', studentId: '__STUDENT__', entityType: 'material', entityId: 'e2e-missing-mat' }), 'entityId=e2e-missing-mat not found in learningMaterials (entityType=material)'],
+      [r('courses', { id: 'e2e-bad-course', programmeId: 'e2e-p2', semesterId: 'e2e-s1', code: 'E2E-BAD', title: L('x'), description: L(''), creditHours: 1, difficulty: 'beginner', learningObjectives: [], references: [], status: 'active' }), "semesterId=e2e-s1 belongs to programmeId=e2e-p1, not the course's programmeId=e2e-p2"],
+      [r('lectures', { id: 'e2e-bad-lec', moduleId: 'e2e-m1', courseId: 'e2e-c2', order: 9, title: L('x'), estimatedMinutes: 1, difficulty: 'beginner', sections: [] }), "moduleId=e2e-m1 belongs to courseId=e2e-c1, not the lecture's courseId=e2e-c2"],
+      [r('coursePrerequisites', { id: 'e2e-bad-q', courseId: 'e2e-c1', prerequisiteCourseId: 'e2e-c3', kind: 'required' }), 'Circular prerequisites: e2e-c1 → e2e-c3 → e2e-c2 → e2e-c1'],
+      [r('semesters', { id: 'e2e-bad-sem', programmeId: 'e2e-p2', number: 3, title: L('x'), description: L('') }), 'number=3 exceeds programme e2e-p2 totalSemesters=1'],
+    ];
+    await idb(violations.map(([op]) => op));
+    await runCheck();
+    await page.getByText(`${violations.length} issues found:`).waitFor();
+    for (const [, detail] of violations) {
+      assert.ok(await page.getByText(detail, { exact: false }).isVisible(), `missing in UI: ${detail}`);
+    }
+    log(`Integrity check UI reports all ${violations.length} injected violations of rules 4–10`);
+
+    // Clean up: remove violations, then the curriculum; student data must be untouched.
+    await idb(violations.map(([op]) => ({ store: op.store, del: op.put.id })));
+    await runCheck();
+    await page.getByText(/No issues found in/).waitFor();
+    await idb(curriculum.map((op) => ({ store: op.store, del: op.put.id })));
+    await runCheck();
+    await page.getByText(/No issues found in/).waitFor();
+    await page.getByRole('link', { name: 'Student Profile' }).click();
+    assert.equal(await page.getByLabel('Preferred Name').inputValue(), 'Aisyah');
+    await page.getByRole('link', { name: 'Backup & Restore' }).click();
+    log('Removing violations restores a clean check; student profile untouched');
 
     // ── Mobile layout ────────────────────────────────────────────────────
     await page.setViewportSize({ width: 390, height: 844 });

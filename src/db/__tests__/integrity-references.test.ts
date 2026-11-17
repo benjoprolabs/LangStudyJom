@@ -21,7 +21,7 @@ const CURRICULUM: Record<string, Row[]> = {
   faculties: [{ id: 'f1' }],
   academies: [{ id: 'a1', facultyId: 'f1' }, { id: 'a2', facultyId: 'f1' }],
   programmes: [{ id: 'p1', academyId: 'a1' }, { id: 'p2', academyId: 'a2' }],
-  semesters: [{ id: 's1', programmeId: 'p1' }, { id: 's2', programmeId: 'p2' }],
+  semesters: [{ id: 's1', programmeId: 'p1', number: 1 }, { id: 's2', programmeId: 'p2', number: 1 }],
   courses: [{ id: 'c1', programmeId: 'p1', semesterId: 's1' }, { id: 'c2', programmeId: 'p2', semesterId: 's2' }],
   modules: [{ id: 'm1', courseId: 'c1' }, { id: 'm2', courseId: 'c2' }],
   lectures: [{ id: 'l1', moduleId: 'm1', courseId: 'c1' }, { id: 'l2', moduleId: 'm2', courseId: 'c2' }],

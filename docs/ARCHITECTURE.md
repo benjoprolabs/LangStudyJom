@@ -77,6 +77,23 @@ Quiz, assignment and examination are assessment types, not exercise types. A qui
 questions (exercises), and an assignment many tasks. The same exercise can appear in practice and in
 several assessments without duplication.
 
+## Table inventory (schema v1: 28 tables)
+
+The brief's 24 suggested entities map onto **22 tables**, because Quiz and Assignment are
+`assessments.type` values (an approved design decision). There are **6 supporting tables**:
+
+| Group | Tables |
+|---|---|
+| Brief entities (22) | students, settings, faculties, academies, programmes, semesters, courses, coursePrerequisites, modules, lectures, learningMaterials, exercises, exerciseAttempts, assessments, studySessions, progress, grades, projects, projectTasks, notes, bookmarks, achievements |
+| Supporting (6) | `enrollments` (student ↔ programme), `gradingScales` (configurable grading), `meta` (install date, schema version, last backup), `activityLog` (recent activity), `snapshots` + `snapshotPayloads` (recovery points: metadata and body, kept separate so listing stays cheap; never exported) |
+
+**About the "30 tables" figure.** The Phase 1 chat summary said 30 tables. That was a miscount in
+the summary, not a change to the database. Git history shows `src/db/schema.ts` was committed once
+(Phase 1, `bd25980`) with 28 tables, and every commit since has had the same 28. Schema version 1
+has never changed and no table has been removed, renamed or merged. So no migration has happened
+and no data was put at risk. The only consolidation, Quiz and Assignment as assessment types, was
+in the design from the first commit and was approved in Phase 1.1.
+
 ## Database versioning and migrations
 
 `src/db/schema.ts` holds an append-only list of schema versions. To change the schema:
@@ -104,7 +121,7 @@ At startup, `bootstrapDatabase()` runs these steps:
 | Import validation | `validateBackup()`: JSON → structure (Zod) → format → version → checksum → migrations → IDs → referential integrity |
 | Restore | `replace` (needs the typed word RESTORE / PULIHKAN) or `merge` (newer `updatedAt` wins, nothing deleted). Runs as one transaction |
 | Recovery points | Created automatically before every restore and upgrade, or manually. Automatic ones are pruned to the configured retention. Manual ones are never pruned |
-| Integrity check | One rule engine checks foreign keys, curriculum-chain consistency, duplicate IDs and self-prerequisites, for the live database, for backups, and for single records at write time (`assertValidReferences`). See [INTEGRITY.md](INTEGRITY.md) |
+| Integrity check | One rule engine checks foreign keys, array and polymorphic references, curriculum-chain and structural consistency, semester ranges and circular prerequisites. It runs on the live database, on backups, and on single records at write time (`assertValidReferences`). See [INTEGRITY.md](INTEGRITY.md) |
 | Persistent storage | `navigator.storage.persist()` is requested from a user action on the Backup page |
 | Confirmation | Every destructive action (replace-restore, restoring a recovery point, deleting a recovery point) opens a confirmation dialog |
 

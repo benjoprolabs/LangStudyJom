@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.2: Phase 1.2 integrity completion
+
+- Integrity items 4–10 closed (see `docs/INTEGRITY.md`):
+  - Assessment → exercise array references: missing IDs, duplicate IDs in a list, and
+    submissions for an exercise that is not part of their assessment.
+  - Polymorphic references for `progress`, `notes` (general notes must not link) and `bookmarks`,
+    with an unknown `entityType` reported.
+  - Course ↔ semester ↔ programme consistency, and lecture ↔ module ↔ course consistency.
+  - Circular prerequisite detection, with each distinct cycle reported once with its path.
+    At write time, only cycles created by the new edge are reported.
+  - Semester number must be a whole number in `1..programme.totalSemesters`.
+- New issue kinds: `duplicate_reference`, `invalid_reference_type`, `out_of_range`, `circular_prerequisite`.
+- No schema change and no migration. Data from 0.1.0 and 0.1.1 opens unchanged.
+- Tests: 33 new unit and integration tests (96 in total). End-to-end tests now seed a valid
+  25-record curriculum into real browser IndexedDB, confirm there are no false positives, then
+  inject and detect one violation per rule.
+- Docs: table inventory and an explanation of the "30 vs 28 tables" figure, in `docs/ARCHITECTURE.md`.
+
+> Correction: the Phase 1 summary reported "30 tables". The schema has always had **28** tables
+> (git history confirms it). Nothing was removed or migrated.
+
 ## 0.1.1: Phase 1.1 data integrity patch
 
 - Integrity: foreign-key checks for `studySessions.academyId`, `.programmeId` and `.semesterId`,
