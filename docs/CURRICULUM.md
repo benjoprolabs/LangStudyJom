@@ -385,8 +385,13 @@ released in later content packages.
 
 **Lua Semester 1 checkpoint (course materials 1.4.0):** all four Semester 1 courses of `LUA-PROG` — LUA101, LUA102,
 LUA103 and LUA104 — are fully written (48/48 lectures, 485 verified code units). Details:
-[LUA-SEMESTER-1-CHECKPOINT.md](LUA-SEMESTER-1-CHECKPOINT.md). Semester 2 (LUA111 onwards) and the Luau programme
-apart from LUAU203 1.1 remain structure only.
+[LUA-SEMESTER-1-CHECKPOINT.md](LUA-SEMESTER-1-CHECKPOINT.md).
+
+**Luau Semester 1 checkpoint (course materials 1.8.0):** all four Semester 1 courses of `LUAU-PROG` — LUAU101,
+LUAU102, LUAU103 and LUAU104 — are fully written (48/48 lectures, 483 code units: 372 executed with the Luau VM,
+97 broken examples error-matched, 14 Roblox units compiled only and not run in Roblox Studio). Details:
+[LUAU-SEMESTER-1-CHECKPOINT.md](LUAU-SEMESTER-1-CHECKPOINT.md). Semester 2 of both programmes (LUA111 and LUAU111
+onwards) and the rest of the Luau programme apart from LUAU203 1.1 remain structure only.
 
 <!-- generated:content-status -->
 | Course | Lecture | Title (EN) | Sections | Verified code units: executed (examples + debug variants) / Roblox, compiled only |

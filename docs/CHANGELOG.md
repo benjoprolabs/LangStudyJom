@@ -2,6 +2,12 @@
 
 ## 0.5.7: Milestone 3 — LUAU104 complete; Luau Semester 1 complete (course materials 1.8.0)
 
+- **Luau Semester 1 checkpoint** ([LUAU-SEMESTER-1-CHECKPOINT.md](LUAU-SEMESTER-1-CHECKPOINT.md)): LUAU101–LUAU104 are
+  48/48 with 483 verified code units and no failures. All 48 Lua Semester 1 lectures are unchanged since the Lua
+  checkpoint (empty `git diff 57b6135`), and student progress and notes survive the update (e2e integrity check).
+  CURRICULUM.md, ROADMAP.md (97 of 612 Lua/Luau lectures written) and README.md updated. Milestone 3 lecture
+  content is complete; Milestone 4 has not been started.
+
 - **LUAU104 1.1–4.3 written (12 lectures):** 1-based arrays, `#` and holes, `table.create`; `table.insert`,
   `table.remove`, `table.find` and `table.clear`, removing while iterating (backwards), swap-and-pop and head-index
   queues; `table.sort` (in place, no return value, not stable) with tie-breakers; dictionaries, key identity, sets;

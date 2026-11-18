@@ -6,9 +6,11 @@ a coding laboratory, study tracking, GPA and a project portfolio.
 
 Bahasa Melayu is the primary language and English the secondary one. Programming terms stay in English.
 
-> **Status: Milestone 3 (Lua & Luau Semester 1 lecture content) is in progress.** Done so far: interactive code
-> examples (Run for Lua 5.4 in the browser, Explain, error & debugging variants, execution status) and all 12 lectures
-> of **Lua Semester 1** (LUA101–LUA104, 48 lectures). Lectures not yet written are labelled "Incomplete · structure only".
+> **Status: Milestone 3 (Lua & Luau Semester 1 lecture content): lecture content complete, awaiting approval.**
+> Done: interactive code examples (Run for Lua 5.4 in the browser, Explain, error & debugging variants, execution
+> status), **Lua Semester 1** (LUA101–LUA104, 48 lectures) and **Luau Semester 1** (LUAU101–LUAU104, 48 lectures;
+> Luau examples executed with the Luau VM, Roblox examples compiled only, nothing claimed as tested in Roblox Studio).
+> See [docs/LUAU-SEMESTER-1-CHECKPOINT.md](docs/LUAU-SEMESTER-1-CHECKPOINT.md). Lectures not yet written are labelled "Incomplete · structure only".
 > See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Run it
