@@ -452,10 +452,22 @@ apart from LUAU203 1.1 remain structure only.
 | LUAU101 | 4.1 | Syntax errors and runtime errors | 4 generated + 24 authored | 10 / 0 |
 | LUAU101 | 4.2 | Reading stack traces | 4 generated + 24 authored | 9 / 1 |
 | LUAU101 | 4.3 | Debugging strategies for beginners | 4 generated + 24 authored | 9 / 1 |
+| LUAU102 | 1.1 | local and global in Luau | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 1.2 | Assignment and multiple assignment | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 1.3 | Roblox-style naming conventions | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 2.1 | nil, boolean, number and string | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 2.2 | type() versus typeof() | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 2.3 | vector and buffer: an overview | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 3.1 | Arithmetic operators and floor division (//) | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 3.2 | Comparison and logical operators | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 3.3 | Compound assignment: +=, -=, *= and ..= | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 4.1 | Backtick string interpolation | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 4.2 | if-expressions | 4 generated + 24 authored | 10 / 0 |
+| LUAU102 | 4.3 | string.format and type conversion | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
 | LUA-PROG | 288 | 48 | 240 |
-| LUAU-PROG | 324 | 13 | 311 |
+| LUAU-PROG | 324 | 25 | 299 |
 <!-- /generated:content-status -->

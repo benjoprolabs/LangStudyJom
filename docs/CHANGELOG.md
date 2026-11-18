@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.5: Milestone 3 — LUAU102 complete (course materials 1.6.0)
+
+- **LUAU102 1.1–4.3 written (12 lectures):** local and global (per-script environments and `_G` in Roblox),
+  multiple assignment, Roblox naming conventions, the basic types and Luau number printing, `type()` versus
+  `typeof()`, `vector` and `buffer`, arithmetic and `//` (division by zero gives `inf`, not an error),
+  comparison and logical operators, compound assignment, backtick interpolation, if-expressions, and
+  `string.format` and type conversion. Luau language only: every example is executed with the Luau 0.663 VM.
+- Luau-specific behaviour taught from measurement: `%s` rejects `nil`/booleans while `%*` formats anything,
+  `%d` truncates fractions, `{{` and empty `{}` in interpolation are syntax errors with Luau's own hints, `t[f()] += 1`
+  evaluates `f` once, and `not a > b` compares a boolean.
+- 7 new Click-to-Learn terms (compound assignment, string interpolation, if-expression, typeof, vector, buffer,
+  naming convention) — 69 in total.
+- Verification corrected my predictions: a multi-return call that is not last in `print` is truncated
+  (`toRowCol` example), and a fixed-seed shuffle example was changed to a seed that visibly shuffles.
+
 ## 0.5.4: Milestone 3 — LUAU101 complete (course materials 1.5.0)
 
 - **LUAU101 1.1–4.3 written (12 lectures):** Lua 5.1 → Luau; what Luau adds and removes (sandbox); the Luau language

@@ -10,7 +10,7 @@ import { join } from 'node:path';
 import { createLogger, horizontalOverflow, launch, startServer, tempDir } from './e2e-lib.mjs';
 
 /** Luau Semester 1 courses whose lectures are written (grows as each course is completed). */
-const LUAU_WRITTEN = ['LUAU101'];
+const LUAU_WRITTEN = ['LUAU101', 'LUAU102'];
 const { log, count } = createLogger();
 const consoleErrors = [];
 
@@ -83,11 +83,11 @@ async function main() {
     await installPackage(page, 'Lua & Luau — Milestone 2', /Pakej dipasang: \d+ rekod dicipta\./);
     log('M1 then M2 installed through the UI; the M2 plan refreshes and reuses Faculty 01 + both academies (957 new, 3 reused)');
 
-    await contentCard.getByText('Akan ditulis: 61 kuliah dan 62 istilah glosari.').waitFor();
+    await contentCard.getByText('Akan ditulis: 73 kuliah dan 69 istilah glosari.').waitFor();
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
-    await page.getByText('Bahan kursus dipasang: 123 item ditulis.').waitFor();
+    await page.getByText('Bahan kursus dipasang: 142 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials 1.5.0 installed (61 lectures: LUA101–LUA104 and LUAU101 ×12 each, LUAU203 1.1; 62 glossary terms); package then reports up to date');
+    log('Course materials 1.6.0 installed (73 lectures: LUA101–LUA104 and LUAU101–LUAU102 ×12 each, LUAU203 1.1; 69 glossary terms); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -448,7 +448,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.5\.0/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.6\.0/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
