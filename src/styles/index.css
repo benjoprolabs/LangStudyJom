@@ -80,6 +80,30 @@
   }
 }
 
+/* Touch screens (phones, tablets): larger tap targets, without changing the desktop layout.
+   Inline glossary terms inside running text keep their text height so paragraphs still read normally. */
+@media (pointer: coarse) {
+  button, [role="button"], [role="radio"], [role="tab"], summary, select {
+    min-height: 44px;
+  }
+  button[aria-label], [role="button"][aria-label] {
+    min-width: 44px;
+  }
+  :where(p, li, dd, td, h1, h2, h3, h4) button[data-term] {
+    min-height: 0;
+    min-width: 0;
+  }
+  input[type="checkbox"], input[type="radio"] {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+  /* Small text links inside tables and lists of records. */
+  td a, th a {
+    display: inline-block;
+    padding-block: 0.625rem;
+  }
+}
+
 /* Syntax highlighting (screen + print) */
 .tok-comment { color: rgb(var(--muted)); font-style: italic; }
 .tok-string { color: rgb(var(--success)); }

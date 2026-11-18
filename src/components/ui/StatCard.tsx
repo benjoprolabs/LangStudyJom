@@ -8,7 +8,7 @@ export function StatCard({ label, value, hint, icon }: { label: string; value: R
       <div className="min-w-0">
         <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
         <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
-        {hint && <p className="mt-0.5 text-xs text-muted">{hint}</p>}
+        {hint && <div className="mt-0.5 text-xs text-muted">{hint}</div>}
       </div>
     </Card>
   );
