@@ -11,8 +11,24 @@ const KEY_RE = /^[a-z0-9-]+$/;
 /** Sections that must contain at least one code / explanation block. */
 const CODE_SECTIONS = ['code_demonstration', 'complete_examples'] as const;
 
-/** Roblox engine identifiers that must never appear in standard-Lua code. */
-const ROBLOX_IDENTIFIERS = /\b(game|workspace|script|Instance|Players|Enum|task|Vector3|CFrame|RemoteEvent|DataStoreService)\b/;
+/**
+ * Roblox engine APIs that must never be USED in standard-Lua (or plain-Luau) code. Matched against code
+ * with comments and string literals removed, so a guessing game may print "game over" and a comment
+ * may mention a script; what is rejected is an API in use (`game:GetService`, `task.wait`, `Instance.new` …).
+ */
+const ROBLOX_API = /\b(game|workspace|script|Instance|Enum|task|Vector3|Vector2|CFrame|Color3|BrickColor|UDim2|TweenInfo)\s*[.:]|\b(Players|RemoteEvent|RemoteFunction|DataStoreService|RunService|ReplicatedStorage|ServerScriptService|RBXScriptSignal|RBXScriptConnection|BasePart|Humanoid)\b/;
+
+/** Removes comments and string literals from Lua/Luau source (for API checks only). */
+export function stripLiterals(code: string, keepBackticks = false): string {
+  const stripped = code
+    .replace(/--\[(=*)\[[\s\S]*?\]\1\]/g, ' ')
+    .replace(/\[(=*)\[[\s\S]*?\]\1\]/g, '""')
+    .replace(/"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'/g, '""')
+    .replace(/--[^\n]*/g, ' ');
+  return keepBackticks ? stripped : stripped.replace(/`(?:\\.|[^`\\])*`/g, '""');
+}
+
+const usesRobloxApi = (code: string) => ROBLOX_API.test(stripLiterals(code));
 /** Luau-only syntax that standard Lua does not accept. */
 const LUAU_ONLY_SYNTAX = /(\+=|-=|\*=|\/=|\.\.=|`[^`]*\{[^}]*\}[^`]*`|\bcontinue\b|:\s*(number|string|boolean)\b|\btype\s+\w+\s*=)/;
 
@@ -82,17 +98,17 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
         if (block.runtime !== 'roblox' && block.expectedOutput === undefined) errors.push(where(`${cw}: runnable code needs expectedOutput`));
         if (pathway === 'lua') {
           if (block.language !== 'lua') errors.push(where(`${cw}: Lua lecture contains ${block.language} code`));
-          if (ROBLOX_IDENTIFIERS.test(block.code)) errors.push(where(`${cw}: Lua code uses a Roblox identifier`));
-          if (LUAU_ONLY_SYNTAX.test(block.code)) errors.push(where(`${cw}: Lua code uses Luau-only syntax`));
+          if (usesRobloxApi(block.code)) errors.push(where(`${cw}: Lua code uses a Roblox identifier`));
+          if (LUAU_ONLY_SYNTAX.test(stripLiterals(block.code, true))) errors.push(where(`${cw}: Lua code uses Luau-only syntax`));
         }
-        if (block.runtime === 'luau' && ROBLOX_IDENTIFIERS.test(block.code)) errors.push(where(`${cw}: code marked "luau" (runs outside Roblox) uses a Roblox API`));
+        if (block.runtime === 'luau' && usesRobloxApi(block.code)) errors.push(where(`${cw}: code marked "luau" (runs outside Roblox) uses a Roblox API`));
         if (block.input !== undefined && block.runtime !== 'lua54') errors.push(where(`${cw}: input (stdin) is only supported for lua54 examples`));
         if (block.debug) {
           const d = block.debug;
           text(`${cw} debug explanation`, d.explanation);
           if (!d.code.trim() || d.code === block.code) errors.push(where(`${cw}: debug variant must be a changed copy of the code`));
           if (!d.error.trim() || d.error.includes('\n')) errors.push(where(`${cw}: debug error must be the single first line of the error message`));
-          if (pathway === 'lua' && (ROBLOX_IDENTIFIERS.test(d.code) || LUAU_ONLY_SYNTAX.test(d.code))) errors.push(where(`${cw}: debug variant breaks the Lua/Luau separation`));
+          if (pathway === 'lua' && (usesRobloxApi(d.code) || LUAU_ONLY_SYNTAX.test(stripLiterals(d.code, true)))) errors.push(where(`${cw}: debug variant breaks the Lua/Luau separation`));
         }
         return;
       }

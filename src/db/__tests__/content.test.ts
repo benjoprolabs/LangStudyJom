@@ -79,7 +79,13 @@ describe('content package', () => {
   });
 });
 
-describe('reference lectures LUA102 1.1 and LUAU203 1.1 (M2 acceptance condition 3)', () => {
+describe('Professional Programming Education Standard — every written lecture', () => {
+  const written = CONTENT_PACKAGES.flatMap((pkg) => pkg.lectures.map((l) => [`${l.courseCode} ${l.module}.${l.lecture}`, pkg, l] as const));
+
+  it('the reference lectures LUA102 1.1 and LUAU203 1.1 are preserved (M2 acceptance condition 2)', () => {
+    expect(written.map(([name]) => name)).toEqual(expect.arrayContaining(['LUA102 1.1', 'LUAU203 1.1']));
+  });
+
   /** Words of prose in a section's paragraphs, callouts and list items (one language). */
   const words = (blocks: ContentPackage['lectures'][number]['sections'][number]['blocks'], lang: 'ms' | 'en') => {
     const texts: string[] = [];
@@ -90,8 +96,7 @@ describe('reference lectures LUA102 1.1 and LUAU203 1.1 (M2 acceptance condition
     return texts.reduce((n, t) => n + inlineToPlain(t).split(/\s+/).filter(Boolean).length, 0);
   };
 
-  it.each(['LUA102', 'LUAU203'])('%s 1.1 is preserved and meets the Professional Programming Education Standard', (code) => {
-    const l = lectureOf(LUA_LUAU_CONTENT, code);
+  it.each(written)('%s meets the standard', (_name, pkg, l) => {
     const section = (kind: string) => l.sections.find((s) => s.kind === kind)!;
     // All 24 authored sections, in order, none skipped (the two optional ones are written too).
     expect(l.sections.map((s) => s.kind)).toEqual(AUTHORED_SECTIONS);
@@ -103,13 +108,41 @@ describe('reference lectures LUA102 1.1 and LUAU203 1.1 (M2 acceptance condition
     expect(code_.length).toBeGreaterThanOrEqual(5);
     // Line-by-line: every explained example covers all of its meaningful lines (validator rule).
     expect(section('line_by_line').blocks.filter((b) => b.type === 'explain').length).toBeGreaterThanOrEqual(2);
-    expect(validateContentPackage({ ...LUA_LUAU_CONTENT, lectures: [l] })).toEqual([]);
+    expect(validateContentPackage({ ...pkg, lectures: [l] })).toEqual([]);
     // Debugging, practical examples, poor-vs-improved, references.
     expect(words(section('debugging').blocks, 'en')).toBeGreaterThanOrEqual(40);
     expect(section('practical_demonstration').blocks.length + section('mini_project').blocks.length).toBeGreaterThanOrEqual(2);
     expect(section('software_engineering').blocks.some((b) => b.type === 'code')).toBe(true);
     const refs = section('references').blocks.flatMap((b) => (b.type === 'links' ? b.items : []));
     expect(refs.length).toBeGreaterThanOrEqual(4);
+  });
+});
+
+describe('Lua/Roblox separation checks real code, not strings or comments', () => {
+  const withCode = (code: string) => {
+    const p = clone();
+    (lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { code: string }).code = code;
+    return validateContentPackage(p).filter((e) => e.includes('Roblox') || e.includes('Luau-only'));
+  };
+
+  it.each([
+    ['a string that says "game over"', 'print("game over")'],
+    ['a comment that mentions a script', '-- this script counts down\nprint(3)'],
+    ['a long string with task.wait', 'local doc = [[task.wait and game:GetService are Roblox-only]]\nprint(#doc)'],
+    ['an identifier merely named task or game', 'local task = "homework"\nlocal game = 1\nprint(task, game)'],
+    ['a string with += inside', 'print("score += 1 is Luau syntax")'],
+  ])('accepts %s', (_name, code) => {
+    expect(withCode(code)).toEqual([]);
+  });
+
+  it.each([
+    ['game:GetService', 'local Players = game:GetService("Players")'],
+    ['task.wait', 'task.wait(1)'],
+    ['workspace access', 'print(workspace.Gravity)'],
+    ['+= compound assignment', 'local s = 0\ns += 1'],
+    ['backtick interpolation', 'local n = 1\nprint(`n = {n}`)'],
+  ])('rejects %s', (_name, code) => {
+    expect(withCode(code).length).toBeGreaterThan(0);
   });
 });
 
@@ -123,6 +156,14 @@ describe('quality rules reject defective materials (Part L)', () => {
     ['Roblox API in Lua code', (p) => {
       const b = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { code: string };
       b.code += '\nlocal Players = game:GetService("Players")';
+    }, 'Lua code uses a Roblox identifier'],
+    ['a Roblox API in a Lua debug variant', (p) => {
+      const b = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { debug: { code: string } };
+      b.debug.code += '\ntask.wait(1)';
+    }, 'debug variant breaks the Lua/Luau separation'],
+    ['Instance.new in Lua code', (p) => {
+      const b = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { code: string };
+      b.code += '\nlocal part = Instance.new("Part")';
     }, 'Lua code uses a Roblox identifier'],
     ['Luau-only syntax in Lua code', (p) => {
       const b = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { code: string };
