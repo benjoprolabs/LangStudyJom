@@ -41,7 +41,7 @@ const meta = { app: '0.4.0', date: '2026-11-18' };
 let db: QhazeDatabase;
 let studentId: string;
 let lua102: Lecture; // LUA102 1.1 — full content
-let lua102b: Lecture; // LUA102 1.2 — structure only
+let structureOnly: Lecture; // LUA103 1.1 — not written yet (structure only)
 let luau203: Lecture; // LUAU203 1.1 — full content
 
 async function lectureAt(code: string, m: number, l: number) {
@@ -57,7 +57,7 @@ beforeAll(async () => {
   await installPackage(db, LUA_LUAU_M2);
   await installContentPackage(db, LUA_LUAU_CONTENT);
   lua102 = await lectureAt('LUA102', 1, 1);
-  lua102b = await lectureAt('LUA102', 1, 2);
+  structureOnly = await lectureAt('LUA103', 1, 1);
   luau203 = await lectureAt('LUAU203', 1, 1);
 }, 60_000);
 
@@ -82,10 +82,10 @@ describe('reading progress', () => {
   });
 
   it('a structure-only lecture can never be completed and records no reading progress', async () => {
-    expect(lua102b.sections).toEqual([]);
-    await expect(completeLecture(db, studentId, lua102b.id)).rejects.toBeInstanceOf(IncompleteLectureError);
-    await expect(recordReading(db, studentId, lua102b.id, 100, 1)).rejects.toBeInstanceOf(IncompleteLectureError);
-    expect(await progressOf(lua102b.id)).toBeUndefined();
+    expect(structureOnly.sections).toEqual([]);
+    await expect(completeLecture(db, studentId, structureOnly.id)).rejects.toBeInstanceOf(IncompleteLectureError);
+    await expect(recordReading(db, studentId, structureOnly.id, 100, 1)).rejects.toBeInstanceOf(IncompleteLectureError);
+    expect(await progressOf(structureOnly.id)).toBeUndefined();
     // Across the whole installed curriculum, completed progress only exists for written lectures.
     const lectures = new Map((await db.lectures.toArray()).map((l) => [l.id, l]));
     for (const p of await db.progress.toArray()) if (p.status === 'completed') expect(lectures.get(p.entityId)!.sections.length).toBeGreaterThan(0);
@@ -142,11 +142,16 @@ describe('course-material exports (Part H)', () => {
   });
 
   it('course and module Markdown include structure-only lectures honestly', async () => {
-    const course = (await db.courses.where('code').equals('LUA102').first())!;
+    // LUA102 is fully written; LUA103 is not written yet (structure only).
+    const written = (await loadCourseBundle(db, (await db.courses.where('code').equals('LUA102').first())!.id))!;
+    const writtenMd = courseMarkdown(written, 'en', await loadGlossary(db), labels, meta);
+    expect(writtenMd.match(/^### \d\.\d /gm)).toHaveLength(12);
+    expect(writtenMd).not.toContain('_NO CONTENT_');
+    const course = (await db.courses.where('code').equals('LUA103').first())!;
     const bundle = (await loadCourseBundle(db, course.id))!;
     const md = courseMarkdown(bundle, 'en', await loadGlossary(db), labels, meta);
     expect(md.match(/^### \d\.\d /gm)).toHaveLength(12);
-    expect(md.match(/_NO CONTENT_/g)).toHaveLength(11);
+    expect(md.match(/_NO CONTENT_/g)).toHaveLength(12);
     const one = courseMarkdown(bundle, 'en', await loadGlossary(db), labels, meta, bundle.modules[1]!.module.id);
     expect(one.match(/^### \d\.\d /gm)).toHaveLength(3);
   });

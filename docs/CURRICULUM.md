@@ -370,6 +370,11 @@ execution-status badge).
   through the same browser harness and requires the reference interpreter’s output and errors. Example code is
   written so that both Lua patch releases agree (for example, a failing call is kept on one line, because
   5.4.6 and 5.4.8 attribute multi-line calls to different lines). **Luau has no browser runner**.
+- **Known browser-runtime limitation (wasmoon, Lua 5.4.6):** integer division or modulo by zero (`//`, `%`)
+  is always reported on **line 1**, whereas Lua 5.4.8 reports the real line. Examples that demonstrate this
+  error therefore place it on line 1, and the equivalence test fails if any example would show a different
+  result in the browser. The browser harness captures `io.stdout:write` by wrapping the file’s methods, so
+  `io.stdout` remains real userdata, as in the reference interpreter.
 
 ### Content status
 
@@ -395,10 +400,21 @@ released in later content packages.
 | LUA101 | 4.1 | print(), string literals and escape sequences | 4 generated + 24 authored | 10 / 0 |
 | LUA101 | 4.2 | io.read() for user input | 4 generated + 24 authored | 10 / 0 |
 | LUA101 | 4.3 | Reading error messages and stack tracebacks | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 1.2 | Multiple assignment and swapping values | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 1.3 | Naming conventions and reserved words | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 2.1 | nil, boolean and truthiness | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 2.2 | number: the integer and float subtypes (5.3+) | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 2.3 | string, table, function, userdata and thread: an overview | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 3.1 | Arithmetic operators: +, -, *, /, //, % and ^ | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 3.2 | Relational (==, ~=) and logical (and, or, not) operators | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 3.3 | Concatenation (..), length (#) and operator precedence | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 4.1 | tonumber(), tostring() and automatic coercion | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 4.2 | Calculator design: requirements and program flow | 4 generated + 24 authored | 10 / 0 |
+| LUA102 | 4.3 | Building and testing the calculator | 4 generated + 24 authored | 9 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
-| LUA-PROG | 288 | 13 | 275 |
+| LUA-PROG | 288 | 24 | 264 |
 | LUAU-PROG | 324 | 1 | 323 |
 <!-- /generated:content-status -->

@@ -5,6 +5,7 @@ import type { LuaEngine } from 'wasmoon';
  * the reference runner used by `npm run verify:code`:
  * - chunk name "=example" (errors read "example:3: …");
  * - print / io.write / io.stdout:write captured (io.write formats floats with "%.14g", like C Lua);
+ *   io.stdout stays the real file userdata — only its write/flush methods are wrapped;
  * - io.read reads the example's `input` ("l", "L", "n", "a" and byte counts);
  * - os.exit is disabled; output is capped so a runaway loop cannot exhaust memory.
  * Tests run every lua54 example and debug variant through this harness and compare with the
@@ -34,13 +35,20 @@ local function writeAll(...)
     else error("bad argument #" .. i .. " to 'write' (string expected, got " .. type(v) .. ")", 2) end
   end
 end
-local stdout = setmetatable({}, { __index = {
-  write = function(self, ...) writeAll(...) return self end,
-  flush = function(self) return self end,
-  close = function() return true end,
-}, __name = 'FILE*' })
+-- Capture io.stdout:write without replacing io.stdout, so it stays a real file userdata
+-- (type(io.stdout) == "userdata", io.type(io.stdout) == "file"), exactly as in the reference runner.
+local stdout = io.stdout
+local fileMethods = getmetatable(stdout).__index
+local realWrite, realFlush = fileMethods.write, fileMethods.flush
+fileMethods.write = function(f, ...)
+  if f == stdout then writeAll(...) return f end
+  return realWrite(f, ...)
+end
+fileMethods.flush = function(f)
+  if f == stdout then return f end
+  return realFlush(f)
+end
 io.write = function(...) writeAll(...) return stdout end
-io.stdout = stdout
 local pos = 1
 local function readOne(fmt)
   if type(fmt) == 'number' then

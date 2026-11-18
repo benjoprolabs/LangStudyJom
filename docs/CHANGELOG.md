@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.5.1: Milestone 3 — LUA102 complete (course materials 1.2.0)
+
+- **LUA102 1.2–4.3 written (11 lectures; LUA102 is now 12/12):** multiple assignment, naming and reserved
+  words, nil/boolean/truthiness, integer and float subtypes, the other five types, arithmetic, relational and
+  logical operators, concatenation/length/precedence, conversion and coercion, and Project 1 (calculator design,
+  then the built and tested calculator). All 24 sections in Malay and English; 7–9 executed examples and 2–3
+  debug variants per lecture, every one verified by execution with Lua 5.4.8.
+- 10 new Click-to-Learn terms (multiple assignment, reserved word, nil, truthiness, number subtypes, userdata,
+  operator, operator precedence, short-circuit evaluation, coercion) — 38 in total.
+- **Browser runner fix:** `io.stdout` stayed a table inside the in-browser harness, so `type(io.stdout)` would
+  have printed `table` instead of `userdata`; output is now captured by wrapping the real file’s methods.
+- Found by the browser-equivalence test: wasmoon (Lua 5.4.6) reports integer division-by-zero errors on line 1;
+  the two affected debug variants place that error on line 1 so the browser shows the documented result.
+- Verification corrected **four** of my predicted results before release (Lua 5.4 says `attempt to divide by
+  zero`, `math.modf` returns an integer part, `a >= b` is reported as `number with string`, and a call that is
+  last in an argument list keeps all its return values). Lectures document the real behaviour.
+- New permanent checks: no lecture defined twice; no code example repeated verbatim anywhere in the materials.
+- Tests that assumed LUA102 1.2 was unwritten now use LUA103 1.1. LUA101, the reference lectures, schema,
+  curriculum and student-data code are unchanged.
+
 ## 0.5.0: Milestone 3 (in progress) — code-example infrastructure and LUA101
 
 **Code examples (Milestone 3, Part A)**

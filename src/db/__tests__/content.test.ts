@@ -82,6 +82,29 @@ describe('content package', () => {
 describe('Professional Programming Education Standard — every written lecture', () => {
   const written = CONTENT_PACKAGES.flatMap((pkg) => pkg.lectures.map((l) => [`${l.courseCode} ${l.module}.${l.lecture}`, pkg, l] as const));
 
+  it('no lecture is defined twice and every lecture maps to a real course/module/lecture number', () => {
+    const ids = written.map(([name]) => name);
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const [name, , l] of written) {
+      expect(allCourses.find((c) => c.code === l.courseCode)?.modules[l.module - 1]?.lectures[l.lecture - 1], name).toBeDefined();
+    }
+  });
+
+  it('no code example is repeated verbatim across the course materials (debug variants excluded)', () => {
+    const seen = new Map<string, string>();
+    const duplicates: string[] = [];
+    for (const pkg of CONTENT_PACKAGES) {
+      for (const unit of collectCodeExamples(pkg)) {
+        if (unit.expectedError !== undefined) continue;
+        const body = unit.code.replace(/\s+/g, ' ').trim();
+        const first = seen.get(body);
+        if (first) duplicates.push(`${unit.key} repeats ${first}`);
+        else seen.set(body, unit.key);
+      }
+    }
+    expect(duplicates).toEqual([]);
+  });
+
   it('the reference lectures LUA102 1.1 and LUAU203 1.1 are preserved (M2 acceptance condition 2)', () => {
     expect(written.map(([name]) => name)).toEqual(expect.arrayContaining(['LUA102 1.1', 'LUAU203 1.1']));
   });
