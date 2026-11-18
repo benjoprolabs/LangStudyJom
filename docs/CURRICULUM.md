@@ -383,6 +383,11 @@ Only the lectures below have full content (24 authored sections plus the 4 gener
 complete and records no reading progress (enforced in `repositories/learning.ts`). Writing the remaining lectures is ongoing content work,
 released in later content packages.
 
+**Lua Semester 1 checkpoint (course materials 1.4.0):** all four Semester 1 courses of `LUA-PROG` — LUA101, LUA102,
+LUA103 and LUA104 — are fully written (48/48 lectures, 485 verified code units). Details:
+[LUA-SEMESTER-1-CHECKPOINT.md](LUA-SEMESTER-1-CHECKPOINT.md). Semester 2 (LUA111 onwards) and the Luau programme
+apart from LUAU203 1.1 remain structure only.
+
 <!-- generated:content-status -->
 | Course | Lecture | Title (EN) | Sections | Verified code units: executed (examples + debug variants) / Roblox, compiled only |
 |---|---|---|---|---|
@@ -423,10 +428,22 @@ released in later content packages.
 | LUA103 | 4.1 | Requirements, design and pseudocode | 4 generated + 24 authored | 10 / 0 |
 | LUA103 | 4.2 | math.random, math.randomseed and input validation | 4 generated + 24 authored | 12 / 0 |
 | LUA103 | 4.3 | Building, testing and improving the game | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 1.1 | function, parameters and return | 4 generated + 24 authored | 11 / 0 |
+| LUA104 | 1.2 | Functions as first-class values | 4 generated + 24 authored | 11 / 0 |
+| LUA104 | 1.3 | More or fewer arguments than parameters | 4 generated + 24 authored | 11 / 0 |
+| LUA104 | 2.1 | return a, b and multiple assignment | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 2.2 | Value adjustment rules in expressions | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 2.3 | table.unpack and the (nil, message) error pattern | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 3.1 | ... and select("#", ...) | 4 generated + 24 authored | 11 / 0 |
+| LUA104 | 3.2 | table.pack and the n field | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 3.3 | Designing flexible function APIs | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 4.1 | Block scope and do … end | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 4.2 | local function and recursion | 4 generated + 24 authored | 10 / 0 |
+| LUA104 | 4.3 | An introduction to upvalues | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
-| LUA-PROG | 288 | 36 | 252 |
+| LUA-PROG | 288 | 48 | 240 |
 | LUAU-PROG | 324 | 1 | 323 |
 <!-- /generated:content-status -->

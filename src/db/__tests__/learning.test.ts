@@ -41,7 +41,7 @@ const meta = { app: '0.4.0', date: '2026-11-18' };
 let db: QhazeDatabase;
 let studentId: string;
 let lua102: Lecture; // LUA102 1.1 — full content
-let structureOnly: Lecture; // LUA104 1.1 — not written yet (structure only)
+let structureOnly: Lecture; // LUA111 1.1 — not written yet (structure only)
 let luau203: Lecture; // LUAU203 1.1 — full content
 
 async function lectureAt(code: string, m: number, l: number) {
@@ -57,7 +57,7 @@ beforeAll(async () => {
   await installPackage(db, LUA_LUAU_M2);
   await installContentPackage(db, LUA_LUAU_CONTENT);
   lua102 = await lectureAt('LUA102', 1, 1);
-  structureOnly = await lectureAt('LUA104', 1, 1);
+  structureOnly = await lectureAt('LUA111', 1, 1);
   luau203 = await lectureAt('LUAU203', 1, 1);
 }, 60_000);
 
@@ -142,14 +142,14 @@ describe('course-material exports (Part H)', () => {
   });
 
   it('course and module Markdown include structure-only lectures honestly', async () => {
-    // LUA102 and LUA103 are fully written; LUA104 is not written yet (structure only).
-    for (const code of ['LUA102', 'LUA103']) {
+    // Lua Semester 1 (LUA101–LUA104) is fully written; LUA111 is not written yet (structure only).
+    for (const code of ['LUA101', 'LUA102', 'LUA103', 'LUA104']) {
       const written = (await loadCourseBundle(db, (await db.courses.where('code').equals(code).first())!.id))!;
       const writtenMd = courseMarkdown(written, 'en', await loadGlossary(db), labels, meta);
       expect(writtenMd.match(/^### \d\.\d /gm)).toHaveLength(12);
       expect(writtenMd).not.toContain('_NO CONTENT_');
     }
-    const course = (await db.courses.where('code').equals('LUA104').first())!;
+    const course = (await db.courses.where('code').equals('LUA111').first())!;
     const bundle = (await loadCourseBundle(db, course.id))!;
     const md = courseMarkdown(bundle, 'en', await loadGlossary(db), labels, meta);
     expect(md.match(/^### \d\.\d /gm)).toHaveLength(12);

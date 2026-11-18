@@ -9,7 +9,7 @@
 | 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Complete |
 | 2-S1 | Curriculum seeding M1: 7 faculties, 15 Faculty 01 academies, 8-semester Python programme ([CURRICULUM.md](CURRICULUM.md)) | ✅ Complete |
 | 2-S2 | Curriculum seeding M2: separate Lua (6 sem.) and Luau/Roblox (7 sem.) programmes, plus the Professional Programming Education Standard (template, content packages, glossary, executed code verification, Library, Lecture Room, print/Markdown/ZIP) | ✅ **Accepted** as a curriculum-structure and seeding milestone (not as completion of lecture content). See the acceptance record below |
-| 3-C1 | **Milestone 3 — Lua & Luau Semester 1 lecture content** (no new structure). Part A: code-example infrastructure (Run for Lua 5.4 in the browser, Explain This Code, error & debugging variants, execution-status manifest). Part B: lectures | **In progress.** Done: Part A; **LUA101 (12/12)**; **LUA102 (12/12)**; **LUA103 (12/12)**. Remaining: LUA104 (12), then LUAU101–LUAU104 (48) |
+| 3-C1 | **Milestone 3 — Lua & Luau Semester 1 lecture content** (no new structure). Part A: code-example infrastructure (Run for Lua 5.4 in the browser, Explain This Code, error & debugging variants, execution-status manifest). Part B: lectures | **In progress.** Done: Part A; **Lua Semester 1 complete — LUA101, LUA102, LUA103, LUA104 (48/48)**; checkpoint recorded in [LUA-SEMESTER-1-CHECKPOINT.md](LUA-SEMESTER-1-CHECKPOINT.md). Remaining: LUAU101–LUAU104 (48), awaiting approval |
 | M4+ | Further milestones | Not started (Milestone 4 awaits Milestone 3 approval) |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | **Partly delivered in 2-S2**: Library, Lecture Room, lecture progress, notes and bookmarks. Still to come: Notes & Bookmarks page, Python content, text highlighting |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | **Delivered in 2-S2** (PDF via the browser print dialog) |
@@ -43,7 +43,7 @@ Status values are literal. "Done" means implemented **and** tested; nothing belo
 | Requirement | Status |
 |---|---|
 | Full university-style Lecture Engine | **Partial.** The 28-section reader, Library and print view are done. The Notes & Bookmarks page and Python content are not |
-| Complete lecture content | **In progress (Milestone 3).** Lua/Luau: 37 of 612 lectures written (LUA101, LUA102 and LUA103 complete, LUAU203 1.1). Python: 0 of 372. Remaining lectures ship in later content packages and stay labelled incomplete until then |
+| Complete lecture content | **In progress (Milestone 3).** Lua/Luau: 49 of 612 lectures written (Lua Semester 1 — LUA101–LUA104 — complete, LUAU203 1.1). Python: 0 of 372. Remaining lectures ship in later content packages and stay labelled incomplete until then |
 | Code-first teaching | Done for every written lecture (≥5 executed examples each, ≥2 verified debug variants); enforced by the validator and a per-lecture compliance test |
 | Line-by-line code explanations | Done for every written lecture: every example has an explanation covering every meaningful line (validator rule), shown inline with **Explain this code**; line numbers in the reader |
 | Click-to-Learn glossary | Done: 16 terms with panel, related concepts and lectures, bookmarking. Must grow with each content release |

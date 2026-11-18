@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.5.3: Milestone 3 — LUA104 complete; Lua Semester 1 checkpoint (course materials 1.4.0)
+
+- **LUA104 1.1–4.3 written (12 lectures; LUA104 is now 12/12):** function definitions, parameters and `return`;
+  functions as first-class values (higher-order functions, `table.sort` comparators, dispatch tables); more or
+  fewer arguments than parameters (defaults, the boolean `or` trap, `error(msg, 2)`, options tables); multiple
+  return values; the value-adjustment rule (including the `tonumber(s:match(…))` base bug); `table.unpack` and the
+  `nil, message` pattern; varargs with `select`; `table.pack` and `n`; designing function APIs (overloading by
+  `type`, factories); block scope and `do … end`; `local function` and recursion (tail calls, memoisation, Tower of
+  Hanoi); upvalues and closures. All 24 sections in Malay and English; 8 executed examples and 2–3 debug variants
+  per lecture (124 code units), each verified by execution with Lua 5.4.8 and reproduced by the browser runner.
+- 8 new Click-to-Learn terms (parameter, first-class function, value adjustment, vararg, block, recursion,
+  upvalue, higher-order function) — 54 in total.
+- **Lua Semester 1 checkpoint:** LUA101–LUA104 = 48/48 lectures, 485 code units (382 executed, 103 debug variants
+  error-matched), 0 failures. See [LUA-SEMESTER-1-CHECKPOINT.md](LUA-SEMESTER-1-CHECKPOINT.md).
+- E2E now opens every lecture of LUA101–LUA104 in the browser (all 24 sections, all unit statuses verified), runs a
+  LUA104 closure example in the browser and completes LUA104 4.3 with earlier progress and notes unchanged.
+- **E2E timing fix:** the "progress unchanged" snapshot for the previously completed lecture is now taken after the
+  reader has finished recording its last-access time (the strict comparison is unchanged; only `lastAccessedAt` /
+  `updatedAt` had been written ~0.8 s after the snapshot).
+- Verification corrected my predictions before release: `math.max()` with no arguments reports `(value expected)`;
+  a "silent" adjustment bug cannot be a debug variant (it raises no error), so the `tonumber` example uses a base
+  that is out of range; one expected output had a tab where two `print` calls produce a newline.
+- Tests that assumed LUA104 was unwritten now use LUA111 1.1. LUA101–LUA103, Luau, the schema and student-data code
+  are unchanged.
+
 ## 0.5.2: Milestone 3 — LUA103 complete (course materials 1.3.0)
 
 - **LUA103 1.1–4.3 written (12 lectures; LUA103 is now 12/12):** `if`/`then`/`end`, `elseif`, the

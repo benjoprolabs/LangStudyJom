@@ -1477,6 +1477,502 @@
    "hash": "11c79031127784",
    "status": "executed"
   },
+  "LUA104 1.1#rect-area": {
+   "hash": "048bc1236e915c",
+   "status": "executed"
+  },
+  "LUA104 1.1#rect-area:debug": {
+   "hash": "095eab4f3a460b",
+   "status": "error-matched"
+  },
+  "LUA104 1.1#early-return": {
+   "hash": "0a2ba375ca8a9e",
+   "status": "executed"
+  },
+  "LUA104 1.1#early-return:debug": {
+   "hash": "1afa68a5702721",
+   "status": "error-matched"
+  },
+  "LUA104 1.1#no-return": {
+   "hash": "1392eb9a35e8d9",
+   "status": "executed"
+  },
+  "LUA104 1.1#area-expression": {
+   "hash": "05cb5855b8b5ec",
+   "status": "executed"
+  },
+  "LUA104 1.1#double-it": {
+   "hash": "1c2e616fd72bc4",
+   "status": "executed"
+  },
+  "LUA104 1.1#double-it:debug": {
+   "hash": "05e670be6a9d85",
+   "status": "error-matched"
+  },
+  "LUA104 1.1#poor-copy-paste": {
+   "hash": "1e0cd6b8e904d1",
+   "status": "executed"
+  },
+  "LUA104 1.1#improved-converter": {
+   "hash": "00f433fc8dfa10",
+   "status": "executed"
+  },
+  "LUA104 1.1#bmi-functions": {
+   "hash": "1a171dcd4f9d9c",
+   "status": "executed"
+  },
+  "LUA104 1.2#function-values": {
+   "hash": "123f6dd28510a5",
+   "status": "executed"
+  },
+  "LUA104 1.2#apply-twice": {
+   "hash": "0f3307d15caeda",
+   "status": "executed"
+  },
+  "LUA104 1.2#apply-twice:debug": {
+   "hash": "00e67832b29b0f",
+   "status": "error-matched"
+  },
+  "LUA104 1.2#sort-comparator": {
+   "hash": "1686805cbace6e",
+   "status": "executed"
+  },
+  "LUA104 1.2#sort-comparator:debug": {
+   "hash": "1020eab8c8adac",
+   "status": "error-matched"
+  },
+  "LUA104 1.2#dispatch-table": {
+   "hash": "101228775d69e0",
+   "status": "executed"
+  },
+  "LUA104 1.2#menu-actions": {
+   "hash": "0b9f3cf0e0def6",
+   "status": "executed"
+  },
+  "LUA104 1.2#menu-actions:debug": {
+   "hash": "0bc56b224af755",
+   "status": "error-matched"
+  },
+  "LUA104 1.2#poor-elseif-ops": {
+   "hash": "14c034452d16d2",
+   "status": "executed"
+  },
+  "LUA104 1.2#improved-op-table": {
+   "hash": "08ff1a20967b2b",
+   "status": "executed"
+  },
+  "LUA104 1.2#filter-map": {
+   "hash": "065b5663c7f327",
+   "status": "executed"
+  },
+  "LUA104 1.3#arg-adjust": {
+   "hash": "1f0dfdcb617dd3",
+   "status": "executed"
+  },
+  "LUA104 1.3#defaults-or": {
+   "hash": "0883fdf8e178fe",
+   "status": "executed"
+  },
+  "LUA104 1.3#defaults-or:debug": {
+   "hash": "0b15412c9df460",
+   "status": "error-matched"
+  },
+  "LUA104 1.3#validate-args": {
+   "hash": "1d714492e7ccf6",
+   "status": "executed"
+  },
+  "LUA104 1.3#validate-args:debug": {
+   "hash": "1ba42b188ade59",
+   "status": "error-matched"
+  },
+  "LUA104 1.3#options-table": {
+   "hash": "13c98bd768c0f2",
+   "status": "executed"
+  },
+  "LUA104 1.3#boolean-default": {
+   "hash": "19fd63087f5670",
+   "status": "executed"
+  },
+  "LUA104 1.3#boolean-default:debug": {
+   "hash": "13861cb124195e",
+   "status": "error-matched"
+  },
+  "LUA104 1.3#poor-or-default": {
+   "hash": "1ba4b4d821b6e1",
+   "status": "executed"
+  },
+  "LUA104 1.3#improved-nil-default": {
+   "hash": "164be9b15d8e0d",
+   "status": "executed"
+  },
+  "LUA104 1.3#log-builder": {
+   "hash": "13e743a70b491c",
+   "status": "executed"
+  },
+  "LUA104 2.1#min-max": {
+   "hash": "135bc0e2dca0bd",
+   "status": "executed"
+  },
+  "LUA104 2.1#div-mod": {
+   "hash": "1d5e835a968153",
+   "status": "executed"
+  },
+  "LUA104 2.1#div-mod:debug": {
+   "hash": "14f14513874746",
+   "status": "error-matched"
+  },
+  "LUA104 2.1#skip-values": {
+   "hash": "1ec561b5640d10",
+   "status": "executed"
+  },
+  "LUA104 2.1#skip-values:debug": {
+   "hash": "11c561fdbc2f15",
+   "status": "error-matched"
+  },
+  "LUA104 2.1#range-table": {
+   "hash": "09ea63c9c92dc8",
+   "status": "executed"
+  },
+  "LUA104 2.1#split-name": {
+   "hash": "1c36a4a510d4d8",
+   "status": "executed"
+  },
+  "LUA104 2.1#poor-two-passes": {
+   "hash": "11c636c4e2f40c",
+   "status": "executed"
+  },
+  "LUA104 2.1#improved-one-pass": {
+   "hash": "017b7dcb676738",
+   "status": "executed"
+  },
+  "LUA104 2.1#score-summary": {
+   "hash": "0d321a13bf650f",
+   "status": "executed"
+  },
+  "LUA104 2.2#adjust-rules": {
+   "hash": "0b45c7ca12cb76",
+   "status": "executed"
+  },
+  "LUA104 2.2#find-results": {
+   "hash": "11bb5deffcfb36",
+   "status": "executed"
+  },
+  "LUA104 2.2#find-results:debug": {
+   "hash": "12f11ac58114be",
+   "status": "error-matched"
+  },
+  "LUA104 2.2#forwarding": {
+   "hash": "1f247f01064158",
+   "status": "executed"
+  },
+  "LUA104 2.2#forwarding:debug": {
+   "hash": "1f0079b4fdbcf0",
+   "status": "error-matched"
+  },
+  "LUA104 2.2#named-captures": {
+   "hash": "068462363f8eaa",
+   "status": "executed"
+  },
+  "LUA104 2.2#gsub-two-values": {
+   "hash": "059fe756ef6e06",
+   "status": "executed"
+  },
+  "LUA104 2.2#poor-double-call": {
+   "hash": "1c64efd5a1f89d",
+   "status": "executed"
+  },
+  "LUA104 2.2#improved-single-call": {
+   "hash": "1f0596c460ec92",
+   "status": "executed"
+  },
+  "LUA104 2.2#collect-results": {
+   "hash": "0e29d57a309cbc",
+   "status": "executed"
+  },
+  "LUA104 2.3#unpack-basics": {
+   "hash": "1a32320b058988",
+   "status": "executed"
+  },
+  "LUA104 2.3#parse-port": {
+   "hash": "1f3b5e3f60e2ec",
+   "status": "executed"
+  },
+  "LUA104 2.3#parse-port:debug": {
+   "hash": "10aa0790443e6c",
+   "status": "error-matched"
+  },
+  "LUA104 2.3#assert-success": {
+   "hash": "0ac74fc6205eae",
+   "status": "executed"
+  },
+  "LUA104 2.3#assert-success:debug": {
+   "hash": "17086a33a25271",
+   "status": "error-matched"
+  },
+  "LUA104 2.3#error-and-pcall": {
+   "hash": "04256961600281",
+   "status": "executed"
+  },
+  "LUA104 2.3#chain-checks": {
+   "hash": "0825b0a71b10f2",
+   "status": "executed"
+  },
+  "LUA104 2.3#poor-sentinel": {
+   "hash": "1c3791dcde956b",
+   "status": "executed"
+  },
+  "LUA104 2.3#improved-nil-message": {
+   "hash": "080641d17c7de6",
+   "status": "executed"
+  },
+  "LUA104 2.3#config-loader": {
+   "hash": "10295ab12aaaf2",
+   "status": "executed"
+  },
+  "LUA104 3.1#vararg-sum": {
+   "hash": "05ef2fe65f3d56",
+   "status": "executed"
+  },
+  "LUA104 3.1#count-args": {
+   "hash": "1b20d515d4ad10",
+   "status": "executed"
+  },
+  "LUA104 3.1#count-args:debug": {
+   "hash": "163a9516d71832",
+   "status": "error-matched"
+  },
+  "LUA104 3.1#printf": {
+   "hash": "05c1042b085738",
+   "status": "executed"
+  },
+  "LUA104 3.1#printf:debug": {
+   "hash": "022f65b2bbf8e2",
+   "status": "error-matched"
+  },
+  "LUA104 3.1#select-loop": {
+   "hash": "0ce5ccbbe9cee4",
+   "status": "executed"
+  },
+  "LUA104 3.1#sum-skip-nil": {
+   "hash": "1f61b222affbe7",
+   "status": "executed"
+  },
+  "LUA104 3.1#sum-skip-nil:debug": {
+   "hash": "0a3ed8a7fa257f",
+   "status": "error-matched"
+  },
+  "LUA104 3.1#poor-nested-max": {
+   "hash": "0cf25b22fa9a8b",
+   "status": "executed"
+  },
+  "LUA104 3.1#improved-vararg-max": {
+   "hash": "156d9f8a6c2a57",
+   "status": "executed"
+  },
+  "LUA104 3.1#vararg-log": {
+   "hash": "08d84205ab0e61",
+   "status": "executed"
+  },
+  "LUA104 3.2#pack-basics": {
+   "hash": "0545432c916a68",
+   "status": "executed"
+  },
+  "LUA104 3.2#deferred-call": {
+   "hash": "0f428e0b046330",
+   "status": "executed"
+  },
+  "LUA104 3.2#pack-vs-braces": {
+   "hash": "09c88de174ded4",
+   "status": "executed"
+  },
+  "LUA104 3.2#pack-vs-braces:debug": {
+   "hash": "0dbc92f85fcc09",
+   "status": "error-matched"
+  },
+  "LUA104 3.2#manual-pack": {
+   "hash": "095dffb31cb90c",
+   "status": "executed"
+  },
+  "LUA104 3.2#nth-arg": {
+   "hash": "0c291aac29187c",
+   "status": "executed"
+  },
+  "LUA104 3.2#nth-arg:debug": {
+   "hash": "0d13a5854c8858",
+   "status": "error-matched"
+  },
+  "LUA104 3.2#poor-braces-record": {
+   "hash": "00e2413b0b6aa9",
+   "status": "executed"
+  },
+  "LUA104 3.2#improved-pack-record": {
+   "hash": "14ed1eea0e0db6",
+   "status": "executed"
+  },
+  "LUA104 3.2#spy-function": {
+   "hash": "0a4ce1725d1df9",
+   "status": "executed"
+  },
+  "LUA104 3.3#flexible-area": {
+   "hash": "0a229b41c3beb5",
+   "status": "executed"
+  },
+  "LUA104 3.3#flexible-area:debug": {
+   "hash": "09f2d2be0c6bf1",
+   "status": "error-matched"
+  },
+  "LUA104 3.3#formatter-factory": {
+   "hash": "0c5f68c643926e",
+   "status": "executed"
+  },
+  "LUA104 3.3#options-first": {
+   "hash": "178d025b6484a8",
+   "status": "executed"
+  },
+  "LUA104 3.3#options-first:debug": {
+   "hash": "19d7c0469bc279",
+   "status": "error-matched"
+  },
+  "LUA104 3.3#optional-first-table": {
+   "hash": "04ec3ce85a0e8c",
+   "status": "executed"
+  },
+  "LUA104 3.3#shape-tests": {
+   "hash": "025f0d1519fcba",
+   "status": "executed"
+  },
+  "LUA104 3.3#poor-boolean-flags": {
+   "hash": "0b4170c2524fc0",
+   "status": "executed"
+  },
+  "LUA104 3.3#improved-named-flags": {
+   "hash": "1e4d345bae3e49",
+   "status": "executed"
+  },
+  "LUA104 3.3#text-table": {
+   "hash": "0ebb3fcbac52e9",
+   "status": "executed"
+  },
+  "LUA104 4.1#scope-layers": {
+   "hash": "1db817bc62c569",
+   "status": "executed"
+  },
+  "LUA104 4.1#do-block-temp": {
+   "hash": "086f2244ca78eb",
+   "status": "executed"
+  },
+  "LUA104 4.1#do-block-temp:debug": {
+   "hash": "0493650e14ef63",
+   "status": "error-matched"
+  },
+  "LUA104 4.1#fresh-loop-locals": {
+   "hash": "19cc0150ee1937",
+   "status": "executed"
+  },
+  "LUA104 4.1#fresh-loop-locals:debug": {
+   "hash": "0922eb3030dfd4",
+   "status": "error-matched"
+  },
+  "LUA104 4.1#iife-scope": {
+   "hash": "0e7bf8c5aed85e",
+   "status": "executed"
+  },
+  "LUA104 4.1#no-shadow": {
+   "hash": "0b683665452c3f",
+   "status": "executed"
+  },
+  "LUA104 4.1#poor-global-temps": {
+   "hash": "039aa2a72670a3",
+   "status": "executed"
+  },
+  "LUA104 4.1#improved-block-locals": {
+   "hash": "1f203fdf1b3a01",
+   "status": "executed"
+  },
+  "LUA104 4.1#scoped-report": {
+   "hash": "05cc3e44cb422e",
+   "status": "executed"
+  },
+  "LUA104 4.2#factorial": {
+   "hash": "14a40b6cda262f",
+   "status": "executed"
+  },
+  "LUA104 4.2#sum-digits": {
+   "hash": "0886011409b2df",
+   "status": "executed"
+  },
+  "LUA104 4.2#sum-digits:debug": {
+   "hash": "0dc0b01f263bcf",
+   "status": "error-matched"
+  },
+  "LUA104 4.2#nested-count": {
+   "hash": "0fecab84cbab10",
+   "status": "executed"
+  },
+  "LUA104 4.2#nested-count:debug": {
+   "hash": "103b3127689cda",
+   "status": "error-matched"
+  },
+  "LUA104 4.2#tail-count": {
+   "hash": "1f53988067bfc8",
+   "status": "executed"
+  },
+  "LUA104 4.2#mutual-recursion": {
+   "hash": "187e60acc86912",
+   "status": "executed"
+  },
+  "LUA104 4.2#poor-naive-fib": {
+   "hash": "1854e08387679b",
+   "status": "executed"
+  },
+  "LUA104 4.2#improved-memo-fib": {
+   "hash": "06684708e1b54c",
+   "status": "executed"
+  },
+  "LUA104 4.2#hanoi": {
+   "hash": "0cd7609c896d52",
+   "status": "executed"
+  },
+  "LUA104 4.3#make-counter": {
+   "hash": "191ba32170359f",
+   "status": "executed"
+  },
+  "LUA104 4.3#shared-upvalue": {
+   "hash": "18a6223b2b3a43",
+   "status": "executed"
+  },
+  "LUA104 4.3#shared-upvalue:debug": {
+   "hash": "1fb38f1c7038db",
+   "status": "error-matched"
+  },
+  "LUA104 4.3#loop-closures": {
+   "hash": "078aba5972814c",
+   "status": "executed"
+  },
+  "LUA104 4.3#loop-closures:debug": {
+   "hash": "080f19742a2dcc",
+   "status": "error-matched"
+  },
+  "LUA104 4.3#table-counter": {
+   "hash": "14910cf3b8946d",
+   "status": "executed"
+  },
+  "LUA104 4.3#fresh-copy": {
+   "hash": "11678c505d831f",
+   "status": "executed"
+  },
+  "LUA104 4.3#poor-global-counter": {
+   "hash": "1797fd05b3c423",
+   "status": "executed"
+  },
+  "LUA104 4.3#improved-private-ids": {
+   "hash": "0bd5dab166bf58",
+   "status": "executed"
+  },
+  "LUA104 4.3#bank-account": {
+   "hash": "0f48e92aa1c286",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -1659,6 +2155,38 @@
   },
   "glossary#pseudo-random": {
    "hash": "1a0b8520fd5fe5",
+   "status": "executed"
+  },
+  "glossary#parameter": {
+   "hash": "09023d98da8cdd",
+   "status": "executed"
+  },
+  "glossary#first-class-function": {
+   "hash": "13febf9331debe",
+   "status": "executed"
+  },
+  "glossary#value-adjustment": {
+   "hash": "18c09530305fd8",
+   "status": "executed"
+  },
+  "glossary#vararg": {
+   "hash": "08ffbfc018ddcb",
+   "status": "executed"
+  },
+  "glossary#block": {
+   "hash": "1ac6f0f3e92c21",
+   "status": "executed"
+  },
+  "glossary#recursion": {
+   "hash": "0002b436e83089",
+   "status": "executed"
+  },
+  "glossary#upvalue": {
+   "hash": "0ba8cb987a1b25",
+   "status": "executed"
+  },
+  "glossary#higher-order-function": {
+   "hash": "00223da4a7f33c",
    "status": "executed"
   }
  }
