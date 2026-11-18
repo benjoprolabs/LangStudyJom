@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.6: Milestone 3 — LUAU103 complete (course materials 1.7.0)
+
+- **LUAU103 1.1–4.3 written (12 lectures):** `if`/`elseif` chains, truthiness and guard clauses; numeric `for`,
+  `while`, `repeat`, generalized iteration (`for k, v in t`), `break` and Luau's `continue`; function definitions,
+  typed parameters and returns, multiple returns, varargs and `select`; closures and upvalues (factories, shared
+  versus separate upvalues, loop capture), callbacks, strict `table.sort` comparators, and a pure-Luau signal with
+  connect, fire, disconnect and `pcall` isolation. Mini project: a score counter with combos, milestones, input
+  validation, capped history and `assert` requirement tests. Every example is executed with the Luau 0.663 VM.
+- 5 new Click-to-Learn terms (generalized iteration, continue, guard clause, callback, function type) — 74 in total.
+- Verification corrected my predictions: passing `print("…")` as a callback to `table.insert(list, fn)` stores
+  nothing and raises no error, so that broken example now stores the `nil` in a record field, where calling it
+  fails; and one count in a callback example was wrong (3 even scores, not 2).
+
 ## 0.5.5: Milestone 3 — LUAU102 complete (course materials 1.6.0)
 
 - **LUAU102 1.1–4.3 written (12 lectures):** local and global (per-script environments and `_G` in Roblox),

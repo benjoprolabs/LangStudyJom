@@ -7,6 +7,7 @@ import { LUA103_GLOSSARY } from './glossary-lua103';
 import { LUA104_GLOSSARY } from './glossary-lua104';
 import { LUAU101_GLOSSARY } from './glossary-luau101';
 import { LUAU102_GLOSSARY } from './glossary-luau102';
+import { LUAU103_GLOSSARY } from './glossary-luau103';
 import { LUA101_M1 } from './lectures/lua101/m1';
 import { LUA101_M2 } from './lectures/lua101/m2';
 import { LUA101_M3 } from './lectures/lua101/m3';
@@ -33,6 +34,10 @@ import { LUAU102_M1 } from './lectures/luau102/m1';
 import { LUAU102_M2 } from './lectures/luau102/m2';
 import { LUAU102_M3 } from './lectures/luau102/m3';
 import { LUAU102_M4 } from './lectures/luau102/m4';
+import { LUAU103_M1 } from './lectures/luau103/m1';
+import { LUAU103_M2 } from './lectures/luau103/m2';
+import { LUAU103_M3 } from './lectures/luau103/m3';
+import { LUAU103_M4 } from './lectures/luau103/m4';
 
 /**
  * Course materials for the Lua and Luau academies (Professional Programming Education Standard).
@@ -45,13 +50,14 @@ import { LUAU102_M4 } from './lectures/luau102/m4';
  * 1.4.0: all 12 lectures of LUA104 (functions and scope) — Lua Semester 1 (LUA101–LUA104) complete.
  * 1.5.0: all 12 lectures of LUAU101 (introduction to Luau and the development environment).
  * 1.6.0: all 12 lectures of LUAU102 (variables, types and operators).
+ * 1.7.0: all 12 lectures of LUAU103 (control flow and functions).
  */
 export const LUA_LUAU_CONTENT: ContentPackage = {
   id: 'qhaze-f01-lua-luau-content',
-  version: '1.6.0',
-  title: L('Bahan Kursus Lua & Luau — Keluaran 7', 'Lua & Luau Course Materials — Release 7'),
-  glossary: [...GLOSSARY, ...LUA101_GLOSSARY, ...LUA102_GLOSSARY, ...LUA103_GLOSSARY, ...LUA104_GLOSSARY, ...LUAU101_GLOSSARY, ...LUAU102_GLOSSARY],
-  lectures: [LUA102_1_1, LUAU203_1_1, ...LUA101_M1, ...LUA101_M2, ...LUA101_M3, ...LUA101_M4, ...LUA102_M1, ...LUA102_M2, ...LUA102_M3, ...LUA102_M4, ...LUA103_M1, ...LUA103_M2, ...LUA103_M3, ...LUA103_M4, ...LUA104_M1, ...LUA104_M2, ...LUA104_M3, ...LUA104_M4, ...LUAU101_M1, ...LUAU101_M2, ...LUAU101_M3, ...LUAU101_M4, ...LUAU102_M1, ...LUAU102_M2, ...LUAU102_M3, ...LUAU102_M4],
+  version: '1.7.0',
+  title: L('Bahan Kursus Lua & Luau — Keluaran 8', 'Lua & Luau Course Materials — Release 8'),
+  glossary: [...GLOSSARY, ...LUA101_GLOSSARY, ...LUA102_GLOSSARY, ...LUA103_GLOSSARY, ...LUA104_GLOSSARY, ...LUAU101_GLOSSARY, ...LUAU102_GLOSSARY, ...LUAU103_GLOSSARY],
+  lectures: [LUA102_1_1, LUAU203_1_1, ...LUA101_M1, ...LUA101_M2, ...LUA101_M3, ...LUA101_M4, ...LUA102_M1, ...LUA102_M2, ...LUA102_M3, ...LUA102_M4, ...LUA103_M1, ...LUA103_M2, ...LUA103_M3, ...LUA103_M4, ...LUA104_M1, ...LUA104_M2, ...LUA104_M3, ...LUA104_M4, ...LUAU101_M1, ...LUAU101_M2, ...LUAU101_M3, ...LUAU101_M4, ...LUAU102_M1, ...LUAU102_M2, ...LUAU102_M3, ...LUAU102_M4, ...LUAU103_M1, ...LUAU103_M2, ...LUAU103_M3, ...LUAU103_M4],
 };
 
 export const CONTENT_PACKAGES: ContentPackage[] = [LUA_LUAU_CONTENT];

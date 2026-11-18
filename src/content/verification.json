@@ -2945,6 +2945,486 @@
    "hash": "0f631b70aadafb",
    "status": "executed"
   },
+  "LUAU103 1.1#medal-ladder": {
+   "hash": "03e522a8999db9",
+   "status": "executed"
+  },
+  "LUAU103 1.1#branch-order": {
+   "hash": "115ea999e5a351",
+   "status": "executed"
+  },
+  "LUAU103 1.1#branch-order:debug": {
+   "hash": "16b5ee9b5e1509",
+   "status": "error-matched"
+  },
+  "LUAU103 1.1#lookup-actions": {
+   "hash": "0216333df0a8a8",
+   "status": "executed"
+  },
+  "LUAU103 1.1#lookup-actions:debug": {
+   "hash": "183f1ece61b780",
+   "status": "error-matched"
+  },
+  "LUAU103 1.1#medal-expression": {
+   "hash": "021629ff695f36",
+   "status": "executed"
+  },
+  "LUAU103 1.1#reach-test": {
+   "hash": "17b9084d695f4e",
+   "status": "executed"
+  },
+  "LUAU103 1.1#poor-nested-ifs": {
+   "hash": "1aadb0d6d31526",
+   "status": "executed"
+  },
+  "LUAU103 1.1#improved-flat-ladder": {
+   "hash": "14d9119cbc17bb",
+   "status": "executed"
+  },
+  "LUAU103 1.1#weather-system": {
+   "hash": "1b983a1d31de20",
+   "status": "executed"
+  },
+  "LUAU103 1.2#truthy-table": {
+   "hash": "19324d3350521d",
+   "status": "executed"
+  },
+  "LUAU103 1.2#three-state-setting": {
+   "hash": "1e34f733997315",
+   "status": "executed"
+  },
+  "LUAU103 1.2#three-state-setting:debug": {
+   "hash": "1022cdfbac07d8",
+   "status": "error-matched"
+  },
+  "LUAU103 1.2#empty-checks": {
+   "hash": "133f5be5407d55",
+   "status": "executed"
+  },
+  "LUAU103 1.2#empty-checks:debug": {
+   "hash": "0b2864a74c4a43",
+   "status": "error-matched"
+  },
+  "LUAU103 1.2#to-boolean": {
+   "hash": "12810b470bc550",
+   "status": "executed"
+  },
+  "LUAU103 1.2#parse-bool": {
+   "hash": "0e7226310a1cdf",
+   "status": "executed"
+  },
+  "LUAU103 1.2#poor-vague-truthy": {
+   "hash": "011098de740813",
+   "status": "executed"
+  },
+  "LUAU103 1.2#improved-explicit-checks": {
+   "hash": "0367f0049aac92",
+   "status": "executed"
+  },
+  "LUAU103 1.2#door-check": {
+   "hash": "1f5021e62ed003",
+   "status": "executed"
+  },
+  "LUAU103 1.3#guarded-purchase": {
+   "hash": "12f05401610beb",
+   "status": "executed"
+  },
+  "LUAU103 1.3#guard-order": {
+   "hash": "0c80cf43bbb70f",
+   "status": "executed"
+  },
+  "LUAU103 1.3#guard-order:debug": {
+   "hash": "006a9d8807e9f9",
+   "status": "error-matched"
+  },
+  "LUAU103 1.3#guard-caller-check": {
+   "hash": "129b2c49e3e68a",
+   "status": "executed"
+  },
+  "LUAU103 1.3#guard-caller-check:debug": {
+   "hash": "0dcd7819c9f0fb",
+   "status": "error-matched"
+  },
+  "LUAU103 1.3#rule-list": {
+   "hash": "05d001fe61b3bd",
+   "status": "executed"
+  },
+  "LUAU103 1.3#logged-guards": {
+   "hash": "164e908656ee6e",
+   "status": "executed"
+  },
+  "LUAU103 1.3#poor-arrow-code": {
+   "hash": "173a70d96e1d5e",
+   "status": "executed"
+  },
+  "LUAU103 1.3#improved-guarded-revive": {
+   "hash": "1e27cad9994d0f",
+   "status": "executed"
+  },
+  "LUAU103 1.3#trade-handler": {
+   "hash": "1830150f39fd88",
+   "status": "executed"
+  },
+  "LUAU103 2.1#three-loops": {
+   "hash": "09d9acbc0533ef",
+   "status": "executed"
+  },
+  "LUAU103 2.1#for-evaluated-once": {
+   "hash": "1f9a0680bc2828",
+   "status": "executed"
+  },
+  "LUAU103 2.1#for-evaluated-once:debug": {
+   "hash": "189ca9351ea298",
+   "status": "error-matched"
+  },
+  "LUAU103 2.1#float-step-safe": {
+   "hash": "06232780b9a3e9",
+   "status": "executed"
+  },
+  "LUAU103 2.1#float-step-safe:debug": {
+   "hash": "1a087f9151a2c9",
+   "status": "error-matched"
+  },
+  "LUAU103 2.1#loop-and-half": {
+   "hash": "0541c2ef8c5b1d",
+   "status": "executed"
+  },
+  "LUAU103 2.1#safety-limit": {
+   "hash": "0366f4c543c13f",
+   "status": "executed"
+  },
+  "LUAU103 2.1#poor-manual-counter": {
+   "hash": "05734caa30744b",
+   "status": "executed"
+  },
+  "LUAU103 2.1#improved-for-loop": {
+   "hash": "125a64b0b3872c",
+   "status": "executed"
+  },
+  "LUAU103 2.1#retry-system": {
+   "hash": "068fd952cf489e",
+   "status": "executed"
+  },
+  "LUAU103 2.2#gen-iter-basics": {
+   "hash": "0c2f94e916fbc6",
+   "status": "executed"
+  },
+  "LUAU103 2.2#holes-and-ipairs": {
+   "hash": "03770ca9bb5cfd",
+   "status": "executed"
+  },
+  "LUAU103 2.2#holes-and-ipairs:debug": {
+   "hash": "16d9d2762042ce",
+   "status": "error-matched"
+  },
+  "LUAU103 2.2#sorted-dictionary": {
+   "hash": "1ae6851881f289",
+   "status": "executed"
+  },
+  "LUAU103 2.2#sorted-dictionary:debug": {
+   "hash": "1bfe30b74ed6f0",
+   "status": "error-matched"
+  },
+  "LUAU103 2.2#custom-iter": {
+   "hash": "1040f6a7606139",
+   "status": "executed"
+  },
+  "LUAU103 2.2#safe-removal": {
+   "hash": "0ebbc5e97bd2fe",
+   "status": "executed"
+  },
+  "LUAU103 2.2#poor-pairs-style": {
+   "hash": "020e6c4f8230a6",
+   "status": "executed"
+  },
+  "LUAU103 2.2#improved-generalized": {
+   "hash": "1c6e70369298be",
+   "status": "executed"
+  },
+  "LUAU103 2.2#inventory-summary": {
+   "hash": "0c294b347029e0",
+   "status": "executed"
+  },
+  "LUAU103 2.3#break-continue": {
+   "hash": "1109f235048157",
+   "status": "executed"
+  },
+  "LUAU103 2.3#nested-exit": {
+   "hash": "1c072a78689f68",
+   "status": "executed"
+  },
+  "LUAU103 2.3#nested-exit:debug": {
+   "hash": "1c08b317b53859",
+   "status": "error-matched"
+  },
+  "LUAU103 2.3#repeat-continue": {
+   "hash": "15957b80a77606",
+   "status": "executed"
+  },
+  "LUAU103 2.3#repeat-continue:debug": {
+   "hash": "103442e69be078",
+   "status": "error-matched"
+  },
+  "LUAU103 2.3#without-continue": {
+   "hash": "0d63234a56fdc9",
+   "status": "executed"
+  },
+  "LUAU103 2.3#while-continue": {
+   "hash": "0863170efe5364",
+   "status": "executed"
+  },
+  "LUAU103 2.3#poor-found-flag": {
+   "hash": "04d6f6473b7e6d",
+   "status": "executed"
+  },
+  "LUAU103 2.3#improved-table-find": {
+   "hash": "083ba8b8bfdedd",
+   "status": "executed"
+  },
+  "LUAU103 2.3#wave-processor": {
+   "hash": "02ceab3ec86f12",
+   "status": "executed"
+  },
+  "LUAU103 3.1#typed-function": {
+   "hash": "028a7bfceec305",
+   "status": "executed"
+  },
+  "LUAU103 3.1#method-syntax": {
+   "hash": "1f741f30256042",
+   "status": "executed"
+  },
+  "LUAU103 3.1#method-syntax:debug": {
+   "hash": "14baad64243dac",
+   "status": "error-matched"
+  },
+  "LUAU103 3.1#define-before-call": {
+   "hash": "183a2886be0726",
+   "status": "executed"
+  },
+  "LUAU103 3.1#define-before-call:debug": {
+   "hash": "02e12305a13246",
+   "status": "error-matched"
+  },
+  "LUAU103 3.1#options-param": {
+   "hash": "15b452c7a19944",
+   "status": "executed"
+  },
+  "LUAU103 3.1#timer-object": {
+   "hash": "17a16036e7a833",
+   "status": "executed"
+  },
+  "LUAU103 3.1#poor-god-function": {
+   "hash": "17424f8f2a0b62",
+   "status": "executed"
+  },
+  "LUAU103 3.1#improved-small-functions": {
+   "hash": "0ca5d3e41aed73",
+   "status": "executed"
+  },
+  "LUAU103 3.1#shop-object": {
+   "hash": "0d5573baccfaa0",
+   "status": "executed"
+  },
+  "LUAU103 3.2#multi-return": {
+   "hash": "1e303a9217af18",
+   "status": "executed"
+  },
+  "LUAU103 3.2#pcall-pattern": {
+   "hash": "1dc61bdb3750d3",
+   "status": "executed"
+  },
+  "LUAU103 3.2#pcall-pattern:debug": {
+   "hash": "17bb5c802115f4",
+   "status": "error-matched"
+  },
+  "LUAU103 3.2#return-forwarding": {
+   "hash": "0c5b7b5ceb8d7e",
+   "status": "executed"
+  },
+  "LUAU103 3.2#return-forwarding:debug": {
+   "hash": "1b0dd2a21d2b89",
+   "status": "error-matched"
+  },
+  "LUAU103 3.2#named-results": {
+   "hash": "1b95be0e619c3d",
+   "status": "executed"
+  },
+  "LUAU103 3.2#gsub-two": {
+   "hash": "19940f4f141595",
+   "status": "executed"
+  },
+  "LUAU103 3.2#poor-inconsistent-returns": {
+   "hash": "0ea0b9f9c8680b",
+   "status": "executed"
+  },
+  "LUAU103 3.2#improved-consistent-returns": {
+   "hash": "0ac981a6c7cd56",
+   "status": "executed"
+  },
+  "LUAU103 3.2#parse-coords": {
+   "hash": "0989574315e773",
+   "status": "executed"
+  },
+  "LUAU103 3.3#vararg-sum": {
+   "hash": "174a1c1d0b3438",
+   "status": "executed"
+  },
+  "LUAU103 3.3#forward-format": {
+   "hash": "0e055c08b9a1e1",
+   "status": "executed"
+  },
+  "LUAU103 3.3#forward-format:debug": {
+   "hash": "1fa640daa509d9",
+   "status": "error-matched"
+  },
+  "LUAU103 3.3#pack-unpack": {
+   "hash": "008eff25ffc95d",
+   "status": "executed"
+  },
+  "LUAU103 3.3#pack-unpack:debug": {
+   "hash": "032c622532bd92",
+   "status": "error-matched"
+  },
+  "LUAU103 3.3#select-loop": {
+   "hash": "05273ac9a3942a",
+   "status": "executed"
+  },
+  "LUAU103 3.3#vararg-validate": {
+   "hash": "074daf30b0884c",
+   "status": "executed"
+  },
+  "LUAU103 3.3#poor-table-arg": {
+   "hash": "1e996043b00c06",
+   "status": "executed"
+  },
+  "LUAU103 3.3#improved-vararg-api": {
+   "hash": "0c67167cbceebb",
+   "status": "executed"
+  },
+  "LUAU103 3.3#call-recorder": {
+   "hash": "13202abd7eb5f0",
+   "status": "executed"
+  },
+  "LUAU103 4.1#click-counter": {
+   "hash": "0a381d00f3f48d",
+   "status": "executed"
+  },
+  "LUAU103 4.1#shared-state": {
+   "hash": "00def79d74f4ee",
+   "status": "executed"
+  },
+  "LUAU103 4.1#shared-state:debug": {
+   "hash": "0af38b50a56043",
+   "status": "error-matched"
+  },
+  "LUAU103 4.1#loop-capture": {
+   "hash": "06104b3a3db535",
+   "status": "executed"
+  },
+  "LUAU103 4.1#loop-capture:debug": {
+   "hash": "014480665e4ca3",
+   "status": "error-matched"
+  },
+  "LUAU103 4.1#open-state": {
+   "hash": "04c7af449e1bca",
+   "status": "executed"
+  },
+  "LUAU103 4.1#fresh-copy": {
+   "hash": "1852fe570c3f53",
+   "status": "executed"
+  },
+  "LUAU103 4.1#poor-global-ids": {
+   "hash": "04bdec6126f58d",
+   "status": "executed"
+  },
+  "LUAU103 4.1#improved-private-ids": {
+   "hash": "19c4264945e096",
+   "status": "executed"
+  },
+  "LUAU103 4.1#debounce": {
+   "hash": "149d82cba772b4",
+   "status": "executed"
+  },
+  "LUAU103 4.2#callback-basics": {
+   "hash": "1f903cc57a2ffd",
+   "status": "executed"
+  },
+  "LUAU103 4.2#signal": {
+   "hash": "0e746cfdef2f9c",
+   "status": "executed"
+  },
+  "LUAU103 4.2#signal:debug": {
+   "hash": "0bb5627e331e82",
+   "status": "error-matched"
+  },
+  "LUAU103 4.2#strict-comparator": {
+   "hash": "172970bbb18107",
+   "status": "executed"
+  },
+  "LUAU103 4.2#strict-comparator:debug": {
+   "hash": "07b64947c0a522",
+   "status": "error-matched"
+  },
+  "LUAU103 4.2#safe-fire": {
+   "hash": "06860e2e72e256",
+   "status": "executed"
+  },
+  "LUAU103 4.2#comparator-check": {
+   "hash": "0865f9ddd04d53",
+   "status": "executed"
+  },
+  "LUAU103 4.2#poor-duplicate-filters": {
+   "hash": "0c6d638b8324dd",
+   "status": "executed"
+  },
+  "LUAU103 4.2#improved-filter-callback": {
+   "hash": "0dd1d2574b9e4e",
+   "status": "executed"
+  },
+  "LUAU103 4.2#achievements": {
+   "hash": "026d5de0f618c2",
+   "status": "executed"
+  },
+  "LUAU103 4.3#score-core": {
+   "hash": "09310f6f83cbf6",
+   "status": "executed"
+  },
+  "LUAU103 4.3#score-milestones": {
+   "hash": "16b05c5d047248",
+   "status": "executed"
+  },
+  "LUAU103 4.3#score-milestones:debug": {
+   "hash": "1a200e526496b5",
+   "status": "error-matched"
+  },
+  "LUAU103 4.3#score-validated": {
+   "hash": "12bf1fb8b8aa00",
+   "status": "executed"
+  },
+  "LUAU103 4.3#score-validated:debug": {
+   "hash": "0486db57401fe9",
+   "status": "error-matched"
+  },
+  "LUAU103 4.3#score-final": {
+   "hash": "11603a84010c03",
+   "status": "executed"
+  },
+  "LUAU103 4.3#score-tests": {
+   "hash": "11c256d86b0967",
+   "status": "executed"
+  },
+  "LUAU103 4.3#poor-open-score": {
+   "hash": "0efeb2b33e9289",
+   "status": "executed"
+  },
+  "LUAU103 4.3#improved-encapsulated-score": {
+   "hash": "18bd9b750835c2",
+   "status": "executed"
+  },
+  "LUAU103 4.3#multiplayer-board": {
+   "hash": "13a3b3b422eded",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -3219,6 +3699,26 @@
   },
   "glossary#naming-convention": {
    "hash": "0c957d5c143085",
+   "status": "executed"
+  },
+  "glossary#generalized-iteration": {
+   "hash": "07bb0a2b1d0a50",
+   "status": "executed"
+  },
+  "glossary#continue-statement": {
+   "hash": "06b05edfdcea7d",
+   "status": "executed"
+  },
+  "glossary#guard-clause": {
+   "hash": "0aee9d25259004",
+   "status": "executed"
+  },
+  "glossary#callback": {
+   "hash": "1419adf0a13847",
+   "status": "executed"
+  },
+  "glossary#function-type": {
+   "hash": "004a2333656971",
    "status": "executed"
   }
  }

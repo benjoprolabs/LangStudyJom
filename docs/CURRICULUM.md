@@ -464,10 +464,22 @@ apart from LUAU203 1.1 remain structure only.
 | LUAU102 | 4.1 | Backtick string interpolation | 4 generated + 24 authored | 10 / 0 |
 | LUAU102 | 4.2 | if-expressions | 4 generated + 24 authored | 10 / 0 |
 | LUAU102 | 4.3 | string.format and type conversion | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 1.1 | if, elseif and else | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 1.2 | Truthiness: only nil and false are falsy | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 1.3 | Guard clauses and early returns | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 2.1 | Numeric for, while and repeat–until | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 2.2 | Generalized iteration: for k, v in t | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 2.3 | break and continue | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 3.1 | Defining and calling functions | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 3.2 | Multiple return values | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 3.3 | Varargs and table.pack | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 4.1 | Closures and upvalues | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 4.2 | Functions as arguments and callbacks | 4 generated + 24 authored | 10 / 0 |
+| LUAU103 | 4.3 | Mini project: a score counter with closures | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
 | LUA-PROG | 288 | 48 | 240 |
-| LUAU-PROG | 324 | 25 | 299 |
+| LUAU-PROG | 324 | 37 | 287 |
 <!-- /generated:content-status -->
