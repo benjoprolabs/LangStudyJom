@@ -87,7 +87,7 @@ including a run against real IndexedDB records in Chromium (see `scripts/e2e-smo
 | Guard | Where | Behaviour |
 |---|---|---|
 | Delete protection | `guards.ts` `planDelete` / `deleteRecord` | Blocked (`ReferencedRecordError`, nothing deleted) while any record references the target, including student progress, notes, bookmarks, study sessions, grades and enrolments. Each blocking record is listed once |
-| Owned children | `OWNED` in `guards.ts` | Deleting a programme removes its *empty* semesters; deleting a course removes its *own* prerequisite links. A child that is referenced elsewhere blocks the delete |
+| Owned children | `OWNED` in `guards.ts` | Deleting a programme removes its *empty* semesters. Deleting a course removes its *own* prerequisite links, modules, lectures and learning materials. A child referenced elsewhere (for example by a student's progress, notes or bookmarks, or by another course's prerequisite) blocks the delete |
 | Save-time validation | `repositories/university.ts` | Field validation (`ValidationError`), code uniqueness, then `assertValidReferences` (foreign keys, consistency, cycles) |
 | Transaction guard | `guardedWrite` | The integrity report is compared before and after each write; a new issue rolls back the whole transaction, which catches effects on *other* records (e.g. moving a course that a study session points to) |
 | Immutable parents | University repositories | `programme.academyId`, `semester.programmeId` and a course's programme cannot change after creation. A course may move only between semesters of its own programme |

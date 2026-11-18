@@ -1,3 +1,4 @@
+import Dexie, { type Transaction } from 'dexie';
 import { newId } from '@/lib/id';
 import { nowIso } from '@/lib/time';
 import type { QhazeDatabase } from './database';
@@ -69,6 +70,11 @@ export async function findReferencingRecords(db: QhazeDatabase, table: string, i
 export const OWNED: { parent: string; child: string; field: string }[] = [
   { parent: 'programmes', child: 'semesters', field: 'programmeId' },
   { parent: 'courses', child: 'coursePrerequisites', field: 'courseId' },
+  // A course's own structure (Phase 2 seeding). Student progress, notes or bookmarks on any
+  // of these still block the delete, because those references are not owned.
+  { parent: 'courses', child: 'modules', field: 'courseId' },
+  { parent: 'modules', child: 'lectures', field: 'moduleId' },
+  { parent: 'lectures', child: 'learningMaterials', field: 'lectureId' },
 ];
 
 export interface DeletePlan {
@@ -112,6 +118,21 @@ function writableTables(db: QhazeDatabase) {
   return db.tables.filter((t) => !NON_EXPORTED_TABLES.has(t.name));
 }
 
+const GUARD_FLAG = '__qhazeGuardedWrite';
+
+/** Is the current Dexie transaction (or one of its parents) a guarded write? */
+function insideGuardedWrite(): boolean {
+  for (let tx = Dexie.currentTransaction as (Transaction & { parent?: unknown }) | null; tx; tx = tx.parent as typeof tx) {
+    if ((tx as unknown as Record<string, unknown>)[GUARD_FLAG]) return true;
+  }
+  return false;
+}
+
+function markGuarded() {
+  const tx = Dexie.currentTransaction as unknown as Record<string, unknown> | null;
+  if (tx) tx[GUARD_FLAG] = true;
+}
+
 const signature = (i: IntegrityIssue) => `${i.table}|${i.id}|${i.kind}|${i.detail}`;
 
 /**
@@ -120,7 +141,11 @@ const signature = (i: IntegrityIssue) => `${i.table}|${i.id}|${i.kind}|${i.detai
  * write made by `fn`. Pre-existing issues never block unrelated edits.
  */
 export async function guardedWrite<T>(db: QhazeDatabase, fn: () => Promise<T>): Promise<T> {
+  // Nested call (e.g. a repository function inside a curriculum install): the outer guard
+  // already compares the whole database before/after, so run `fn` inside the outer transaction.
+  if (insideGuardedWrite()) return fn();
   return db.transaction('rw', writableTables(db), async () => {
+    markGuarded();
     const before = new Set(checkIntegrity(await dumpTables(db)).issues.map(signature));
     const result = await fn();
     const introduced = checkIntegrity(await dumpTables(db)).issues.filter((i) => !before.has(signature(i)));

@@ -6,7 +6,8 @@
 | 1.1 | Data integrity patch: study session and project reference checks, chain consistency, write-time guard, assessment model | ✅ Complete |
 | 1.2 | Integrity completion: items 4–10 (assessment–exercise, progress, notes and bookmarks, curriculum consistency, prerequisite cycles, semester range) | ✅ Complete |
 | 2.0 | Step 0, safety: schema v2, delete protection, save-time validation, cycle prevention, boot-safety fix, bio input, toast label | ✅ Complete |
-| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Structure complete. **Curriculum seeding awaits approval** |
+| 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Complete |
+| 2-S1 | Curriculum seeding M1: 7 faculties, 15 Faculty 01 academies, 8-semester Python programme ([CURRICULUM.md](CURRICULUM.md)) | ✅ Complete. **M2 awaits approval** |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | Planned |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | Planned |
 | 5 | Practice Center: exercises, coding challenges, quizzes, assignments, examinations, evaluation | Planned |

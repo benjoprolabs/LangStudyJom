@@ -42,6 +42,7 @@ export type FieldErrorCode =
   | 'level_order'
   | 'invalid_choice'
   | 'immutable'
+  | 'order_taken'
   | 'not_found';
 
 export type FieldErrors = Record<string, FieldErrorCode>;
@@ -442,6 +443,7 @@ export interface CourseInput {
   creditHours: number;
   difficulty: DifficultyLevel;
   learningObjectives?: LocalizedText[];
+  learningOutcomes?: LocalizedText[];
   references?: BookReference[];
   status?: RecordStatus;
 }
@@ -455,6 +457,7 @@ export function validateCourse(input: CourseInput): FieldErrors {
   checkInt(errors, 'creditHours', input.creditHours, 0, 30);
   if (!DIFFICULTY_LEVELS.includes(input.difficulty)) errors.difficulty = 'invalid_choice';
   checkList(errors, 'learningObjectives', input.learningObjectives);
+  checkList(errors, 'learningOutcomes', input.learningOutcomes);
   if (input.references && input.references.length > LIMITS.listLength) errors.references = 'too_long';
   input.references?.forEach((r, i) => {
     if (!r.title?.trim()) errors[`references.${i}`] = 'required';
@@ -481,6 +484,7 @@ export async function createCourse(db: QhazeDatabase, input: CourseInput): Promi
       creditHours: input.creditHours,
       difficulty: input.difficulty,
       learningObjectives: cleanList(input.learningObjectives),
+      learningOutcomes: cleanList(input.learningOutcomes),
       references: (input.references ?? []).map((r) => ({ ...r, title: r.title.trim() })),
       status: input.status ?? 'active',
       createdAt: now,
@@ -513,6 +517,7 @@ export async function updateCourse(db: QhazeDatabase, id: string, input: CourseI
       creditHours: input.creditHours,
       difficulty: input.difficulty,
       learningObjectives: cleanList(input.learningObjectives),
+      learningOutcomes: cleanList(input.learningOutcomes),
       references: (input.references ?? []).map((r) => ({ ...r, title: r.title.trim() })),
       status: input.status ?? current.status,
       updatedAt: nowIso(),

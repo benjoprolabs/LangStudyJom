@@ -75,6 +75,20 @@ bookmarks, achievements, plus the system tables `meta`, `activityLog`, `snapshot
 Codes are upper-case (`A–Z`, `0–9`, `-`, at most 20 characters) and unique per table. Malay text is
 required and English is optional. The UI falls back to Malay when English is missing.
 
+## Curriculum packages (seeding)
+
+| Part | Location |
+|---|---|
+| Format (codes, not IDs) and authoring helpers | `src/db/seed/types.ts` |
+| Data | `src/db/seed/packages/` (`faculties.ts`, `python-programme.ts`, `index.ts`) |
+| Validator and counts | `src/db/seed/validate.ts` |
+| Dry run, install and idempotency | `src/db/seed/install.ts` |
+| Module and lecture writes | `src/db/repositories/modules.ts` |
+| UI | `features/university/CurriculumPackages.tsx`. Package data is loaded with dynamic `import()` |
+
+Installed packages are recorded in `meta.curriculumPackages`. See [CURRICULUM.md](CURRICULUM.md) for
+the rules, the safety procedure and the generated curriculum tables.
+
 ## Assessment model (approved in Phase 1.1)
 
 | Record | Table | Role |

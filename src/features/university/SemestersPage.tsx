@@ -49,9 +49,20 @@ export function SemestersPage() {
       nextFreeSemesterNumber(db, programmeId),
     ]);
     const codes = new Map((await db.courses.toArray()).map((c) => [c.id, c.code]));
+    const ids = new Set(courses.map((c) => c.id));
+    const structure = new Map<string, { modules: number; lectures: number }>();
+    const bump = (courseId: string, key: 'modules' | 'lectures') => {
+      if (!ids.has(courseId)) return;
+      const s = structure.get(courseId) ?? { modules: 0, lectures: 0 };
+      s[key]++;
+      structure.set(courseId, s);
+    };
+    for (const m of await db.modules.toArray()) bump(m.courseId, 'modules');
+    for (const lec of await db.lectures.toArray()) bump(lec.courseId, 'lectures');
     const prereqs = new Map<string, string[]>();
     for (const link of links) prereqs.set(link.courseId, [...(prereqs.get(link.courseId) ?? []), codes.get(link.prerequisiteCourseId) ?? '?']);
-    return { semesters, courses, prereqs, nextNumber };
+    for (const list of prereqs.values()) list.sort(); // stable, readable order (ids are random)
+    return { semesters, courses, prereqs, nextNumber, structure };
   }, [programmeId]);
 
   if (!programmes) return <p className="text-sm text-muted">{t('common.loading')}</p>;
@@ -129,6 +140,7 @@ export function SemestersPage() {
                 semester={s}
                 courses={courses.filter((c) => c.semesterId === s.id)}
                 prereqs={data.prereqs}
+                structure={data.structure}
                 onEdit={() => setSemesterForm({ id: s.id, input: { programmeId, number: s.number, title: s.title, description: s.description } })}
                 onDelete={() => setDeleting({ table: 'semesters', id: s.id, name: `${t('entities.semester')} ${s.number} — ${l(s.title)}`, entity: 'semester' })}
                 onAddCourse={() => newCourse(s.id)}
@@ -154,6 +166,7 @@ function SemesterCard({
   semester,
   courses,
   prereqs,
+  structure,
   onEdit,
   onDelete,
   onAddCourse,
@@ -164,6 +177,7 @@ function SemesterCard({
   semester: Semester;
   courses: Course[];
   prereqs: Map<string, string[]>;
+  structure: Map<string, { modules: number; lectures: number }>;
   onEdit: () => void;
   onDelete: () => void;
   onAddCourse: () => void;
@@ -207,6 +221,11 @@ function SemesterCard({
                   <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
                     <span>{t('university.semesters.credits', { count: c.creditHours })}</span>
                     <Badge>{t(`difficulty.${c.difficulty}`)}</Badge>
+                    {structure.get(c.id) && (
+                      <span data-testid={`structure-${c.code}`}>
+                        {t('university.courses.structureCount', { modules: structure.get(c.id)!.modules, lectures: structure.get(c.id)!.lectures })}
+                      </span>
+                    )}
                     {pre.length > 0 && (
                       <span className="inline-flex items-center gap-1" data-testid={`prereqs-${c.code}`}>
                         <Link2 className="h-3 w-3" aria-hidden />

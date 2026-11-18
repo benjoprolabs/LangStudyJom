@@ -140,6 +140,8 @@ export interface Course extends BaseEntity {
   creditHours: number;
   difficulty: DifficultyLevel;
   learningObjectives: LocalizedText[];
+  /** What the student can demonstrably do after the course (added in 0.3.0; absent on older rows). */
+  learningOutcomes?: LocalizedText[];
   references: Reference[];
   status: RecordStatus;
 }
@@ -421,7 +423,8 @@ export type ActivityLogType =
   | 'curriculum.updated'
   | 'curriculum.archived'
   | 'curriculum.restored'
-  | 'curriculum.deleted';
+  | 'curriculum.deleted'
+  | 'curriculum.installed';
 
 export interface ActivityLogEntry {
   id: ID;
@@ -430,7 +433,7 @@ export interface ActivityLogEntry {
   details?: Record<string, string | number | boolean>;
 }
 
-export type SnapshotReason = 'manual' | 'pre-restore' | 'pre-migration';
+export type SnapshotReason = 'manual' | 'pre-restore' | 'pre-migration' | 'pre-seed';
 
 /** Internal recovery snapshot stored inside IndexedDB (not included in exports). */
 export interface Snapshot {

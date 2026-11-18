@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.3.0: Curriculum Seeding, Milestone 1
+
+- **Curriculum package system** (`src/db/seed/`): a code-referenced package format, a quality and
+  structure validator, a dry-run planner with conflict detection, and an atomic, idempotent installer
+  with a "Before curriculum install" recovery point. There is a **Curriculum packages** dialog on
+  My Faculties.
+- **Package `qhaze-university-core` v1.0.0**:
+  - the 7 faculties of the specification
+  - the 15 Faculty 01 academies (Lua and Luau separate)
+  - the 8-semester Python Programming programme: 31 courses, 124 modules, 372 lectures, 107 credit
+    hours and 44 prerequisite links, all bilingual. See `docs/CURRICULUM.md`.
+- Validated module and lecture writes (`repositories/modules.ts`). A lecture's course is always
+  derived from its module.
+- Courses gain **expected learning outcomes**, separate from objectives (optional field, no migration).
+- A course's own modules, lectures and materials are owned children for delete planning. Student
+  progress, notes and bookmarks still block a delete.
+- `guardedWrite` is nesting-aware: one integrity comparison for a whole bulk install.
+- UI: the course form shows the module and lecture structure; course rows show module and lecture
+  counts; prerequisite codes are sorted (they were in random ID order).
+- Fix (installer dry run): conflicts were not reported when the parent record was new.
+- Curriculum data loads on demand as a separate chunk, not in the main bundle.
+- Tests: 31 new unit and integration tests (154 in total); new e2e suite with 14 checks.
+
+> Correction: an earlier report referred to "9 faculties". The master specification defines
+> **exactly 7** faculties, and the package and its tests follow the specification.
+
 ## 0.2.0: Phase 2 University Management (structure; no curriculum seeded)
 
 - **M1 Faculties and Academies**: live lists, bilingual create and edit forms (Malay required,

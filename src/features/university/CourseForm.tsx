@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Link2, Plus, Trash2 } from 'lucide-react';
+import { BookOpen, Link2, Plus, Trash2 } from 'lucide-react';
 import { db } from '@/db/client';
 import { addPrerequisite, createCourse, removePrerequisite, updateCourse, type CourseInput } from '@/db/repositories/university';
 import { DIFFICULTY_LEVELS, type Course, type Reference } from '@/db/types';
@@ -21,6 +21,7 @@ export const courseToInput = (c: Course): CourseInput => ({
   creditHours: c.creditHours,
   difficulty: c.difficulty,
   learningObjectives: c.learningObjectives,
+  learningOutcomes: c.learningOutcomes ?? [],
   references: c.references,
   status: c.status,
 });
@@ -135,6 +136,14 @@ export function CourseForm({
           errors={errors}
           onChange={(learningObjectives) => setValue({ ...value, learningObjectives })}
         />
+        <LocalizedListField
+          label={t('university.courses.learningOutcomes')}
+          hint={t('university.courses.learningOutcomesHint')}
+          field="learningOutcomes"
+          items={value.learningOutcomes ?? []}
+          errors={errors}
+          onChange={(learningOutcomes) => setValue({ ...value, learningOutcomes })}
+        />
 
         <fieldset className="space-y-2">
           <legend className="text-sm font-medium">{t('university.courses.references')}</legend>
@@ -172,6 +181,7 @@ export function CourseForm({
         </fieldset>
       </form>
 
+      {id && <CourseStructure courseId={id} />}
       <div className="mt-6 border-t border-border pt-5">{id ? <PrerequisiteManager courseId={id} /> : <p className="text-sm text-muted">{t('university.courses.saveFirst')}</p>}</div>
     </Modal>
   );
@@ -276,6 +286,55 @@ function PrerequisiteManager({ courseId }: { courseId: string }) {
             {t('university.courses.addPrerequisite')}
           </Button>
         </div>
+      )}
+    </section>
+  );
+}
+
+/** Read-only view of a course's modules and lecture outline (content arrives in Phase 3). */
+function CourseStructure({ courseId }: { courseId: string }) {
+  const { t, l } = useI18n();
+  const data = useLiveQuery(async () => {
+    const modules = await db.modules.where('courseId').equals(courseId).sortBy('order');
+    const lectures = await db.lectures.where('courseId').equals(courseId).toArray();
+    return modules.map((m) => ({ module: m, lectures: lectures.filter((x) => x.moduleId === m.id).sort((a, b) => a.order - b.order) }));
+  }, [courseId]);
+  if (!data) return null;
+  const lectureCount = data.reduce((n, d) => n + d.lectures.length, 0);
+  return (
+    <section className="mt-6 space-y-3 border-t border-border pt-5" aria-labelledby="structure-title" data-testid="course-structure">
+      <div>
+        <h3 id="structure-title" className="flex items-center gap-2 text-sm font-semibold">
+          <BookOpen className="h-4 w-4 text-accent" aria-hidden />
+          {t('university.courses.structure')}
+          {data.length > 0 && <span className="font-normal text-muted">· {t('university.courses.structureCount', { modules: data.length, lectures: lectureCount })}</span>}
+        </h3>
+        <p className="mt-1 text-xs text-muted">{t('university.courses.structureHint')}</p>
+      </div>
+      {data.length === 0 ? (
+        <p className="text-sm text-muted">{t('university.courses.noModules')}</p>
+      ) : (
+        <ol className="space-y-3">
+          {data.map(({ module, lectures }) => (
+            <li key={module.id} className="rounded-lg border border-border p-3">
+              <p className="text-sm font-medium">
+                <span className="text-muted">{t('university.courses.moduleN', { n: module.order })} · </span>
+                {l(module.title)}
+              </p>
+              <ol className="mt-2 space-y-1 text-sm">
+                {lectures.map((lecture) => (
+                  <li key={lecture.id} className="flex items-baseline gap-2">
+                    <span className="w-8 shrink-0 text-right font-mono text-xs text-muted">
+                      {module.order}.{lecture.order}
+                    </span>
+                    <span className="flex-1">{l(lecture.title)}</span>
+                    <span className="shrink-0 text-xs text-muted">{t('university.courses.lectureMinutes', { count: lecture.estimatedMinutes })}</span>
+                  </li>
+                ))}
+              </ol>
+            </li>
+          ))}
+        </ol>
       )}
     </section>
   );

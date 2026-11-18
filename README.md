@@ -6,7 +6,7 @@ a coding laboratory, study tracking, GPA and a project portfolio.
 
 Bahasa Melayu is the primary language and English the secondary one. Programming terms stay in English.
 
-> **Status: Phase 2 University Management is complete (structure only; no curriculum has been seeded yet).** Later modules show which phase delivers them.
+> **Status: Phase 2 University Management and Curriculum Seeding Milestone 1 (7 faculties, Faculty 01 academies and the Python programme) are complete.** Later modules show which phase delivers them.
 > See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Run it
@@ -48,4 +48,5 @@ survives, and it exercises backup, restore and recovery points.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): technical architecture, database, i18n and data safety
 - [docs/ROADMAP.md](docs/ROADMAP.md): development phases and their status
 - [docs/INTEGRITY.md](docs/INTEGRITY.md): data integrity rules and open items
+- [docs/CURRICULUM.md](docs/CURRICULUM.md): curriculum packages and the generated curriculum tables
 - [docs/CHANGELOG.md](docs/CHANGELOG.md): release history

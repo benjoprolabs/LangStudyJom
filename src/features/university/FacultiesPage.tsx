@@ -13,6 +13,7 @@ import { LocalizedField } from '@/components/ui/LocalizedField';
 import { Modal } from '@/components/ui/Modal';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { CodeOrderStatus } from './CommonFields';
+import { CurriculumPackagesButton } from './CurriculumPackages';
 import { ArchivedToggle, CodeTag, DeleteDialog, RowActions, StatusBadge, useArchiveToggle, useFieldErrors, useRunner, type DeleteTarget } from './shared';
 
 const blank = (order: number): FacultyInput => ({ code: '', name: { ms: '', en: '' }, description: { ms: '', en: '' }, order, status: 'active' });
@@ -42,9 +43,12 @@ export function FacultiesPage() {
         title={t('nav.faculties')}
         description={t('university.faculties.subtitle')}
         actions={
-          <Button onClick={() => setEditing({ input: blank(nextOrder) })} icon={<Plus className="h-4 w-4" />}>
-            {t('university.faculties.add')}
-          </Button>
+          <>
+            <CurriculumPackagesButton />
+            <Button onClick={() => setEditing({ input: blank(nextOrder) })} icon={<Plus className="h-4 w-4" />}>
+              {t('university.faculties.add')}
+            </Button>
+          </>
         }
       />
       <div className="mb-4 flex justify-end">
