@@ -81,11 +81,11 @@ async function main() {
     await installPackage(page, 'Lua & Luau — Milestone 2', /Pakej dipasang: \d+ rekod dicipta\./);
     log('M1 then M2 installed through the UI; the M2 plan refreshes and reuses Faculty 01 + both academies (957 new, 3 reused)');
 
-    await contentCard.getByText('Akan ditulis: 25 kuliah dan 38 istilah glosari.').waitFor();
+    await contentCard.getByText('Akan ditulis: 37 kuliah dan 46 istilah glosari.').waitFor();
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
-    await page.getByText('Bahan kursus dipasang: 63 item ditulis.').waitFor();
+    await page.getByText('Bahan kursus dipasang: 83 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials 1.2.0 installed (25 lectures: LUA101 ×12, LUA102 ×12, LUAU203 1.1; 38 glossary terms); package then reports up to date');
+    log('Course materials 1.3.0 installed (37 lectures: LUA101 ×12, LUA102 ×12, LUA103 ×12, LUAU203 1.1; 46 glossary terms); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -120,15 +120,20 @@ async function main() {
     assert.equal(await lua102.getByText('Belum lengkap · struktur sahaja').count(), 0);
     const lua103 = lib.getByTestId('course-LUA103');
     await lua103.locator('summary').click();
-    await lua103.getByText('0/12 kuliah berkandungan').waitFor();
-    assert.equal(await lua103.getByText('Belum lengkap · struktur sahaja').count(), 12, 'unwritten lectures stay labelled incomplete');
+    await lua103.getByText('12/12 kuliah berkandungan').waitFor();
+    assert.equal(await lua103.getByText('Kandungan lengkap').count(), 12, 'every LUA103 lecture is written');
+    assert.equal(await lua103.getByText('Belum lengkap · struktur sahaja').count(), 0);
+    const lua104 = lib.getByTestId('course-LUA104');
+    await lua104.locator('summary').click();
+    await lua104.getByText('0/12 kuliah berkandungan').waitFor();
+    assert.equal(await lua104.getByText('Belum lengkap · struktur sahaja').count(), 12, 'unwritten lectures stay labelled incomplete');
     await page.getByLabel('Program').selectOption(luau.id);
     await lib.getByTestId('course-LUAU203').waitFor();
     assert.equal(await lib.locator('[data-testid^="course-LUA1"], [data-testid^="course-LUA2"], [data-testid^="course-LUA3"]').count(), 0);
     await page.getByTestId('glossary-list').locator('[data-term="datastore"]').waitFor();
     await page.getByLabel('Cari istilah').fill('metatab');
     assert.equal(await page.getByTestId('glossary-list').locator('li').count(), 1);
-    log('Library: Lua and Luau kept apart; LUA101 12/12 and LUA102 12/12 written; LUA103 0/12 labelled incomplete; glossary search');
+    log('Library: Lua and Luau kept apart; LUA101, LUA102 and LUA103 12/12 written; LUA104 0/12 labelled incomplete; glossary search');
 
     // ── Reader: 28-section lecture ───────────────────────────────────────
     const luaLecture = await lectureId(page, 'LUA102', 1, 1);
@@ -242,7 +247,7 @@ async function main() {
     await page.getByRole('link', { name: /Kuliah seterusnya/ }).click();
     await page.getByRole('heading', { name: /Assignment berbilang dan pertukaran nilai/ }).waitFor();
     await page.getByRole('link', { name: /Kuliah sebelumnya/ }).waitFor();
-    const unwritten = await lectureId(page, 'LUA103', 1, 1);
+    const unwritten = await lectureId(page, 'LUA104', 1, 1);
     await page.goto(`${base}#/lecture-room?lecture=${unwritten}`);
     await page.getByText('Kandungan kuliah ini belum ditulis — bahan pembelajaran belum lengkap').waitFor();
     await page.getByTestId('incomplete-badge').waitFor();
@@ -250,7 +255,7 @@ async function main() {
     await page.waitForTimeout(1200);
     assert.equal((await readStore(page, 'progress')).filter((p) => p.entityId === unwritten).length, 0, 'no progress recorded for an incomplete lecture');
     assert.equal(await page.getByRole('button', { name: 'Kod sumber (.zip)' }).count(), 0);
-    log('Next/previous navigation (LUA102 1.1 → 1.2); LUA103 1.1 (unwritten) is labelled incomplete, offers no completion and records no progress');
+    log('Next/previous navigation (LUA102 1.1 → 1.2); LUA104 1.1 (unwritten) is labelled incomplete, offers no completion and records no progress');
 
     // ── LUA102: all 12 lectures open, render fully and can be completed; earlier progress is kept ──
     const before102 = (await readStore(page, 'progress')).find((p) => p.entityId === luaLecture);
@@ -277,6 +282,38 @@ async function main() {
     assert.deepEqual(progressAfter.find((p) => p.entityId === luaLecture), before102, 'LUA102 1.1 progress unchanged');
     assert.ok((await readStore(page, 'notes')).some((n) => n.entityId === luaLecture && n.body === 'Guna local secara lalai.'), 'note kept');
     log(`LUA102 1.1–4.3: all 12 lectures open with 24 sections and ${units102} verified code units; LUA102 4.3 completed; earlier progress and notes unchanged`);
+
+    // ── LUA103: all 12 lectures open, render fully and can be completed; earlier progress is kept ──
+    const before102Last = (await readStore(page, 'progress')).find((p) => p.entityId === lastId);
+    let units103 = 0;
+    for (let m = 1; m <= 4; m++) {
+      for (let l = 1; l <= 3; l++) {
+        const id = await lectureId(page, 'LUA103', m, l);
+        await page.goto(`${base}#/lecture-room?lecture=${id}`);
+        await page.locator(`[data-testid^="status-LUA103 ${m}.${l}#"]`).first().waitFor();
+        assert.equal(await page.getByTestId('lecture-article').locator('section[data-section]').count(), 24, `LUA103 ${m}.${l} sections`);
+        const statuses = await page.locator(`[data-testid^="status-LUA103 ${m}.${l}#"]`).evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+        assert.ok(statuses.length >= 10 && statuses.every((x) => x === 'executed' || x === 'error-matched'), `LUA103 ${m}.${l}: ${statuses.join()}`);
+        units103 += statuses.length;
+        assert.equal(await page.getByTestId('incomplete-badge').count(), 0, `LUA103 ${m}.${l} is not labelled incomplete`);
+        await page.getByTestId('toc').first().waitFor();
+      }
+    }
+    // Browser Run of an input-driven Project 2 example (LUA103 4.3 game-v2) reproduces the documented output.
+    const gameFig = page.locator('figure[data-code-id="game-v2"]');
+    await gameFig.getByRole('button', { name: 'Jalankan', exact: true }).click();
+    await gameFig.getByTestId('run-verdict').waitFor({ timeout: 20_000 });
+    assert.equal(await gameFig.getByTestId('run-verdict').getAttribute('data-matches'), 'yes');
+    assert.equal(await gameFig.getByTestId('run-output').innerText(), 'higher, 2 left\ntype a whole number\nbetween 1 and 100 please\nlower, 1 left\nwon in 3');
+    await page.getByRole('button', { name: 'Tandakan selesai' }).click();
+    await page.getByRole('button', { name: 'Selesai' }).waitFor();
+    const last103 = await lectureId(page, 'LUA103', 4, 3);
+    const progress103 = await readStore(page, 'progress');
+    assert.equal(progress103.find((p) => p.entityId === last103).status, 'completed');
+    assert.deepEqual(progress103.find((p) => p.entityId === luaLecture), before102, 'LUA102 1.1 progress unchanged');
+    assert.deepEqual(progress103.find((p) => p.entityId === lastId), before102Last, 'LUA102 4.3 progress unchanged');
+    assert.ok((await readStore(page, 'notes')).some((n) => n.entityId === luaLecture && n.body === 'Guna local secara lalai.'), 'note kept');
+    log(`LUA103 1.1–4.3: all 12 lectures open with 24 sections and ${units103} verified code units; game-v2 run in the browser matches; LUA103 4.3 completed; earlier progress and notes unchanged`);
 
     // ── Luau lecture: Roblox examples marked and never claimed as executed ──
     // ── LUA101 4.2: io.read examples run in the browser with their documented input ──
@@ -314,7 +351,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.2\.0/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.3\.0/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

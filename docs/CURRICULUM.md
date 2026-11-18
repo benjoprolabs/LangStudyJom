@@ -411,10 +411,22 @@ released in later content packages.
 | LUA102 | 4.1 | tonumber(), tostring() and automatic coercion | 4 generated + 24 authored | 10 / 0 |
 | LUA102 | 4.2 | Calculator design: requirements and program flow | 4 generated + 24 authored | 10 / 0 |
 | LUA102 | 4.3 | Building and testing the calculator | 4 generated + 24 authored | 9 / 0 |
+| LUA103 | 1.1 | if, then and end | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 1.2 | elseif and multi-branch conditions | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 1.3 | The "a and b or c" idiom and its pitfall | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 2.1 | while loops | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 2.2 | repeat–until and the scope of its condition | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 2.3 | Numeric for: start, limit and step | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 3.1 | break to leave a loop | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 3.2 | goto and labels: the continue pattern (5.2+) | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 3.3 | Nested loops and algorithmic thinking | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 4.1 | Requirements, design and pseudocode | 4 generated + 24 authored | 10 / 0 |
+| LUA103 | 4.2 | math.random, math.randomseed and input validation | 4 generated + 24 authored | 12 / 0 |
+| LUA103 | 4.3 | Building, testing and improving the game | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
-| LUA-PROG | 288 | 24 | 264 |
+| LUA-PROG | 288 | 36 | 252 |
 | LUAU-PROG | 324 | 1 | 323 |
 <!-- /generated:content-status -->

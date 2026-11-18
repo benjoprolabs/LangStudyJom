@@ -989,6 +989,494 @@
    "hash": "032188de36e2e1",
    "status": "executed"
   },
+  "LUA103 1.1#temperature-advice": {
+   "hash": "069fbc94f980a2",
+   "status": "executed"
+  },
+  "LUA103 1.1#parity-else": {
+   "hash": "03bf851285d9d6",
+   "status": "executed"
+  },
+  "LUA103 1.1#branch-scope": {
+   "hash": "00f2d062f609e6",
+   "status": "executed"
+  },
+  "LUA103 1.1#branch-scope:debug": {
+   "hash": "0def33bea1c251",
+   "status": "error-matched"
+  },
+  "LUA103 1.1#return-choice": {
+   "hash": "1c9d395af4f8c6",
+   "status": "executed"
+  },
+  "LUA103 1.1#adult-check": {
+   "hash": "1789afecd60c89",
+   "status": "executed"
+  },
+  "LUA103 1.1#adult-check:debug": {
+   "hash": "0e94f52aaaea01",
+   "status": "error-matched"
+  },
+  "LUA103 1.1#poor-redundant-if": {
+   "hash": "078e4c7a36cd81",
+   "status": "executed"
+  },
+  "LUA103 1.1#improved-direct-boolean": {
+   "hash": "0cc5204a7a0487",
+   "status": "executed"
+  },
+  "LUA103 1.1#shipping-fee": {
+   "hash": "1920ffcbf433dd",
+   "status": "executed"
+  },
+  "LUA103 1.2#letter-grade": {
+   "hash": "1a56f71b10988f",
+   "status": "executed"
+  },
+  "LUA103 1.2#order-matters": {
+   "hash": "07bc8597e28f7f",
+   "status": "executed"
+  },
+  "LUA103 1.2#traffic-light": {
+   "hash": "0279db2ed5dddd",
+   "status": "executed"
+  },
+  "LUA103 1.2#traffic-light:debug": {
+   "hash": "08cd18d99a391a",
+   "status": "error-matched"
+  },
+  "LUA103 1.2#opening-hours": {
+   "hash": "1bacaf3177c153",
+   "status": "executed"
+  },
+  "LUA103 1.2#fan-speed": {
+   "hash": "1a0a76bd149441",
+   "status": "executed"
+  },
+  "LUA103 1.2#fan-speed:debug": {
+   "hash": "1a62a62650bd0a",
+   "status": "error-matched"
+  },
+  "LUA103 1.2#poor-long-chain": {
+   "hash": "04f254b47fb9cb",
+   "status": "executed"
+  },
+  "LUA103 1.2#improved-band-table": {
+   "hash": "0c29a0f102a39d",
+   "status": "executed"
+  },
+  "LUA103 1.2#bmi-category": {
+   "hash": "19252117df62da",
+   "status": "executed"
+  },
+  "LUA103 1.3#plural-label": {
+   "hash": "066f8219288072",
+   "status": "executed"
+  },
+  "LUA103 1.3#false-trap": {
+   "hash": "0b106255ab98af",
+   "status": "executed"
+  },
+  "LUA103 1.3#table-select": {
+   "hash": "042c8e7caeee6b",
+   "status": "executed"
+  },
+  "LUA103 1.3#table-select:debug": {
+   "hash": "1f62d3319e0107",
+   "status": "error-matched"
+  },
+  "LUA103 1.3#nil-default": {
+   "hash": "02ecba2af88b8e",
+   "status": "executed"
+  },
+  "LUA103 1.3#greeting-name": {
+   "hash": "0fa6adc630a66e",
+   "status": "executed"
+  },
+  "LUA103 1.3#greeting-name:debug": {
+   "hash": "0dbf5cc52d0d1a",
+   "status": "error-matched"
+  },
+  "LUA103 1.3#poor-nested-idiom": {
+   "hash": "0c2db3b6bc2ccf",
+   "status": "executed"
+  },
+  "LUA103 1.3#improved-elseif-label": {
+   "hash": "06240a0b93564f",
+   "status": "executed"
+  },
+  "LUA103 1.3#order-messages": {
+   "hash": "026af7db0e1ada",
+   "status": "executed"
+  },
+  "LUA103 2.1#countdown-while": {
+   "hash": "1f9297699acdf5",
+   "status": "executed"
+  },
+  "LUA103 2.1#digit-sum": {
+   "hash": "0b4ce74f6b0551",
+   "status": "executed"
+  },
+  "LUA103 2.1#digit-sum:debug": {
+   "hash": "18d7a59c221b2a",
+   "status": "error-matched"
+  },
+  "LUA103 2.1#savings-double": {
+   "hash": "1607bea9cd5f6a",
+   "status": "executed"
+  },
+  "LUA103 2.1#read-until-done": {
+   "hash": "1dd89496739318",
+   "status": "executed"
+  },
+  "LUA103 2.1#fill-tank": {
+   "hash": "108d8a53b6b481",
+   "status": "executed"
+  },
+  "LUA103 2.1#fill-tank:debug": {
+   "hash": "04583e04609e21",
+   "status": "error-matched"
+  },
+  "LUA103 2.1#poor-manual-counter": {
+   "hash": "01047ffe388b17",
+   "status": "executed"
+  },
+  "LUA103 2.1#improved-for-counter": {
+   "hash": "0f89d05d588cc3",
+   "status": "executed"
+  },
+  "LUA103 2.1#collatz": {
+   "hash": "0650791cf0fd2f",
+   "status": "executed"
+  },
+  "LUA103 2.2#repeat-vs-while": {
+   "hash": "1c3defe1b339f8",
+   "status": "executed"
+  },
+  "LUA103 2.2#until-sees-local": {
+   "hash": "09b0c9a053b7a1",
+   "status": "executed"
+  },
+  "LUA103 2.2#until-sees-local:debug": {
+   "hash": "147e4525e7bfba",
+   "status": "error-matched"
+  },
+  "LUA103 2.2#validate-repeat": {
+   "hash": "1c36f466fc751a",
+   "status": "executed"
+  },
+  "LUA103 2.2#yes-no": {
+   "hash": "0bbaa25c28c04a",
+   "status": "executed"
+  },
+  "LUA103 2.2#powers-of-two": {
+   "hash": "052c90c08cc5dd",
+   "status": "executed"
+  },
+  "LUA103 2.2#powers-of-two:debug": {
+   "hash": "00b63466f2ed5b",
+   "status": "error-matched"
+  },
+  "LUA103 2.2#poor-duplicated-read": {
+   "hash": "19a6fab0d648e6",
+   "status": "executed"
+  },
+  "LUA103 2.2#improved-single-read": {
+   "hash": "1bca22075affaa",
+   "status": "executed"
+  },
+  "LUA103 2.2#text-menu": {
+   "hash": "04e02aad2a69f9",
+   "status": "executed"
+  },
+  "LUA103 2.3#for-ranges": {
+   "hash": "1407695bc9012f",
+   "status": "executed"
+  },
+  "LUA103 2.3#loop-variable-local": {
+   "hash": "1d0deebd473966",
+   "status": "executed"
+  },
+  "LUA103 2.3#loop-variable-local:debug": {
+   "hash": "0a9a2f7febd16a",
+   "status": "error-matched"
+  },
+  "LUA103 2.3#float-step": {
+   "hash": "1081bcde8542b4",
+   "status": "executed"
+  },
+  "LUA103 2.3#remove-backwards": {
+   "hash": "05e03e4a0c3ce8",
+   "status": "executed"
+  },
+  "LUA103 2.3#times-table": {
+   "hash": "0ed1c25dc63e59",
+   "status": "executed"
+  },
+  "LUA103 2.3#times-table:debug": {
+   "hash": "00ac7173a192bb",
+   "status": "error-matched"
+  },
+  "LUA103 2.3#poor-forward-remove": {
+   "hash": "03e3bdc1093a45",
+   "status": "executed"
+  },
+  "LUA103 2.3#improved-filter-new": {
+   "hash": "094dad585204d2",
+   "status": "executed"
+  },
+  "LUA103 2.3#times-grid": {
+   "hash": "1a756708cbac43",
+   "status": "executed"
+  },
+  "LUA103 3.1#first-negative": {
+   "hash": "0caab555f1e39a",
+   "status": "executed"
+  },
+  "LUA103 3.1#innermost-only": {
+   "hash": "1de41b6e470907",
+   "status": "executed"
+  },
+  "LUA103 3.1#found-or-not": {
+   "hash": "1e822aa0650f1e",
+   "status": "executed"
+  },
+  "LUA103 3.1#found-or-not:debug": {
+   "hash": "17059d3de5b332",
+   "status": "error-matched"
+  },
+  "LUA103 3.1#exit-both": {
+   "hash": "1586d8f02ee518",
+   "status": "executed"
+  },
+  "LUA103 3.1#stop-at-limit": {
+   "hash": "05d2904633c20e",
+   "status": "executed"
+  },
+  "LUA103 3.1#stop-at-limit:debug": {
+   "hash": "017c147f6069b4",
+   "status": "error-matched"
+  },
+  "LUA103 3.1#poor-flag-loop": {
+   "hash": "079d70bf438197",
+   "status": "executed"
+  },
+  "LUA103 3.1#improved-early-return": {
+   "hash": "07e43e9af14f8a",
+   "status": "executed"
+  },
+  "LUA103 3.1#login-attempts": {
+   "hash": "1492c927e861d4",
+   "status": "executed"
+  },
+  "LUA103 3.2#continue-pattern": {
+   "hash": "07f1f79b9db15a",
+   "status": "executed"
+  },
+  "LUA103 3.2#skip-odd": {
+   "hash": "06034c4cc8111d",
+   "status": "executed"
+  },
+  "LUA103 3.2#skip-odd:debug": {
+   "hash": "1b26eb61dbb09b",
+   "status": "error-matched"
+  },
+  "LUA103 3.2#goto-done": {
+   "hash": "01aa9db5f430e1",
+   "status": "executed"
+  },
+  "LUA103 3.2#if-instead-of-goto": {
+   "hash": "08d2e1bf7e51d2",
+   "status": "executed"
+  },
+  "LUA103 3.2#setup-skip": {
+   "hash": "05aff591396802",
+   "status": "executed"
+  },
+  "LUA103 3.2#setup-skip:debug": {
+   "hash": "119aaa2f8ba3aa",
+   "status": "error-matched"
+  },
+  "LUA103 3.2#poor-deep-nesting": {
+   "hash": "1f927de6e31019",
+   "status": "executed"
+  },
+  "LUA103 3.2#improved-guard-continue": {
+   "hash": "12013d568ae036",
+   "status": "executed"
+  },
+  "LUA103 3.2#shopping-cleaner": {
+   "hash": "00e41bb889a34f",
+   "status": "executed"
+  },
+  "LUA103 3.3#triangle": {
+   "hash": "1b168ef42bd40a",
+   "status": "executed"
+  },
+  "LUA103 3.3#pair-sums": {
+   "hash": "023fbbe3ce2d7a",
+   "status": "executed"
+  },
+  "LUA103 3.3#pair-sums:debug": {
+   "hash": "077c9afa2e89eb",
+   "status": "error-matched"
+  },
+  "LUA103 3.3#primes-trial": {
+   "hash": "0785a8aec1e05d",
+   "status": "executed"
+  },
+  "LUA103 3.3#triangle-rep": {
+   "hash": "038074f4d7a490",
+   "status": "executed"
+  },
+  "LUA103 3.3#row-totals": {
+   "hash": "090a3e24f12343",
+   "status": "executed"
+  },
+  "LUA103 3.3#row-totals:debug": {
+   "hash": "160381a3464194",
+   "status": "error-matched"
+  },
+  "LUA103 3.3#poor-quadratic-dupes": {
+   "hash": "1a1e7d15c1d37b",
+   "status": "executed"
+  },
+  "LUA103 3.3#improved-set-dupes": {
+   "hash": "067c9210e49724",
+   "status": "executed"
+  },
+  "LUA103 3.3#bubble-sort": {
+   "hash": "056b020d176088",
+   "status": "executed"
+  },
+  "LUA103 4.1#check-guess": {
+   "hash": "0bd6ba0a524f54",
+   "status": "executed"
+  },
+  "LUA103 4.1#check-guess:debug": {
+   "hash": "145d0b7fab56b5",
+   "status": "error-matched"
+  },
+  "LUA103 4.1#scripted-round": {
+   "hash": "14f69341ce5926",
+   "status": "executed"
+  },
+  "LUA103 4.1#scripted-round:debug": {
+   "hash": "1a295a4d663588",
+   "status": "error-matched"
+  },
+  "LUA103 4.1#rules-table": {
+   "hash": "1d737950ddaf26",
+   "status": "executed"
+  },
+  "LUA103 4.1#auto-play": {
+   "hash": "071fd66af12d87",
+   "status": "executed"
+  },
+  "LUA103 4.1#warm-cold": {
+   "hash": "03435270837ad5",
+   "status": "executed"
+  },
+  "LUA103 4.1#poor-magic-numbers": {
+   "hash": "19b67a0ae3d429",
+   "status": "executed"
+  },
+  "LUA103 4.1#improved-feedback": {
+   "hash": "150f95b29b064f",
+   "status": "executed"
+  },
+  "LUA103 4.1#requirements-check": {
+   "hash": "1878f813d161d4",
+   "status": "executed"
+  },
+  "LUA103 4.2#seeded-dice": {
+   "hash": "03ed051d81c7fe",
+   "status": "executed"
+  },
+  "LUA103 4.2#random-forms": {
+   "hash": "0617d1c827d16b",
+   "status": "executed"
+  },
+  "LUA103 4.2#random-forms:debug": {
+   "hash": "157871462bda26",
+   "status": "error-matched"
+  },
+  "LUA103 4.2#parse-guess": {
+   "hash": "06b703f208543f",
+   "status": "executed"
+  },
+  "LUA103 4.2#inject-rng": {
+   "hash": "0cf7458ecba2f0",
+   "status": "executed"
+  },
+  "LUA103 4.2#random-word": {
+   "hash": "0a5e84360bc009",
+   "status": "executed"
+  },
+  "LUA103 4.2#random-word:debug": {
+   "hash": "144e749cb78873",
+   "status": "error-matched"
+  },
+  "LUA103 4.2#unchecked-tonumber": {
+   "hash": "0ebfdacfe76c63",
+   "status": "executed"
+  },
+  "LUA103 4.2#unchecked-tonumber:debug": {
+   "hash": "1d3ce01fbe39ea",
+   "status": "error-matched"
+  },
+  "LUA103 4.2#poor-reseed-loop": {
+   "hash": "10a15734eda9c6",
+   "status": "executed"
+  },
+  "LUA103 4.2#improved-seed-once": {
+   "hash": "161e176c2e768f",
+   "status": "executed"
+  },
+  "LUA103 4.2#dice-stats": {
+   "hash": "0fdf846ad1be9a",
+   "status": "executed"
+  },
+  "LUA103 4.3#full-game": {
+   "hash": "0ba1f0d3c1d0fb",
+   "status": "executed"
+  },
+  "LUA103 4.3#feedback-tests": {
+   "hash": "01c0d77d106495",
+   "status": "executed"
+  },
+  "LUA103 4.3#feedback-tests:debug": {
+   "hash": "1044237fb7b7a0",
+   "status": "error-matched"
+  },
+  "LUA103 4.3#scripted-play": {
+   "hash": "045aba8e1e3fc8",
+   "status": "executed"
+  },
+  "LUA103 4.3#scripted-play:debug": {
+   "hash": "17d8f310ba8657",
+   "status": "error-matched"
+  },
+  "LUA103 4.3#best-score": {
+   "hash": "1c3235925a308c",
+   "status": "executed"
+  },
+  "LUA103 4.3#difficulty-levels": {
+   "hash": "0b65e6c630970c",
+   "status": "executed"
+  },
+  "LUA103 4.3#poor-untestable": {
+   "hash": "0830f019f686a4",
+   "status": "executed"
+  },
+  "LUA103 4.3#improved-respond": {
+   "hash": "0e9623e8c910bb",
+   "status": "executed"
+  },
+  "LUA103 4.3#game-v2": {
+   "hash": "11c79031127784",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -1139,6 +1627,38 @@
   },
   "glossary#coercion": {
    "hash": "0ed7045b332abc",
+   "status": "executed"
+  },
+  "glossary#control-flow": {
+   "hash": "140b6f3c8f6b41",
+   "status": "executed"
+  },
+  "glossary#conditional": {
+   "hash": "12fac29ff9d021",
+   "status": "executed"
+  },
+  "glossary#loop": {
+   "hash": "0199ac7f2fb228",
+   "status": "executed"
+  },
+  "glossary#infinite-loop": {
+   "hash": "08e284a9bd85f9",
+   "status": "executed"
+  },
+  "glossary#goto-label": {
+   "hash": "083927c2031fe9",
+   "status": "executed"
+  },
+  "glossary#algorithm": {
+   "hash": "1b6710a2674109",
+   "status": "executed"
+  },
+  "glossary#pseudocode": {
+   "hash": "1807ee8088574e",
+   "status": "executed"
+  },
+  "glossary#pseudo-random": {
+   "hash": "1a0b8520fd5fe5",
    "status": "executed"
   }
  }

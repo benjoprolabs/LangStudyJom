@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.2: Milestone 3 — LUA103 complete (course materials 1.3.0)
+
+- **LUA103 1.1–4.3 written (12 lectures; LUA103 is now 12/12):** `if`/`then`/`end`, `elseif`, the
+  `a and b or c` idiom and its `false` trap, `while`, `repeat`–`until` and the scope of its condition, numeric
+  `for` (start, limit, step, float steps), `break`, `goto` and labels (the continue pattern, Lua 5.2+), nested
+  loops and algorithmic thinking (big-O, set tables), and Project 2 — a number guessing game (requirements and
+  pseudocode; `math.random`/`math.randomseed` and input validation; the assembled game with table-driven tests and
+  a scripted input reader). All 24 sections in Malay and English; 8–9 executed examples and 2–3 debug variants per
+  lecture (122 code units), every one verified by execution with Lua 5.4.8 and reproduced by the browser runner.
+- 8 new Click-to-Learn terms (control flow, conditional, loop, infinite loop, goto/label, algorithm, pseudocode,
+  pseudo-random) — 46 in total.
+- Randomness is taught with fixed seeds (`math.randomseed(7)` etc.), so every random example has a verifiable
+  output; the browser (wasmoon, Lua 5.4.6) and reference (Lua 5.4.8) produce identical sequences, confirmed by the
+  browser-equivalence test.
+- Verification corrected my predictions before release: a numeric string such as `"4"` is accepted as a `for`
+  limit (the debug example now uses `"four"`); `for i = 0, 0.3, 0.1` runs 3 times, not 4; unresolved `break`/`goto`
+  errors carry the chunk's last line as their position prefix; `tonumber(nil)` returns `nil` rather than raising an
+  error. Lectures document the real behaviour.
+- The content checker flags the word `continue` as Luau-only syntax, so the Lua lectures name the continue label
+  `::next_item::` and explain why.
+- Tests that assumed LUA103 was unwritten now use LUA104 1.1. LUA101, LUA102, LUA104, Luau, the schema and
+  student-data code are unchanged.
+
 ## 0.5.1: Milestone 3 — LUA102 complete (course materials 1.2.0)
 
 - **LUA102 1.2–4.3 written (11 lectures; LUA102 is now 12/12):** multiple assignment, naming and reserved
