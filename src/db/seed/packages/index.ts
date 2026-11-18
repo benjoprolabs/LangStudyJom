@@ -1,5 +1,7 @@
 import { L, type CurriculumPackage } from '../types';
 import { FACULTIES, FACULTY_01_ACADEMIES } from './faculties';
+import { LUA_PROGRAMME } from './lua-programme';
+import { LUAU_PROGRAMME } from './luau-programme';
 import { PYTHON_PROGRAMME } from './python-programme';
 
 /**
@@ -21,4 +23,22 @@ export const UNIVERSITY_CORE_M1: CurriculumPackage = {
   programmes: [PYTHON_PROGRAMME],
 };
 
-export const CURRICULUM_PACKAGES: CurriculumPackage[] = [UNIVERSITY_CORE_M1];
+/**
+ * Curriculum Seeding — Milestone 2: the Lua and Luau academies' programmes (two separate
+ * pathways). Faculty 01 and both academy definitions are included so the package is
+ * self-contained; when Milestone 1 is installed they are simply reused.
+ */
+export const LUA_LUAU_M2: CurriculumPackage = {
+  id: 'qhaze-f01-lua-luau',
+  version: '1.0.0',
+  title: L('Lua & Luau — Milestone 2', 'Lua & Luau — Milestone 2'),
+  description: L(
+    'Dua laluan berasingan dalam Fakulti 01: Program Pengaturcaraan Lua (Lua standard, 6 semester) dan Program Luau & Pembangunan Roblox (7 semester), lengkap dengan kursus, modul, struktur kuliah dan 18 projek berperingkat.',
+    'Two separate pathways in Faculty 01: the Lua Programming Programme (standard Lua, 6 semesters) and the Luau & Roblox Development Programme (7 semesters), with courses, modules, lecture structure and 18 progressive projects.',
+  ),
+  faculties: FACULTIES.filter((f) => f.code === 'F01'),
+  academies: FACULTY_01_ACADEMIES.filter((a) => a.code === 'F01-LUA' || a.code === 'F01-LUAU'),
+  programmes: [LUA_PROGRAMME, LUAU_PROGRAMME],
+};
+
+export const CURRICULUM_PACKAGES: CurriculumPackage[] = [UNIVERSITY_CORE_M1, LUA_LUAU_M2];
