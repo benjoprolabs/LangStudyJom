@@ -7,9 +7,11 @@
 | 1.2 | Integrity completion: items 4–10 (assessment–exercise, progress, notes and bookmarks, curriculum consistency, prerequisite cycles, semester range) | ✅ Complete |
 | 2.0 | Step 0, safety: schema v2, delete protection, save-time validation, cycle prevention, boot-safety fix, bio input, toast label | ✅ Complete |
 | 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Complete |
-| 2-S1 | Curriculum seeding M1: 7 faculties, 15 Faculty 01 academies, 8-semester Python programme ([CURRICULUM.md](CURRICULUM.md)) | ✅ Complete. **M2 awaits approval** |
-| 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | Planned |
-| 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | Planned |
+| 2-S1 | Curriculum seeding M1: 7 faculties, 15 Faculty 01 academies, 8-semester Python programme ([CURRICULUM.md](CURRICULUM.md)) | ✅ Complete |
+| 2-S2 | Curriculum seeding M2: separate Lua (6 sem.) and Luau/Roblox (7 sem.) programmes, plus the Professional Programming Education Standard: 28-section template, content packages, glossary, executed code verification, Library, Lecture Room, print/PDF/Markdown/ZIP | ✅ Built. **Awaiting approval**. Content: 2 of 612 Lua/Luau lectures fully written |
+| 2-S3+ | Further milestones (other academies), plus content releases for the remaining lectures | Not started (awaits M2 approval) |
+| 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | **Partly delivered in 2-S2**: Library, Lecture Room, lecture progress, notes and bookmarks. Still to come: Notes & Bookmarks page, Python content, text highlighting |
+| 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | **Delivered in 2-S2** (PDF via the browser print dialog) |
 | 5 | Practice Center: exercises, coding challenges, quizzes, assignments, examinations, evaluation | Planned |
 | 6 | Coding Laboratory: Python (Pyodide), Lua, Luau, editor, console, history | Planned |
 | 7 | Student management: study timer, calendar, history, goals, streaks, reminders | Planned |
@@ -58,6 +60,23 @@ component to `IMPLEMENTED` in `src/app/routes.tsx`. A startup check fails if the
   curriculum in Chromium (no issues reported), injects 9 violations covering rules 4–10 (all
   shown in the Integrity Check UI), and removes them (clean again, student profile untouched).
 - Upgrade check: data created with the 0.1.1 build was byte-identical after opening with 0.1.2.
+
+## Curriculum Seeding M2 test record
+
+- 201 unit and integration tests. They cover the M2 structure and separation rules, content quality
+  rules (each defect class has a rejection test), content install (atomic, idempotent, structure
+  untouched), reading progress (never auto-complete; the race regression), notes, bookmarks, Markdown
+  exports with no Practice data, ZIP CRC and structure, and the highlighter.
+- `npm run verify:code`: 20 examples executed and matched (Lua 5.4 and Luau VM), and 10 Roblox examples
+  labelled as not executed.
+- `scripts/e2e-learning.mjs`, 19 checks in real Chromium:
+  - installing M1, M2 and course materials through the UI;
+  - Lua/Luau separation in the database and the Library;
+  - the 28-section reader with its TOC; code copy and download (the downloaded file is executed with Lua 5.4);
+  - the glossary panel and bookmark; Markdown and ZIP downloads;
+  - progress, scroll position and notes persisting across a browser restart; explicit completion;
+  - a structure-only lecture; Roblox labelling; a 10-page A4 PDF and the course print document;
+  - a clean integrity check; a 390px phone layout; offline navigation; zero console errors.
 
 ## Phase 2 test record
 

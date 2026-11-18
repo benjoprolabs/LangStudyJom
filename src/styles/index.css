@@ -20,6 +20,8 @@
     --success: 5 150 105;
     --warning: 180 83 9;
     --danger: 220 38 38;
+    /* Blue accent for academic notes (Part G): headings, key concepts, definitions. */
+    --note: 37 99 235;
     color-scheme: light;
   }
 
@@ -36,6 +38,7 @@
     --success: 52 211 153;
     --warning: 251 191 36;
     --danger: 248 113 113;
+    --note: 96 165 250;
     color-scheme: dark;
   }
 
@@ -75,4 +78,37 @@
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Syntax highlighting (screen + print) */
+.tok-comment { color: rgb(var(--muted)); font-style: italic; }
+.tok-string { color: rgb(var(--success)); }
+.tok-number { color: rgb(var(--warning)); }
+.tok-keyword { color: rgb(var(--primary)); font-weight: 600; }
+.tok-builtin { color: rgb(var(--note)); }
+
+/* Print stylesheet (Part H): A4, no navigation, code blocks kept whole where possible. */
+@page {
+  size: A4;
+  margin: 18mm 16mm 20mm;
+  @bottom-right { content: counter(page) " / " counter(pages); font-size: 9pt; color: #666; }
+  @bottom-left { content: "QHAZE TECH UNIVERSITY"; font-size: 9pt; color: #666; }
+}
+@media print {
+  /* Always print with the light tokens, whatever the screen theme. */
+  :root, .dark {
+    --bg: 255 255 255; --surface: 255 255 255; --surface-2: 243 244 246; --border: 209 213 219;
+    --fg: 17 17 17; --muted: 75 85 99; --primary: 109 40 217; --accent: 14 116 144;
+    --success: 21 128 61; --warning: 180 83 9; --danger: 185 28 28; --note: 29 78 216;
+  }
+  [data-print-hide] { display: none !important; }
+  html, body { background: #fff !important; color: #111 !important; color-scheme: light !important; }
+  .dark body { background-image: none !important; }
+  .print-doc { font-size: 10.5pt; line-height: 1.5; }
+  .print-doc pre, .print-doc figure, .print-doc .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+  .print-doc h1, .print-doc h2, .print-doc h3 { break-after: avoid; page-break-after: avoid; }
+  .print-doc .page-break { break-before: page; page-break-before: always; }
+  /* Long code lines wrap on paper instead of being cut off at the page edge. */
+  .print-doc pre { white-space: pre-wrap !important; overflow-wrap: anywhere; overflow: visible !important; }
+  .print-doc a { color: #1d4ed8; text-decoration: underline; }
 }

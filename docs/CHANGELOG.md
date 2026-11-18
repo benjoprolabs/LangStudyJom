@@ -1,5 +1,61 @@
 # Changelog
 
+## 0.4.0: Curriculum Seeding, Milestone 2 (Lua & Luau) and the Professional Programming Education Standard
+
+**Curriculum (package `qhaze-f01-lua-luau` v1.0.0)**
+- Two separate programmes in Faculty 01:
+  - **LUA-PROG**: standard Lua 5.4, 6 semesters, 24 courses, 82 credits.
+  - **LUAU-PROG**: Luau & Roblox, 7 semesters, 27 courses, 93 credits.
+  - Together: 204 modules, 612 lectures, 75 prerequisite links, and 8 + 10 progressive projects (Part E).
+- Faculty 01 and both academies are reused when Milestone 1 is installed: 957 new records and 3 reused.
+  No Python record is changed.
+- Separation is enforced by tests:
+  - no Roblox API anywhere in the Lua programme;
+  - Luau Semester 1 is language-only;
+  - every Roblox-API course carries an explicit marker.
+
+**Course materials (new content-package system, `src/db/content`, `src/content`)**
+- A 28-section lecture template. Sections 1–4 are generated from curriculum metadata; sections 5–28 are authored.
+- Content packages are validated (completeness, order, bilingual text, glossary links, Lua/Luau/Roblox
+  separation, expected output, https references), dry-run planned, and installed atomically with a recovery point.
+- **Schema v3**: a `glossaryTerms` table (index-only migration with a pre-migration recovery point).
+  Glossary bookmarks are covered by the integrity rules.
+- Release 1 (`qhaze-f01-lua-luau-content` v1.0.0) contains **2 fully written pilot lectures** (LUA102 1.1, LUAU203 1.1)
+  and **16 Click-to-Learn glossary terms**. The other 610 Lua/Luau lectures are structure-only, and the UI says so.
+- `npm run verify:code` **executes** every runnable example: Lua 5.4 via `lupa`, Luau via `tools/luau-runner`.
+  Output must match exactly; results are in `docs/CODE-VERIFICATION.md`. Roblox examples are labelled and never executed.
+
+**Learning interface (Course Library and Lecture Room are now implemented)**
+- **Course Library**:
+  - programme selector, semester → course → module → lecture tree;
+  - "full content" / "structure only" badges;
+  - searchable glossary;
+  - per course and per module: Markdown, PDF/print, and source-code ZIP downloads.
+- **Lecture Room**:
+  - reading progress bar and a 28-entry table of contents (collapsible on phones);
+  - code blocks with syntax highlighting, runtime badge, copy, file download and expected output;
+  - glossary panel with related concepts and lectures, external-link indicator and bookmarking;
+  - lecture bookmark and an explicit "Mark complete" (reading never completes a lecture);
+  - autosaved personal notes with Markdown export;
+  - previous/next navigation and a separate link to the Practice Center.
+  - Reading position is restored after a restart, and the Lecture Room resumes the last-read lecture.
+- **Print / PDF** (`/print?lecture|module|course=`):
+  - A4 page size, page numbers, branding and a version line;
+  - always printed with the light palette; navigation and toasts hidden; long code lines wrap.
+  - The PDF is produced with the browser's "Save as PDF", fully offline.
+- Markdown exports contain course materials only. Practice Center data cannot appear in them, and a test proves it.
+
+**Fixes found while testing**
+- Package dialog: a package's dry run was stale after another package was installed (it showed 0 reused). Every card now re-plans after any install.
+- Progress writes are atomic read-modify-write transactions. Before, a reading save that landed just after
+  "Mark complete" could overwrite the completion (lost update). The regression test fails without the fix.
+- Reading position: opening a lecture recorded the top of the page before the saved position was restored,
+  overwriting it. Also, "no progress yet" was confused with "still loading".
+
+**Tests**: 201 unit and integration tests (13 new for the reader and exports, plus the content tests),
+31 code-verification tests, and a new e2e suite `scripts/e2e-learning.mjs` with 19 checks. Existing e2e
+suites were updated for schema v3 and the now-implemented Library.
+
 ## 0.3.0: Curriculum Seeding, Milestone 1
 
 - **Curriculum package system** (`src/db/seed/`): a code-referenced package format, a quality and

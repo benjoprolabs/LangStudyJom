@@ -12,6 +12,18 @@ export function downloadText(fileName: string, content: string, mime = 'applicat
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+/** Trigger a browser download for binary content (e.g. a ZIP archive). */
+export function downloadBytes(fileName: string, bytes: Uint8Array, mime = 'application/zip'): void {
+  const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type: mime }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 export function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
   const units = ['KB', 'MB', 'GB'];

@@ -11,6 +11,9 @@ import { AcademiesPage } from '@/features/university/AcademiesPage';
 import { FacultiesPage } from '@/features/university/FacultiesPage';
 import { ProgrammesPage } from '@/features/university/ProgrammesPage';
 import { SemestersPage } from '@/features/university/SemestersPage';
+import { LectureRoomPage } from '@/features/learning/LectureRoomPage';
+import { LibraryPage } from '@/features/learning/LibraryPage';
+import { PrintPage } from '@/features/learning/PrintPage';
 import { NotFound } from './NotFound';
 
 /** Components for the pages listed in IMPLEMENTED_PAGES. Others render their "planned" page. */
@@ -20,12 +23,16 @@ const IMPLEMENTED: Partial<Record<NavKey, ComponentType>> = {
   academies: AcademiesPage,
   programmes: ProgrammesPage,
   semesters: SemestersPage,
+  library: LibraryPage,
+  lectureRoom: LectureRoomPage,
   profile: ProfilePage,
   settings: SettingsPage,
   backup: BackupPage,
 };
 
 export const routes: RouteObject[] = [
+  // Print / PDF documents render without the app shell.
+  { path: '/print', element: <PrintPage /> },
   {
     element: <AppShell />,
     children: [

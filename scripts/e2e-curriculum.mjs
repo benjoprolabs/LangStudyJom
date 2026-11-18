@@ -47,7 +47,7 @@ async function main() {
     // ── Dry run in the UI ────────────────────────────────────────────────
     await page.getByRole('link', { name: 'Fakulti Saya' }).click();
     await page.getByRole('button', { name: 'Pakej kurikulum' }).click();
-    const card = page.getByTestId('package-card');
+    const card = page.getByTestId('package-card').filter({ hasText: 'Teras Universiti — Milestone 1' });
     await card.getByText('Teras Universiti — Milestone 1').waitFor();
     assert.ok(await card.getByText(EXPECTED_COUNTS).isVisible(), 'package counts');
     await card.getByText('Akan dicipta: 602 rekod. Sedia ada dan digunakan semula: 0.').waitFor();
@@ -178,8 +178,8 @@ async function main() {
     // Re-install after recovery works (the procedure is repeatable).
     await page.goto(`${base}#/faculties`);
     await page.getByRole('button', { name: 'Pakej kurikulum' }).click();
-    await page.getByTestId('package-card').getByText('Akan dicipta: 602 rekod.', { exact: false }).waitFor();
-    await page.getByTestId('package-card').getByRole('button', { name: 'Pasang pakej' }).click();
+    await page.getByTestId('package-card').filter({ hasText: 'Teras Universiti — Milestone 1' }).getByText('Akan dicipta: 602 rekod.', { exact: false }).waitFor();
+    await page.getByTestId('package-card').filter({ hasText: 'Teras Universiti — Milestone 1' }).getByRole('button', { name: 'Pasang pakej' }).click();
     await page.getByRole('dialog', { name: 'Pasang pakej kurikulum?' }).getByRole('button', { name: 'Pasang pakej' }).click();
     await page.getByText('Pakej dipasang: 602 rekod dicipta.').waitFor({ timeout: 60_000 });
     log('After recovery the package can be installed again cleanly');

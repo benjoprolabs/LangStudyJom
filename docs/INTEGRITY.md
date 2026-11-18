@@ -27,7 +27,7 @@ Polymorphic targets:
 |---|---|
 | `progress` | programme → programmes, semester → semesters, course → courses, module → modules, lecture → lectures |
 | `notes` | academy → academies, course → courses, lecture → lectures, general → *(no link allowed)* |
-| `bookmarks` | lecture → lectures, course → courses, material → learningMaterials, exercise → exercises |
+| `bookmarks` | lecture → lectures, course → courses, material → learningMaterials, exercise → exercises, glossary → glossaryTerms (schema v3) |
 
 An ID that exists in a *different* table is still a broken reference. For example, a progress
 record with `entityType: 'lecture'` that points at a course ID is reported.

@@ -31,13 +31,21 @@ src/
     bootstrap.ts  Safe open: version detection → pre-migration snapshot → upgrade
     integrity.ts  Referential-integrity checker
     backup/       Export, validation, restore, snapshots, backup data migrations
-    repositories/ Student, settings, activity log, statistics
+    repositories/ Student, settings, activity log, statistics, university, modules,
+                  learning (reading progress, lecture notes, bookmarks)
+    seed/         Curriculum (structure) packages: format, validator, planner, installer
+    content/      Course-material packages: format, inline syntax, validator, installer
+  content/        Course-material data: glossary + fully written lectures (lazy chunk)
   features/       One folder per feature (dashboard, onboarding, profile, settings,
-                  backup, planned)
+                  backup, university, learning, planned)
   hooks/          useSettings, useStudent, useAutosave
   i18n/           Dictionaries (ms = source, en), translator, provider
-  lib/            ids, time, checksum, download helpers
-scripts/e2e-smoke.mjs   End-to-end test
+  lib/            ids, time, checksum, download, zip (STORE), syntax highlighter
+scripts/          End-to-end suites (smoke, university, curriculum, learning)
+tools/
+  code-verification/  Executes every runnable course example (npm run verify:code)
+  luau-runner/        Luau VM runner built from source via mlua (binary not committed)
+  curriculum-docs/    Regenerates the tables in docs/CURRICULUM.md (npm run docs:curriculum)
 ```
 
 Navigation is driven by `src/app/navigation.ts`. Each nav item declares its path, icon, group,
@@ -89,6 +97,30 @@ required and English is optional. The UI falls back to Malay when English is mis
 Installed packages are recorded in `meta.curriculumPackages`. See [CURRICULUM.md](CURRICULUM.md) for
 the rules, the safety procedure and the generated curriculum tables.
 
+## Course materials and the learning interface (Curriculum Seeding M2)
+
+**Structure and content are separate.** Curriculum packages create lectures with a title, order and duration. Content
+packages (`src/db/content`) write `lecture.sections` and `contentVersion` onto *existing* lectures, plus the
+`glossaryTerms`. A content package is addressed by course code and module/lecture order, never by ID. It is
+validated (`validateContentPackage`), planned (`planContentInstall`: lectures that do not exist yet block
+the install) and installed in one `guardedWrite` after a `pre-seed` recovery point. Its record is kept in
+`meta.contentPackages`.
+
+| Part | Location |
+|---|---|
+| 28-section template, block types | `LECTURE_TEMPLATE`, `ContentBlock` in `src/db/types.ts` |
+| Inline syntax: `**bold**`, `` `code` ``, `[[term\|label]]`, `[label](https://…)` | `src/db/content/inline.ts` |
+| Authoring helpers (P, UL, CODE, EXPLAIN, S, NA …) | `src/db/content/authoring.ts` |
+| Data: glossary, pilot lectures | `src/content/` (dynamic import) |
+| Reader records | `src/db/repositories/learning.ts`. Progress writes are atomic read-modify-write; reading never completes a lecture |
+| Library, Lecture Room, Print | `src/features/learning/` (`LibraryPage`, `LectureRoomPage`, `PrintPage`) |
+| Rendering | `ContentRenderer.tsx`: blocks, highlighted code, glossary links (`GlossaryProvider`) |
+| Exports | `markdown.ts` (lecture/module/course Markdown, code files) + `lib/zip.ts` |
+
+**Print/PDF.** `/print?lecture=|module=|course=` renders outside the app shell. `@page` sets A4, margins,
+page counters and branding; `@media print` forces the light tokens and hides `[data-print-hide]` (toolbars,
+navigation, toasts). The PDF comes from the browser's "Save as PDF", with no PDF library and no network.
+
 ## Assessment model (approved in Phase 1.1)
 
 | Record | Table | Role |
@@ -102,7 +134,7 @@ Quiz, assignment and examination are assessment types, not exercise types. A qui
 questions (exercises), and an assignment many tasks. The same exercise can appear in practice and in
 several assessments without duplication.
 
-## Table inventory (28 tables; schema v2 adds indexes only)
+## Table inventory (29 tables: 28 from v1, plus `glossaryTerms` in v3)
 
 The brief's 24 suggested entities map onto **22 tables**, because Quiz and Assignment are
 `assessments.type` values (an approved design decision). There are **6 supporting tables**:
@@ -110,6 +142,7 @@ The brief's 24 suggested entities map onto **22 tables**, because Quiz and Assig
 | Group | Tables |
 |---|---|
 | Brief entities (22) | students, settings, faculties, academies, programmes, semesters, courses, coursePrerequisites, modules, lectures, learningMaterials, exercises, exerciseAttempts, assessments, studySessions, progress, grades, projects, projectTasks, notes, bookmarks, achievements |
+| Course materials (1, v3) | `glossaryTerms` (Click-to-Learn glossary; key-unique, scoped general / lua / luau / roblox) |
 | Supporting (6) | `enrollments` (student ↔ programme), `gradingScales` (configurable grading), `meta` (install date, schema version, last backup), `activityLog` (recent activity), `snapshots` + `snapshotPayloads` (recovery points: metadata and body, kept separate so listing stays cheap; never exported) |
 
 **About the "30 tables" figure.** The Phase 1 chat summary said 30 tables. That was a miscount in
@@ -134,6 +167,7 @@ in the design from the first commit and was approved in Phase 1.1.
 |---|---|---|
 | 1 | 0.1.0 | Initial 28 tables |
 | 2 | 0.1.3 | Index-only, no row transformed. Adds reverse-reference indexes so delete protection can find a record's dependants: `enrollments.currentSemesterId`, `exerciseAttempts.assessmentId`, `assessments.*exerciseIds`, `studySessions.programmeId` / `.semesterId`, and `[entityType+entityId]` on `progress`, `notes` and `bookmarks`. A test enforces that every reference used by delete protection is indexed |
+| 3 | 0.4.0 | Adds the `glossaryTerms` table (`id, &key, scope`). No existing row is transformed; a pre-migration recovery point is taken as for every upgrade. Bookmarks gain the `glossary` entity type (integrity rule added) |
 
 ### Boot safety: the database never opens itself
 
@@ -202,7 +236,19 @@ cyan (#22D3EE) dark theme. The theme is stored in settings (dark, light or syste
 script applies the cached theme before React loads to avoid a flash. The layout is responsive: a fixed
 sidebar from 1024px wide, and a drawer below that. It is checked for no horizontal overflow at 390px.
 
-## Known limitations (Phase 1)
+## Known limitations
+
+Curriculum Seeding M2:
+
+- **Content coverage.** Only 2 of 612 Lua/Luau lectures have full 28-section content. The other 610 are
+  structure-only and labelled so; no Python lecture has content yet.
+- **Text highlighting** in the reader (Part I) is not implemented. Bookmarks, notes and the glossary are.
+- **Roblox examples** are checked statically, never executed. **Luau** examples are executed but not
+  type-checked (`luau-analyze` is not run).
+- **PDF** is produced by the browser's print dialog ("Save as PDF"). There is no one-click PDF file download.
+- The Lecture Room's practice link opens the Practice Center, which is still the Phase 5 planned page.
+
+Phase 1:
 
 - Data lives in one browser profile. Cloud sync is intentionally out of scope and can be added later as an option.
 - Recovery points are stored in the same IndexedDB. They protect against bad restores and upgrades, but

@@ -195,7 +195,7 @@ async function main() {
     log('Settings validate input and persist');
 
     // ── Planned module pages are honest ──────────────────────────────────
-    await page.getByRole('link', { name: 'Course Library' }).click();
+    await page.getByRole('link', { name: 'Notes & Bookmarks' }).click();
     await page.getByRole('heading', { name: 'This module is built in Phase 3' }).waitFor();
     log('Future modules show their delivery phase and prepared tables (no fake controls)');
 
@@ -420,12 +420,12 @@ async function main() {
           };
         }),
     );
-    assert.equal(migrated.version, 20);
+    assert.equal(migrated.version, 30);
     assert.equal(migrated.student.bio, 'Rekod Fasa 1');
     assert.ok(migrated.hasNewIndex);
     await page.getByRole('button', { name: 'Jalankan semakan' }).click();
     await page.getByText(/Tiada isu ditemui/).waitFor();
-    log('Schema v1 database migrates to v2 with a pre-migration recovery point; student data intact');
+    log('Schema v1 database migrates to the current schema (v3) with a pre-migration recovery point; student data intact');
     await context.close();
 
     const relevantErrors = consoleErrors.filter((e) => !/favicon/i.test(e));

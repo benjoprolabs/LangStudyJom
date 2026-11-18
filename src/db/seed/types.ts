@@ -5,7 +5,7 @@ import type { DifficultyLevel, LocalizedText, Reference } from '../types';
  * database id, so a package is portable and idempotent: installing it twice creates nothing new.
  *
  * Lecture CONTENT is not part of a structure package — a lecture here is its title, order
- * and estimated duration. Content follows the 20-section template in Phase 3.
+ * and estimated duration. Content (the 28-section template) ships in content packages (src/db/content).
  */
 
 export const L = (ms: string, en: string): LocalizedText => ({ ms, en });

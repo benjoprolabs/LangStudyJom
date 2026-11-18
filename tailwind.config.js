@@ -19,6 +19,7 @@ export default {
         success: token('success'),
         warning: token('warning'),
         danger: token('danger'),
+        note: token('note'),
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'Segoe UI', 'Roboto', 'sans-serif'],

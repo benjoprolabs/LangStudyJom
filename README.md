@@ -6,7 +6,10 @@ a coding laboratory, study tracking, GPA and a project portfolio.
 
 Bahasa Melayu is the primary language and English the secondary one. Programming terms stay in English.
 
-> **Status: Phase 2 University Management and Curriculum Seeding Milestone 1 (7 faculties, Faculty 01 academies and the Python programme) are complete.** Later modules show which phase delivers them.
+> **Status: Curriculum Seeding Milestone 2 is built and awaiting approval.** It adds the separate Lua and Luau/Roblox
+> programmes, the 28-section course-material standard, the Course Library, the Lecture Room and Markdown, PDF and ZIP downloads.
+> 2 pilot lectures are fully written; the remaining lectures are structure-only for now.
+> Phase 2 University Management and Seeding Milestone 1 (7 faculties, Faculty 01 academies, the Python programme) are complete.
 > See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Run it
@@ -31,7 +34,20 @@ npm run typecheck    # TypeScript strict mode
 npm run build && npm run test:e2e   # end-to-end test in real Chromium (needs Playwright installed)
 ```
 
-The end-to-end test opens the real production build. It restarts the browser to confirm data
+### Course-material code verification
+
+```bash
+pip install lupa               # Lua 5.4 reference interpreter for Python
+cargo build --release --manifest-path tools/luau-runner/Cargo.toml   # Luau VM (Rust toolchain; builds Luau from source)
+npm run verify:code            # executes every runnable example → docs/CODE-VERIFICATION.md
+npm run docs:curriculum        # regenerates the curriculum tables in docs/CURRICULUM.md
+```
+
+If a runtime is missing, its examples are reported as *skipped*, never as passed. Roblox examples are never
+executed (they need Roblox Studio). `scripts/e2e-learning.mjs` also needs `lupa`, because it runs a downloaded
+example file.
+
+The end-to-end tests open the real production build. It restarts the browser to confirm data
 survives, and it exercises backup, restore and recovery points.
 
 ## Your data

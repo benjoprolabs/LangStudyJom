@@ -408,6 +408,8 @@ export interface StudentProgress extends BaseEntity {
   /** Opening a lecture does NOT complete it — completion is an explicit action. */
   status: 'not_started' | 'in_progress' | 'completed';
   percent: number;
+  /** Last reading position (0–1 of the page) so the reader can resume where the student stopped. */
+  position?: number;
   lastAccessedAt?: ISODateString;
   completedAt?: ISODateString;
 }
