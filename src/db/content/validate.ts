@@ -61,6 +61,7 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
 
   const codeIds = new Set<string>();
   const codeById = new Map<string, string>();
+  const coveredById = new Map<string, Set<number>>();
   const allBlocks = sections.flatMap((s) => s.blocks.map((b) => ({ section: s.kind, block: b })));
   for (const { block } of allBlocks) if (block.type === 'code') {
     if (codeIds.has(block.id)) errors.push(where(`duplicate code id ${block.id}`));
@@ -129,13 +130,15 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
 
   /**
    * Line-by-line rule: ranges ("3", "3–6") must lie inside the code, and every line that is not blank,
-   * not a comment and not a lone closing keyword must be explained. Catches gaps and off-by-one ranges.
+   * not a comment and not a lone closing keyword must be explained by at least one explain block for
+   * that example (an example may be discussed in several places). Catches gaps and off-by-one ranges.
    */
   function checkExplainCoverage(w: string, block: Extract<ContentBlock, { type: 'explain' }>) {
     const code = codeById.get(block.codeId);
     if (code === undefined) return;
     const lines = codeLines(code);
-    const covered = new Set<number>();
+    const covered = coveredById.get(block.codeId) ?? new Set<number>();
+    coveredById.set(block.codeId, covered);
     for (const item of block.items) {
       const range = parseLineRange(item.lines);
       if (!range || range[0] < 1 || range[1] > lines.length || range[0] > range[1]) {
@@ -145,8 +148,11 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
       for (let n = range[0]; n <= range[1]; n++) covered.add(n);
       if (range[0] === range[1] && !lines[range[0] - 1]!.trim()) errors.push(where(`${w}: explanation "${item.lines}" points at a blank line of ${block.codeId}`));
     }
-    const missing = lines.map((l, i) => [l.trim(), i + 1] as const).filter(([l, n]) => l && !l.startsWith('--') && !TRIVIAL_LINE.test(l) && !covered.has(n));
-    if (missing.length) errors.push(where(`${w}: ${block.codeId} lines not explained: ${missing.map(([, n]) => n).join(', ')}`));
+  }
+
+  for (const [id, covered] of coveredById) {
+    const missing = codeLines(codeById.get(id)!).map((l, i) => [l.trim(), i + 1] as const).filter(([l, n]) => l && !l.startsWith('--') && !TRIVIAL_LINE.test(l) && !covered.has(n));
+    if (missing.length) errors.push(where(`${id} lines not explained: ${missing.map(([, n]) => n).join(', ')}`));
   }
 
   // "Explain This Code": every example of the lecture has a line-by-line explanation somewhere.

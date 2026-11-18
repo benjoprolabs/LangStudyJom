@@ -198,7 +198,7 @@ describe('content installation', () => {
   it('requires the curriculum structure first and writes nothing otherwise', async () => {
     const db = await freshDb();
     const plan = await planContentInstall(db, LUA_LUAU_CONTENT);
-    expect(plan.missing).toEqual(['LUA102 1.1', 'LUAU203 1.1']);
+    expect(plan.missing).toEqual(LUA_LUAU_CONTENT.lectures.map((l) => `${l.courseCode} ${l.module}.${l.lecture}`));
     await expect(installContentPackage(db, LUA_LUAU_CONTENT)).rejects.toBeInstanceOf(ContentInstallError);
     expect(await db.glossaryTerms.count()).toBe(0);
   });
@@ -211,7 +211,7 @@ describe('content installation', () => {
     const before = await dumpTables(db);
 
     const result = await installContentPackage(db, LUA_LUAU_CONTENT);
-    expect(result.written).toBe(16 + 2);
+    expect(result.written).toBe(LUA_LUAU_CONTENT.glossary.length + LUA_LUAU_CONTENT.lectures.length);
     expect((await db.snapshots.get(result.snapshotId!))?.reason).toBe('pre-seed');
 
     const course = (await db.courses.where('code').equals('LUA102').first())!;
@@ -220,7 +220,7 @@ describe('content installation', () => {
     expect(lecture.sections.map((s) => s.kind)).toEqual(AUTHORED_SECTIONS);
     expect(lecture.sections).toEqual(LUA102_1_1.sections);
     expect(lecture.contentVersion).toBe(LUA_LUAU_CONTENT.version);
-    expect(await db.glossaryTerms.count()).toBe(16);
+    expect(await db.glossaryTerms.count()).toBe(LUA_LUAU_CONTENT.glossary.length);
 
     // Only lecture content changed: every other table (structure, student) is identical.
     const after = await dumpTables(db);
@@ -235,10 +235,10 @@ describe('content installation', () => {
     expect((await checkDatabaseIntegrity(db)).issues).toEqual([]);
 
     expect(await installContentPackage(db, LUA_LUAU_CONTENT)).toMatchObject({ written: 0 });
-    expect((await planContentInstall(db, LUA_LUAU_CONTENT)).lecturesUpToDate).toBe(2);
+    expect((await planContentInstall(db, LUA_LUAU_CONTENT)).lecturesUpToDate).toBe(LUA_LUAU_CONTENT.lectures.length);
   });
 
-  it('a corrected release (1.0.0 → 1.0.1) updates installed lectures and keeps student data', async () => {
+  it('a newer release updates lectures installed by an older one and keeps student data', async () => {
     const db = await freshDb();
     const student = await createStudent(db, { fullName: 'Nur Aisyah', preferredName: 'Aisyah' });
     await installPackage(db, UNIVERSITY_CORE_M1);
@@ -250,10 +250,11 @@ describe('content installation', () => {
     const lecture = (await db.lectures.where('[moduleId+order]').equals([module.id, 1]).first())!;
     await db.notes.add({ id: 'n1', studentId: student.id, entityType: 'lecture', entityId: lecture.id, kind: 'lecture_note', title: 't', body: 'mine', tags: [], createdAt: 'x', updatedAt: 'x' });
 
-    expect(await planContentInstall(db, LUA_LUAU_CONTENT)).toMatchObject({ lecturesToWrite: 2, glossaryToWrite: 16 });
-    expect((await installContentPackage(db, LUA_LUAU_CONTENT)).written).toBe(18);
+    // The old release contained exactly the lectures/terms of `old`; all of them are rewritten.
+    expect(await planContentInstall(db, LUA_LUAU_CONTENT)).toMatchObject({ lecturesToWrite: LUA_LUAU_CONTENT.lectures.length, glossaryToWrite: LUA_LUAU_CONTENT.glossary.length });
+    expect((await installContentPackage(db, LUA_LUAU_CONTENT)).written).toBe(LUA_LUAU_CONTENT.lectures.length + LUA_LUAU_CONTENT.glossary.length);
     const updated = (await db.lectures.get(lecture.id))!;
-    expect(updated.contentVersion).toBe('1.0.1');
+    expect(updated.contentVersion).toBe(LUA_LUAU_CONTENT.version);
     expect(JSON.stringify(updated.sections)).toContain('"29–37"');
     expect((await db.notes.get('n1'))?.body).toBe('mine');
     expect((await checkDatabaseIntegrity(db)).issues).toEqual([]);

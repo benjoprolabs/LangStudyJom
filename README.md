@@ -6,10 +6,9 @@ a coding laboratory, study tracking, GPA and a project portfolio.
 
 Bahasa Melayu is the primary language and English the secondary one. Programming terms stay in English.
 
-> **Status: Curriculum Seeding Milestone 2 is built and awaiting approval.** It adds the separate Lua and Luau/Roblox
-> programmes, the 28-section course-material standard, the Course Library, the Lecture Room and Markdown, PDF and ZIP downloads.
-> 2 pilot lectures are fully written; the remaining lectures are structure-only for now.
-> Phase 2 University Management and Seeding Milestone 1 (7 faculties, Faculty 01 academies, the Python programme) are complete.
+> **Status: Milestone 3 (Lua & Luau Semester 1 lecture content) is in progress.** Done so far: interactive code
+> examples (Run for Lua 5.4 in the browser, Explain, error & debugging variants, execution status) and all 12 lectures
+> of **LUA101**. Lectures not yet written are labelled "Incomplete · structure only".
 > See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Run it

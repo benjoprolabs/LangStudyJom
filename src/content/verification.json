@@ -77,6 +77,482 @@
    "hash": "1b3baedbfd6e17",
    "status": "compiled"
   },
+  "LUA101 1.1#hello-version": {
+   "hash": "12fc83c5d99aa8",
+   "status": "executed"
+  },
+  "LUA101 1.1#one-structure": {
+   "hash": "19f038b9a1e84c",
+   "status": "executed"
+  },
+  "LUA101 1.1#mechanism-object": {
+   "hash": "1dfce532b45020",
+   "status": "executed"
+  },
+  "LUA101 1.1#mechanism-object:debug": {
+   "hash": "131e95fd22106b",
+   "status": "error-matched"
+  },
+  "LUA101 1.1#format-alternative": {
+   "hash": "1cd750a0e3cc55",
+   "status": "executed"
+  },
+  "LUA101 1.1#poor-parallel": {
+   "hash": "0bec8da1fd2a76",
+   "status": "executed"
+  },
+  "LUA101 1.1#improved-records": {
+   "hash": "0d7dfed4628587",
+   "status": "executed"
+  },
+  "LUA101 1.1#timeline": {
+   "hash": "1012d93b6b9c6f",
+   "status": "executed"
+  },
+  "LUA101 1.1#timeline:debug": {
+   "hash": "1d79912f7301e1",
+   "status": "error-matched"
+  },
+  "LUA101 1.2#host-config": {
+   "hash": "1f17d01112a20f",
+   "status": "executed"
+  },
+  "LUA101 1.2#host-capabilities": {
+   "hash": "106887c15fd796",
+   "status": "executed"
+  },
+  "LUA101 1.2#script-returns": {
+   "hash": "08219da606620a",
+   "status": "executed"
+  },
+  "LUA101 1.2#script-returns:debug": {
+   "hash": "0b3ace3a1d7db5",
+   "status": "error-matched"
+  },
+  "LUA101 1.2#config-return": {
+   "hash": "0843d617785598",
+   "status": "executed"
+  },
+  "LUA101 1.2#safe-load": {
+   "hash": "1f14758f61306a",
+   "status": "executed"
+  },
+  "LUA101 1.2#safe-load:debug": {
+   "hash": "18a6b81a462d38",
+   "status": "error-matched"
+  },
+  "LUA101 1.2#poor-open-env": {
+   "hash": "19cca496d6876d",
+   "status": "executed"
+  },
+  "LUA101 1.2#improved-sandbox": {
+   "hash": "16997258197b39",
+   "status": "executed"
+  },
+  "LUA101 1.2#theme-loader": {
+   "hash": "0a2a08bbc072b8",
+   "status": "executed"
+  },
+  "LUA101 1.3#numbers-53": {
+   "hash": "05e833df6dfa9f",
+   "status": "executed"
+  },
+  "LUA101 1.3#bitwise-flags": {
+   "hash": "0b40abc508259d",
+   "status": "executed"
+  },
+  "LUA101 1.3#const-54": {
+   "hash": "1e10e08c072891",
+   "status": "executed"
+  },
+  "LUA101 1.3#const-54:debug": {
+   "hash": "0ccefcc3b0c9d1",
+   "status": "error-matched"
+  },
+  "LUA101 1.3#portable-floor": {
+   "hash": "12d8ebd94f6690",
+   "status": "executed"
+  },
+  "LUA101 1.3#removed-unpack": {
+   "hash": "11cb54377668b1",
+   "status": "executed"
+  },
+  "LUA101 1.3#removed-unpack:debug": {
+   "hash": "18507d765bdf4d",
+   "status": "error-matched"
+  },
+  "LUA101 1.3#poor-assume": {
+   "hash": "112a6b55f39060",
+   "status": "executed"
+  },
+  "LUA101 1.3#improved-check": {
+   "hash": "1f94096d9a61aa",
+   "status": "executed"
+  },
+  "LUA101 1.3#capability-report": {
+   "hash": "15bce61061da45",
+   "status": "executed"
+  },
+  "LUA101 2.1#check-version": {
+   "hash": "18229afd87c5ea",
+   "status": "executed"
+  },
+  "LUA101 2.1#library-report": {
+   "hash": "0d8687c00d608c",
+   "status": "executed"
+  },
+  "LUA101 2.1#version-numbers": {
+   "hash": "04a023b78a3b63",
+   "status": "executed"
+  },
+  "LUA101 2.1#version-numbers:debug": {
+   "hash": "05b13580e87eab",
+   "status": "error-matched"
+  },
+  "LUA101 2.1#feature-check": {
+   "hash": "043df974710c4f",
+   "status": "executed"
+  },
+  "LUA101 2.1#max-integer": {
+   "hash": "14021d318787f6",
+   "status": "executed"
+  },
+  "LUA101 2.1#max-integer:debug": {
+   "hash": "08067fc0a4eb3d",
+   "status": "error-matched"
+  },
+  "LUA101 2.1#poor-version-check": {
+   "hash": "07cdd8424be256",
+   "status": "executed"
+  },
+  "LUA101 2.1#improved-version-check": {
+   "hash": "0c394511b25c44",
+   "status": "executed"
+  },
+  "LUA101 2.1#improved-version-check:debug": {
+   "hash": "1b92065dc6dfe8",
+   "status": "error-matched"
+  },
+  "LUA101 2.1#env-checker": {
+   "hash": "010d0a2f3d4033",
+   "status": "executed"
+  },
+  "LUA101 2.2#mini-repl": {
+   "hash": "15ca7087861e4e",
+   "status": "executed"
+  },
+  "LUA101 2.2#local-per-line": {
+   "hash": "0b43a0a8ba5814",
+   "status": "executed"
+  },
+  "LUA101 2.2#local-per-line:debug": {
+   "hash": "1a9f928804dd17",
+   "status": "error-matched"
+  },
+  "LUA101 2.2#script-args": {
+   "hash": "0c020ea9bb8937",
+   "status": "executed"
+  },
+  "LUA101 2.2#script-args:debug": {
+   "hash": "0e3114d14f949e",
+   "status": "error-matched"
+  },
+  "LUA101 2.2#chunk-return": {
+   "hash": "1128dbf74a8e51",
+   "status": "executed"
+  },
+  "LUA101 2.2#poor-toplevel": {
+   "hash": "118daa4da7b503",
+   "status": "executed"
+  },
+  "LUA101 2.2#improved-main": {
+   "hash": "12cd15a0cda4ba",
+   "status": "executed"
+  },
+  "LUA101 2.2#line-calculator": {
+   "hash": "004ae9ecdb123e",
+   "status": "executed"
+  },
+  "LUA101 2.3#annotated": {
+   "hash": "159dad2f032d52",
+   "status": "executed"
+  },
+  "LUA101 2.3#global-leak": {
+   "hash": "0189ea1ed873fa",
+   "status": "executed"
+  },
+  "LUA101 2.3#typo-field": {
+   "hash": "1e2542e17121e3",
+   "status": "executed"
+  },
+  "LUA101 2.3#typo-field:debug": {
+   "hash": "1cba73eb2d7aa3",
+   "status": "error-matched"
+  },
+  "LUA101 2.3#strict-globals": {
+   "hash": "02e70080efbc7a",
+   "status": "executed"
+  },
+  "LUA101 2.3#missing-end": {
+   "hash": "134acab6d32e58",
+   "status": "executed"
+  },
+  "LUA101 2.3#missing-end:debug": {
+   "hash": "15dae620d937b6",
+   "status": "error-matched"
+  },
+  "LUA101 2.3#poor-undocumented": {
+   "hash": "066a2c6b926d9f",
+   "status": "executed"
+  },
+  "LUA101 2.3#improved-annotated": {
+   "hash": "04f5e2b262ceb8",
+   "status": "executed"
+  },
+  "LUA101 2.3#units-module": {
+   "hash": "107dba8a2ad113",
+   "status": "executed"
+  },
+  "LUA101 3.1#load-run": {
+   "hash": "0686a98e69742f",
+   "status": "executed"
+  },
+  "LUA101 3.1#chunk-args": {
+   "hash": "1e08c5276cc700",
+   "status": "executed"
+  },
+  "LUA101 3.1#dump-bytecode": {
+   "hash": "0511c81ea37260",
+   "status": "executed"
+  },
+  "LUA101 3.1#dump-bytecode:debug": {
+   "hash": "0ccfb872685488",
+   "status": "error-matched"
+  },
+  "LUA101 3.1#load-reader": {
+   "hash": "1bc565f23e4e89",
+   "status": "executed"
+  },
+  "LUA101 3.1#compile-before-run": {
+   "hash": "14ed6ba4810980",
+   "status": "executed"
+  },
+  "LUA101 3.1#compile-before-run:debug": {
+   "hash": "181d0ddaf5de07",
+   "status": "error-matched"
+  },
+  "LUA101 3.1#poor-recompile": {
+   "hash": "1e6b1732d86978",
+   "status": "executed"
+  },
+  "LUA101 3.1#improved-compile-once": {
+   "hash": "1546f2d0fe969e",
+   "status": "executed"
+  },
+  "LUA101 3.1#formula-table": {
+   "hash": "022e31bd07afa6",
+   "status": "executed"
+  },
+  "LUA101 3.2#where-am-i": {
+   "hash": "0eb399b92cffd6",
+   "status": "executed"
+  },
+  "LUA101 3.2#recursion-frames": {
+   "hash": "078272dcb66fb7",
+   "status": "executed"
+  },
+  "LUA101 3.2#tail-call": {
+   "hash": "0005d419fcf77e",
+   "status": "executed"
+  },
+  "LUA101 3.2#tail-call:debug": {
+   "hash": "07ee4061c583a1",
+   "status": "error-matched"
+  },
+  "LUA101 3.2#iterative-factorial": {
+   "hash": "087c7b0840dcb7",
+   "status": "executed"
+  },
+  "LUA101 3.2#nested-call": {
+   "hash": "0c7cc56e94b5ba",
+   "status": "executed"
+  },
+  "LUA101 3.2#nested-call:debug": {
+   "hash": "0163bbd14d897c",
+   "status": "error-matched"
+  },
+  "LUA101 3.2#poor-deep-recursion": {
+   "hash": "1dac7f4c020468",
+   "status": "executed"
+  },
+  "LUA101 3.2#improved-loop-sum": {
+   "hash": "1d1271680b7849",
+   "status": "executed"
+  },
+  "LUA101 3.2#call-tracer": {
+   "hash": "16516d52b36e18",
+   "status": "executed"
+  },
+  "LUA101 3.3#statements-blocks": {
+   "hash": "0c6eb359c6665b",
+   "status": "executed"
+  },
+  "LUA101 3.3#comment-styles": {
+   "hash": "00a7a962d24127",
+   "status": "executed"
+  },
+  "LUA101 3.3#toggle-block": {
+   "hash": "141244b6a398f2",
+   "status": "executed"
+  },
+  "LUA101 3.3#toggle-block:debug": {
+   "hash": "1c3f62c0c5fb98",
+   "status": "error-matched"
+  },
+  "LUA101 3.3#if-vs-expression": {
+   "hash": "050bcc8842de69",
+   "status": "executed"
+  },
+  "LUA101 3.3#missing-then": {
+   "hash": "11c7bc1936a855",
+   "status": "executed"
+  },
+  "LUA101 3.3#missing-then:debug": {
+   "hash": "06aeebcd246f70",
+   "status": "error-matched"
+  },
+  "LUA101 3.3#poor-dense": {
+   "hash": "0a186b750ee2ea",
+   "status": "executed"
+  },
+  "LUA101 3.3#improved-structured": {
+   "hash": "18c2f9d146f66f",
+   "status": "executed"
+  },
+  "LUA101 3.3#receipt": {
+   "hash": "08524e7d7026a0",
+   "status": "executed"
+  },
+  "LUA101 4.1#print-basics": {
+   "hash": "02ac286a8fa6d3",
+   "status": "executed"
+  },
+  "LUA101 4.1#escapes": {
+   "hash": "16ef8ca0f91315",
+   "status": "executed"
+  },
+  "LUA101 4.1#escapes:debug": {
+   "hash": "178f3b3a55091a",
+   "status": "error-matched"
+  },
+  "LUA101 4.1#long-strings": {
+   "hash": "10bfba17c7f4cb",
+   "status": "executed"
+  },
+  "LUA101 4.1#write-format": {
+   "hash": "175c1fdb97eee7",
+   "status": "executed"
+  },
+  "LUA101 4.1#closed-quote": {
+   "hash": "1681981997116a",
+   "status": "executed"
+  },
+  "LUA101 4.1#closed-quote:debug": {
+   "hash": "10c09dcae4632d",
+   "status": "error-matched"
+  },
+  "LUA101 4.1#poor-concat-loop": {
+   "hash": "1f43b113dfcc71",
+   "status": "executed"
+  },
+  "LUA101 4.1#improved-table-concat": {
+   "hash": "02589648cad038",
+   "status": "executed"
+  },
+  "LUA101 4.1#name-card": {
+   "hash": "0237040997b746",
+   "status": "executed"
+  },
+  "LUA101 4.2#read-name": {
+   "hash": "01f8f76c287d4e",
+   "status": "executed"
+  },
+  "LUA101 4.2#read-name:debug": {
+   "hash": "002850617bae27",
+   "status": "error-matched"
+  },
+  "LUA101 4.2#read-numbers": {
+   "hash": "134d6dc2386aed",
+   "status": "executed"
+  },
+  "LUA101 4.2#read-numbers:debug": {
+   "hash": "00b6c1dc4ff449",
+   "status": "error-matched"
+  },
+  "LUA101 4.2#read-validate": {
+   "hash": "16df0c665851ed",
+   "status": "executed"
+  },
+  "LUA101 4.2#read-all": {
+   "hash": "04c7dc8647f158",
+   "status": "executed"
+  },
+  "LUA101 4.2#poor-inline-read": {
+   "hash": "15178e0130a61c",
+   "status": "executed"
+  },
+  "LUA101 4.2#improved-read-function": {
+   "hash": "19a7ff7ca8eea0",
+   "status": "executed"
+  },
+  "LUA101 4.2#improved-read-function:debug": {
+   "hash": "1d2eca1d3a1822",
+   "status": "error-matched"
+  },
+  "LUA101 4.2#score-average": {
+   "hash": "0c7d462684005b",
+   "status": "executed"
+  },
+  "LUA101 4.3#error-anatomy": {
+   "hash": "0658836663e299",
+   "status": "executed"
+  },
+  "LUA101 4.3#error-levels": {
+   "hash": "06ff875bbd0321",
+   "status": "executed"
+  },
+  "LUA101 4.3#traceback": {
+   "hash": "024c2d6010b335",
+   "status": "executed"
+  },
+  "LUA101 4.3#traceback:debug": {
+   "hash": "114646feef0d6d",
+   "status": "error-matched"
+  },
+  "LUA101 4.3#error-objects": {
+   "hash": "07aa2010102fa7",
+   "status": "executed"
+  },
+  "LUA101 4.3#nested-field": {
+   "hash": "0cd035632c94ad",
+   "status": "executed"
+  },
+  "LUA101 4.3#nested-field:debug": {
+   "hash": "10ffb47ecc8fcc",
+   "status": "error-matched"
+  },
+  "LUA101 4.3#poor-silent": {
+   "hash": "15d035faaad808",
+   "status": "executed"
+  },
+  "LUA101 4.3#improved-explicit": {
+   "hash": "027a7edebcf5bf",
+   "status": "executed"
+  },
+  "LUA101 4.3#task-runner": {
+   "hash": "1c784a56eef90a",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -140,6 +616,54 @@
   "glossary#replication": {
    "hash": "1fe308e4cbdad7",
    "status": "compiled"
+  },
+  "glossary#interpreter": {
+   "hash": "02e82ca67cc7d4",
+   "status": "executed"
+  },
+  "glossary#embedding": {
+   "hash": "05df9b1b07b82f",
+   "status": "executed"
+  },
+  "glossary#chunk": {
+   "hash": "1338dd2a64504e",
+   "status": "executed"
+  },
+  "glossary#bytecode": {
+   "hash": "115957ddd01cab",
+   "status": "executed"
+  },
+  "glossary#virtual-machine": {
+   "hash": "1635775cc00d87",
+   "status": "executed"
+  },
+  "glossary#call-stack": {
+   "hash": "08c3ae4c87bf28",
+   "status": "executed"
+  },
+  "glossary#repl": {
+   "hash": "06c6ec2263bb95",
+   "status": "executed"
+  },
+  "glossary#language-server": {
+   "hash": "0089b0603fc543",
+   "status": "executed"
+  },
+  "glossary#comment": {
+   "hash": "068ce563674622",
+   "status": "executed"
+  },
+  "glossary#escape-sequence": {
+   "hash": "1c2afc5e0a4b22",
+   "status": "executed"
+  },
+  "glossary#standard-input": {
+   "hash": "119beefcbcbf44",
+   "status": "executed"
+  },
+  "glossary#stack-traceback": {
+   "hash": "0e6382c9e1779c",
+   "status": "executed"
   }
  }
 }

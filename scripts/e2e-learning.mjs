@@ -81,11 +81,11 @@ async function main() {
     await installPackage(page, 'Lua & Luau — Milestone 2', /Pakej dipasang: \d+ rekod dicipta\./);
     log('M1 then M2 installed through the UI; the M2 plan refreshes and reuses Faculty 01 + both academies (957 new, 3 reused)');
 
-    await contentCard.getByText('Akan ditulis: 2 kuliah dan 16 istilah glosari.').waitFor();
+    await contentCard.getByText('Akan ditulis: 14 kuliah dan 28 istilah glosari.').waitFor();
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
-    await page.getByText('Bahan kursus dipasang: 18 item ditulis.').waitFor();
+    await page.getByText('Bahan kursus dipasang: 42 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials installed (2 pilot lectures + 16 glossary terms); package then reports up to date');
+    log('Course materials 1.1.0 installed (14 lectures: LUA101 ×12 + 2 reference lectures; 28 glossary terms); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -112,6 +112,10 @@ async function main() {
     const lua102 = lib.getByTestId('course-LUA102');
     await lua102.locator('summary').click();
     await lua102.getByText('1/12 kuliah berkandungan').waitFor();
+    const lua101 = lib.getByTestId('course-LUA101');
+    await lua101.locator('summary').click();
+    await lua101.getByText('12/12 kuliah berkandungan').waitFor();
+    assert.equal(await lua101.getByText('Belum lengkap · struktur sahaja').count(), 0, 'every LUA101 lecture is written');
     await lua102.getByText('Kandungan lengkap').waitFor();
     assert.equal(await lua102.getByText('Belum lengkap · struktur sahaja').count(), 11);
     await page.getByLabel('Program').selectOption(luau.id);
@@ -120,7 +124,7 @@ async function main() {
     await page.getByTestId('glossary-list').locator('[data-term="datastore"]').waitFor();
     await page.getByLabel('Cari istilah').fill('metatab');
     assert.equal(await page.getByTestId('glossary-list').locator('li').count(), 1);
-    log('Library: programme selector keeps Lua and Luau apart; content badges (1/12 ready); glossary search');
+    log('Library: programme selector keeps Lua and Luau apart; LUA101 12/12 written, LUA102 1/12; glossary search');
 
     // ── Reader: 28-section lecture ───────────────────────────────────────
     const luaLecture = await lectureId(page, 'LUA102', 1, 1);
@@ -243,9 +247,26 @@ async function main() {
     log('Next/previous navigation; a structure-only lecture is labelled incomplete, offers no completion and records no progress');
 
     // ── Luau lecture: Roblox examples marked and never claimed as executed ──
+    // ── LUA101 4.2: io.read examples run in the browser with their documented input ──
+    const ioLecture = await lectureId(page, 'LUA101', 4, 2);
+    await page.goto(`${base}#/lecture-room?lecture=${ioLecture}`);
+    const validate = page.locator('figure[data-code-id="read-validate"]');
+    await validate.waitFor();
+    assert.equal(await validate.getByTestId('input-read-validate').innerText(), 'seventeen\n999\n17\n');
+    await validate.getByRole('button', { name: 'Jalankan', exact: true }).click();
+    await validate.getByTestId('run-verdict').waitFor({ timeout: 20_000 });
+    assert.equal(await validate.getByTestId('run-verdict').getAttribute('data-matches'), 'yes');
+    assert.equal(await validate.getByTestId('run-output').innerText(), 'Please enter an age between 0 and 150, not: seventeen\nPlease enter an age between 0 and 150, not: 999\nage:\t17');
+    const ioStatuses = await page.locator('[data-status]').evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+    assert.ok(ioStatuses.length >= 10 && ioStatuses.every((x) => x === 'executed' || x === 'error-matched'), ioStatuses.join());
+    assert.equal(await page.getByTestId('incomplete-badge').count(), 0);
+    await page.getByRole('button', { name: 'Tandakan selesai' }).waitFor();
+    log(`LUA101 4.2: stdin input shown and fed to Run (validation loop reproduced in the browser); ${ioStatuses.length} units verified; lecture can be completed`);
+
     const luauLecture = await lectureId(page, 'LUAU203', 1, 1);
     await page.goto(`${base}#/lecture-room?lecture=${luauLecture}`);
-    await page.getByTestId('lecture-article').locator('section[data-section]').first().waitFor();
+    // Wait for this lecture specifically (the previous lecture also has sections).
+    await page.getByTestId('status-LUAU203 1.1#pure-signal').waitFor();
     const luauStatuses = await page.locator('[data-status]').evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
     assert.equal(luauStatuses.filter((x) => x === 'compiled').length, 4 + 1, 'Roblox examples (+ Roblox debug variant) are compiled only');
     assert.equal(await page.getByTestId('status-LUAU203 1.1#pure-signal').getAttribute('data-status'), 'executed');
@@ -261,7 +282,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.0\.1/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.1\.0/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

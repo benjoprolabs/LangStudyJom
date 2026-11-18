@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.5.0: Milestone 3 (in progress) — code-example infrastructure and LUA101
+
+**Code examples (Milestone 3, Part A)**
+- Every example shows line numbers, its **execution status** and, where the environment supports it, a
+  **Run** button: Lua 5.4 compiled to WebAssembly (wasmoon 1.16.0) in a Web Worker, bundled for offline use,
+  with a 4-second limit and an output cap. Run compares the actual output with the expected output.
+- **Explain this code** opens the example’s line-by-line explanation inline.
+- **Error & debugging**: a broken variant of the example, the exact error it produces, how to read and fix it,
+  and (for Lua) a button to run the broken version.
+- Execution status comes from `src/content/verification.json`, written by `npm run verify:code` and tied to a
+  hash of the exact code; an edited example shows "not verified" until it is re-verified, and a test forbids
+  shipping stale records. Roblox code is compiled with the Luau compiler (`luau-runner --check`) and labelled
+  "NOT run in Roblox Studio". Luau has no browser runner (verified with the official Luau VM only).
+- Validator: every example needs a line-by-line explanation; ≥2 verified debug variants per lecture; the Lua
+  /Roblox separation check now ignores strings and comments and detects APIs in use.
+
+**Content (Milestone 3, Part B) — course materials 1.1.0**
+- **LUA101 complete: 12 lectures** (history and design, embedding, versions, installation, REPL, editors,
+  chunks and bytecode, the VM and call stack, syntax, output and escapes, `io.read`, errors and tracebacks).
+  Each has all 24 authored sections in Malay and English, 9–11 verified code units, and ≥2 debug variants
+  whose errors are reproduced by execution.
+- 12 new Click-to-Learn terms (interpreter, embedding, chunk, bytecode, virtual machine, call stack, REPL,
+  language server, comment, escape sequence, standard input, stack traceback) — 28 in total.
+- The reference lectures LUA102 1.1 and LUAU203 1.1 gain an explanation for every example and debug variants;
+  their existing text is unchanged.
+- Verification found and corrected **seven** of my own predicted outputs/errors before release (for example,
+  Lua 5.4 reports string arithmetic as `attempt to add a 'number' with a 'string'`, `assert` adds the caller’s
+  position, and `10 *` followed by a newline is valid syntax). Each lecture now documents the real behaviour.
+
+**Tests**: 388 unit/integration tests, 166 verified code units (`verify:code`), learning e2e 20 checks (new:
+LUA101 library status and an `io.read` example run in the browser with its input).
+
 ## 0.4.1: Milestone 2 acceptance conditions
 
 - **Reference lectures audited** (LUA102 1.1, LUAU203 1.1). Fixed off-by-one line ranges in the

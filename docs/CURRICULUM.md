@@ -342,39 +342,63 @@ real-world applications · mini project\* · summary · review questions · furt
 |---|---|
 | Complete and ordered | All 24 authored sections present, in template order; only the optional two may be marked not applicable |
 | Bilingual | Every text block has Malay and English. Technical terms and code stay in English |
-| Lua/Luau separation (Part C) | A Lua lecture may not link a Luau- or Roblox-scoped glossary term, may not use Luau-only syntax (`+=`, `continue`, type annotations …) and may not use a Roblox identifier (`game`, `workspace`, `Instance`, `Players` …). Luau code that uses a Roblox API must be marked runtime `roblox` |
-| Runnable code | Every `lua54` or `luau` example has an expected output |
-| Line-by-line coverage | Every explanation range lies inside its code, and every line that is not blank, not a comment and not a lone `end`/closing bracket is explained (from 0.4.1) |
+| Lua/Luau separation (Part C) | A Lua lecture may not link a Luau- or Roblox-scoped glossary term, may not use Luau-only syntax (`+=`, `continue`, backtick interpolation, type annotations …) and may not **use** a Roblox API (`game:`, `workspace.`, `Instance.new`, `task.wait`, `Players` …). The API check ignores comments and string literals, so Lua code may print "game over". Debug variants follow the same rule. Luau code that uses a Roblox API must be marked runtime `roblox` |
+| Runnable code | Every `lua54` or `luau` example has an expected output; `lua54` examples may declare `input` (stdin for `io.read`) |
+| Explain this code | Every example has a line-by-line explanation. Across all explanations of an example, every line that is not blank, not a comment and not a lone `end`/closing bracket is covered, and every range lies inside the code |
+| Error and debugging | At least **2** examples per lecture carry a broken variant (`debug`) with the exact first line of its error and an explanation of how to read and fix it |
+| Execution status | Every example and debug variant has a current record in `src/content/verification.json` (tied to a hash of its code); a test fails if any record is missing or stale |
 | Links resolve | Every `[[term]]` link resolves to a glossary term; every reference uses https |
 | No answers in materials | Course materials contain no exercises, quiz questions or answers. Those live in the Practice Center (Phase 5), and exports cannot include them because they are not part of lecture content |
 
 ### Execution verification (`npm run verify:code`)
 
-Every `lua54` example is **executed** with the reference Lua 5.4 interpreter (via `lupa`), and every pure
-`luau` example with the Luau VM (built from source, `tools/luau-runner`). The output must equal the
-documented expected output exactly. Results are written to `docs/CODE-VERIFICATION.md`.
+Every `lua54` example is **executed** with the reference Lua 5.4 interpreter (Lua 5.4.8 via `lupa`), with its
+`input` on stdin, and every pure `luau` example with the official Luau VM (built from source,
+`tools/luau-runner`). The output must equal the documented expected output exactly. Every **debug variant** is
+executed too and must fail with exactly its documented first error line. Results are written to
+`docs/CODE-VERIFICATION.md` (report) and `src/content/verification.json` (the manifest behind the reader’s
+execution-status badge).
 
-- **Roblox examples are never executed** (they need Roblox Studio). The reader labels them "Roblox API · only
-  runs in Roblox Studio (not executed here)". They are checked statically only: the runtime marker and API usage.
+- **Roblox examples are never executed** (they need Roblox Studio). They are **compiled** with the Luau
+  compiler (`luau-runner --check`), which proves the syntax only, and the reader labels them "Syntax checked by
+  the Luau compiler · NOT run in Roblox Studio". Errors documented for Roblox debug variants are the Studio
+  messages and are not verified by execution.
 - **Luau is executed but not type-checked**: the runner does not run `luau-analyze`. Type annotations are
   parsed and run but not verified.
+- **Run Code in the browser** exists for `lua54` examples only (Lua 5.4 compiled to WebAssembly by wasmoon
+  1.16.0, in a Web Worker with a 4-second limit). A unit test runs every `lua54` example and debug variant
+  through the same browser harness and requires the reference interpreter’s output and errors. Example code is
+  written so that both Lua patch releases agree (for example, a failing call is kept on one line, because
+  5.4.6 and 5.4.8 attribute multi-line calls to different lines). **Luau has no browser runner**.
 
 ### Content status
 
-Only the **pilot lectures** below have full 28-section content. Every other lecture is installed as
+Only the lectures below have full content (24 authored sections plus the 4 generated ones). Every other lecture is installed as
 **structure only** and explicitly labelled **incomplete**. A structure-only lecture cannot be marked
 complete and records no reading progress (enforced in `repositories/learning.ts`). Writing the remaining lectures is ongoing content work,
 released in later content packages.
 
 <!-- generated:content-status -->
-| Course | Lecture | Title (EN) | Sections | Code examples (executed / Roblox, not executed) |
+| Course | Lecture | Title (EN) | Sections | Verified code units: executed (examples + debug variants) / Roblox, compiled only |
 |---|---|---|---|---|
 | LUA102 | 1.1 | Global and local variables | 4 generated + 24 authored | 11 / 0 |
 | LUAU203 | 1.1 | RBXScriptSignal and Connect | 4 generated + 24 authored | 2 / 5 |
+| LUA101 | 1.1 | The history and design philosophy of Lua | 4 generated + 24 authored | 9 / 0 |
+| LUA101 | 1.2 | Lua as an embedded language: games, applications and devices | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 1.3 | Lua 5.1–5.4, LuaJIT and Luau: what differs | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 2.1 | Installing the lua interpreter and checking the version | 4 generated + 24 authored | 11 / 0 |
+| LUA101 | 2.2 | The interactive REPL versus .lua script files | 4 generated + 24 authored | 9 / 0 |
+| LUA101 | 2.3 | Code editors and Lua language extensions | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 3.1 | Chunks, compilation and bytecode (luac) | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 3.2 | The Lua virtual machine and the execution stack | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 3.3 | Basic syntax: statements, blocks and comments | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 4.1 | print(), string literals and escape sequences | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 4.2 | io.read() for user input | 4 generated + 24 authored | 10 / 0 |
+| LUA101 | 4.3 | Reading error messages and stack tracebacks | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
-| LUA-PROG | 288 | 1 | 287 |
+| LUA-PROG | 288 | 13 | 275 |
 | LUAU-PROG | 324 | 1 | 323 |
 <!-- /generated:content-status -->

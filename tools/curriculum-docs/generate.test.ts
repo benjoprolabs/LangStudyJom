@@ -36,7 +36,7 @@ function programmeSection(p: ProgrammeDef): string {
 }
 
 function contentStatus(): string {
-  const out = ['| Course | Lecture | Title (EN) | Sections | Code examples (executed / Roblox, not executed) |', '|---|---|---|---|---|'];
+  const out = ['| Course | Lecture | Title (EN) | Sections | Verified code units: executed (examples + debug variants) / Roblox, compiled only |', '|---|---|---|---|---|'];
   const programmes = CURRICULUM_PACKAGES.flatMap((p) => p.programmes);
   for (const pkg of CONTENT_PACKAGES) {
     for (const l of pkg.lectures) {
