@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.7: Milestone 3 — LUAU104 complete; Luau Semester 1 complete (course materials 1.8.0)
+
+- **LUAU104 1.1–4.3 written (12 lectures):** 1-based arrays, `#` and holes, `table.create`; `table.insert`,
+  `table.remove`, `table.find` and `table.clear`, removing while iterating (backwards), swap-and-pop and head-index
+  queues; `table.sort` (in place, no return value, not stable) with tie-breakers; dictionaries, key identity, sets;
+  iteration order and sorted keys; nested tables and safe paths; reference semantics; `table.clone` and deep copies
+  with cycle handling; `table.freeze`/`table.isfrozen` and deep freezing; player statistics, validated layered
+  configuration, and a 90-minute inventory mini project with stacking, atomic removal, defensive copies and
+  `assert` tests. Luau language only; every example is executed with the Luau 0.663 VM.
+- Behaviour taught from measurement: `table.insert` past the end and `table.remove(t, nil)` fail silently,
+  errors raised inside C library functions (`table.sort`, `table.insert` on a frozen table) carry no line number,
+  a clone of a frozen table is not frozen, and freezing twice is an error.
+- 6 new Click-to-Learn terms (array, dictionary, reference semantics, shallow copy, deep copy, frozen table) — 80
+  in total.
+- Verification corrected my predictions: I mis-traced the potion stacking and trade examples in 4.3, and two
+  `print(f(), …)` lines dropped the second return value (value adjustment); the outputs and explanations now follow
+  the measured results.
+
 ## 0.5.6: Milestone 3 — LUAU103 complete (course materials 1.7.0)
 
 - **LUAU103 1.1–4.3 written (12 lectures):** `if`/`elseif` chains, truthiness and guard clauses; numeric `for`,

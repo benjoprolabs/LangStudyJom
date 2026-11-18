@@ -476,10 +476,22 @@ apart from LUAU203 1.1 remain structure only.
 | LUAU103 | 4.1 | Closures and upvalues | 4 generated + 24 authored | 10 / 0 |
 | LUAU103 | 4.2 | Functions as arguments and callbacks | 4 generated + 24 authored | 10 / 0 |
 | LUAU103 | 4.3 | Mini project: a score counter with closures | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 1.1 | 1-based arrays and the # operator | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 1.2 | table.insert, table.remove and table.find | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 1.3 | table.sort and comparison functions | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 2.1 | Keys and values | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 2.2 | Iterating dictionaries | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 2.3 | Nested tables for game data | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 3.1 | Tables are references | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 3.2 | table.clone and deep copies | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 3.3 | table.freeze and table.isfrozen | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 4.1 | Recording player statistics | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 4.2 | Game configuration data | 4 generated + 24 authored | 10 / 0 |
+| LUAU104 | 4.3 | Mini project: an inventory in pure Luau | 4 generated + 24 authored | 10 / 0 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
 | LUA-PROG | 288 | 48 | 240 |
-| LUAU-PROG | 324 | 37 | 287 |
+| LUAU-PROG | 324 | 49 | 275 |
 <!-- /generated:content-status -->
