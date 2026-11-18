@@ -178,7 +178,7 @@ describe('item 6 — notes and bookmarks references', () => {
     expect(issues(r)).toEqual([
       'missing_reference: entityId=GONE not found in learningMaterials (entityType=material)',
       'missing_reference: entityId=GONE not found in exercises (entityType=exercise)',
-      'invalid_reference_type: entityType=video is not one of lecture, course, material, exercise',
+      'invalid_reference_type: entityType=video is not one of lecture, course, material, exercise, glossary',
     ]);
   });
 });

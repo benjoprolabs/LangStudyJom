@@ -499,6 +499,7 @@ export const ms = {
     notes: 'Nota',
     bookmarks: 'Penanda buku',
     achievements: 'Pencapaian',
+    glossaryTerms: 'Istilah glosari',
   },
   planned: {
     phaseLabel: 'Fasa {phase}',

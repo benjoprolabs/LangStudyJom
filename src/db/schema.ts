@@ -83,6 +83,13 @@ export const SCHEMA_VERSIONS: SchemaVersion[] = [
       bookmarks: 'id, studentId, &[studentId+entityType+entityId], [entityType+entityId]',
     },
   },
+  {
+    version: 3,
+    description: 'Click-to-Learn glossary (Professional Programming Education Standard, Part F). New table only.',
+    stores: {
+      glossaryTerms: 'id, &key, scope',
+    },
+  },
 ];
 
 export const CURRENT_SCHEMA_VERSION = SCHEMA_VERSIONS[SCHEMA_VERSIONS.length - 1]!.version;

@@ -10,7 +10,8 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "node scripts/e2e-smoke.mjs && node scripts/e2e-university.mjs && node scripts/e2e-curriculum.mjs"
+    "test:e2e": "node scripts/e2e-smoke.mjs && node scripts/e2e-university.mjs && node scripts/e2e-curriculum.mjs",
+    "verify:code": "vitest run --config tools/code-verification/vitest.config.ts"
   },
   "dependencies": {
     "dexie": "^4.4.7",

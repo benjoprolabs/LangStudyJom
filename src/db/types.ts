@@ -166,33 +166,85 @@ export interface Module extends BaseEntity {
   description: LocalizedText;
 }
 
-/** The 20 sections of the university lecture template (Part 6). */
-export type LectureSectionKind =
-  | 'lecture_information'
-  | 'course_information'
-  | 'learning_objectives'
-  | 'prerequisite_knowledge'
-  | 'introduction'
-  | 'fundamental_concepts'
-  | 'detailed_theory'
-  | 'technical_terminology'
-  | 'syntax_explanation'
-  | 'code_demonstration'
-  | 'line_by_line_breakdown'
-  | 'why_written_this_way'
-  | 'why_necessary'
-  | 'alternative_approaches'
-  | 'common_mistakes'
-  | 'debugging_explanation'
-  | 'real_world_applications'
-  | 'industry_examples'
-  | 'summary'
-  | 'references';
+/**
+ * The 28-section university lecture template (Professional Programming Education Standard,
+ * Part A). Sections 1–4 are GENERATED from curriculum metadata by the reader (so they can never
+ * disagree with the database); sections 5–28 are authored content, stored in `Lecture.sections`
+ * in exactly this order.
+ */
+export const LECTURE_TEMPLATE = [
+  'lecture_information',
+  'course_information',
+  'academic_level',
+  'estimated_duration',
+  'learning_objectives',
+  'prerequisite_knowledge',
+  'introduction',
+  'fundamental_concepts',
+  'detailed_theory',
+  'technical_terminology',
+  'syntax_rules',
+  'code_demonstration',
+  'complete_examples',
+  'line_by_line',
+  'why_this_way',
+  'execution_flow',
+  'memory_behaviour',
+  'alternative_implementations',
+  'common_mistakes',
+  'debugging',
+  'performance',
+  'software_engineering',
+  'industry_use_cases',
+  'practical_demonstration',
+  'mini_project',
+  'summary',
+  'knowledge_check',
+  'references',
+] as const;
+export type LectureSectionKind = (typeof LECTURE_TEMPLATE)[number];
+export const GENERATED_SECTIONS: readonly LectureSectionKind[] = ['lecture_information', 'course_information', 'academic_level', 'estimated_duration'];
+export const AUTHORED_SECTIONS = LECTURE_TEMPLATE.filter((k) => !GENERATED_SECTIONS.includes(k));
+/** Sections the standard requires only "where relevant / where appropriate". */
+export const OPTIONAL_SECTIONS: readonly LectureSectionKind[] = ['memory_behaviour', 'mini_project'];
+
+/**
+ * Where a code example can run:
+ *  - `lua54`  — standard Lua 5.4 (verified with the reference interpreter),
+ *  - `luau`   — the Luau language VM outside Roblox (verified with the Luau VM),
+ *  - `roblox` — uses Roblox engine APIs; runs only in Roblox Studio and is NEVER claimed as executed.
+ */
+export type CodeRuntime = 'lua54' | 'luau' | 'roblox';
+
+/**
+ * Inline text syntax inside LocalizedText: **bold**, `code`, [[glossary-key]] or
+ * [[glossary-key|label]] (Click-to-Learn), and [label](https://…) for external links.
+ */
+export type ContentBlock =
+  | { type: 'paragraph'; text: LocalizedText }
+  | { type: 'list'; ordered?: boolean; items: LocalizedText[] }
+  | { type: 'callout'; tone: 'key' | 'info' | 'warning'; title?: LocalizedText; text: LocalizedText }
+  | {
+      type: 'code';
+      /** Unique within the lecture; referenced by `explain` blocks and source downloads. */
+      id: string;
+      language: 'lua' | 'luau';
+      runtime: CodeRuntime;
+      title: LocalizedText;
+      /** Never translated: keywords, APIs and identifiers stay as written. */
+      code: string;
+      /** Exact expected stdout (required for lua54 / luau; describes Studio Output for roblox). */
+      expectedOutput?: string;
+    }
+  | { type: 'explain'; codeId: string; items: { lines: string; text: LocalizedText }[] }
+  | { type: 'terms'; keys: string[] }
+  | { type: 'links'; items: { title: string; url: string; note?: LocalizedText }[] };
 
 export interface LectureSection {
   kind: LectureSectionKind;
-  /** Markdown body per language. */
-  body: LocalizedText;
+  blocks: ContentBlock[];
+  /** Only for OPTIONAL_SECTIONS: why the section does not apply to this lecture. */
+  notApplicable?: LocalizedText;
 }
 
 export interface Lecture extends BaseEntity {
@@ -202,7 +254,10 @@ export interface Lecture extends BaseEntity {
   title: LocalizedText;
   estimatedMinutes: number;
   difficulty: DifficultyLevel;
+  /** Authored sections 5–28 of LECTURE_TEMPLATE; empty until content is installed. */
   sections: LectureSection[];
+  /** Version of the content package that wrote `sections`. */
+  contentVersion?: string;
 }
 
 export type MaterialKind = 'markdown' | 'code' | 'diagram' | 'table' | 'link' | 'file';
@@ -397,9 +452,32 @@ export interface Note extends BaseEntity {
 
 export interface Bookmark extends BaseEntity {
   studentId: ID;
-  entityType: 'lecture' | 'course' | 'material' | 'exercise';
+  entityType: 'lecture' | 'course' | 'material' | 'exercise' | 'glossary';
   entityId: ID;
   label?: string;
+}
+
+/** Which pathway a glossary concept belongs to (keeps Lua and Roblox concepts apart). */
+export type GlossaryScope = 'general' | 'lua' | 'luau' | 'roblox';
+
+/** Click-to-Learn glossary entry (Part F). */
+export interface GlossaryTerm extends BaseEntity {
+  /** Stable key used in content links: [[closure]]. */
+  key: string;
+  /** English technical term — never translated. */
+  term: string;
+  /** Bahasa Melayu rendering of the term. */
+  translation: string;
+  scope: GlossaryScope;
+  definition: LocalizedText;
+  explanation: LocalizedText;
+  example?: { language: 'lua' | 'luau'; runtime: CodeRuntime; code: string; expectedOutput?: string };
+  /** Keys of related glossary terms. */
+  related: string[];
+  /** Related lectures, by curriculum position (resolved at display time). */
+  lectures: { courseCode: string; module: number; lecture: number }[];
+  references: { title: string; url: string }[];
+  version: string;
 }
 
 export interface Achievement extends BaseEntity {

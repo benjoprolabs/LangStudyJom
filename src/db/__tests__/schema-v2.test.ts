@@ -42,8 +42,9 @@ async function populateV1(db: Pick<Dexie, 'table'>) {
 }
 
 describe('schema v2', () => {
-  it('is the current version', () => {
-    expect(CURRENT_SCHEMA_VERSION).toBe(2);
+  it('is followed only by additive versions (current: v3, glossary)', () => {
+    expect(CURRENT_SCHEMA_VERSION).toBe(3);
+    expect(Object.keys(SCHEMA_VERSIONS[2]!.stores)).toEqual(['glossaryTerms']);
   });
 
   it('every reference used by delete-protection has a reverse index', async () => {
@@ -72,7 +73,7 @@ describe('migration v1 (Phase 1.2) → v2', () => {
     const db = new QhazeDatabase(name);
     const result = await bootstrapDatabase(db);
     expect(result).toMatchObject({ status: 'ready', migratedFrom: 1 });
-    expect(db.verno).toBe(2);
+    expect(db.verno).toBe(CURRENT_SCHEMA_VERSION);
 
     // Every user table is byte-identical (only system tables gain entries).
     const after = await dumpTables(db);
@@ -80,7 +81,7 @@ describe('migration v1 (Phase 1.2) → v2', () => {
     expect(changed).toEqual([]);
     expect(await db.students.get('st')).toMatchObject({ fullName: 'Nur Aisyah', bio: 'Pelajar' });
     expect((await db.meta.get('lastBackupAt'))?.value).toBe(T);
-    expect((await db.meta.get('schemaVersion'))?.value).toBe(2);
+    expect((await db.meta.get('schemaVersion'))?.value).toBe(CURRENT_SCHEMA_VERSION);
 
     // Pre-migration recovery point holds the complete v1 data.
     const snaps = await db.snapshots.where('reason').equals('pre-migration').toArray();
@@ -133,5 +134,27 @@ describe('migration v1 (Phase 1.2) → v2', () => {
     await restoreBackup(db, result.backup!, 'replace');
     expect(await db.studySessions.where('programmeId').equals('p').count()).toBe(1);
     expect((await checkDatabaseIntegrity(db)).ok).toBe(true);
+  });
+});
+
+describe('migration v2 (0.3.x) → v3 (glossary)', () => {
+  it('adds the glossary table without touching existing data, after a pre-migration recovery point', async () => {
+    const name = `mig-v2-v3-${Date.now()}`;
+    const v2 = new Dexie(name);
+    v2.version(1).stores(SCHEMA_VERSIONS[0]!.stores as Record<string, string>);
+    v2.version(2).stores(SCHEMA_VERSIONS[1]!.stores as Record<string, string>);
+    await v2.open();
+    await populateV1(v2);
+    const before = await dumpTables(v2);
+    v2.close();
+
+    const db = new QhazeDatabase(name);
+    expect(await bootstrapDatabase(db)).toMatchObject({ status: 'ready', migratedFrom: 2 });
+    const after = await dumpTables(db);
+    const changed = Object.keys(before).filter((t) => !['meta', 'activityLog'].includes(t) && JSON.stringify(before[t]) !== JSON.stringify(after[t]));
+    expect(changed).toEqual([]);
+    expect(after.glossaryTerms).toEqual([]);
+    expect(await db.snapshots.where('reason').equals('pre-migration').count()).toBe(1);
+    expect((await checkDatabaseIntegrity(db)).issues).toEqual([]);
   });
 });

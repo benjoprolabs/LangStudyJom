@@ -497,6 +497,7 @@ export const en: Messages = {
     notes: 'Notes',
     bookmarks: 'Bookmarks',
     achievements: 'Achievements',
+    glossaryTerms: 'Glossary terms',
   },
   planned: {
     phaseLabel: 'Phase {phase}',

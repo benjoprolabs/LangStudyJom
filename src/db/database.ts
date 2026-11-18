@@ -14,6 +14,7 @@ import type {
   Exercise,
   ExerciseAttempt,
   Faculty,
+  GlossaryTerm,
   GradingScale,
   LearningMaterial,
   Lecture,
@@ -64,6 +65,7 @@ export class QhazeDatabase extends Dexie {
   notes!: Table<Note, string>;
   bookmarks!: Table<Bookmark, string>;
   achievements!: Table<Achievement, string>;
+  glossaryTerms!: Table<GlossaryTerm, string>;
 
   constructor(name: string = DB_NAME, options?: DexieOptions) {
     super(name, options);

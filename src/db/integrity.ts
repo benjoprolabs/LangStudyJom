@@ -119,7 +119,7 @@ export const POLYMORPHIC_RELATIONS: PolymorphicRelation[] = [
     table: 'bookmarks',
     typeField: 'entityType',
     idField: 'entityId',
-    targets: { lecture: 'lectures', course: 'courses', material: 'learningMaterials', exercise: 'exercises' },
+    targets: { lecture: 'lectures', course: 'courses', material: 'learningMaterials', exercise: 'exercises', glossary: 'glossaryTerms' },
   },
 ];
 
