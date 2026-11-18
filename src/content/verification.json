@@ -1973,6 +1973,498 @@
    "hash": "0f48e92aa1c286",
    "status": "executed"
   },
+  "LUAU101 1.1#lua51-compatible": {
+   "hash": "017e45a0568aff",
+   "status": "executed"
+  },
+  "LUAU101 1.1#numbers-are-doubles": {
+   "hash": "0825a1ff1a47ac",
+   "status": "executed"
+  },
+  "LUAU101 1.1#numbers-are-doubles:debug": {
+   "hash": "00b38b6a96176a",
+   "status": "error-matched"
+  },
+  "LUAU101 1.1#continue-not-goto": {
+   "hash": "10a6f700c3aeb6",
+   "status": "executed"
+  },
+  "LUAU101 1.1#continue-not-goto:debug": {
+   "hash": "1193dae0c80f10",
+   "status": "error-matched"
+  },
+  "LUAU101 1.1#both-unpacks": {
+   "hash": "0dd3a9a2f69158",
+   "status": "executed"
+  },
+  "LUAU101 1.1#bit32-flags": {
+   "hash": "07dabc10c7ce36",
+   "status": "executed"
+  },
+  "LUAU101 1.1#poor-global-habit": {
+   "hash": "03b6930b2e72a3",
+   "status": "executed"
+  },
+  "LUAU101 1.1#improved-local-habit": {
+   "hash": "04aa72e5b9bb6e",
+   "status": "executed"
+  },
+  "LUAU101 1.1#compat-report": {
+   "hash": "1905c620f64630",
+   "status": "executed"
+  },
+  "LUAU101 1.2#luau-additions": {
+   "hash": "06381ceb91693d",
+   "status": "executed"
+  },
+  "LUAU101 1.2#library-additions": {
+   "hash": "1a0b9e61a435bd",
+   "status": "executed"
+  },
+  "LUAU101 1.2#library-additions:debug": {
+   "hash": "142d2773d476ed",
+   "status": "error-matched"
+  },
+  "LUAU101 1.2#sandbox-check": {
+   "hash": "0b3b7ab26e08ed",
+   "status": "executed"
+  },
+  "LUAU101 1.2#sandbox-check:debug": {
+   "hash": "13e07e650c3a92",
+   "status": "error-matched"
+  },
+  "LUAU101 1.2#interp-vs-format": {
+   "hash": "15023761a79185",
+   "status": "executed"
+  },
+  "LUAU101 1.2#types-not-enforced": {
+   "hash": "1dd74466d4dbb5",
+   "status": "executed"
+  },
+  "LUAU101 1.2#poor-and-or": {
+   "hash": "14530af55337ea",
+   "status": "executed"
+  },
+  "LUAU101 1.2#improved-if-expression": {
+   "hash": "14765441e3b6dc",
+   "status": "executed"
+  },
+  "LUAU101 1.2#round-summary": {
+   "hash": "13c2378da88973",
+   "status": "executed"
+  },
+  "LUAU101 1.3#pure-damage": {
+   "hash": "09d9b7f6ce5678",
+   "status": "executed"
+  },
+  "LUAU101 1.3#roblox-damage": {
+   "hash": "0c5583a696913b",
+   "status": "compiled"
+  },
+  "LUAU101 1.3#roblox-damage:debug": {
+   "hash": "0e280d7f790fdb",
+   "status": "error-matched"
+  },
+  "LUAU101 1.3#engine-missing": {
+   "hash": "08ac4cb72cbef9",
+   "status": "executed"
+  },
+  "LUAU101 1.3#engine-missing:debug": {
+   "hash": "11a01e3a5b8828",
+   "status": "error-matched"
+  },
+  "LUAU101 1.3#fake-humanoid": {
+   "hash": "07a20a4ab696f0",
+   "status": "executed"
+  },
+  "LUAU101 1.3#safe-lookup": {
+   "hash": "0480e442c55db7",
+   "status": "executed"
+  },
+  "LUAU101 1.3#poor-mixed-logic": {
+   "hash": "09aa71063a4f89",
+   "status": "compiled"
+  },
+  "LUAU101 1.3#improved-pure-rule": {
+   "hash": "16cff4ee7291ef",
+   "status": "executed"
+  },
+  "LUAU101 1.3#shop-logic": {
+   "hash": "12468c0999a2b1",
+   "status": "executed"
+  },
+  "LUAU101 1.3#shop-engine": {
+   "hash": "113cd1e6355928",
+   "status": "compiled"
+  },
+  "LUAU101 2.1#cli-hello": {
+   "hash": "19ef1bf44088a7",
+   "status": "executed"
+  },
+  "LUAU101 2.1#cli-timing": {
+   "hash": "0efd680279a002",
+   "status": "executed"
+  },
+  "LUAU101 2.1#cli-timing:debug": {
+   "hash": "1ef59540d6b8d6",
+   "status": "error-matched"
+  },
+  "LUAU101 2.1#cli-args": {
+   "hash": "01c93e731248f7",
+   "status": "executed"
+  },
+  "LUAU101 2.1#cli-args:debug": {
+   "hash": "01f108cc83930a",
+   "status": "error-matched"
+  },
+  "LUAU101 2.1#cli-selftest": {
+   "hash": "18ab2201e8de96",
+   "status": "executed"
+  },
+  "LUAU101 2.1#cli-validate": {
+   "hash": "18634a43382dc1",
+   "status": "executed"
+  },
+  "LUAU101 2.1#poor-eyeball-test": {
+   "hash": "175081750930d5",
+   "status": "executed"
+  },
+  "LUAU101 2.1#improved-assert-test": {
+   "hash": "08c531ead6a62e",
+   "status": "executed"
+  },
+  "LUAU101 2.1#xp-calculator": {
+   "hash": "022b36628b5f91",
+   "status": "executed"
+  },
+  "LUAU101 2.2#command-bar-part": {
+   "hash": "0754a2c5ca3dd9",
+   "status": "compiled"
+  },
+  "LUAU101 2.2#first-server-script": {
+   "hash": "1101780525d24f",
+   "status": "compiled"
+  },
+  "LUAU101 2.2#first-server-script:debug": {
+   "hash": "12c6d30ccfb71c",
+   "status": "error-matched"
+  },
+  "LUAU101 2.2#explorer-model": {
+   "hash": "08d242d5e99c68",
+   "status": "executed"
+  },
+  "LUAU101 2.2#explorer-model:debug": {
+   "hash": "04bf838cfb161c",
+   "status": "error-matched"
+  },
+  "LUAU101 2.2#rename-parts": {
+   "hash": "1ede5d068e956c",
+   "status": "compiled"
+  },
+  "LUAU101 2.2#find-by-path": {
+   "hash": "0c9cb0d7b05b76",
+   "status": "executed"
+  },
+  "LUAU101 2.2#poor-repeated-path": {
+   "hash": "1302288471b93a",
+   "status": "compiled"
+  },
+  "LUAU101 2.2#improved-local-ref": {
+   "hash": "1321960acdd755",
+   "status": "compiled"
+  },
+  "LUAU101 2.2#count-by-class": {
+   "hash": "15805a456aa37a",
+   "status": "executed"
+  },
+  "LUAU101 2.2#count-by-class-roblox": {
+   "hash": "0265ec8761035e",
+   "status": "compiled"
+  },
+  "LUAU101 2.3#module-settings": {
+   "hash": "14066f4dfe60a5",
+   "status": "compiled"
+  },
+  "LUAU101 2.3#server-and-client": {
+   "hash": "185acda3a4f582",
+   "status": "compiled"
+  },
+  "LUAU101 2.3#server-and-client:debug": {
+   "hash": "1d970a6d1584ef",
+   "status": "error-matched"
+  },
+  "LUAU101 2.3#require-cache-model": {
+   "hash": "0882f5283b7463",
+   "status": "executed"
+  },
+  "LUAU101 2.3#require-cache-model:debug": {
+   "hash": "07e6541af05def",
+   "status": "error-matched"
+  },
+  "LUAU101 2.3#function-module": {
+   "hash": "1e2cc520e42e80",
+   "status": "executed"
+  },
+  "LUAU101 2.3#strict-module": {
+   "hash": "0e293cf7e64225",
+   "status": "executed"
+  },
+  "LUAU101 2.3#poor-duplicated-rule": {
+   "hash": "033645d6878c55",
+   "status": "executed"
+  },
+  "LUAU101 2.3#improved-shared-module": {
+   "hash": "069d1e92aa02a4",
+   "status": "executed"
+  },
+  "LUAU101 2.3#inventory-module": {
+   "hash": "199d487f520e79",
+   "status": "executed"
+  },
+  "LUAU101 3.1#print-basics": {
+   "hash": "00a6014c56d463",
+   "status": "executed"
+  },
+  "LUAU101 3.1#concat-vs-args": {
+   "hash": "079f33046290b0",
+   "status": "executed"
+  },
+  "LUAU101 3.1#concat-vs-args:debug": {
+   "hash": "0cddcad62eba21",
+   "status": "error-matched"
+  },
+  "LUAU101 3.1#escapes": {
+   "hash": "13cce8f1ccb684",
+   "status": "executed"
+  },
+  "LUAU101 3.1#escapes:debug": {
+   "hash": "1de8bc01855ecd",
+   "status": "error-matched"
+  },
+  "LUAU101 3.1#print-warn-error": {
+   "hash": "02841c287b3443",
+   "status": "compiled"
+  },
+  "LUAU101 3.1#dump-table": {
+   "hash": "04551dfe17e63b",
+   "status": "executed"
+  },
+  "LUAU101 3.1#poor-bare-prints": {
+   "hash": "1e06fe2dd5d269",
+   "status": "executed"
+  },
+  "LUAU101 3.1#improved-debug-log": {
+   "hash": "164c93aa28fbd8",
+   "status": "executed"
+  },
+  "LUAU101 3.1#scoreboard": {
+   "hash": "0ae57768c7ea01",
+   "status": "executed"
+  },
+  "LUAU101 3.2#comment-styles": {
+   "hash": "1aceb587c6c450",
+   "status": "executed"
+  },
+  "LUAU101 3.2#blocks-and-end": {
+   "hash": "01de16428a1df1",
+   "status": "executed"
+  },
+  "LUAU101 3.2#blocks-and-end:debug": {
+   "hash": "18e160414a3d58",
+   "status": "error-matched"
+  },
+  "LUAU101 3.2#names-and-case": {
+   "hash": "0911b384d257ce",
+   "status": "executed"
+  },
+  "LUAU101 3.2#names-and-case:debug": {
+   "hash": "181dbe9988794d",
+   "status": "error-matched"
+  },
+  "LUAU101 3.2#levelled-comment": {
+   "hash": "0b1ed23384a687",
+   "status": "executed"
+  },
+  "LUAU101 3.2#case-matters": {
+   "hash": "13cadff9bf585f",
+   "status": "executed"
+  },
+  "LUAU101 3.2#poor-noisy-comments": {
+   "hash": "0c763ba4d0cd45",
+   "status": "executed"
+  },
+  "LUAU101 3.2#improved-meaningful-names": {
+   "hash": "03cb429a0b3bbe",
+   "status": "executed"
+  },
+  "LUAU101 3.2#daily-reward": {
+   "hash": "061edc577c57a6",
+   "status": "executed"
+  },
+  "LUAU101 3.3#lint-clean": {
+   "hash": "049a5475636f91",
+   "status": "executed"
+  },
+  "LUAU101 3.3#unknown-global": {
+   "hash": "0fec78e10aadbc",
+   "status": "executed"
+  },
+  "LUAU101 3.3#unknown-global:debug": {
+   "hash": "1cca538730a141",
+   "status": "error-matched"
+  },
+  "LUAU101 3.3#shadow-and-unused": {
+   "hash": "0633be08292be3",
+   "status": "executed"
+  },
+  "LUAU101 3.3#shadow-and-unused:debug": {
+   "hash": "128a5693f0717c",
+   "status": "error-matched"
+  },
+  "LUAU101 3.3#runtime-guard": {
+   "hash": "0a1096ba57d2c6",
+   "status": "executed"
+  },
+  "LUAU101 3.3#reachable-code": {
+   "hash": "0755500104bbe5",
+   "status": "executed"
+  },
+  "LUAU101 3.3#reachable-code:debug": {
+   "hash": "1e0ac2e0153e64",
+   "status": "error-matched"
+  },
+  "LUAU101 3.3#poor-warning-noise": {
+   "hash": "1dca528c5d9d98",
+   "status": "executed"
+  },
+  "LUAU101 3.3#improved-warning-free": {
+   "hash": "17cd89b086c9dd",
+   "status": "executed"
+  },
+  "LUAU101 3.3#cleanup-project": {
+   "hash": "0d9016508c5fb7",
+   "status": "executed"
+  },
+  "LUAU101 4.1#runtime-catalogue": {
+   "hash": "18907dce5819e6",
+   "status": "executed"
+  },
+  "LUAU101 4.1#syntax-vs-runtime": {
+   "hash": "134766f0cf7457",
+   "status": "executed"
+  },
+  "LUAU101 4.1#syntax-vs-runtime:debug": {
+   "hash": "1778de5700dd51",
+   "status": "error-matched"
+  },
+  "LUAU101 4.1#raise-own-error": {
+   "hash": "15af600bdec014",
+   "status": "executed"
+  },
+  "LUAU101 4.1#raise-own-error:debug": {
+   "hash": "0a0bd737d24244",
+   "status": "error-matched"
+  },
+  "LUAU101 4.1#nil-message-alt": {
+   "hash": "141afbcd336a62",
+   "status": "executed"
+  },
+  "LUAU101 4.1#find-nil-link": {
+   "hash": "1bf47a25548b21",
+   "status": "executed"
+  },
+  "LUAU101 4.1#poor-silent-failure": {
+   "hash": "0344af424496ed",
+   "status": "executed"
+  },
+  "LUAU101 4.1#improved-loud-failure": {
+   "hash": "15170986e4d1cb",
+   "status": "executed"
+  },
+  "LUAU101 4.1#command-processor": {
+   "hash": "1adf2bf79d8336",
+   "status": "executed"
+  },
+  "LUAU101 4.2#traceback-chain": {
+   "hash": "0c5edc3b27862c",
+   "status": "executed"
+  },
+  "LUAU101 4.2#caller-level": {
+   "hash": "13c5d97f47fdd6",
+   "status": "executed"
+  },
+  "LUAU101 4.2#caller-level:debug": {
+   "hash": "06df51bffd6478",
+   "status": "error-matched"
+  },
+  "LUAU101 4.2#traceback-snapshot": {
+   "hash": "0cbd63450b14d3",
+   "status": "executed"
+  },
+  "LUAU101 4.2#traceback-snapshot:debug": {
+   "hash": "16186ef1cda5a2",
+   "status": "error-matched"
+  },
+  "LUAU101 4.2#scriptcontext-log": {
+   "hash": "088ee01495b9e7",
+   "status": "compiled"
+  },
+  "LUAU101 4.2#fail-early": {
+   "hash": "02ab90fc73c8b6",
+   "status": "executed"
+  },
+  "LUAU101 4.2#poor-pcall-only": {
+   "hash": "117ef72e931f0e",
+   "status": "executed"
+  },
+  "LUAU101 4.2#improved-xpcall-trace": {
+   "hash": "1a9d644c1e4fee",
+   "status": "executed"
+  },
+  "LUAU101 4.2#error-reporter": {
+   "hash": "06e6b463bf20d0",
+   "status": "executed"
+  },
+  "LUAU101 4.3#labelled-debug": {
+   "hash": "144178509eadf1",
+   "status": "executed"
+  },
+  "LUAU101 4.3#divide-and-conquer": {
+   "hash": "011440af20efc2",
+   "status": "executed"
+  },
+  "LUAU101 4.3#divide-and-conquer:debug": {
+   "hash": "06cacadeaebe6c",
+   "status": "error-matched"
+  },
+  "LUAU101 4.3#regression-test": {
+   "hash": "062cda856c19d8",
+   "status": "executed"
+  },
+  "LUAU101 4.3#regression-test:debug": {
+   "hash": "0eda0d61a18956",
+   "status": "error-matched"
+  },
+  "LUAU101 4.3#breakpoint-practice": {
+   "hash": "13855755afe2be",
+   "status": "compiled"
+  },
+  "LUAU101 4.3#minimal-repro": {
+   "hash": "0b737966f9fb50",
+   "status": "executed"
+  },
+  "LUAU101 4.3#poor-random-fix": {
+   "hash": "1633ea950bc981",
+   "status": "executed"
+  },
+  "LUAU101 4.3#improved-verified-fix": {
+   "hash": "1a71865b16f55e",
+   "status": "executed"
+  },
+  "LUAU101 4.3#bug-investigation": {
+   "hash": "0d996132722d76",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -2188,6 +2680,38 @@
   "glossary#higher-order-function": {
    "hash": "00223da4a7f33c",
    "status": "executed"
+  },
+  "glossary#luau-cli": {
+   "hash": "11da0929abd032",
+   "status": "executed"
+  },
+  "glossary#roblox-studio": {
+   "hash": "1dc71dfe403199",
+   "status": "compiled"
+  },
+  "glossary#output-window": {
+   "hash": "0775e64c3e30b8",
+   "status": "compiled"
+  },
+  "glossary#script-types": {
+   "hash": "1db39785574a73",
+   "status": "compiled"
+  },
+  "glossary#script-analysis": {
+   "hash": "04e659e1213d5d",
+   "status": "compiled"
+  },
+  "glossary#syntax-error": {
+   "hash": "12decae890c535",
+   "status": "executed"
+  },
+  "glossary#runtime-error": {
+   "hash": "04102f7ba680a4",
+   "status": "executed"
+  },
+  "glossary#engine-api": {
+   "hash": "11cee837902ced",
+   "status": "compiled"
   }
  }
 }

@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.5.4: Milestone 3 — LUAU101 complete (course materials 1.5.0)
+
+- **LUAU101 1.1–4.3 written (12 lectures):** Lua 5.1 → Luau; what Luau adds and removes (sandbox); the Luau language
+  versus the Roblox engine API; the luau CLI; a tour of Roblox Studio; Script, LocalScript and ModuleScript; `print`
+  and the Output window; comments, blocks and names; Script Analysis; syntax versus runtime errors; reading stack
+  tracebacks; debugging strategies. All 24 sections in Malay and English.
+- Every lecture distinguishes three statuses honestly: `luau` examples are **executed** with the official Luau VM
+  (0.663) and their output verified; `roblox` examples are **compiled only**; nothing is claimed as tested in Roblox
+  Studio. Lint warnings and type errors are described from the Luau documentation, not produced by the verifier.
+- 8 new Click-to-Learn terms (luau CLI, Roblox Studio, Output window, script types, Script Analysis, syntax error,
+  runtime error, engine API) — 62 in total.
+- Verification corrected my predictions: two `return`s in one block is itself a Luau syntax error; Luau adds a
+  hint (`did you forget to close 'then' at line 5?`) to unclosed-block messages; an `xpcall` traceback contains the
+  calling function's frame, not extra `[C]` frames.
+- E2E opens every LUAU101 lecture (24 sections, ≥2 error-matched broken examples each, every compiled-only unit
+  labelled, no browser Run for Luau) and completes LUAU101 4.3 with all earlier progress and notes unchanged.
+
 ## 0.5.3: Milestone 3 — LUA104 complete; Lua Semester 1 checkpoint (course materials 1.4.0)
 
 - **LUA104 1.1–4.3 written (12 lectures; LUA104 is now 12/12):** function definitions, parameters and `return`;

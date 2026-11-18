@@ -9,6 +9,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createLogger, horizontalOverflow, launch, startServer, tempDir } from './e2e-lib.mjs';
 
+/** Luau Semester 1 courses whose lectures are written (grows as each course is completed). */
+const LUAU_WRITTEN = ['LUAU101'];
 const { log, count } = createLogger();
 const consoleErrors = [];
 
@@ -81,11 +83,11 @@ async function main() {
     await installPackage(page, 'Lua & Luau — Milestone 2', /Pakej dipasang: \d+ rekod dicipta\./);
     log('M1 then M2 installed through the UI; the M2 plan refreshes and reuses Faculty 01 + both academies (957 new, 3 reused)');
 
-    await contentCard.getByText('Akan ditulis: 49 kuliah dan 54 istilah glosari.').waitFor();
+    await contentCard.getByText('Akan ditulis: 61 kuliah dan 62 istilah glosari.').waitFor();
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
-    await page.getByText('Bahan kursus dipasang: 103 item ditulis.').waitFor();
+    await page.getByText('Bahan kursus dipasang: 123 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials 1.4.0 installed (49 lectures: LUA101–LUA104 ×12 each, LUAU203 1.1; 54 glossary terms); package then reports up to date');
+    log('Course materials 1.5.0 installed (61 lectures: LUA101–LUA104 and LUAU101 ×12 each, LUAU203 1.1; 62 glossary terms); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -134,11 +136,17 @@ async function main() {
     assert.equal(await lua111.getByText('Belum lengkap · struktur sahaja').count(), 12, 'unwritten lectures stay labelled incomplete');
     await page.getByLabel('Program').selectOption(luau.id);
     await lib.getByTestId('course-LUAU203').waitFor();
+    for (const code of LUAU_WRITTEN) {
+      const course = lib.getByTestId(`course-${code}`);
+      await course.locator('summary').click();
+      await course.getByText('12/12 kuliah berkandungan').waitFor();
+      assert.equal(await course.getByText('Belum lengkap · struktur sahaja').count(), 0, `every ${code} lecture is written`);
+    }
     assert.equal(await lib.locator('[data-testid^="course-LUA1"], [data-testid^="course-LUA2"], [data-testid^="course-LUA3"]').count(), 0);
     await page.getByTestId('glossary-list').locator('[data-term="datastore"]').waitFor();
     await page.getByLabel('Cari istilah').fill('metatab');
     assert.equal(await page.getByTestId('glossary-list').locator('li').count(), 1);
-    log('Library: Lua and Luau kept apart; Lua Semester 1 (LUA101–LUA104) 48/48 written; LUA111 0/12 labelled incomplete; glossary search');
+    log(`Library: Lua and Luau kept apart; Lua Semester 1 (LUA101–LUA104) 48/48 written; LUA111 0/12 labelled incomplete; Luau ${LUAU_WRITTEN.join(', ')} 12/12 written; glossary search`);
 
     // ── Reader: 28-section lecture ───────────────────────────────────────
     const luaLecture = await lectureId(page, 'LUA102', 1, 1);
@@ -401,13 +409,46 @@ async function main() {
     assert.ok(await page.getByTestId('output-pure-signal').isVisible());
     log('LUAU203 1.1: Roblox examples compiled only and labelled "NOT run in Roblox Studio"; pure-Luau example executed; no fake Run button');
 
+    // ── Luau Semester 1: every written lecture opens, renders 24 sections, and shows an honest status per unit ──
+    let unitsLuau = 0, compiledLuau = 0;
+    for (const code of LUAU_WRITTEN) {
+      for (let m = 1; m <= 4; m++) {
+        for (let l = 1; l <= 3; l++) {
+          const id = await lectureId(page, code, m, l);
+          await page.goto(`${base}#/lecture-room?lecture=${id}`);
+          await page.locator(`[data-testid^="status-${code} ${m}.${l}#"]`).first().waitFor();
+          assert.equal(await page.getByTestId('lecture-article').locator('section[data-section]').count(), 24, `${code} ${m}.${l} sections`);
+          const statuses = await page.locator(`[data-testid^="status-${code} ${m}.${l}#"]`).evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+          assert.ok(statuses.length >= 7 && statuses.every((x) => x === 'executed' || x === 'error-matched' || x === 'compiled'), `${code} ${m}.${l}: ${statuses.join()}`);
+          assert.ok(statuses.filter((x) => x === 'error-matched').length >= 2, `${code} ${m}.${l}: at least two verified broken examples`);
+          const compiled = statuses.filter((x) => x === 'compiled').length;
+          assert.equal(await page.getByText('Sintaks disahkan oleh pengkompil Luau · TIDAK dijalankan dalam Roblox Studio').count(), compiled, `${code} ${m}.${l}: every compiled-only unit is labelled`);
+          assert.equal(await page.getByRole('button', { name: 'Jalankan', exact: true }).count(), 0, `${code} ${m}.${l}: no browser Run for Luau`);
+          assert.equal(await page.getByTestId('incomplete-badge').count(), 0, `${code} ${m}.${l} is not labelled incomplete`);
+          unitsLuau += statuses.length;
+          compiledLuau += compiled;
+        }
+      }
+    }
+    // Completion still works on the last written Luau lecture, and earlier Lua progress and notes are unchanged.
+    await page.waitForTimeout(1500);
+    const beforeLuau = await readStore(page, 'progress');
+    await page.getByRole('button', { name: 'Tandakan selesai' }).click();
+    await page.getByRole('button', { name: 'Selesai' }).waitFor();
+    const lastLuau = await lectureId(page, LUAU_WRITTEN.at(-1), 4, 3);
+    const afterLuau = await readStore(page, 'progress');
+    assert.equal(afterLuau.find((p) => p.entityId === lastLuau).status, 'completed');
+    for (const p of beforeLuau) assert.deepEqual(afterLuau.find((q) => q.id === p.id), p, `progress ${p.entityId} unchanged`);
+    assert.ok((await readStore(page, 'notes')).some((n) => n.entityId === luaLecture && n.body === 'Guna local secara lalai.'), 'note kept');
+    log(`Luau ${LUAU_WRITTEN.join(', ')}: ${LUAU_WRITTEN.length * 12} lectures open with 24 sections; ${unitsLuau} units (${compiledLuau} Roblox compiled-only, each labelled); no browser Run; ${LUAU_WRITTEN.at(-1)} 4.3 completed; all earlier progress and notes unchanged`);
+
     // ── Print / PDF ───────────────────────────────────────────────────────
     await page.goto(`${base}#/lecture-room?lecture=${luaLecture}`);
     await page.getByRole('link', { name: 'PDF / Cetak' }).click();
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.4\.0/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.5\.0/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

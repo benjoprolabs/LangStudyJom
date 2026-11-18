@@ -440,10 +440,22 @@ apart from LUAU203 1.1 remain structure only.
 | LUA104 | 4.1 | Block scope and do … end | 4 generated + 24 authored | 10 / 0 |
 | LUA104 | 4.2 | local function and recursion | 4 generated + 24 authored | 10 / 0 |
 | LUA104 | 4.3 | An introduction to upvalues | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 1.1 | From Lua 5.1 to Luau | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 1.2 | What Luau adds and what it removes | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 1.3 | The Luau language versus the Roblox engine API | 4 generated + 24 authored | 7 / 4 |
+| LUAU101 | 2.1 | The luau CLI for pure-language code | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 2.2 | A tour of Roblox Studio | 4 generated + 24 authored | 4 / 7 |
+| LUAU101 | 2.3 | Script, LocalScript and ModuleScript: an overview | 4 generated + 24 authored | 7 / 3 |
+| LUAU101 | 3.1 | print() and the Output window | 4 generated + 24 authored | 9 / 1 |
+| LUAU101 | 3.2 | Comments, blocks and basic syntax | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 3.3 | Script Analysis and editor warnings | 4 generated + 24 authored | 11 / 0 |
+| LUAU101 | 4.1 | Syntax errors and runtime errors | 4 generated + 24 authored | 10 / 0 |
+| LUAU101 | 4.2 | Reading stack traces | 4 generated + 24 authored | 9 / 1 |
+| LUAU101 | 4.3 | Debugging strategies for beginners | 4 generated + 24 authored | 9 / 1 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|
 | PY-PROG | 372 | 0 | 372 |
 | LUA-PROG | 288 | 48 | 240 |
-| LUAU-PROG | 324 | 1 | 323 |
+| LUAU-PROG | 324 | 13 | 311 |
 <!-- /generated:content-status -->
