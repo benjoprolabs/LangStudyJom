@@ -4,7 +4,7 @@ import { CONTENT_PACKAGES, LUA_LUAU_CONTENT } from '@/content';
 import { GLOSSARY } from '@/content/glossary';
 import { LUA102_1_1 } from '@/content/lectures/lua102-1-1';
 import { ContentInstallError, installContentPackage, planContentInstall } from '@/db/content/install';
-import { parseInline } from '@/db/content/inline';
+import { inlineToPlain, parseInline } from '@/db/content/inline';
 import type { ContentPackage } from '@/db/content/types';
 import { validateContentPackage } from '@/db/content/validate';
 import { checkDatabaseIntegrity, dumpTables } from '@/db/integrity';
@@ -65,6 +65,40 @@ describe('content package', () => {
   });
 });
 
+describe('reference lectures LUA102 1.1 and LUAU203 1.1 (M2 acceptance condition 3)', () => {
+  /** Words of prose in a section's paragraphs, callouts and list items (one language). */
+  const words = (blocks: ContentPackage['lectures'][number]['sections'][number]['blocks'], lang: 'ms' | 'en') => {
+    const texts: string[] = [];
+    for (const b of blocks) {
+      if (b.type === 'paragraph' || b.type === 'callout') texts.push(b.text[lang] ?? '');
+      if (b.type === 'list') texts.push(...b.items.map((i) => i[lang] ?? ''));
+    }
+    return texts.reduce((n, t) => n + inlineToPlain(t).split(/\s+/).filter(Boolean).length, 0);
+  };
+
+  it.each(['LUA102', 'LUAU203'])('%s 1.1 is preserved and meets the Professional Programming Education Standard', (code) => {
+    const l = lectureOf(LUA_LUAU_CONTENT, code);
+    const section = (kind: string) => l.sections.find((s) => s.kind === kind)!;
+    // All 24 authored sections, in order, none skipped (the two optional ones are written too).
+    expect(l.sections.map((s) => s.kind)).toEqual(AUTHORED_SECTIONS);
+    expect(l.sections.filter((s) => s.notApplicable)).toEqual([]);
+    // Detailed theory: substantive prose in both languages.
+    for (const lang of ['ms', 'en'] as const) expect(words(section('detailed_theory').blocks, lang)).toBeGreaterThanOrEqual(80);
+    // Real code: several complete examples, each runnable one with expected output.
+    const code_ = l.sections.flatMap((s) => s.blocks).filter((b) => b.type === 'code');
+    expect(code_.length).toBeGreaterThanOrEqual(5);
+    // Line-by-line: every explained example covers all of its meaningful lines (validator rule).
+    expect(section('line_by_line').blocks.filter((b) => b.type === 'explain').length).toBeGreaterThanOrEqual(2);
+    expect(validateContentPackage({ ...LUA_LUAU_CONTENT, lectures: [l] })).toEqual([]);
+    // Debugging, practical examples, poor-vs-improved, references.
+    expect(words(section('debugging').blocks, 'en')).toBeGreaterThanOrEqual(40);
+    expect(section('practical_demonstration').blocks.length + section('mini_project').blocks.length).toBeGreaterThanOrEqual(2);
+    expect(section('software_engineering').blocks.some((b) => b.type === 'code')).toBe(true);
+    const refs = section('references').blocks.flatMap((b) => (b.type === 'links' ? b.items : []));
+    expect(refs.length).toBeGreaterThanOrEqual(4);
+  });
+});
+
 describe('quality rules reject defective materials (Part L)', () => {
   it.each<[string, (p: ContentPackage) => void, string]>([
     ['a missing section', (p) => lectureOf(p, 'LUA102').sections.splice(5, 1), 'missing sections: technical_terminology'],
@@ -88,6 +122,14 @@ describe('quality rules reject defective materials (Part L)', () => {
       const b = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'code_demonstration')!.blocks[0] as { expectedOutput?: string };
       delete b.expectedOutput;
     }, 'needs expectedOutput'],
+    ['an explanation range outside the code (off by one)', (p) => {
+      const e = lectureOf(p, 'LUAU203').sections.find((s) => s.kind === 'line_by_line')!.blocks.find((b) => b.type === 'explain' && b.codeId === 'pure-signal') as { items: { lines: string }[] };
+      e.items.at(-1)!.lines = '29–38';
+    }, 'is outside pure-signal'],
+    ['a code line left unexplained', (p) => {
+      const e = lectureOf(p, 'LUA102').sections.find((s) => s.kind === 'line_by_line')!.blocks.find((b) => b.type === 'explain' && b.codeId === 'scope-blocks') as { items: unknown[] };
+      e.items.splice(4, 1); // drop the explanation of line 14
+    }, 'scope-blocks lines not explained: 14'],
     ['a non-https reference', (p) => (lectureOf(p, 'LUA102').sections.at(-1)!.blocks[0] as { items: { url: string }[] }).items[0]!.url = 'http://example.com', 'must use https'],
     ['a not-applicable mandatory section', (p) => (lectureOf(p, 'LUA102').sections[3]!.notApplicable = { ms: 'x', en: 'y' }), 'may be marked not applicable'],
   ])('rejects %s', (_name, mutate, expected) => {
@@ -122,7 +164,7 @@ describe('content installation', () => {
     const lecture = (await db.lectures.where('[moduleId+order]').equals([module.id, 1]).first())!;
     expect(lecture.sections.map((s) => s.kind)).toEqual(AUTHORED_SECTIONS);
     expect(lecture.sections).toEqual(LUA102_1_1.sections);
-    expect(lecture.contentVersion).toBe('1.0.0');
+    expect(lecture.contentVersion).toBe(LUA_LUAU_CONTENT.version);
     expect(await db.glossaryTerms.count()).toBe(16);
 
     // Only lecture content changed: every other table (structure, student) is identical.
@@ -139,5 +181,26 @@ describe('content installation', () => {
 
     expect(await installContentPackage(db, LUA_LUAU_CONTENT)).toMatchObject({ written: 0 });
     expect((await planContentInstall(db, LUA_LUAU_CONTENT)).lecturesUpToDate).toBe(2);
+  });
+
+  it('a corrected release (1.0.0 → 1.0.1) updates installed lectures and keeps student data', async () => {
+    const db = await freshDb();
+    const student = await createStudent(db, { fullName: 'Nur Aisyah', preferredName: 'Aisyah' });
+    await installPackage(db, UNIVERSITY_CORE_M1);
+    await installPackage(db, LUA_LUAU_M2);
+    const old = { ...clone(), version: '1.0.0' };
+    await installContentPackage(db, old);
+    const course = (await db.courses.where('code').equals('LUAU203').first())!;
+    const module = (await db.modules.where('[courseId+order]').equals([course.id, 1]).first())!;
+    const lecture = (await db.lectures.where('[moduleId+order]').equals([module.id, 1]).first())!;
+    await db.notes.add({ id: 'n1', studentId: student.id, entityType: 'lecture', entityId: lecture.id, kind: 'lecture_note', title: 't', body: 'mine', tags: [], createdAt: 'x', updatedAt: 'x' });
+
+    expect(await planContentInstall(db, LUA_LUAU_CONTENT)).toMatchObject({ lecturesToWrite: 2, glossaryToWrite: 16 });
+    expect((await installContentPackage(db, LUA_LUAU_CONTENT)).written).toBe(18);
+    const updated = (await db.lectures.get(lecture.id))!;
+    expect(updated.contentVersion).toBe('1.0.1');
+    expect(JSON.stringify(updated.sections)).toContain('"29–37"');
+    expect((await db.notes.get('n1'))?.body).toBe('mine');
+    expect((await checkDatabaseIntegrity(db)).issues).toEqual([]);
   });
 });

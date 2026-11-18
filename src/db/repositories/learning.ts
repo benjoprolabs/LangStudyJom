@@ -2,7 +2,7 @@ import { newId } from '@/lib/id';
 import { nowIso } from '@/lib/time';
 import type { QhazeDatabase } from '../database';
 import { assertValidReferences } from '../integrity';
-import type { Bookmark, Note, StudentProgress } from '../types';
+import type { Bookmark, Lecture, Note, StudentProgress } from '../types';
 
 /**
  * Student learning records written while reading (progress, lecture notes, bookmarks).
@@ -12,6 +12,25 @@ import type { Bookmark, Note, StudentProgress } from '../types';
  * Rule (master spec, Part 12): opening or reading a lecture NEVER marks it complete —
  * only `completeLecture` does, on an explicit action.
  */
+
+/**
+ * Structure-only lectures (no written content yet) are incomplete learning materials: they can be
+ * opened, but they cannot be completed and reading them records no progress (M2 acceptance rule).
+ */
+export class IncompleteLectureError extends Error {
+  constructor(public readonly lectureId: string) {
+    super(`lecture_incomplete: ${lectureId} has no written content yet`);
+    this.name = 'IncompleteLectureError';
+  }
+}
+
+export const hasWrittenContent = (lecture: Pick<Lecture, 'sections'> | undefined) => Boolean(lecture && lecture.sections.length > 0);
+
+async function assertWrittenContent(db: QhazeDatabase, lectureId: string) {
+  const lecture = await db.lectures.get(lectureId);
+  // A missing lecture is reported by the reference check (IntegrityError), not here.
+  if (lecture && !hasWrittenContent(lecture)) throw new IncompleteLectureError(lectureId);
+}
 
 function progressRow(db: QhazeDatabase, studentId: string, lectureId: string) {
   return db.progress.where('[studentId+entityType+entityId]').equals([studentId, 'lecture', lectureId]).first();
@@ -29,6 +48,7 @@ export function recordReading(db: QhazeDatabase, studentId: string, lectureId: s
 }
 
 async function recordReadingTx(db: QhazeDatabase, studentId: string, lectureId: string, percent: number, position: number): Promise<StudentProgress> {
+  await assertWrittenContent(db, lectureId);
   const now = nowIso();
   const current = await progressRow(db, studentId, lectureId);
   const row: StudentProgress = current
@@ -44,6 +64,7 @@ export function completeLecture(db: QhazeDatabase, studentId: string, lectureId:
 }
 
 async function completeLectureTx(db: QhazeDatabase, studentId: string, lectureId: string): Promise<void> {
+  await assertWrittenContent(db, lectureId);
   const now = nowIso();
   const current = await progressRow(db, studentId, lectureId);
   const row: StudentProgress = {

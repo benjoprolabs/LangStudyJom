@@ -61,12 +61,28 @@ export function RichText({ text }: { text: LocalizedText | string }) {
   );
 }
 
+/**
+ * Highlighted code, one row per line with a line-number gutter, so "Lines 3–6" in a line-by-line
+ * explanation can be found at a glance. Numbers are not selectable: selecting and copying the code
+ * (or the Copy button) gives the code only. Wrapped lines (print) stay indented under their number.
+ */
 export function HighlightedCode({ code, language }: { code: string; language: 'lua' | 'luau' }) {
+  const lines: { kind: string; text: string }[][] = [[]];
+  for (const tok of highlight(code, language)) {
+    tok.text.split('\n').forEach((part, i) => {
+      if (i > 0) lines.push([]);
+      if (part) lines[lines.length - 1]!.push({ kind: tok.kind, text: part });
+    });
+  }
+  const width = String(lines.length).length;
   return (
     <>
-      {highlight(code, language).map((tok, i) =>
-        tok.kind === 'plain' ? <span key={i}>{tok.text}</span> : <span key={i} className={`tok-${tok.kind}`}>{tok.text}</span>,
-      )}
+      {lines.map((parts, n) => (
+        <span key={n} className="relative block" style={{ paddingLeft: `${width + 2}ch`, minHeight: '1lh' }} data-line={n + 1}>
+          <span aria-hidden className="code-ln absolute left-0 select-none text-right text-muted/70" style={{ width: `${width}ch` }}>{n + 1}</span>
+          {parts.map((p, i) => (p.kind === 'plain' ? <span key={i}>{p.text}</span> : <span key={i} className={`tok-${p.kind}`}>{p.text}</span>))}
+        </span>
+      ))}
     </>
   );
 }

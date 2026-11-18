@@ -8,8 +8,9 @@
 | 2.0 | Step 0, safety: schema v2, delete protection, save-time validation, cycle prevention, boot-safety fix, bio input, toast label | ✅ Complete |
 | 2 | University management: faculties, academies, programmes, semesters, courses, curriculum database, prerequisites (M1–M3) | ✅ Complete |
 | 2-S1 | Curriculum seeding M1: 7 faculties, 15 Faculty 01 academies, 8-semester Python programme ([CURRICULUM.md](CURRICULUM.md)) | ✅ Complete |
-| 2-S2 | Curriculum seeding M2: separate Lua (6 sem.) and Luau/Roblox (7 sem.) programmes, plus the Professional Programming Education Standard: 28-section template, content packages, glossary, executed code verification, Library, Lecture Room, print/PDF/Markdown/ZIP | ✅ Built. **Awaiting approval**. Content: 2 of 612 Lua/Luau lectures fully written |
-| 2-S3+ | Further milestones (other academies), plus content releases for the remaining lectures | Not started (awaits M2 approval) |
+| 2-S2 | Curriculum seeding M2: separate Lua (6 sem.) and Luau/Roblox (7 sem.) programmes, plus the Professional Programming Education Standard (template, content packages, glossary, executed code verification, Library, Lecture Room, print/Markdown/ZIP) | ✅ **Accepted** as a curriculum-structure and seeding milestone (not as completion of lecture content). See the acceptance record below |
+| 2-S3 | Curriculum seeding M3 | In progress |
+| 2-S4+ | Further seeding milestones | Not started (M4 awaits M3 approval) |
 | 3 | Learning engine: Course Library, modules, Lecture Room, code explanations, progress, notes and bookmarks | **Partly delivered in 2-S2**: Library, Lecture Room, lecture progress, notes and bookmarks. Still to come: Notes & Bookmarks page, Python content, text highlighting |
 | 4 | Download engine: PDF and Markdown export of lectures, modules and courses; source code downloads | **Delivered in 2-S2** (PDF via the browser print dialog) |
 | 5 | Practice Center: exercises, coding challenges, quizzes, assignments, examinations, evaluation | Planned |
@@ -18,6 +19,56 @@
 | 8 | Academic analytics: grading scales, GPA per academy, semester results, reports | Planned |
 | 9 | Projects and portfolio | Planned |
 | 10 | PWA, offline support, performance, accessibility audit, full testing, documentation | Planned |
+
+## Milestone 2 acceptance record (0.4.0 → 0.4.1)
+
+Accepted by the project owner **as a curriculum-structure and database-seeding milestone**. It is not a
+completion of the 612 Lua/Luau lectures' content. Conditions, and how each is met:
+
+| # | Condition | How it is met |
+|---|---|---|
+| 1 | Accepted as structure and seeding only | Recorded here and in the CHANGELOG. Nothing claims the lecture content is complete |
+| 2 | Preserve reference lectures LUA102 1.1 and LUAU203 1.1 | Kept in `src/content/lectures/`. A test fails if either is missing, incomplete or below the standard |
+| 3 | Verify both follow the standard | A per-lecture compliance test checks all 24 authored sections, detailed theory (≥80 words per language), ≥5 real code examples, line-by-line explanations covering every meaningful line, debugging, practical work, poor-vs-improved code and ≥4 references. The audit found and fixed **two defects**: off-by-one line ranges in LUAU203 `pure-signal`, and line 14 of LUA102 `scope-blocks` left unexplained. Content release 1.0.1 delivers the fix to installed devices. Full line coverage is now a permanent validator rule |
+| 4 | Structure-only lectures labelled incomplete | Library and reader badge "Belum lengkap · struktur sahaja / Incomplete · structure only"; the reader shows an "incomplete learning material" notice; print and Markdown say the content is not written |
+| 5 | Structure-only lectures never completed | `completeLecture` and `recordReading` refuse a lecture with no written content (`IncompleteLectureError`). The reader shows no "Mark complete" button and records no progress for them. Covered by unit and e2e tests |
+| 6 | Outstanding requirements recorded | The register below |
+
+## Outstanding requirements register (carried into Phase 3)
+
+Status values are literal. "Done" means implemented **and** tested; nothing below is claimed beyond that.
+
+**Phase 3: Lecture Engine and course materials**
+
+| Requirement | Status |
+|---|---|
+| Full university-style Lecture Engine | **Partial.** The 28-section reader, Library and print view are done. The Notes & Bookmarks page and Python content are not |
+| Complete lecture content | **Not done.** Lua/Luau: 2 of 612 lectures written. Python: 0 of 372. Remaining lectures ship in later content packages and stay labelled incomplete until then |
+| Code-first teaching | Done for the 2 reference lectures; enforced for all future lectures by the validator (code sections must contain code) |
+| Line-by-line code explanations | Done for the 2 reference lectures. The validator now enforces full coverage, and the reader shows line numbers |
+| Click-to-Learn glossary | Done: 16 terms with panel, related concepts and lectures, bookmarking. Must grow with each content release |
+| Internal and external reference links | **Partial.** External https references and glossary → lecture links are done. Lecture → lecture cross-reference links inside lecture text are not supported yet |
+| Blue-accent academic reading design | Done (screen and print) |
+| Text highlighting | **Not done** |
+| Personal notes and bookmarks | Done in the reader (lecture notes with autosave and export; lecture and glossary bookmarks). A dedicated Notes & Bookmarks page is not done |
+| One-click PDF downloads | **Not done.** The PDF is made through the browser print dialog ("Save as PDF") |
+| A4 print support | Done |
+| Markdown export | Done: lecture, module, course and notes |
+| Source code downloads | Done: per example, and ZIP per lecture or course |
+| Offline learning materials | **Partial.** Data is local (IndexedDB), downloaded files work offline, and an already-open app keeps working without a network. Starting the app offline (PWA / service worker) is not done; it is planned for Phase 10 |
+| Reading progress tracking | Done (percent, position restore, resume last lecture, explicit completion) |
+| Bilingual lecture content | Done for the reference lectures; enforced by the validator |
+| Separate Practice Center navigation | **Partial.** The reader links to the Practice Center, which is still a planned Phase 5 page |
+
+**Technical commitments (standing)**
+
+- Database schema **version 3** and its migration history (v1 → v2 index-only → v3 `glossaryTerms`) are
+  preserved. Future changes append versions only.
+- All Python, Lua and Luau curriculum records are preserved. Packages are idempotent and never overwrite records.
+- Lua and Luau stay technically separate: separate programmes and course-code prefixes, validator rules
+  (no Roblox identifiers or Luau-only syntax in Lua), and tests.
+- **Roblox execution limitation:** Roblox API examples are never executed. They are checked statically and labelled "not executed here".
+- **No Luau type checking:** Luau examples are executed with the Luau VM, but `luau-analyze` is not run, so type annotations are not verified.
 
 When a page becomes functional, add its key to `IMPLEMENTED_PAGES` in `src/app/navigation.ts` and its
 component to `IMPLEMENTED` in `src/app/routes.tsx`. A startup check fails if the two disagree.

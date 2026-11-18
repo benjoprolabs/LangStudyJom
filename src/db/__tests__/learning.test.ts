@@ -4,7 +4,7 @@ import { LUA_LUAU_CONTENT } from '@/content';
 import { installContentPackage } from '@/db/content/install';
 import type { QhazeDatabase } from '@/db/database';
 import { checkDatabaseIntegrity, IntegrityError } from '@/db/integrity';
-import { completeLecture, getLectureNote, recordReading, saveLectureNote, toggleBookmark } from '@/db/repositories/learning';
+import { completeLecture, getLectureNote, IncompleteLectureError, recordReading, saveLectureNote, toggleBookmark } from '@/db/repositories/learning';
 import { createStudent } from '@/db/repositories/student';
 import { installPackage } from '@/db/seed/install';
 import { LUA_LUAU_M2, UNIVERSITY_CORE_M1 } from '@/db/seed/packages';
@@ -36,6 +36,7 @@ let db: QhazeDatabase;
 let studentId: string;
 let lua102: Lecture; // LUA102 1.1 — full content
 let lua102b: Lecture; // LUA102 1.2 — structure only
+let luau203: Lecture; // LUAU203 1.1 — full content
 
 async function lectureAt(code: string, m: number, l: number) {
   const course = (await db.courses.where('code').equals(code).first())!;
@@ -51,6 +52,7 @@ beforeAll(async () => {
   await installContentPackage(db, LUA_LUAU_CONTENT);
   lua102 = await lectureAt('LUA102', 1, 1);
   lua102b = await lectureAt('LUA102', 1, 2);
+  luau203 = await lectureAt('LUAU203', 1, 1);
 }, 60_000);
 
 const progressOf = (lectureId: string) => db.progress.where('[studentId+entityType+entityId]').equals([studentId, 'lecture', lectureId]).first();
@@ -66,11 +68,21 @@ describe('reading progress', () => {
   });
 
   it('completion is explicit and survives a reading save racing with it (no lost update)', async () => {
-    await Promise.all([recordReading(db, studentId, lua102b.id, 30, 0.3), completeLecture(db, studentId, lua102b.id), recordReading(db, studentId, lua102b.id, 35, 0.35)]);
-    const p = (await progressOf(lua102b.id))!;
+    await Promise.all([recordReading(db, studentId, luau203.id, 30, 0.3), completeLecture(db, studentId, luau203.id), recordReading(db, studentId, luau203.id, 35, 0.35)]);
+    const p = (await progressOf(luau203.id))!;
     expect(p.status).toBe('completed');
     expect(p.percent).toBe(100);
-    expect((await db.progress.toArray()).filter((p) => p.entityId === lua102b.id)).toHaveLength(1);
+    expect((await db.progress.toArray()).filter((x) => x.entityId === luau203.id)).toHaveLength(1);
+  });
+
+  it('a structure-only lecture can never be completed and records no reading progress', async () => {
+    expect(lua102b.sections).toEqual([]);
+    await expect(completeLecture(db, studentId, lua102b.id)).rejects.toBeInstanceOf(IncompleteLectureError);
+    await expect(recordReading(db, studentId, lua102b.id, 100, 1)).rejects.toBeInstanceOf(IncompleteLectureError);
+    expect(await progressOf(lua102b.id)).toBeUndefined();
+    // Across the whole installed curriculum, completed progress only exists for written lectures.
+    const lectures = new Map((await db.lectures.toArray()).map((l) => [l.id, l]));
+    for (const p of await db.progress.toArray()) if (p.status === 'completed') expect(lectures.get(p.entityId)!.sections.length).toBeGreaterThan(0);
   });
 
   it('rejects progress for a lecture or student that does not exist', async () => {

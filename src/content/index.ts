@@ -11,7 +11,7 @@ import { LUAU203_1_1 } from './lectures/luau203-1-1';
  */
 export const LUA_LUAU_CONTENT: ContentPackage = {
   id: 'qhaze-f01-lua-luau-content',
-  version: '1.0.0',
+  version: '1.0.1',
   title: L('Bahan Kursus Lua & Luau — Keluaran 1', 'Lua & Luau Course Materials — Release 1'),
   glossary: GLOSSARY,
   lectures: [LUA102_1_1, LUAU203_1_1],

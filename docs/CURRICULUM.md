@@ -344,6 +344,7 @@ real-world applications · mini project\* · summary · review questions · furt
 | Bilingual | Every text block has Malay and English. Technical terms and code stay in English |
 | Lua/Luau separation (Part C) | A Lua lecture may not link a Luau- or Roblox-scoped glossary term, may not use Luau-only syntax (`+=`, `continue`, type annotations …) and may not use a Roblox identifier (`game`, `workspace`, `Instance`, `Players` …). Luau code that uses a Roblox API must be marked runtime `roblox` |
 | Runnable code | Every `lua54` or `luau` example has an expected output |
+| Line-by-line coverage | Every explanation range lies inside its code, and every line that is not blank, not a comment and not a lone `end`/closing bracket is explained (from 0.4.1) |
 | Links resolve | Every `[[term]]` link resolves to a glossary term; every reference uses https |
 | No answers in materials | Course materials contain no exercises, quiz questions or answers. Those live in the Practice Center (Phase 5), and exports cannot include them because they are not part of lecture content |
 
@@ -361,7 +362,8 @@ documented expected output exactly. Results are written to `docs/CODE-VERIFICATI
 ### Content status
 
 Only the **pilot lectures** below have full 28-section content. Every other lecture is installed as
-**structure only**, and the reader says so plainly. Writing the remaining lectures is ongoing content work,
+**structure only** and explicitly labelled **incomplete**. A structure-only lecture cannot be marked
+complete and records no reading progress (enforced in `repositories/learning.ts`). Writing the remaining lectures is ongoing content work,
 released in later content packages.
 
 <!-- generated:content-status -->

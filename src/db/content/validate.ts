@@ -44,10 +44,12 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
   };
 
   const codeIds = new Set<string>();
+  const codeById = new Map<string, string>();
   const allBlocks = sections.flatMap((s) => s.blocks.map((b) => ({ section: s.kind, block: b })));
   for (const { block } of allBlocks) if (block.type === 'code') {
     if (codeIds.has(block.id)) errors.push(where(`duplicate code id ${block.id}`));
     codeIds.add(block.id);
+    codeById.set(block.id, block.code);
   }
 
   for (const section of sections) {
@@ -89,7 +91,8 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
       case 'explain':
         if (!codeIds.has(block.codeId)) errors.push(where(`${w}: explains unknown code ${block.codeId}`));
         if (!block.items.length) errors.push(where(`${w}: empty explanation`));
-        return block.items.forEach((item, i) => text(`${w} explanation ${i + 1}`, item.text));
+        block.items.forEach((item, i) => text(`${w} explanation ${i + 1}`, item.text));
+        return checkExplainCoverage(w, block);
       case 'terms':
         return block.keys.forEach((k) => checkTerm(w, k));
       case 'links':
@@ -100,6 +103,28 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
     }
   }
 
+  /**
+   * Line-by-line rule: ranges ("3", "3–6") must lie inside the code, and every line that is not blank,
+   * not a comment and not a lone closing keyword must be explained. Catches gaps and off-by-one ranges.
+   */
+  function checkExplainCoverage(w: string, block: Extract<ContentBlock, { type: 'explain' }>) {
+    const code = codeById.get(block.codeId);
+    if (code === undefined) return;
+    const lines = codeLines(code);
+    const covered = new Set<number>();
+    for (const item of block.items) {
+      const range = parseLineRange(item.lines);
+      if (!range || range[0] < 1 || range[1] > lines.length || range[0] > range[1]) {
+        errors.push(where(`${w}: explanation range "${item.lines}" is outside ${block.codeId} (1–${lines.length})`));
+        continue;
+      }
+      for (let n = range[0]; n <= range[1]; n++) covered.add(n);
+      if (range[0] === range[1] && !lines[range[0] - 1]!.trim()) errors.push(where(`${w}: explanation "${item.lines}" points at a blank line of ${block.codeId}`));
+    }
+    const missing = lines.map((l, i) => [l.trim(), i + 1] as const).filter(([l, n]) => l && !l.startsWith('--') && !TRIVIAL_LINE.test(l) && !covered.has(n));
+    if (missing.length) errors.push(where(`${w}: ${block.codeId} lines not explained: ${missing.map(([, n]) => n).join(', ')}`));
+  }
+
   // Section-specific requirements of the standard.
   const blocksOf = (kind: string) => sections.find((s) => s.kind === kind)?.blocks ?? [];
   for (const kind of CODE_SECTIONS) if (!blocksOf(kind).some((b) => b.type === 'code')) errors.push(where(`${kind}: must contain code`));
@@ -108,6 +133,20 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
   if (!blocksOf('knowledge_check').some((b) => b.type === 'list')) errors.push(where('knowledge_check: must contain questions'));
   if (!blocksOf('references').some((b) => b.type === 'links')) errors.push(where('references: must contain links'));
   return errors;
+}
+
+/** A lone closing token needs no explanation of its own ("end", "end)", "},", "until x" does). */
+const TRIVIAL_LINE = /^(end[,)]*|[}\])]+[,)]*;?|else)$/;
+
+/** Code lines as displayed and numbered in the reader (the leading newline of a template literal is dropped). */
+export function codeLines(code: string): string[] {
+  return code.replace(/^\n/, '').replace(/\n$/, '').split('\n');
+}
+
+/** "7" → [7, 7]; "3–6" or "3-6" → [3, 6]. */
+export function parseLineRange(spec: string): [number, number] | null {
+  const m = /^(\d+)(?:\s*[-–]\s*(\d+))?$/.exec(spec.trim());
+  return m ? [Number(m[1]), Number(m[2] ?? m[1])] : null;
 }
 
 export function validateGlossaryTerm(t: GlossaryTermDef, keys: Set<string>): string[] {

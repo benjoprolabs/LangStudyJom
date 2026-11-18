@@ -87,7 +87,8 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
       const position = max > 0 ? Math.min(1, window.scrollY / max) : 1;
       setPercent(Math.round(position * 100));
       // Never record before the saved position has been restored (it would overwrite it with the top).
-      if (!restored.current) return;
+      // Structure-only lectures record no progress: there is nothing to read yet.
+      if (!restored.current || !hasContent) return;
       clearTimeout(timer);
       timer = setTimeout(() => void recordReading(db, studentId, lectureId, position * 100, position), 800);
     };
@@ -97,7 +98,7 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
       window.removeEventListener('scroll', measure);
       clearTimeout(timer);
     };
-  }, [studentId, lectureId]);
+  }, [studentId, lectureId, hasContent]);
 
   const completed = progress?.status === 'completed';
   const sections = useMemo(() => new Map(lecture.sections.map((s) => [s.kind, s])), [lecture.sections]);
@@ -129,18 +130,22 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
         </h1>
 
         <div className="mt-4 flex flex-wrap gap-2" data-print-hide>
-          <Button
-            size="sm"
-            variant={completed ? 'secondary' : 'primary'}
-            disabled={completed}
-            onClick={async () => {
-              await completeLecture(db, studentId, lectureId);
-              toast.success(t('learning.reader.markedComplete'));
-            }}
-            icon={<CheckCircle2 className="h-4 w-4" />}
-          >
-            {completed ? t('learning.reader.completed') : t('learning.reader.markComplete')}
-          </Button>
+          {hasContent ? (
+            <Button
+              size="sm"
+              variant={completed ? 'secondary' : 'primary'}
+              disabled={completed}
+              onClick={async () => {
+                await completeLecture(db, studentId, lectureId);
+                toast.success(t('learning.reader.markedComplete'));
+              }}
+              icon={<CheckCircle2 className="h-4 w-4" />}
+            >
+              {completed ? t('learning.reader.completed') : t('learning.reader.markComplete')}
+            </Button>
+          ) : (
+            <span data-testid="incomplete-badge"><Badge tone="warning">{t('learning.library.structureOnly')}</Badge></span>
+          )}
           <Button size="sm" variant="outline" aria-pressed={Boolean(bookmarked)} onClick={() => void toggleBookmark(db, studentId, 'lecture', lectureId, `${course.code} ${bundle.number}`)} icon={bookmarked ? <BookmarkCheck className="h-4 w-4" /> : <Bookmark className="h-4 w-4" />}>
             {bookmarked ? t('learning.reader.bookmarked') : t('learning.reader.bookmark')}
           </Button>

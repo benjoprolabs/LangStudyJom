@@ -95,7 +95,7 @@ export function LibraryPage() {
                                         <li key={x.id} className="flex flex-wrap items-center gap-2 text-sm">
                                           <span className="w-8 font-mono text-xs text-muted">{m.order}.{x.order}</span>
                                           <Link to={`/lecture-room?lecture=${x.id}`} className="hover:text-accent hover:underline">{l(x.title)}</Link>
-                                          {x.sections.length > 0 ? <Badge tone="success">{t('learning.library.contentReady')}</Badge> : <Badge>{t('learning.library.structureOnly')}</Badge>}
+                                          {x.sections.length > 0 ? <Badge tone="success">{t('learning.library.contentReady')}</Badge> : <Badge tone="warning">{t('learning.library.structureOnly')}</Badge>}
                                           <span className="ml-auto text-xs text-muted">{t('learning.reader.minutes', { count: x.estimatedMinutes })}</span>
                                         </li>
                                       ))}

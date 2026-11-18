@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.1: Milestone 2 acceptance conditions
+
+- **Reference lectures audited** (LUA102 1.1, LUAU203 1.1). Fixed off-by-one line ranges in the
+  `pure-signal` explanation and an unexplained line (`print(describe())`) in `scope-blocks`.
+  Course materials **1.0.1** carries the fix; installing it updates devices that have 1.0.0 without
+  touching student notes or progress.
+- New validator rule: line-by-line explanations must stay inside the code and cover every meaningful line.
+- The reader shows **line numbers** in code blocks (not selectable, so they are never copied).
+- **Structure-only lectures are explicitly incomplete:**
+  - labelled "Belum lengkap · struktur sahaja" (Incomplete · structure only);
+  - they cannot be marked complete, and reading them records no progress
+    (`IncompleteLectureError`, enforced in the repository as well as the UI).
+- ROADMAP: M2 acceptance record and the outstanding-requirements register for Phase 3.
+- Tests: 207 unit and integration tests; e2e learning suite still at 19 checks, now asserting the incomplete-lecture rules and line numbers.
+
 ## 0.4.0: Curriculum Seeding, Milestone 2 (Lua & Luau) and the Professional Programming Education Standard
 
 **Curriculum (package `qhaze-f01-lua-luau` v1.0.0)**

@@ -113,7 +113,7 @@ async function main() {
     await lua102.locator('summary').click();
     await lua102.getByText('1/12 kuliah berkandungan').waitFor();
     await lua102.getByText('Kandungan lengkap').waitFor();
-    assert.equal(await lua102.getByText('Struktur sahaja').count(), 11);
+    assert.equal(await lua102.getByText('Belum lengkap · struktur sahaja').count(), 11);
     await page.getByLabel('Program').selectOption(luau.id);
     await lib.getByTestId('course-LUAU203').waitFor();
     assert.equal(await lib.locator('[data-testid^="course-LUA1"], [data-testid^="course-LUA2"], [data-testid^="course-LUA3"]').count(), 0);
@@ -139,8 +139,12 @@ async function main() {
     assert.equal(await page.getByTestId('output-demo-basic').textContent(), 'Aisyah\t10\nNew score:\t15');
     assert.ok(await demo.getByText('Lua 5.4 · disahkan dengan pelaksanaan sebenar').first().isVisible());
     await article.getByRole('button', { name: 'Salin: Global berbanding local' }).click();
+    // Line numbers match the line-by-line explanation ("Baris 14" → print(describe())) and are not copied.
+    const scopeBlock = article.locator('figure').filter({ has: page.getByTestId('output-scope-blocks') });
+    assert.equal((await scopeBlock.locator('[data-line="14"]').innerText()).replace(/^14/, '').trim(), 'print(describe())');
+    assert.ok(await article.getByText('Baris 14', { exact: true }).isVisible());
     const clip = await page.evaluate(() => navigator.clipboard.readText());
-    assert.ok(clip.includes('local playerName = "Aisyah"'), 'copied code');
+    assert.ok(clip.includes('local playerName = "Aisyah"') && !/^\s*\d+\s/m.test(clip.split('\n')[0]), 'copied code without line numbers');
     const file = await save(page, downloadsDir, () => article.getByRole('button', { name: 'Muat turun fail: demo-basic.lua' }).click());
     assert.ok(readFileSync(file.path, 'utf-8').startsWith('-- Global: no'));
     // The downloaded file really runs on Lua 5.4 and prints the documented output.
@@ -208,10 +212,15 @@ async function main() {
 
     // Previous / next + structure-only lecture is honest.
     await page.getByRole('link', { name: /Kuliah seterusnya/ }).click();
-    await page.getByText('Kandungan kuliah ini belum dibangunkan').waitFor();
+    await page.getByText('Kandungan kuliah ini belum ditulis — bahan pembelajaran belum lengkap').waitFor();
+    await page.getByTestId('incomplete-badge').waitFor();
+    assert.equal(await page.getByRole('button', { name: 'Tandakan selesai' }).count(), 0, 'structure-only lecture cannot be completed');
+    await page.waitForTimeout(1200);
+    const structureOnlyId = new URL(page.url().replace('#/', '')).searchParams.get('lecture');
+    assert.equal((await readStore(page, 'progress')).filter((p) => p.entityId === structureOnlyId).length, 0, 'no progress recorded for an incomplete lecture');
     assert.equal(await page.getByRole('button', { name: 'Kod sumber (.zip)' }).count(), 0);
     await page.getByRole('link', { name: /Kuliah sebelumnya/ }).waitFor();
-    log('Next/previous navigation; a structure-only lecture says so plainly (no fake content, no empty ZIP)');
+    log('Next/previous navigation; a structure-only lecture is labelled incomplete, offers no completion and records no progress');
 
     // ── Luau lecture: Roblox examples marked and never claimed as executed ──
     const luauLecture = await lectureId(page, 'LUAU203', 1, 1);
@@ -230,7 +239,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.0\.0/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.0\.1/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
