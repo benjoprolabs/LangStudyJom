@@ -137,7 +137,27 @@ async function main() {
     // Code blocks: runtime badge, expected output, copy, download.
     const demo = article.locator('figure, div').filter({ has: page.getByTestId('output-demo-basic') }).first();
     assert.equal(await page.getByTestId('output-demo-basic').textContent(), 'Aisyah\t10\nNew score:\t15');
-    assert.ok(await demo.getByText('Lua 5.4 · disahkan dengan pelaksanaan sebenar').first().isVisible());
+    assert.equal(await page.getByTestId('status-LUA102 1.1#demo-basic').getAttribute('data-status'), 'executed');
+    assert.match(await page.getByTestId('status-LUA102 1.1#demo-basic').innerText(), /Dilaksanakan · output disahkan \(Lua 5\.4\.\d+ \(lupa/);
+    // Run Code: Lua 5.4 compiled to WebAssembly in a Web Worker, compared with the expected output.
+    const demoFig = page.locator('figure[data-code-id="demo-basic"]');
+    await demoFig.getByRole('button', { name: 'Jalankan', exact: true }).click();
+    await demoFig.getByTestId('run-verdict').waitFor({ timeout: 20_000 });
+    assert.equal(await demoFig.getByTestId('run-verdict').getAttribute('data-matches'), 'yes');
+    assert.equal(await demoFig.getByTestId('run-output').innerText(), 'Aisyah\t10\nNew score:\t15');
+    // Explain This Code: the lecture's line-by-line notes for this example, inline.
+    await demoFig.getByRole('button', { name: 'Terangkan kod ini: Global berbanding local' }).click();
+    assert.ok(await demoFig.getByTestId('explain-demo-basic').getByText('Baris 1–2').isVisible());
+    // Error & debugging: the buggy variant, its verified error, and running it reproduces that error.
+    await demoFig.getByTestId('debug-demo-basic').locator('summary').click();
+    assert.equal(await demoFig.getByTestId('debug-error-demo-basic').innerText(), "example:8: attempt to perform arithmetic on a nil value (global 'scroe')");
+    assert.equal(await demoFig.getByTestId('status-LUA102 1.1#demo-basic:debug').getAttribute('data-status'), 'error-matched');
+    await demoFig.getByRole('button', { name: 'Jalankan versi berpepijat' }).click();
+    await demoFig.getByTestId('debug-demo-basic').getByTestId('run-verdict').waitFor({ timeout: 20_000 });
+    assert.equal(await demoFig.getByTestId('debug-demo-basic').getByTestId('run-error').innerText(), "example:8: attempt to perform arithmetic on a nil value (global 'scroe')");
+    assert.equal(await demoFig.getByTestId('debug-demo-basic').getByTestId('run-verdict').getAttribute('data-matches'), 'yes');
+    const statuses = await page.locator('[data-status]').evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+    assert.ok(statuses.length >= 11 && statuses.every((x) => x === 'executed' || x === 'error-matched'), statuses.join());
     await article.getByRole('button', { name: 'Salin: Global berbanding local' }).click();
     // Line numbers match the line-by-line explanation ("Baris 14" → print(describe())) and are not copied.
     const scopeBlock = article.locator('figure').filter({ has: page.getByTestId('output-scope-blocks') });
@@ -150,7 +170,7 @@ async function main() {
     // The downloaded file really runs on Lua 5.4 and prints the documented output.
     const ran = execFileSync('python3', ['tools/code-verification/run-lua54.py'], { input: readFileSync(file.path), encoding: 'utf-8' });
     assert.equal(ran.trimEnd(), 'Aisyah\t10\nNew score:\t15');
-    log('Code example: verified-runtime badge, expected output, copy to clipboard, .lua download that runs on Lua 5.4');
+    log('Code example: execution status from the manifest, Run in the browser (Lua 5.4 WASM) matches, Explain, debug variant reproduces its error, copy, .lua download runs on Lua 5.4');
 
     // Glossary popover + bookmark.
     await article.locator('[data-term="variable"]').first().click();
@@ -226,12 +246,14 @@ async function main() {
     const luauLecture = await lectureId(page, 'LUAU203', 1, 1);
     await page.goto(`${base}#/lecture-room?lecture=${luauLecture}`);
     await page.getByTestId('lecture-article').locator('section[data-section]').first().waitFor();
-    const robloxBadges = await page.getByText('API Roblox · hanya berjalan dalam Roblox Studio (tidak dijalankan di sini)').count();
-    const luauBadges = await page.getByText('VM Luau · disahkan dengan pelaksanaan sebenar').count();
-    assert.equal(robloxBadges, 4);
-    assert.equal(luauBadges, 1);
+    const luauStatuses = await page.locator('[data-status]').evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+    assert.equal(luauStatuses.filter((x) => x === 'compiled').length, 4 + 1, 'Roblox examples (+ Roblox debug variant) are compiled only');
+    assert.equal(await page.getByTestId('status-LUAU203 1.1#pure-signal').getAttribute('data-status'), 'executed');
+    assert.equal(await page.getByText('Sintaks disahkan oleh pengkompil Luau · TIDAK dijalankan dalam Roblox Studio').count(), 4 + 1, 'four Roblox examples + the Roblox debug variant');
+    assert.equal(await page.getByRole('button', { name: 'Jalankan', exact: true }).count(), 0, 'no browser Run for Luau/Roblox');
+    assert.equal(await page.getByText('Kod ini menggunakan API Roblox dan hanya boleh berjalan dalam Roblox Studio.').count(), 4);
     assert.ok(await page.getByTestId('output-pure-signal').isVisible());
-    log('LUAU203 1.1: 4 Roblox examples labelled "not executed here", 1 pure-Luau example verified with output');
+    log('LUAU203 1.1: Roblox examples compiled only and labelled "NOT run in Roblox Studio"; pure-Luau example executed; no fake Run button');
 
     // ── Print / PDF ───────────────────────────────────────────────────────
     await page.goto(`${base}#/lecture-room?lecture=${luaLecture}`);

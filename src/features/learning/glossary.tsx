@@ -10,7 +10,8 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
-import { CodeBlock, GlossaryProvider, RichText } from './ContentRenderer';
+import { VERIFICATION } from '@/content/verification';
+import { CodeBlock, CodeScopeProvider, GlossaryProvider, RichText } from './ContentRenderer';
 import { loadGlossary } from './data';
 import type { ExportLabels } from './markdown';
 
@@ -78,7 +79,9 @@ function GlossaryPanel({ termKey, terms, onNavigate, onClose }: { termKey: strin
             {term.example && (
               <section>
                 <h3 className="font-semibold">{t('learning.glossary.example')}</h3>
-                <CodeBlock block={{ type: 'code', id: term.key, language: term.example.language, runtime: term.example.runtime, title: { ms: term.term, en: term.term }, code: term.example.code, expectedOutput: term.example.expectedOutput }} />
+                <CodeScopeProvider value={{ scope: 'glossary', explains: new Map() }}>
+                  <CodeBlock block={{ type: 'code', id: term.key, language: term.example.language, runtime: term.example.runtime, title: { ms: term.term, en: term.term }, code: term.example.code, expectedOutput: term.example.expectedOutput }} />
+                </CodeScopeProvider>
               </section>
             )}
             {term.related.length > 0 && (
@@ -145,5 +148,18 @@ export function useExportLabels(): ExportLabels {
     generated: t('learning.reader.generated'),
     externalLink: t('learning.reader.externalLink'),
     notes: t('learning.reader.notes'),
+    status: (runtime, status) => {
+      const tool = runtime === 'lua54' ? VERIFICATION.tools.lua54 : VERIFICATION.tools.luau;
+      const date = VERIFICATION.generatedAt;
+      if (status === 'executed') return t('learning.code.status.executed', { tool, date });
+      if (status === 'error-matched') return t('learning.code.status.errorMatched', { tool, date });
+      if (status === 'compiled') return t('learning.code.status.compiled');
+      return t('learning.code.status.unverified');
+    },
+    input: t('learning.code.input'),
+    debugTitle: t('learning.code.debugTitle'),
+    brokenCode: t('learning.code.brokenCode'),
+    errorMessage: t('learning.code.errorMessage'),
+    fix: t('learning.code.fix'),
   };
 }

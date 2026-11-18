@@ -369,8 +369,8 @@ released in later content packages.
 <!-- generated:content-status -->
 | Course | Lecture | Title (EN) | Sections | Code examples (executed / Roblox, not executed) |
 |---|---|---|---|---|
-| LUA102 | 1.1 | Global and local variables | 4 generated + 24 authored | 9 / 0 |
-| LUAU203 | 1.1 | RBXScriptSignal and Connect | 4 generated + 24 authored | 1 / 4 |
+| LUA102 | 1.1 | Global and local variables | 4 generated + 24 authored | 11 / 0 |
+| LUAU203 | 1.1 | RBXScriptSignal and Connect | 4 generated + 24 authored | 2 / 5 |
 
 | Programme | Lectures | With full content | Structure only |
 |---|---|---|---|

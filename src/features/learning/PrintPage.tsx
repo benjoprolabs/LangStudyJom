@@ -7,7 +7,7 @@ import { APP_VERSION } from '@/db/backup/backup';
 import { LECTURE_TEMPLATE, type Lecture, type Module } from '@/db/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from '@/components/ui/Button';
-import { Blocks, GlossaryProvider, RichText } from './ContentRenderer';
+import { Blocks, CodeScopeProvider, explainsOf, GlossaryProvider, RichText } from './ContentRenderer';
 import { loadCourseBundle, loadLectureBundle, type CourseBundle } from './data';
 import { useGlossaryTerms } from './glossary';
 
@@ -97,7 +97,9 @@ export function PrintPage() {
 function PrintedLecture({ module, lecture, breakBefore, courseCode }: { module: Module; lecture: Lecture; breakBefore: boolean; courseCode: string }) {
   const { t, l } = useI18n();
   const sections = new Map(lecture.sections.map((s) => [s.kind, s]));
+  const codeScope = { scope: `${courseCode} ${module.order}.${lecture.order}`, explains: explainsOf(lecture.sections.flatMap((s) => s.blocks)) };
   return (
+    <CodeScopeProvider value={codeScope}>
     <article className={breakBefore ? 'page-break mt-10' : 'mt-8'} data-testid="print-lecture">
       <h2 className="text-xl font-bold">
         <span className="font-mono text-note">{courseCode} {module.order}.{lecture.order}</span> {l(lecture.title)}
@@ -134,5 +136,6 @@ function PrintedLecture({ module, lecture, breakBefore, courseCode }: { module: 
         })
       )}
     </article>
+    </CodeScopeProvider>
   );
 }

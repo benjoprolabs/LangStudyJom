@@ -2,11 +2,12 @@
 import { describe, expect, it } from 'vitest';
 import { CONTENT_PACKAGES, LUA_LUAU_CONTENT } from '@/content';
 import { GLOSSARY } from '@/content/glossary';
+import { VERIFICATION, verificationOf } from '@/content/verification';
 import { LUA102_1_1 } from '@/content/lectures/lua102-1-1';
 import { ContentInstallError, installContentPackage, planContentInstall } from '@/db/content/install';
 import { inlineToPlain, parseInline } from '@/db/content/inline';
 import type { ContentPackage } from '@/db/content/types';
-import { validateContentPackage } from '@/db/content/validate';
+import { collectCodeExamples, validateContentPackage } from '@/db/content/validate';
 import { checkDatabaseIntegrity, dumpTables } from '@/db/integrity';
 import { createStudent } from '@/db/repositories/student';
 import { installPackage } from '@/db/seed/install';
@@ -30,6 +31,19 @@ describe('lecture template (Part A)', () => {
 describe('content package', () => {
   it('passes every quality rule', () => {
     for (const pkg of CONTENT_PACKAGES) expect(validateContentPackage(pkg)).toEqual([]);
+  });
+
+  it('every example and debug variant has a current execution record (npm run verify:code)', () => {
+    const units = CONTENT_PACKAGES.flatMap((p) => collectCodeExamples(p));
+    const stale = units.filter((u) => !verificationOf(u.key, u)).map((u) => u.key);
+    expect(stale, 'run `npm run verify:code` after editing course materials').toEqual([]);
+    for (const u of units) {
+      const status = verificationOf(u.key, u);
+      if (u.runtime === 'roblox') expect(['compiled', 'error-matched'], u.key).toContain(status);
+      else expect(status, u.key).toBe(u.expectedError !== undefined ? 'error-matched' : 'executed');
+    }
+    expect(VERIFICATION.tools.lua54).toMatch(/^Lua 5\.4\.\d+/);
+    expect(VERIFICATION.tools.luau).toMatch(/^Luau 0\.\d+/);
   });
 
   it('pilot lectures address real lectures of the installed curriculum', () => {

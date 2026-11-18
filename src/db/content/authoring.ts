@@ -1,4 +1,4 @@
-import type { CodeRuntime, ContentBlock, LectureSection, LectureSectionKind, LocalizedText } from '../types';
+import type { CodeDebug, CodeRuntime, ContentBlock, LectureSection, LectureSectionKind, LocalizedText } from '../types';
 
 /** Authoring helpers for course materials. Every text is [Bahasa Melayu, English]. */
 type T = [ms: string, en: string];
@@ -13,6 +13,11 @@ export const WARN = (ms: string, en: string, title?: T): ContentBlock => ({ type
 export const TERMS = (...keys: string[]): ContentBlock => ({ type: 'terms', keys });
 export const LINKS = (...items: { title: string; url: string }[]): ContentBlock => ({ type: 'links', items });
 
+const trimCode = (code: string) => code.replace(/^\n/, '').replace(/\s+$/, '');
+
+/**
+ * A code example. `extra.input` is stdin for io.read(); `extra.debug` is a broken variant built with BUG().
+ */
 export function CODE(
   id: string,
   language: 'lua' | 'luau',
@@ -20,9 +25,13 @@ export function CODE(
   title: T,
   code: string,
   expectedOutput?: string,
+  extra: { input?: string; debug?: CodeDebug } = {},
 ): ContentBlock {
-  return { type: 'code', id, language, runtime, title: L(title), code: code.replace(/^\n/, '').replace(/\s+$/, ''), expectedOutput };
+  return { type: 'code', id, language, runtime, title: L(title), code: trimCode(code), expectedOutput, ...(extra.input !== undefined && { input: extra.input }), ...(extra.debug && { debug: extra.debug }) };
 }
+
+/** Broken variant of an example: the code, the exact first line of the error, and how to fix it [ms, en]. */
+export const BUG = (code: string, error: string, ms: string, en: string): CodeDebug => ({ code: trimCode(code), error, explanation: { ms, en } });
 
 export const EXPLAIN = (codeId: string, ...items: [lines: string, ms: string, en: string][]): ContentBlock => ({
   type: 'explain',

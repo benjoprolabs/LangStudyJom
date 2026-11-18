@@ -1,4 +1,4 @@
-import { AUTHORED_SECTIONS, OPTIONAL_SECTIONS, type ContentBlock, type LectureSection, type LocalizedText } from '../types';
+import { AUTHORED_SECTIONS, OPTIONAL_SECTIONS, type CodeRuntime, type ContentBlock, type LectureSection, type LocalizedText } from '../types';
 import { parseInline } from './inline';
 import { pathwayOf, type ContentPackage, type GlossaryTermDef } from './types';
 
@@ -86,6 +86,14 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
           if (LUAU_ONLY_SYNTAX.test(block.code)) errors.push(where(`${cw}: Lua code uses Luau-only syntax`));
         }
         if (block.runtime === 'luau' && ROBLOX_IDENTIFIERS.test(block.code)) errors.push(where(`${cw}: code marked "luau" (runs outside Roblox) uses a Roblox API`));
+        if (block.input !== undefined && block.runtime !== 'lua54') errors.push(where(`${cw}: input (stdin) is only supported for lua54 examples`));
+        if (block.debug) {
+          const d = block.debug;
+          text(`${cw} debug explanation`, d.explanation);
+          if (!d.code.trim() || d.code === block.code) errors.push(where(`${cw}: debug variant must be a changed copy of the code`));
+          if (!d.error.trim() || d.error.includes('\n')) errors.push(where(`${cw}: debug error must be the single first line of the error message`));
+          if (pathway === 'lua' && (ROBLOX_IDENTIFIERS.test(d.code) || LUAU_ONLY_SYNTAX.test(d.code))) errors.push(where(`${cw}: debug variant breaks the Lua/Luau separation`));
+        }
         return;
       }
       case 'explain':
@@ -125,6 +133,13 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
     if (missing.length) errors.push(where(`${w}: ${block.codeId} lines not explained: ${missing.map(([, n]) => n).join(', ')}`));
   }
 
+  // "Explain This Code": every example of the lecture has a line-by-line explanation somewhere.
+  const explained = new Set(allBlocks.flatMap(({ block }) => (block.type === 'explain' ? [block.codeId] : [])));
+  for (const id of codeIds) if (!explained.has(id)) errors.push(where(`code ${id}: has no line-by-line explanation (explain block)`));
+  // "Error and debugging explanation": at least two examples per lecture carry a verified broken variant.
+  const debugCount = allBlocks.filter(({ block }) => block.type === 'code' && block.debug).length;
+  if (debugCount < MIN_DEBUG_VARIANTS) errors.push(where(`only ${debugCount} debug variant(s); at least ${MIN_DEBUG_VARIANTS} examples need a broken variant with its error (BUG)`));
+
   // Section-specific requirements of the standard.
   const blocksOf = (kind: string) => sections.find((s) => s.kind === kind)?.blocks ?? [];
   for (const kind of CODE_SECTIONS) if (!blocksOf(kind).some((b) => b.type === 'code')) errors.push(where(`${kind}: must contain code`));
@@ -134,6 +149,9 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
   if (!blocksOf('references').some((b) => b.type === 'links')) errors.push(where('references: must contain links'));
   return errors;
 }
+
+/** Minimum number of examples per lecture that carry an executed error-and-debugging variant. */
+export const MIN_DEBUG_VARIANTS = 2;
 
 /** A lone closing token needs no explanation of its own ("end", "end)", "},", "until x" does). */
 const TRIVIAL_LINE = /^(end[,)]*|[}\])]+[,)]*;?|else)$/;
@@ -188,15 +206,33 @@ export function validateContentPackage(pkg: ContentPackage): string[] {
 }
 
 /** Every code example in a package (lectures and glossary), for execution verification. */
-export function collectCodeExamples(pkg: ContentPackage) {
-  const out: { where: string; id: string; language: 'lua' | 'luau'; runtime: string; code: string; expectedOutput?: string }[] = [];
+/** One runnable unit for the verifier and the browser runner: an example or the broken variant of one. */
+export interface CodeExample {
+  /** Stable key used by the verification manifest, e.g. "LUA102 1.1#demo-basic" or "glossary#closure". */
+  key: string;
+  where: string;
+  id: string;
+  language: 'lua' | 'luau';
+  runtime: CodeRuntime;
+  code: string;
+  expectedOutput?: string;
+  input?: string;
+  /** Present for a broken variant: the error it must produce (first line). */
+  expectedError?: string;
+}
+
+export function collectCodeExamples(pkg: ContentPackage): CodeExample[] {
+  const out: CodeExample[] = [];
+  const add = (where: string, b: Extract<ContentBlock, { type: 'code' }>) => {
+    const key = `${where}#${b.id}`;
+    out.push({ key, where, id: b.id, language: b.language, runtime: b.runtime, code: b.code, expectedOutput: b.expectedOutput, input: b.input });
+    if (b.debug) out.push({ key: `${key}:debug`, where, id: `${b.id} (debug)`, language: b.language, runtime: b.runtime, code: b.debug.code, input: b.input, expectedError: b.debug.error });
+  };
   for (const l of pkg.lectures) {
-    for (const s of l.sections) for (const b of s.blocks) {
-      if (b.type === 'code') out.push({ where: `${l.courseCode} ${l.module}.${l.lecture}`, id: b.id, language: b.language, runtime: b.runtime, code: b.code, expectedOutput: b.expectedOutput });
-    }
+    for (const s of l.sections) for (const b of s.blocks) if (b.type === 'code') add(`${l.courseCode} ${l.module}.${l.lecture}`, b);
   }
   for (const t of pkg.glossary) {
-    if (t.example) out.push({ where: `glossary`, id: t.key, language: t.example.language, runtime: t.example.runtime, code: t.example.code, expectedOutput: t.example.expectedOutput });
+    if (t.example) add('glossary', { type: 'code', id: t.key, title: { ms: t.term, en: t.term }, ...t.example });
   }
   return out;
 }

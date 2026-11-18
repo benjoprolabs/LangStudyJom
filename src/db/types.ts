@@ -220,6 +220,12 @@ export type CodeRuntime = 'lua54' | 'luau' | 'roblox';
  * Inline text syntax inside LocalizedText: **bold**, `code`, [[glossary-key]] or
  * [[glossary-key|label]] (Click-to-Learn), and [label](https://…) for external links.
  */
+export interface CodeDebug {
+  code: string;
+  error: string;
+  explanation: LocalizedText;
+}
+
 export type ContentBlock =
   | { type: 'paragraph'; text: LocalizedText }
   | { type: 'list'; ordered?: boolean; items: LocalizedText[] }
@@ -235,6 +241,14 @@ export type ContentBlock =
       code: string;
       /** Exact expected stdout (required for lua54 / luau; describes Studio Output for roblox). */
       expectedOutput?: string;
+      /** Standard input the example reads with io.read() (lua54 only). Fed by the verifier and the browser runner. */
+      input?: string;
+      /**
+       * "Error and debugging explanation": a broken variant of this example, the exact error message
+       * it produces (first line, as the interpreter prints it) and how to read and fix it. For lua54/luau
+       * the verifier runs the variant and requires exactly this error; Roblox variants are only compiled.
+       */
+      debug?: CodeDebug;
     }
   | { type: 'explain'; codeId: string; items: { lines: string; text: LocalizedText }[] }
   | { type: 'terms'; keys: string[] }

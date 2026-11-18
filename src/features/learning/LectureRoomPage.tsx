@@ -19,7 +19,7 @@ import { Textarea } from '@/components/ui/Field';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { useToast } from '@/components/ui/Toast';
 import { SaveIndicator } from '@/features/profile/ProfilePage';
-import { Blocks, RichText, SectionHeading } from './ContentRenderer';
+import { Blocks, CodeScopeProvider, explainsOf, RichText, SectionHeading } from './ContentRenderer';
 import { loadLectureBundle, type LectureBundle } from './data';
 import { GlossaryScope, useExportLabels, useGlossaryTerms } from './glossary';
 import { codeFiles, lectureMarkdown, notesMarkdown } from './markdown';
@@ -102,6 +102,7 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
 
   const completed = progress?.status === 'completed';
   const sections = useMemo(() => new Map(lecture.sections.map((s) => [s.kind, s])), [lecture.sections]);
+  const codeScope = useMemo(() => ({ scope: `${course.code} ${module.order}.${lecture.order}`, explains: explainsOf(lecture.sections.flatMap((s) => s.blocks)) }), [course.code, module.order, lecture.order, lecture.sections]);
   const tocKinds = hasContent ? LECTURE_TEMPLATE : LECTURE_TEMPLATE.slice(0, 4);
   const meta = { app: APP_VERSION, date: new Date().toISOString().slice(0, 10) };
   const fileBase = `${course.code}-${bundle.number}`.replace(/\./g, '_');
@@ -170,6 +171,7 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
             <p className="mt-1 text-sm text-muted">{t('learning.reader.noContentBody')}</p>
           </Card>
         ) : (
+          <CodeScopeProvider value={codeScope}>
           <div className="mt-8 space-y-10">
             {LECTURE_TEMPLATE.slice(4).map((kind) => {
               const section = sections.get(kind)!;
@@ -187,6 +189,7 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
               );
             })}
           </div>
+          </CodeScopeProvider>
         )}
 
         <Card className="mt-10 border-accent/40" data-print-hide>

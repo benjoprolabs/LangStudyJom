@@ -21,6 +21,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.5",
+    "wasmoon": "1.16.0",
     "zod": "^4.6.7"
   },
   "devDependencies": {

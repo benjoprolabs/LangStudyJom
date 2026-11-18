@@ -1,4 +1,4 @@
-import { CODE, EXPLAIN, INFO, KEY, LINKS, OL, P, S, TERMS, UL, WARN } from '@/db/content/authoring';
+import { BUG, CODE, EXPLAIN, INFO, KEY, LINKS, OL, P, S, TERMS, UL, WARN } from '@/db/content/authoring';
 import type { LectureContentDef } from '@/db/content/types';
 
 /**
@@ -62,7 +62,21 @@ local playerName = "Aisyah"
 print(playerName, score)
 score = score + 5
 print("New score:", score)
-`, 'Aisyah\t10\nNew score:\t15'),
+`, 'Aisyah\t10\nNew score:\t15', {
+        debug: BUG(`
+-- Global: no 'local' keyword
+score = 10
+
+-- Local: visible only in this chunk
+local playerName = "Aisyah"
+
+print(playerName, score)
+score = scroe + 5
+print("New score:", score)
+`, "example:8: attempt to perform arithmetic on a nil value (global 'scroe')",
+          'Salah ejaan `scroe` dibaca sebagai global yang tidak wujud, jadi nilainya `nil`, dan `nil + 5` gagal. Mesej menunjukkan **baris 8**, **operasi** (aritmetik) dan **nama** (`global \'scroe\'`). Betulkan ejaan kepada `score`. Perkataan "global" dalam mesej ialah petunjuk kuat bahawa nama itu tidak diisytiharkan.',
+          'The misspelling `scroe` is read as a global that does not exist, so its value is `nil`, and `nil + 5` fails. The message gives the **line** (8), the **operation** (arithmetic) and the **name** (`global \'scroe\'`). Fix the spelling to `score`. The word "global" in the message is a strong hint that the name was never declared.'),
+      }),
       P('`print` memisahkan setiap argumen dengan aksara tab, sebab itu output kelihatan berjarak.',
         '`print` separates each argument with a tab character, which is why the output looks spaced out.')),
     S('complete_examples',
@@ -111,7 +125,37 @@ print(a, b)
         ['8–11', '`do … end` membuka blok baharu. `local level = 99` mencipta pemboleh ubah **baharu** yang membayangi `level` luar hanya di dalam blok ini.', '`do … end` opens a new block. `local level = 99` creates a **new** variable that shadows the outer `level` only inside this block.'],
         ['13', 'Selepas blok tamat, `level` merujuk semula kepada pemboleh ubah luar: 1.', 'After the block ends, `level` refers to the outer variable again: 1.'],
         ['14', '`describe()` dipanggil di luar blok `do`. Ia membaca `level` yang ditangkapnya semasa dicipta — pemboleh ubah luar — maka hasilnya `Level 1`, bukan 99.', '`describe()` is called outside the `do` block. It reads the `level` it captured when it was created — the outer variable — so the result is `Level 1`, not 99.'],
-        ['15', '`message` ialah local dalam `describe`, jadi di sini nama itu dicari sebagai global — yang tidak wujud — maka hasilnya `nil`.', '`message` was local to `describe`, so here the name is looked up as a global — which does not exist — giving `nil`.'])),
+        ['15', '`message` ialah local dalam `describe`, jadi di sini nama itu dicari sebagai global — yang tidak wujud — maka hasilnya `nil`.', '`message` was local to `describe`, so here the name is looked up as a global — which does not exist — giving `nil`.']),
+      EXPLAIN('global-typo',
+        ['1', '`total` ialah local bermula dengan 0.', '`total` is a local starting at 0.'],
+        ['2–4', 'Gelung berjalan tiga kali. Baris 3 sepatutnya mengemas kini `total`, tetapi menulis kepada `totl` — nama baharu tanpa `local`, jadi Lua mencipta **global** `totl`. Setiap pusingan mengira `total + i` dengan `total` yang masih 0, maka `totl` akhirnya 0 + 3 = 3.', 'The loop runs three times. Line 3 should update `total` but writes to `totl` — a new name without `local`, so Lua creates a **global** `totl`. Each pass computes `total + i` with `total` still 0, so `totl` ends as 0 + 3 = 3.'],
+        ['5–6', 'Output membuktikan pepijat: `total` tidak berubah (0) dan global tersalah eja memegang 3. Tiada ralat dilaporkan — itulah sebabnya pepijat ini berbahaya.', 'The output proves the bug: `total` never changed (0) and the misspelled global holds 3. No error is reported — which is exactly why this bug is dangerous.']),
+      EXPLAIN('multi-assign',
+        ['1', 'Tiga nama, dua nilai: `a` = 1, `b` = 2, dan `c` menerima `nil` kerana nilai tidak mencukupi.', 'Three names, two values: `a` = 1, `b` = 2, and `c` receives `nil` because there are not enough values.'],
+        ['2', 'Memaparkan `1  2  nil`.', 'Displays `1  2  nil`.'],
+        ['4', 'Lua menilai **semua** nilai di sebelah kanan dahulu (`b`, `a` → 2, 1), kemudian memberikannya. Itulah sebabnya pertukaran berfungsi tanpa pemboleh ubah sementara.', 'Lua evaluates **all** right-hand values first (`b`, `a` → 2, 1), then assigns them. That is why the swap works without a temporary variable.'],
+        ['5', 'Memaparkan `2  1`.', 'Displays `2  1`.']),
+      EXPLAIN('config-table',
+        ['1', 'Satu table local menghimpunkan tetapan berkaitan. Hanya satu nama (`Config`) memasuki skop, bukan dua global.', 'One local table groups related settings. Only one name (`Config`) enters the scope instead of two globals.'],
+        ['3', 'Medan dibaca dengan sintaks titik: `Config.maxPlayers` sama dengan `Config["maxPlayers"]`.', 'Fields are read with dot syntax: `Config.maxPlayers` is the same as `Config["maxPlayers"]`.']),
+      EXPLAIN('nil-arith',
+        ['1', 'Pemboleh ubah yang betul ialah `score`.', 'The correct variable is `score`.'],
+        ['2–4', '`pcall` menjalankan fungsi dalam mod dilindungi: ralat tidak menghentikan program, sebaliknya `pcall` memulangkan `false` dan mesej ralat. Baris 3 membaca `scroe` (salah ejaan) — global `nil` — lalu `nil + 1` mencetuskan ralat.', '`pcall` runs the function in protected mode: an error does not stop the program; instead `pcall` returns `false` and the error message. Line 3 reads `scroe` (a typo) — a `nil` global — so `nil + 1` raises an error.'],
+        ['5–6', 'Kita mencetak status (`false`) dan mesej penuh supaya boleh membacanya. Mesej mengandungi nama chunk dan baris (`example:3`), operasi, dan nama pemboleh ubah.', 'We print the status (`false`) and the full message so we can read it. It contains the chunk name and line (`example:3`), the operation and the variable name.']),
+      EXPLAIN('poor-globals',
+        ['1', '`function addItem` tanpa `local` mencipta fungsi **global**.', '`function addItem` without `local` creates a **global** function.'],
+        ['2', '`items or {}` memulangkan `items` jika wujud, jika tidak table baharu. Hasilnya disimpan dalam global `items` — sesiapa sahaja boleh mengubahnya.', '`items or {}` returns `items` if it exists, otherwise a new table. The result is stored in the global `items` — anyone can change it.'],
+        ['3', '`#items + 1` ialah indeks selepas elemen terakhir; menambah nama di hujung senarai.', '`#items + 1` is the index after the last element; it appends the name to the list.'],
+        ['6–8', 'Dua panggilan menambah dua item; `#items` memaparkan 2. Berfungsi, tetapi `addItem` dan `items` kini tercemar dalam ruang nama global.', 'Two calls add two items; `#items` displays 2. It works, but `addItem` and `items` now pollute the global namespace.']),
+      EXPLAIN('improved-locals',
+        ['1–2', '`Inventory` ialah table local yang akan memegang fungsi awam; `items` ialah data **peribadi** — hanya fungsi dalam fail ini boleh melihatnya.', '`Inventory` is a local table that will hold the public functions; `items` is **private** data — only functions in this file can see it.'],
+        ['4–6', '`function Inventory.add` menyimpan fungsi sebagai medan table, bukan global. Ia menambah ke `items` melalui [[closure]].', '`function Inventory.add` stores the function as a table field, not a global. It appends to `items` through a [[closure]].'],
+        ['8–10', '`count` ialah satu-satunya cara untuk membaca saiz dari luar — antara muka yang terkawal.', '`count` is the only way to read the size from outside — a controlled interface.'],
+        ['12–14', 'Penggunaan melalui antara muka; output sama (2) dengan versi lemah, tanpa sebarang global baharu.', 'Usage through the interface; the same output (2) as the poor version, without any new global.']),
+      EXPLAIN('mini-scorecard',
+        ['1–2', 'Semua data disimpan dalam pemboleh ubah `local`. Baris 2 menggunakan assignment berbilang untuk tiga markah.', 'All data lives in `local` variables. Line 2 uses multiple assignment for the three scores.'],
+        ['4–5', 'Jumlah dikira sekali dan disimpan; purata menggunakan `/`, yang sentiasa memberi float (12.0).', 'The total is computed once and stored; the average uses `/`, which always gives a float (12.0).'],
+        ['7', '`..` menggabungkan string dan nombor menjadi satu baris; nombor ditukar kepada teks secara automatik.', '`..` joins strings and numbers into one line; numbers are converted to text automatically.'])),
     S('why_this_way',
       P('Kita menggunakan `local` kerana ia **mengehadkan kesan** sesuatu nama kepada tempat ia diperlukan. Apabila program membesar, global boleh diubah dari mana-mana fail, menjadikan pepijat sukar dijejak. Local juga lebih pantas dan membebaskan memori apabila blok tamat.',
         'We use `local` because it **limits the effect** of a name to where it is needed. As a program grows, a global can be changed from any file, making bugs hard to trace. Locals are also faster and release memory when their block ends.'),
@@ -224,7 +268,19 @@ local total = round1 + round2 + round3
 local average = total / 3
 
 print(playerName .. ": total " .. total .. ", average " .. average)
-`, 'Aisyah: total 36, average 12.0'),
+`, 'Aisyah: total 36, average 12.0', {
+        debug: BUG(`
+local playerName = "Aisyah"
+local round1, round2, round3 = 12, 15, 9
+
+local total = round1 + round2 + round3
+local average = total / 3
+
+print(playerName .. ": total " .. total .. ", average " .. averge)
+`, "example:7: attempt to concatenate a nil value (global 'averge')",
+          'Operator `..` hanya menggabungkan string dan nombor. `averge` (salah ejaan) ialah global `nil`, jadi penggabungan gagal pada baris 7. Betulkan ejaan; jika nilai memang boleh `nil`, gunakan `tostring(nilai)` supaya ia dipaparkan sebagai teks "nil".',
+          'The `..` operator only joins strings and numbers. `averge` (a typo) is a `nil` global, so the concatenation fails on line 7. Fix the spelling; if a value really can be `nil`, use `tostring(value)` so it is displayed as the text "nil".'),
+      }),
       INFO('Perhatikan `12.0`: operator `/` dalam Lua 5.3+ **sentiasa** menghasilkan float. Gunakan `//` untuk pembahagian integer (LUA102, modul 3).',
         'Notice `12.0`: the `/` operator in Lua 5.3+ **always** produces a float. Use `//` for floor division (LUA102, module 3).')),
     S('summary',

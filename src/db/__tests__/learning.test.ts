@@ -29,6 +29,12 @@ const labels: ExportLabels = {
   generated: 'Generated',
   externalLink: '(external)',
   notes: 'Notes',
+  status: (r, st) => `STATUS:${r}:${st ?? 'unverified'}`,
+  input: 'Input',
+  debugTitle: 'Debugging',
+  brokenCode: 'Buggy',
+  errorMessage: 'Error',
+  fix: 'Fix',
 };
 const meta = { app: '0.4.0', date: '2026-11-18' };
 
@@ -120,6 +126,11 @@ describe('course-material exports (Part H)', () => {
     expect(md).toContain('```lua\n-- Global: no');
     expect(md).toContain('Aisyah\t10');
     expect(md).not.toMatch(/\[\[|\]\]/); // glossary syntax resolved
+    // Verification status comes from the manifest and is tied to the exact code.
+    expect(md).toContain('_STATUS:lua54:executed_');
+    expect(md).not.toContain('unverified');
+    expect(md).toContain("**Debugging** — _STATUS:lua54:error-matched_");
+    expect(md).toContain("example:8: attempt to perform arithmetic on a nil value (global 'scroe')");
   });
 
   it('Markdown never contains Practice Center data (exercises, assessments) even when it exists', async () => {
@@ -142,8 +153,10 @@ describe('course-material exports (Part H)', () => {
 
   it('source files: one per example with runtime and expected output in a header comment', () => {
     const files = codeFiles([{ prefix: 'M1/', lecture: lua102 }], 'en', labels);
-    expect(files).toHaveLength(9);
+    expect(files).toHaveLength(9 + 2); // 9 examples + 2 buggy variants
     expect(files[0]!.name).toBe('M1/01-demo-basic.lua');
+    expect(files[1]!.name).toBe('M1/01-demo-basic.buggy.lua');
+    expect(files[1]!.content).toContain("-- Error: example:8: attempt to perform arithmetic on a nil value (global 'scroe')");
     expect(files[0]!.content).toMatch(/^-- Global versus local\n-- R:lua54\n-- Expected output:\n--   Aisyah\t10\n/);
   });
 });

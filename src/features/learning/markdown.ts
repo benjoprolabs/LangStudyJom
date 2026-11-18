@@ -1,6 +1,7 @@
 import { parseInline } from '@/db/content/inline';
 import { GENERATED_SECTIONS, type ContentBlock, type GlossaryTerm, type LanguageCode, type Lecture, type LocalizedText, type Note } from '@/db/types';
 import type { CourseBundle, LectureBundle } from './data';
+import { verificationOf, type VerificationStatus } from '@/content/verification';
 
 /**
  * Markdown export of COURSE MATERIALS only (Part H). Practice Center exercises, quiz questions
@@ -20,6 +21,13 @@ export interface ExportLabels {
   generated: string;
   externalLink: string;
   notes: string;
+  /** Verification status line for an example (from the manifest; null = not verified in this form). */
+  status: (runtime: string, status: VerificationStatus | null) => string;
+  input: string;
+  debugTitle: string;
+  brokenCode: string;
+  errorMessage: string;
+  fix: string;
 }
 
 const pick = (t: LocalizedText | undefined, lang: LanguageCode) => (t ? (lang === 'en' ? t.en || t.ms : t.ms) : '');
@@ -43,7 +51,7 @@ function inline(text: string, glossary: Map<string, GlossaryTerm>): string {
     .join('');
 }
 
-function block(b: ContentBlock, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels): string {
+function block(b: ContentBlock, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, scope: string): string {
   const txt = (t: LocalizedText) => inline(pick(t, lang), glossary);
   switch (b.type) {
     case 'paragraph':
@@ -52,15 +60,30 @@ function block(b: ContentBlock, lang: LanguageCode, glossary: Map<string, Glossa
       return b.items.map((item, i) => `${b.ordered ? `${i + 1}.` : '-'} ${txt(item)}`).join('\n');
     case 'callout':
       return `> ${b.tone === 'warning' ? '⚠️ ' : b.tone === 'key' ? '🔑 ' : 'ℹ️ '}${b.title ? `**${txt(b.title)}** — ` : ''}${txt(b.text)}`;
-    case 'code':
-      return [
+    case 'code': {
+      const key = `${scope}#${b.id}`;
+      const out = [
         `**${txt(b.title)}** · _${labels.runtime(b.runtime)}_`,
+        '',
+        `_${labels.status(b.runtime, verificationOf(key, b))}_`,
         '',
         `\`\`\`${b.language}`,
         b.code,
         '```',
+        ...(b.input !== undefined ? ['', `${labels.input}:`, '', '```text', b.input, '```'] : []),
         ...(b.expectedOutput !== undefined ? ['', `${labels.expectedOutput}:`, '', '```text', b.expectedOutput, '```'] : []),
-      ].join('\n');
+      ];
+      if (b.debug) {
+        const d = b.debug;
+        out.push(
+          '', `**${labels.debugTitle}** — _${labels.status(b.runtime, verificationOf(`${key}:debug`, { runtime: b.runtime, code: d.code, input: b.input, expectedError: d.error }))}_`,
+          '', `${labels.brokenCode}:`, '', `\`\`\`${b.language}`, d.code, '```',
+          '', `${labels.errorMessage}:`, '', '```text', d.error, '```',
+          '', `${labels.fix}: ${txt(d.explanation)}`,
+        );
+      }
+      return out.join('\n');
+    }
     case 'explain':
       return [`\`${b.codeId}\``, ...b.items.map((i) => `- **${labels.lines} ${i.lines}:** ${txt(i.text)}`)].join('\n');
     case 'terms':
@@ -85,13 +108,13 @@ function metadataTable(b: LectureBundle, lang: LanguageCode, labels: ExportLabel
   ].join('\n');
 }
 
-export function lectureBody(lecture: Lecture, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, headingLevel = 2): string {
+export function lectureBody(lecture: Lecture, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, scope: string, headingLevel = 2): string {
   if (lecture.sections.length === 0) return `_${labels.noContent}_`;
   const h = '#'.repeat(headingLevel);
   return lecture.sections
     .filter((s) => !GENERATED_SECTIONS.includes(s.kind))
     .map((s) => {
-      const body = s.notApplicable ? `_${labels.notApplicable}: ${inline(pick(s.notApplicable, lang), glossary)}_` : s.blocks.map((x) => block(x, lang, glossary, labels)).join('\n\n');
+      const body = s.notApplicable ? `_${labels.notApplicable}: ${inline(pick(s.notApplicable, lang), glossary)}_` : s.blocks.map((x) => block(x, lang, glossary, labels, scope)).join('\n\n');
       return `${h} ${labels.section(s.kind)}\n\n${body}`;
     })
     .join('\n\n');
@@ -105,7 +128,7 @@ export function lectureMarkdown(b: LectureBundle, lang: LanguageCode, glossary: 
     '',
     metadataTable(b, lang, labels),
     '',
-    lectureBody(b.lecture, lang, glossary, labels),
+    lectureBody(b.lecture, lang, glossary, labels, `${b.course.code} ${b.module.order}.${b.lecture.order}`),
     '',
   ].join('\n');
 }
@@ -124,7 +147,7 @@ export function courseMarkdown(b: CourseBundle, lang: LanguageCode, glossary: Ma
       '',
       `_${labels.difficulty(l.difficulty)} · ${labels.minutes(l.estimatedMinutes)}_`,
       '',
-      lectureBody(l, lang, glossary, labels, 4),
+      lectureBody(l, lang, glossary, labels, `${b.course.code} ${m.module.order}.${l.order}`, 4),
       '',
     ]),
   ]);
@@ -158,7 +181,13 @@ export function codeFiles(lectures: { prefix: string; lecture: Lecture }[], lang
       const ext = b.language === 'lua' ? 'lua' : 'luau';
       const header = [`-- ${pick(b.title, lang)}`, `-- ${labels.runtime(b.runtime)}`];
       if (b.expectedOutput !== undefined) header.push(`-- ${labels.expectedOutput}:`, ...b.expectedOutput.split('\n').map((line) => `--   ${line}`));
-      files.push({ name: `${prefix}${String(n).padStart(2, '0')}-${b.id}.${ext}`, content: `${header.join('\n')}\n\n${b.code}\n` });
+      const base = `${prefix}${String(n).padStart(2, '0')}-${b.id}`;
+      files.push({ name: `${base}.${ext}`, content: `${header.join('\n')}\n\n${b.code}\n` });
+      if (b.input !== undefined) files.push({ name: `${base}.input.txt`, content: `${b.input}\n` });
+      if (b.debug) {
+        const h = [`-- ${pick(b.title, lang)} — ${labels.brokenCode}`, `-- ${labels.errorMessage}: ${b.debug.error}`];
+        files.push({ name: `${base}.buggy.${ext}`, content: `${h.join('\n')}\n\n${b.debug.code}\n` });
+      }
     }
   }
   return files;

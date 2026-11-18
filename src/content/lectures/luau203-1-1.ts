@@ -1,4 +1,4 @@
-import { CODE, EXPLAIN, INFO, KEY, LINKS, OL, P, S, TERMS, UL, WARN } from '@/db/content/authoring';
+import { BUG, CODE, EXPLAIN, INFO, KEY, LINKS, OL, P, S, TERMS, UL, WARN } from '@/db/content/authoring';
 import type { LectureContentDef } from '@/db/content/types';
 
 /**
@@ -66,7 +66,19 @@ local function onTouched(otherPart: BasePart)
 end
 
 part.Touched:Connect(onTouched)
-`, 'Touched by LeftFoot   (in Roblox Studio, when a character steps on the part)')),
+`, 'Touched by LeftFoot   (in Roblox Studio, when a character steps on the part)', {
+        debug: BUG(`
+local part = script.Parent
+
+local function onTouched(otherPart: BasePart)
+	print("Touched by", otherPart.Name)
+end
+
+part.Touched:Connect(onTouched())
+`, "Workspace.Part.Script:4: attempt to index nil with 'Name'",
+          '`onTouched()` **memanggil** fungsi serta-merta — sebelum `Connect` — tanpa argumen, jadi `otherPart` ialah `nil` dan baris 4 gagal. (Ini mesej yang dipaparkan dalam tetingkap Output Roblox Studio; nama Script bergantung pada lokasinya. Ia **tidak** dijalankan di sini — hanya disemak sintaks.) Betulkan dengan menghantar fungsi itu sendiri: `Connect(onTouched)`.',
+          '`onTouched()` **calls** the function immediately — before `Connect` — with no argument, so `otherPart` is `nil` and line 4 fails. (This is the message shown in the Roblox Studio Output window; the Script name depends on where it lives. It is **not** executed here — only syntax-checked.) Fix it by passing the function itself: `Connect(onTouched)`.'),
+      })),
     S('complete_examples',
       CODE('player-greeter', 'luau', 'roblox', ['Mengalu-alukan pemain dan berhenti selepas tiga', 'Greeting players and stopping after three'], `
 local Players = game:GetService("Players")
@@ -121,7 +133,49 @@ touched:Fire("LeftFoot")
 connection.Disconnect()
 touched:Fire("RightFoot")
 print(\`handlers left: {#touched.handlers}\`)
-`, 'Touched by LeftFoot\nhandlers left: 0'),
+`, 'Touched by LeftFoot\nhandlers left: 0', {
+        debug: BUG(`
+type Callback = (...any) -> ()
+
+local Signal = {}
+Signal.__index = Signal
+
+function Signal.new()
+	return setmetatable({ handlers = {} :: { Callback } }, Signal)
+end
+
+function Signal:Connect(callback: Callback)
+	table.insert(self.handlers, callback)
+	local signal = self
+	return {
+		Disconnect = function()
+			local index = table.find(signal.handlers, callback)
+			if index then
+				table.remove(signal.handlers, index)
+			end
+		end,
+	}
+end
+
+function Signal:Fire(...: any)
+	for _, handler in table.clone(self.handlers) do
+		handler(...)
+	end
+end
+
+local touched = Signal.new()
+local connection = touched:Connect(function(name: string)
+	print(\`Touched by {name}\`)
+end)
+
+touched.Fire("LeftFoot")
+connection.Disconnect()
+touched:Fire("RightFoot")
+print(\`handlers left: {#touched.handlers}\`)
+`, "example:24: invalid argument #1 to 'clone' (table expected, got nil)",
+          'Baris 34 memanggil `touched.Fire(...)` dengan **titik**, jadi `self` menerima string `"LeftFoot"` dan bukannya objek isyarat. Di baris 24, `self.handlers` ialah `nil` (string tiada medan itu), lalu `table.clone(nil)` gagal. Mesej menunjuk ke baris 24 (tempat ralat berlaku), tetapi **punca** di baris 34 — baca stack traceback dari atas ke bawah untuk menjejakinya. Betulkan dengan `touched:Fire("LeftFoot")`.',
+          'Line 34 calls `touched.Fire(...)` with a **dot**, so `self` receives the string `"LeftFoot"` instead of the signal object. On line 24, `self.handlers` is `nil` (a string has no such field), so `table.clone(nil)` fails. The message points at line 24 (where the error happened), but the **cause** is on line 34 — read the stack traceback from top to bottom to trace it. Fix: `touched:Fire("LeftFoot")`.'),
+      }),
       INFO('Contoh `pure-signal` dijalankan dengan VM Luau di luar Roblox untuk mengesahkan output. Anotasi jenisnya tidak disemak oleh penyemak jenis semasa pengesahan ini.',
         'The `pure-signal` example is executed with the Luau VM outside Roblox to verify its output. Its type annotations are not checked by the type checker during this verification.')),
     S('line_by_line',
@@ -134,7 +188,22 @@ print(\`handlers left: {#touched.handlers}\`)
         ['3–8', 'Kelas `Signal` dengan [[metatable]]; setiap isyarat menyimpan senarai `handlers` sendiri.', 'A `Signal` class using a [[metatable]]; each signal keeps its own `handlers` list.'],
         ['10–21', '`Connect` menambah pengendali dan memulangkan objek sambungan. Fungsi `Disconnect` ialah [[closure]] yang mengingati `signal` dan `callback`.', '`Connect` adds the handler and returns a connection object. Its `Disconnect` function is a [[closure]] that remembers `signal` and `callback`.'],
         ['23–27', '`Fire` memanggil setiap pengendali. `table.clone` melindungi gelung jika pengendali memutuskan dirinya semasa dipanggil.', '`Fire` calls every handler. `table.clone` protects the loop if a handler disconnects itself while being called.'],
-        ['29–37', 'Penggunaan: sambung, cetuskan sekali, putuskan, cetuskan lagi — panggilan kedua tidak mencetak apa-apa.', 'Usage: connect, fire once, disconnect, fire again — the second fire prints nothing.'])),
+        ['29–37', 'Penggunaan: sambung, cetuskan sekali, putuskan, cetuskan lagi — panggilan kedua tidak mencetak apa-apa.', 'Usage: connect, fire once, disconnect, fire again — the second fire prints nothing.']),
+      EXPLAIN('player-greeter',
+        ['1', '`game:GetService("Players")` mendapatkan perkhidmatan Players — cara yang disyorkan untuk mengakses perkhidmatan Roblox.', '`game:GetService("Players")` gets the Players service — the recommended way to reach a Roblox service.'],
+        ['3–4', '`greeted` mengira pemain; `connection` diisytiharkan dahulu (dengan [[type-annotation|anotasi jenis]] `RBXScriptConnection`) supaya pengendali boleh merujuknya untuk memutuskan dirinya.', '`greeted` counts players; `connection` is declared first (with the `RBXScriptConnection` [[type-annotation]]) so the handler can refer to it to disconnect itself.'],
+        ['6', '`PlayerAdded:Connect` mendaftar fungsi tanpa nama yang menerima objek `Player`. Nilai pulangan — [[connection]] — disimpan.', '`PlayerAdded:Connect` registers an anonymous function that receives a `Player` object. The return value — a [[connection]] — is stored.'],
+        ['7–8', '`+=` ialah assignment majmuk Luau; interpolasi backtick memasukkan nama pemain dan kiraan ke dalam teks.', '`+=` is Luau compound assignment; backtick interpolation inserts the player name and count into the text.'],
+        ['9–12', 'Selepas pemain ketiga, `Disconnect()` menghentikan pengendali — pemain seterusnya tidak dialu-alukan.', 'After the third player, `Disconnect()` stops the handler — later players are not greeted.']),
+      EXPLAIN('coin-service',
+        ['1', '`CollectionService` mengurus **tag**: label yang boleh diletakkan pada mana-mana Instance.', '`CollectionService` manages **tags**: labels that can be put on any Instance.'],
+        ['3–8', 'Satu fungsi pengendali untuk semua syiling. Ia memastikan bahagian yang menyentuh milik watak (ada `Humanoid`) sebelum memusnahkan syiling; `Destroy()` juga memutuskan [[connection]] syiling itu.', 'One handler function for every coin. It checks that the touching part belongs to a character (has a `Humanoid`) before destroying the coin; `Destroy()` also disconnects that coin\'s [[connection]].'],
+        ['10–14', 'Gelung atas semua Part bertag "Coin". Setiap satu disambung kepada fungsi kecil yang menghantar syiling dan bahagian yang menyentuh kepada pengendali dikongsi.', 'A loop over every Part tagged "Coin". Each is connected to a small function that passes the coin and the touching part to the shared handler.']),
+      EXPLAIN('jump-pad',
+        ['1–2', '`pad` ialah Part induk; `cooling` ialah bendera **debounce** bermula `false`.', '`pad` is the parent Part; `cooling` is the **debounce** flag, starting `false`.'],
+        ['4–8', 'Pengendali `Touched` mencari `Humanoid` pada induk bahagian yang menyentuh. Jika tiada, atau pad sedang bertenang, ia pulang awal (guard clause).', 'The `Touched` handler looks for a `Humanoid` on the touching part\'s parent. If there is none, or the pad is cooling down, it returns early (a guard clause).'],
+        ['9–12', 'Hidupkan debounce, tukar warna, naikkan `JumpPower` dan paksa lompatan.', 'Turn the debounce on, change the colour, raise `JumpPower` and force a jump.'],
+        ['13–16', '`task.wait(2)` menjeda **thread pengendali ini sahaja** selama dua saat, kemudian nilai asal dipulihkan dan debounce dimatikan.', '`task.wait(2)` pauses **this handler\'s thread only** for two seconds; then the original values are restored and the debounce is turned off.'])),
     S('why_this_way',
       P('Pengendali **bernama** (`onTouched`) lebih mudah dibaca, diuji dan diputuskan berbanding fungsi tanpa nama yang panjang. Kita menyimpan [[connection]] hanya apabila kita perlu menghentikannya kemudian — contohnya selepas tiga pemain, atau apabila pusingan permainan tamat.',
         'A **named** handler (`onTouched`) is easier to read, test and disconnect than a long anonymous function. We keep the [[connection]] only when we need to stop it later — for example after three players, or when a game round ends.')),

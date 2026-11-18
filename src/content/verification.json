@@ -1,0 +1,145 @@
+{
+ "generatedAt": "2026-11-18",
+ "tools": {
+  "lua54": "Lua 5.4.8 (lupa 2.8)",
+  "luau": "Luau 0.663 (luau-runner, mlua)"
+ },
+ "results": {
+  "LUA102 1.1#demo-basic": {
+   "hash": "0ee611f555d9e9",
+   "status": "executed"
+  },
+  "LUA102 1.1#demo-basic:debug": {
+   "hash": "076c6080380229",
+   "status": "error-matched"
+  },
+  "LUA102 1.1#scope-blocks": {
+   "hash": "0703c888a3d412",
+   "status": "executed"
+  },
+  "LUA102 1.1#global-typo": {
+   "hash": "0773d3392d290b",
+   "status": "executed"
+  },
+  "LUA102 1.1#multi-assign": {
+   "hash": "05d3544a67d026",
+   "status": "executed"
+  },
+  "LUA102 1.1#config-table": {
+   "hash": "0946191b0f312e",
+   "status": "executed"
+  },
+  "LUA102 1.1#nil-arith": {
+   "hash": "0db289c12366dc",
+   "status": "executed"
+  },
+  "LUA102 1.1#poor-globals": {
+   "hash": "0dfb322f78ce36",
+   "status": "executed"
+  },
+  "LUA102 1.1#improved-locals": {
+   "hash": "0b098d61748fa4",
+   "status": "executed"
+  },
+  "LUA102 1.1#mini-scorecard": {
+   "hash": "0451395a1b081f",
+   "status": "executed"
+  },
+  "LUA102 1.1#mini-scorecard:debug": {
+   "hash": "1bac120a45a451",
+   "status": "error-matched"
+  },
+  "LUAU203 1.1#touched-basic": {
+   "hash": "1f88ebd34f4d44",
+   "status": "compiled"
+  },
+  "LUAU203 1.1#touched-basic:debug": {
+   "hash": "148549c5e01f88",
+   "status": "compiled"
+  },
+  "LUAU203 1.1#player-greeter": {
+   "hash": "1ccf134c48a178",
+   "status": "compiled"
+  },
+  "LUAU203 1.1#pure-signal": {
+   "hash": "16771e09b0db00",
+   "status": "executed"
+  },
+  "LUAU203 1.1#pure-signal:debug": {
+   "hash": "1503b457e369d8",
+   "status": "error-matched"
+  },
+  "LUAU203 1.1#coin-service": {
+   "hash": "06f2e90b85ccb2",
+   "status": "compiled"
+  },
+  "LUAU203 1.1#jump-pad": {
+   "hash": "1b3baedbfd6e17",
+   "status": "compiled"
+  },
+  "glossary#variable": {
+   "hash": "0e6979dbad018c",
+   "status": "executed"
+  },
+  "glossary#function": {
+   "hash": "1f4817c3cc353a",
+   "status": "executed"
+  },
+  "glossary#scope": {
+   "hash": "1e86639f40a95d",
+   "status": "executed"
+  },
+  "glossary#closure": {
+   "hash": "0680c91b1c23f0",
+   "status": "executed"
+  },
+  "glossary#table": {
+   "hash": "08bb7761b6873c",
+   "status": "executed"
+  },
+  "glossary#metatable": {
+   "hash": "138c89f66672a0",
+   "status": "executed"
+  },
+  "glossary#iterator": {
+   "hash": "1a18adbe724c5a",
+   "status": "executed"
+  },
+  "glossary#coroutine": {
+   "hash": "1e9b406eb93da1",
+   "status": "executed"
+  },
+  "glossary#module": {
+   "hash": "188b42dce92074",
+   "status": "executed"
+  },
+  "glossary#type-annotation": {
+   "hash": "1c8d81dc93b5ce",
+   "status": "executed"
+  },
+  "glossary#instance": {
+   "hash": "0d8c8c28ae5281",
+   "status": "compiled"
+  },
+  "glossary#event": {
+   "hash": "1f44c27c822abf",
+   "status": "compiled"
+  },
+  "glossary#connection": {
+   "hash": "0712b8190af13d",
+   "status": "compiled"
+  },
+  "glossary#remote-event": {
+   "hash": "0854c9f979617f",
+   "status": "compiled"
+  },
+  "glossary#datastore": {
+   "hash": "0e44d535dcfdf1",
+   "status": "compiled"
+  },
+  "glossary#replication": {
+   "hash": "1fe308e4cbdad7",
+   "status": "compiled"
+  }
+ }
+}
