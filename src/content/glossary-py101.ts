@@ -1,0 +1,336 @@
+import type { GlossaryTermDef } from '@/db/content/types';
+
+/**
+ * Click-to-Learn terms introduced by PY101 (Introduction to Programming and Python).
+ * Every example is Python 3.13 and is executed by CPython 3.13 (npm run verify:code).
+ * `python` terms are Python-specific; `general` terms are language-neutral concepts illustrated in Python.
+ */
+const PYDOCS = 'https://docs.python.org/3.13';
+const py101 = (module: number, lecture: number) => ({ courseCode: 'PY101', module, lecture });
+
+export const PY101_GLOSSARY: GlossaryTermDef[] = [
+  {
+    key: 'source-code',
+    term: 'Source Code',
+    translation: 'Kod sumber',
+    scope: 'general',
+    definition: {
+      ms: 'Arahan program yang ditulis oleh manusia dalam bahasa pengaturcaraan, disimpan sebagai teks biasa (contohnya fail `.py`).',
+      en: 'A program’s instructions written by people in a programming language, stored as plain text (for example a `.py` file).',
+    },
+    explanation: {
+      ms: 'Pemproses tidak memahami kod sumber secara langsung. Kod sumber mesti diterjemah — oleh pengkompil atau interpreter — kepada arahan yang boleh dilaksanakan oleh mesin. Kod sumber ditulis untuk dibaca oleh manusia juga, jadi nama yang jelas dan komen yang baik adalah sebahagian daripada kualitinya.',
+      en: 'The processor does not understand source code directly. Source code must be translated — by a compiler or an interpreter — into instructions the machine can execute. Source code is also written to be read by people, so clear names and good comments are part of its quality.',
+    },
+    example: { language: 'python', runtime: 'python', code: '# This text is source code: three statements a person wrote.\nmessage = "Source code is text"\nprint(message)\nprint(len(message), "characters")', expectedOutput: 'Source code is text\n19 characters' },
+    related: ['compiler', 'interpreter', 'python-script'],
+    lectures: [py101(1, 1)],
+    references: [{ title: 'Python Glossary', url: `${PYDOCS}/glossary.html` }],
+  },
+  {
+    key: 'compiler',
+    term: 'Compiler',
+    translation: 'Pengkompil',
+    scope: 'general',
+    definition: {
+      ms: 'Program yang menterjemah keseluruhan kod sumber kepada bentuk lain (kod mesin atau bytecode) **sebelum** program dijalankan.',
+      en: 'A program that translates the whole of a program’s source code into another form (machine code or bytecode) **before** the program runs.',
+    },
+    explanation: {
+      ms: 'Bahasa seperti C dan Rust dikompil terus kepada kod mesin; hasilnya ialah fail boleh laksana. CPython juga mempunyai pengkompil dalaman: ia mengkompil fail `.py` kepada bytecode, kemudian interpreter menjalankan bytecode itu. Kerana pengkompil membaca seluruh fail dahulu, ralat sintaks dikesan sebelum sebarang baris dijalankan.',
+      en: 'Languages such as C and Rust are compiled straight to machine code; the result is an executable file. CPython also has an internal compiler: it compiles a `.py` file to bytecode, then the interpreter runs that bytecode. Because a compiler reads the whole file first, syntax errors are detected before any line runs.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'source = "print(6 * 7)"\ncode_object = compile(source, "demo", "exec")\nprint(type(code_object).__name__)\nexec(code_object)', expectedOutput: 'code\n42' },
+    related: ['interpreter', 'bytecode', 'source-code'],
+    lectures: [py101(1, 2)],
+    references: [{ title: 'Python built-in functions — compile()', url: `${PYDOCS}/library/functions.html#compile` }],
+  },
+  {
+    key: 'ipo-model',
+    term: 'Input–Process–Output (IPO) Model',
+    translation: 'Model Input–Proses–Output',
+    scope: 'general',
+    definition: {
+      ms: 'Cara asas untuk menerangkan sebarang program: ia menerima **input** (data), **memproses** data itu, dan menghasilkan **output** (keputusan).',
+      en: 'A basic way to describe any program: it receives **input** (data), **processes** that data, and produces **output** (results).',
+    },
+    explanation: {
+      ms: 'Model IPO membantu merancang program sebelum menulis kod: apakah data yang diperlukan, apakah pengiraan yang dilakukan, dan apakah yang mesti dipaparkan atau disimpan. Input boleh datang daripada papan kekunci, fail, sensor atau rangkaian; output boleh menjadi teks pada skrin, fail atau isyarat kepada peranti lain.',
+      en: 'The IPO model helps plan a program before writing code: what data is needed, what calculation is done, and what must be shown or stored. Input can come from the keyboard, files, sensors or the network; output can be text on the screen, a file or a signal to another device.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'celsius = 30                      # input\nfahrenheit = celsius * 9 / 5 + 32  # process\nprint(celsius, "C =", fahrenheit, "F")  # output', expectedOutput: '30 C = 86.0 F' },
+    related: ['algorithm', 'input-function', 'print-function'],
+    lectures: [py101(1, 1)],
+    references: [{ title: 'Think Python, 3rd edition — Chapter 1', url: 'https://allendowney.github.io/ThinkPython/chap01.html' }],
+  },
+  {
+    key: 'cpython',
+    term: 'CPython',
+    translation: 'CPython',
+    scope: 'python',
+    definition: {
+      ms: 'Pelaksanaan rujukan (rasmi) bahasa Python, ditulis dalam bahasa C dan diedarkan di python.org. Arahan `python` atau `python3` biasanya menjalankan CPython.',
+      en: 'The reference (official) implementation of the Python language, written in C and distributed at python.org. The `python` or `python3` command usually runs CPython.',
+    },
+    explanation: {
+      ms: 'Python ialah spesifikasi bahasa; CPython ialah program yang melaksanakannya. Pelaksanaan lain wujud — PyPy (dengan JIT), MicroPython (untuk mikropengawal) — tetapi CPython menentukan tingkah laku standard. CPython mengkompil kod sumber kepada bytecode dan menjalankannya dengan mesin maya. Kursus ini menggunakan CPython 3.13.',
+      en: 'Python is a language specification; CPython is the program that implements it. Other implementations exist — PyPy (with a JIT), MicroPython (for microcontrollers) — but CPython defines the standard behaviour. CPython compiles source code to bytecode and runs it with a virtual machine. This course uses CPython 3.13.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'import platform\nimport sys\n\nprint(platform.python_implementation())\nprint(sys.version_info.major, sys.version_info.minor)', expectedOutput: 'CPython\n3 13' },
+    related: ['interpreter', 'bytecode', 'virtual-machine'],
+    lectures: [py101(1, 3), py101(2, 1)],
+    references: [{ title: 'Python FAQ — General', url: `${PYDOCS}/faq/general.html` }, { title: 'Python Glossary — CPython', url: `${PYDOCS}/glossary.html#term-CPython` }],
+  },
+  {
+    key: 'python-script',
+    term: 'Python Script (.py file)',
+    translation: 'Skrip Python (fail .py)',
+    scope: 'python',
+    definition: {
+      ms: 'Fail teks yang mengandungi kod sumber Python, dengan sambungan `.py`, yang dijalankan dari atas ke bawah oleh interpreter dengan arahan seperti `python3 hello.py`.',
+      en: 'A text file containing Python source code, with the `.py` extension, which the interpreter runs from top to bottom with a command such as `python3 hello.py`.',
+    },
+    explanation: {
+      ms: 'Berbeza daripada REPL, skrip disimpan dan boleh dijalankan semula, dikongsi dan disemak. Skrip tidak mencetak nilai ungkapan secara automatik — hanya `print()` menghasilkan output. Apabila fail dijalankan terus, pemboleh ubah khas `__name__` bernilai `"__main__"`.',
+      en: 'Unlike the REPL, a script is saved and can be run again, shared and reviewed. A script does not print expression values automatically — only `print()` produces output. When a file is run directly, the special variable `__name__` is `"__main__"`.',
+    },
+    example: { language: 'python', runtime: 'python', code: '6 * 7            # a script does not echo this value\nprint(6 * 7)     # only print() shows it\nprint(__name__)', expectedOutput: '42\n__main__' },
+    related: ['python-shell', 'source-code', 'terminal'],
+    lectures: [py101(2, 2), py101(2, 3)],
+    references: [{ title: 'Python tutorial — Using the Python interpreter', url: `${PYDOCS}/tutorial/interpreter.html` }],
+  },
+  {
+    key: 'python-shell',
+    term: 'Python Interactive Shell (REPL)',
+    translation: 'Shell interaktif Python (REPL)',
+    scope: 'python',
+    definition: {
+      ms: 'Mod interaktif Python, dimulakan dengan `python3` tanpa nama fail. Ia memaparkan prompt `>>>`, menjalankan setiap pernyataan serta-merta dan mencetak nilai setiap ungkapan.',
+      en: 'Python’s interactive mode, started with `python3` and no file name. It shows the `>>>` prompt, runs each statement immediately and prints the value of each expression.',
+    },
+    explanation: {
+      ms: 'Shell sesuai untuk mencuba idea kecil, menyemak fungsi dan membuat pengiraan pantas. Prompt `...` muncul untuk baris sambungan dalam blok. Sejak Python 3.13, shell lalai mempunyai warna, sejarah berbilang baris dan arahan `exit` tanpa kurungan. Kod dalam shell hilang apabila shell ditutup, jadi program sebenar ditulis dalam fail `.py`.',
+      en: 'The shell is ideal for trying small ideas, checking functions and quick calculations. The `...` prompt appears for continuation lines inside a block. Since Python 3.13, the default shell has colour, multi-line history and an `exit` command without parentheses. Code typed in the shell is lost when the shell closes, so real programs are written in `.py` files.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'import code\n\nshell = code.InteractiveInterpreter()\nshell.runsource("2 ** 10", symbol="single")\nshell.runsource("len(\'Python\')", symbol="single")', expectedOutput: '1024\n6' },
+    related: ['repl', 'python-script', 'interpreter'],
+    lectures: [py101(2, 2)],
+    references: [{ title: 'Python tutorial — Interactive mode', url: `${PYDOCS}/tutorial/interpreter.html#interactive-mode` }, { title: 'What’s New in Python 3.13 — a better interactive interpreter', url: `${PYDOCS}/whatsnew/3.13.html` }],
+  },
+  {
+    key: 'terminal',
+    term: 'Terminal (Command Line)',
+    translation: 'Terminal (baris arahan)',
+    scope: 'general',
+    definition: {
+      ms: 'Antara muka teks untuk memberi arahan kepada sistem pengendalian — contohnya PowerShell di Windows, Terminal di macOS dan Linux — termasuk arahan untuk menjalankan program Python.',
+      en: 'A text interface for giving commands to the operating system — for example PowerShell on Windows, Terminal on macOS and Linux — including commands that run Python programs.',
+    },
+    explanation: {
+      ms: 'Terminal sentiasa berada dalam satu **direktori kerja**; nama fail relatif dicari di situ. Arahan seperti `cd` menukar direktori, `ls`/`dir` menyenaraikan fail, dan `python3 nama.py` menjalankan skrip. Output `print()` dan mesej ralat Python dipaparkan dalam terminal.',
+      en: 'A terminal is always in one **working directory**; relative file names are looked up there. Commands such as `cd` change directory, `ls`/`dir` list files, and `python3 name.py` runs a script. The output of `print()` and Python’s error messages appear in the terminal.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'from pathlib import Path\n\nPath("hello.py").write_text(\'print("Hello from a file")\\n\')\nprint(Path("hello.py").exists())\nexec(Path("hello.py").read_text())', expectedOutput: 'True\nHello from a file' },
+    related: ['python-script', 'code-editor'],
+    lectures: [py101(2, 3)],
+    references: [{ title: 'Python Setup and Usage — Command line', url: `${PYDOCS}/using/cmdline.html` }],
+  },
+  {
+    key: 'code-editor',
+    term: 'Code Editor',
+    translation: 'Editor kod',
+    scope: 'general',
+    definition: {
+      ms: 'Program untuk menulis kod sumber, dengan penyerlahan sintaks, inden automatik dan penyemakan ralat — contohnya Visual Studio Code, PyCharm atau IDLE.',
+      en: 'A program for writing source code, with syntax highlighting, automatic indentation and error checking — for example Visual Studio Code, PyCharm or IDLE.',
+    },
+    explanation: {
+      ms: 'Editor kod menyimpan fail sebagai teks biasa (UTF-8), tidak seperti pemproses kata yang menambah format. Editor yang baik menandakan ralat sintaks sebelum program dijalankan dan boleh menjalankan skrip dalam terminal terbina dalam. IDE (Integrated Development Environment) ialah editor dengan alat tambahan seperti debugger.',
+      en: 'A code editor saves files as plain text (UTF-8), unlike a word processor, which adds formatting. A good editor marks syntax errors before the program runs and can run the script in a built-in terminal. An IDE (Integrated Development Environment) is an editor with extra tools such as a debugger.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'text = "print(\'ok\')\\n"\ndata = text.encode("utf-8")\nprint(len(data), "bytes of plain text")\nprint(data)', expectedOutput: "12 bytes of plain text\nb\"print('ok')\\n\"" },
+    related: ['terminal', 'python-script', 'indentation'],
+    lectures: [py101(2, 3)],
+    references: [{ title: 'Python in Visual Studio Code — tutorial', url: 'https://code.visualstudio.com/docs/python/python-tutorial' }, { title: 'IDLE — Python’s editor', url: `${PYDOCS}/library/idle.html` }],
+  },
+  {
+    key: 'print-function',
+    term: 'print()',
+    translation: 'Fungsi print()',
+    scope: 'python',
+    definition: {
+      ms: 'Fungsi terbina dalam yang menukar setiap argumennya kepada teks dan menulisnya ke output standard, dipisahkan oleh `sep` (lalai: satu ruang) dan diakhiri oleh `end` (lalai: baris baharu).',
+      en: 'A built-in function that converts each of its arguments to text and writes them to standard output, separated by `sep` (default: one space) and ended by `end` (default: a newline).',
+    },
+    explanation: {
+      ms: 'Dalam Python 3, `print` ialah **fungsi**, jadi kurungan wajib: `print "hai"` ialah ralat sintaks (itu bentuk Python 2). `print()` memulangkan `None`; tugasnya ialah kesan sampingan — memaparkan teks. Argumen kata kunci `sep`, `end` dan `file` mengawal format dan destinasi.',
+      en: 'In Python 3, `print` is a **function**, so parentheses are required: `print "hi"` is a syntax error (that is Python 2 form). `print()` returns `None`; its job is a side effect — displaying text. The keyword arguments `sep`, `end` and `file` control the format and destination.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'print("A", "B", "C")\nprint("A", "B", "C", sep="-")\nprint("no newline", end=" | ")\nprint("same line")', expectedOutput: 'A B C\nA-B-C\nno newline | same line' },
+    related: ['string-literal', 'input-function', 'function'],
+    lectures: [py101(3, 1)],
+    references: [{ title: 'Python built-in functions — print()', url: `${PYDOCS}/library/functions.html#print` }],
+  },
+  {
+    key: 'input-function',
+    term: 'input()',
+    translation: 'Fungsi input()',
+    scope: 'python',
+    definition: {
+      ms: 'Fungsi terbina dalam yang memaparkan prompt pilihan, membaca satu baris daripada input standard (biasanya papan kekunci) dan memulangkannya sebagai **string**, tanpa aksara baris baharu.',
+      en: 'A built-in function that shows an optional prompt, reads one line from standard input (usually the keyboard) and returns it as a **string**, without the newline character.',
+    },
+    explanation: {
+      ms: '`input()` sentiasa memulangkan `str`, walaupun pengguna menaip nombor: `"17"` bukan `17`. Untuk mengira, tukar dengan `int()` atau `float()`. Program berhenti dan menunggu di `input()` sehingga pengguna menekan Enter. Jika input tamat (EOF), `input()` menimbulkan `EOFError`. Contoh ini menggantikan papan kekunci dengan teks supaya ia boleh diuji secara automatik.',
+      en: '`input()` always returns a `str`, even when the user types a number: `"17"` not `17`. To calculate, convert with `int()` or `float()`. The program stops and waits at `input()` until the user presses Enter. If input has ended (EOF), `input()` raises `EOFError`. This example replaces the keyboard with text so it can be tested automatically.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'import io\nimport sys\n\nsys.stdin = io.StringIO("Aina\\n17\\n")  # simulated keyboard for testing\nname = input("Name: ")\nage = input("Age: ")\nprint()\nprint(name, type(age).__name__, int(age) + 1)', expectedOutput: 'Name: Age: \nAina str 18' },
+    related: ['print-function', 'standard-input', 'string-literal'],
+    lectures: [py101(3, 2)],
+    references: [{ title: 'Python built-in functions — input()', url: `${PYDOCS}/library/functions.html#input` }],
+  },
+  {
+    key: 'string-literal',
+    term: 'String Literal',
+    translation: 'Literal string',
+    scope: 'python',
+    definition: {
+      ms: 'Teks yang ditulis terus dalam kod sumber di antara tanda petik — `\'...\'`, `"..."`, atau tiga tanda petik `"""..."""` untuk berbilang baris — dan menjadi nilai jenis `str`.',
+      en: 'Text written directly in source code between quotes — `\'...\'`, `"..."`, or triple quotes `"""..."""` for multiple lines — that becomes a value of type `str`.',
+    },
+    explanation: {
+      ms: 'Petik tunggal dan berganda adalah setara; pilih satu yang membolehkan petik lain muncul di dalamnya tanpa escape. Garis miring terbalik memulakan escape sequence seperti `\\n` (baris baharu) dan `\\t` (tab). Prefiks `r` mencipta raw string, dan prefiks `f` mencipta f-string yang menggantikan `{ungkapan}` dengan nilainya.',
+      en: 'Single and double quotes are equivalent; choose the one that lets the other kind appear inside without escaping. A backslash starts an escape sequence such as `\\n` (newline) and `\\t` (tab). The `r` prefix creates a raw string, and the `f` prefix creates an f-string that replaces `{expression}` with its value.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'print(\'She said "hi"\')\nprint("It\'s Python")\nprint("""Line one\nLine two""")\nprint(type("text").__name__)', expectedOutput: 'She said "hi"\nIt\'s Python\nLine one\nLine two\nstr' },
+    related: ['escape-sequence', 'print-function', 'hash-comment'],
+    lectures: [py101(3, 1)],
+    references: [{ title: 'Python Language Reference — String literals', url: `${PYDOCS}/reference/lexical_analysis.html#string-and-bytes-literals` }],
+  },
+  {
+    key: 'hash-comment',
+    term: 'Comment (#) and Docstring',
+    translation: 'Komen (#) dan docstring',
+    scope: 'python',
+    definition: {
+      ms: 'Dalam Python, komen bermula dengan `#` dan berterusan hingga hujung baris; interpreter mengabaikannya. Docstring ialah literal string pada permulaan modul atau fungsi yang mendokumentasikannya.',
+      en: 'In Python, a comment starts with `#` and runs to the end of the line; the interpreter ignores it. A docstring is a string literal at the start of a module or function that documents it.',
+    },
+    explanation: {
+      ms: 'Komen menerangkan **mengapa** kod ditulis begitu; kod itu sendiri sepatutnya menunjukkan **apa** yang dilakukannya. Python tiada sintaks komen berbilang baris — gunakan beberapa baris `#`. Docstring, tidak seperti komen, disimpan dalam program dan boleh dibaca dengan `help()` atau atribut `__doc__`.',
+      en: 'Comments explain **why** code is written as it is; the code itself should show **what** it does. Python has no multi-line comment syntax — use several `#` lines. A docstring, unlike a comment, is kept in the program and can be read with `help()` or the `__doc__` attribute.',
+    },
+    example: { language: 'python', runtime: 'python', code: '"""Price calculator for the school canteen."""\n\n# Prices are in ringgit; tax is not charged on food.\nprice = 4.50  # nasi lemak\nprint(price * 2)\nprint(__doc__)', expectedOutput: '9.0\nPrice calculator for the school canteen.' },
+    related: ['comment', 'string-literal', 'pep-8'],
+    lectures: [py101(3, 1)],
+    references: [{ title: 'Python Language Reference — Comments', url: `${PYDOCS}/reference/lexical_analysis.html#comments` }, { title: 'PEP 257 — Docstring Conventions', url: 'https://peps.python.org/pep-0257/' }],
+  },
+  {
+    key: 'statement',
+    term: 'Statement',
+    translation: 'Pernyataan',
+    scope: 'general',
+    definition: {
+      ms: 'Satu arahan lengkap yang dilaksanakan oleh program — contohnya assignment `x = 5` atau panggilan `print(x)`. Dalam Python, setiap baris biasanya ialah satu pernyataan.',
+      en: 'One complete instruction that a program carries out — for example the assignment `x = 5` or the call `print(x)`. In Python, each line is usually one statement.',
+    },
+    explanation: {
+      ms: 'Pernyataan **melakukan** sesuatu; ungkapan (expression) **menghasilkan nilai**. `2 + 3` ialah ungkapan; `total = 2 + 3` ialah pernyataan yang menggunakan ungkapan itu. Program Python dijalankan sebagai urutan pernyataan dari atas ke bawah, kecuali apabila struktur kawalan seperti `if` atau gelung mengubah aliran.',
+      en: 'A statement **does** something; an expression **produces a value**. `2 + 3` is an expression; `total = 2 + 3` is a statement that uses it. A Python program runs as a sequence of statements from top to bottom, except when control structures such as `if` or loops change the flow.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'step = 1\nprint("step", step)\nstep = step + 1\nprint("step", step)', expectedOutput: 'step 1\nstep 2' },
+    related: ['control-flow', 'variable', 'indentation'],
+    lectures: [py101(3, 3)],
+    references: [{ title: 'Python Language Reference — Simple statements', url: `${PYDOCS}/reference/simple_stmts.html` }],
+  },
+  {
+    key: 'indentation',
+    term: 'Indentation (Python)',
+    translation: 'Inden (Python)',
+    scope: 'python',
+    definition: {
+      ms: 'Ruang di awal baris. Dalam Python, inden adalah **sebahagian daripada sintaks**: ia menentukan pernyataan mana yang tergolong dalam satu blok selepas baris yang berakhir dengan `:`.',
+      en: 'The spaces at the start of a line. In Python, indentation is **part of the syntax**: it decides which statements belong to a block after a line ending in `:`.',
+    },
+    explanation: {
+      ms: 'Konvensyen PEP 8 ialah empat ruang bagi setiap tahap. Inden yang tidak dijangka menimbulkan `IndentationError: unexpected indent`, dan blok yang kosong menimbulkan `IndentationError: expected an indented block`. Jangan campurkan tab dan ruang; editor kod boleh menukar Tab kepada empat ruang secara automatik.',
+      en: 'The PEP 8 convention is four spaces per level. An unexpected indent raises `IndentationError: unexpected indent`, and an empty block raises `IndentationError: expected an indented block`. Do not mix tabs and spaces; a code editor can turn Tab into four spaces automatically.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'marks = 72\nif marks >= 50:\n    print("pass")       # inside the block\n    print("well done")  # inside the block\nprint("report printed")  # after the block', expectedOutput: 'pass\nwell done\nreport printed' },
+    related: ['block', 'syntax-error', 'pep-8'],
+    lectures: [py101(3, 3), py101(4, 1)],
+    references: [{ title: 'Python Language Reference — Indentation', url: `${PYDOCS}/reference/lexical_analysis.html#indentation` }],
+  },
+  {
+    key: 'pep-8',
+    term: 'PEP 8',
+    translation: 'PEP 8 (panduan gaya Python)',
+    scope: 'python',
+    definition: {
+      ms: 'Panduan gaya rasmi untuk kod Python: empat ruang setiap inden, nama `snake_case` untuk pemboleh ubah dan fungsi, `UPPER_CASE` untuk pemalar, dan baris yang tidak terlalu panjang.',
+      en: 'The official style guide for Python code: four spaces per indent, `snake_case` names for variables and functions, `UPPER_CASE` for constants, and lines that are not too long.',
+    },
+    explanation: {
+      ms: 'PEP bermaksud Python Enhancement Proposal. PEP 8 tidak dikuatkuasakan oleh interpreter — kod yang melanggarnya masih berjalan — tetapi alat seperti `ruff` dan `flake8` menyemaknya, dan hampir semua projek Python profesional mengikutinya supaya kod mudah dibaca oleh sesiapa sahaja.',
+      en: 'PEP stands for Python Enhancement Proposal. PEP 8 is not enforced by the interpreter — code that breaks it still runs — but tools such as `ruff` and `flake8` check it, and almost every professional Python project follows it so that code is easy for anyone to read.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'SERVICE_TAX_RATE = 0.06\nmeal_price = 12.00\nprice_with_tax = meal_price * (1 + SERVICE_TAX_RATE)\nprint(round(price_with_tax, 2))', expectedOutput: '12.72' },
+    related: ['naming-convention', 'indentation', 'hash-comment'],
+    lectures: [py101(3, 3)],
+    references: [{ title: 'PEP 8 — Style Guide for Python Code', url: 'https://peps.python.org/pep-0008/' }],
+  },
+  {
+    key: 'traceback',
+    term: 'Traceback',
+    translation: 'Traceback (jejak balik ralat)',
+    scope: 'python',
+    definition: {
+      ms: 'Laporan yang dicetak oleh Python apabila exception tidak dikendalikan: senarai panggilan yang aktif (fail, nombor baris, kod), diakhiri dengan **jenis exception dan mesejnya** pada baris terakhir.',
+      en: 'The report Python prints when an exception is not handled: the list of active calls (file, line number, code), ending with the **exception type and its message** on the last line.',
+    },
+    explanation: {
+      ms: 'Baca traceback dari **bawah ke atas**: baris terakhir memberi apa yang salah (contohnya `NameError: name \'totl\' is not defined`), dan baris `File "...", line N` tepat di atasnya memberi di mana. Untuk ralat sintaks, Python juga menunjuk lokasi dengan `^`. Sejak Python 3.11–3.13, traceback menyerlahkan bahagian tepat ungkapan dan boleh mencadangkan nama yang betul ("Did you mean ...?").',
+      en: 'Read a traceback from the **bottom up**: the last line says what went wrong (for example `NameError: name \'totl\' is not defined`), and the `File "...", line N` line just above it says where. For syntax errors, Python also points at the location with `^`. Since Python 3.11–3.13, tracebacks highlight the exact part of the expression and can suggest the correct name ("Did you mean ...?").',
+    },
+    example: { language: 'python', runtime: 'python', code: 'import traceback\n\ntry:\n    print(10 / 0)\nexcept ZeroDivisionError:\n    last_line = traceback.format_exc().strip().splitlines()[-1]\n    print("Last line:", last_line)', expectedOutput: 'Last line: ZeroDivisionError: division by zero' },
+    related: ['exception', 'stack-traceback', 'syntax-error'],
+    lectures: [py101(4, 1)],
+    references: [{ title: 'Python tutorial — Errors and Exceptions', url: `${PYDOCS}/tutorial/errors.html` }, { title: 'traceback module', url: `${PYDOCS}/library/traceback.html` }],
+  },
+  {
+    key: 'exception',
+    term: 'Exception',
+    translation: 'Exception (pengecualian)',
+    scope: 'python',
+    definition: {
+      ms: 'Objek yang mewakili ralat yang berlaku semasa program berjalan — contohnya `ZeroDivisionError`, `NameError`, `TypeError` atau `ValueError`. Jika tidak dikendalikan, ia menghentikan program dan mencetak traceback.',
+      en: 'An object representing an error that happens while a program runs — for example `ZeroDivisionError`, `NameError`, `TypeError` or `ValueError`. If it is not handled, it stops the program and prints a traceback.',
+    },
+    explanation: {
+      ms: 'Setiap jenis exception ialah kelas dengan nama yang menerangkan masalahnya. Kod sebelum exception telah pun berjalan (outputnya kekal); kod selepasnya tidak berjalan. Pernyataan `try`/`except` (diajar dengan mendalam dalam PY114) membolehkan program mengendalikan exception dan meneruskan kerja.',
+      en: 'Each exception type is a class whose name describes the problem. Code before the exception has already run (its output remains); code after it does not run. The `try`/`except` statement (taught in depth in PY114) lets a program handle an exception and carry on.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'try:\n    int("tujuh")\nexcept ValueError as error:\n    print(type(error).__name__)\n    print(error)', expectedOutput: "ValueError\ninvalid literal for int() with base 10: 'tujuh'" },
+    related: ['traceback', 'runtime-error', 'debugging'],
+    lectures: [py101(4, 2)],
+    references: [{ title: 'Python Library — Built-in Exceptions', url: `${PYDOCS}/library/exceptions.html` }],
+  },
+  {
+    key: 'debugging',
+    term: 'Debugging',
+    translation: 'Debugging (penyahpepijatan)',
+    scope: 'general',
+    definition: {
+      ms: 'Proses sistematik mencari, memahami dan membetulkan pepijat (bug) dalam program: menghasilkan semula masalah, mengasingkan punca, membetulkan dan menguji semula.',
+      en: 'The systematic process of finding, understanding and fixing bugs in a program: reproducing the problem, isolating the cause, fixing it and testing again.',
+    },
+    explanation: {
+      ms: 'Teknik asas termasuk membaca traceback, mencetak nilai perantaraan, menjejak kod dengan tangan, menerangkan kod kepada orang lain (rubber duck debugging) dan menggunakan debugger seperti `pdb` atau debugger dalam editor. Debugging yang baik bermula dengan hipotesis yang boleh diuji, bukan perubahan rawak.',
+      en: 'Basic techniques include reading the traceback, printing intermediate values, tracing code by hand, explaining the code to someone else (rubber duck debugging) and using a debugger such as `pdb` or the editor’s debugger. Good debugging starts from a testable hypothesis, not random changes.',
+    },
+    example: { language: 'python', runtime: 'python', code: 'prices = [3.50, 4.20, 2.80]\ntotal = 0\nfor price in prices:\n    total = total + price\n    print("DEBUG price", price, "running total", round(total, 2))\nprint("Total:", round(total, 2))', expectedOutput: 'DEBUG price 3.5 running total 3.5\nDEBUG price 4.2 running total 7.7\nDEBUG price 2.8 running total 10.5\nTotal: 10.5' },
+    related: ['traceback', 'exception', 'syntax-error'],
+    lectures: [py101(4, 3)],
+    references: [{ title: 'pdb — The Python Debugger', url: `${PYDOCS}/library/pdb.html` }],
+  },
+];

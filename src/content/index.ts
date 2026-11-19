@@ -43,6 +43,12 @@ import { LUAU104_M1 } from './lectures/luau104/m1';
 import { LUAU104_M2 } from './lectures/luau104/m2';
 import { LUAU104_M3 } from './lectures/luau104/m3';
 import { LUAU104_M4 } from './lectures/luau104/m4';
+import { PY101_GLOSSARY } from './glossary-py101';
+import { PY101_M1 } from './lectures/py101/m1';
+import { PY101_M2 } from './lectures/py101/m2';
+import { PY101_M3 } from './lectures/py101/m3';
+import { PY101_M4 } from './lectures/py101/m4';
+import { PY101_MODULES } from './modules/py101';
 
 /**
  * Course materials for the Lua and Luau academies (Professional Programming Education Standard).
@@ -58,13 +64,16 @@ import { LUAU104_M4 } from './lectures/luau104/m4';
  * 1.7.0: all 12 lectures of LUAU103 (control flow and functions).
  * 1.8.0: all 12 lectures of LUAU104 (tables in Luau); Luau Semester 1 complete.
  * 1.8.1: glossary only — 11 lecture links re-pointed from unwritten lectures to the written lectures that teach the term.
+ * 1.9.0: Python pilot (PY101): all 12 lectures, the first packaged module-level materials (PY101 M1–M4) and 18
+ *        Python/general glossary terms; every Python example is executed by CPython 3.13. Lua/Luau content unchanged.
  */
 export const LUA_LUAU_CONTENT: ContentPackage = {
   id: 'qhaze-f01-lua-luau-content',
-  version: '1.8.1',
-  title: L('Bahan Kursus Lua & Luau — Keluaran 9', 'Lua & Luau Course Materials — Release 9'),
-  glossary: [...GLOSSARY, ...LUA101_GLOSSARY, ...LUA102_GLOSSARY, ...LUA103_GLOSSARY, ...LUA104_GLOSSARY, ...LUAU101_GLOSSARY, ...LUAU102_GLOSSARY, ...LUAU103_GLOSSARY, ...LUAU104_GLOSSARY],
-  lectures: [LUA102_1_1, LUAU203_1_1, ...LUA101_M1, ...LUA101_M2, ...LUA101_M3, ...LUA101_M4, ...LUA102_M1, ...LUA102_M2, ...LUA102_M3, ...LUA102_M4, ...LUA103_M1, ...LUA103_M2, ...LUA103_M3, ...LUA103_M4, ...LUA104_M1, ...LUA104_M2, ...LUA104_M3, ...LUA104_M4, ...LUAU101_M1, ...LUAU101_M2, ...LUAU101_M3, ...LUAU101_M4, ...LUAU102_M1, ...LUAU102_M2, ...LUAU102_M3, ...LUAU102_M4, ...LUAU103_M1, ...LUAU103_M2, ...LUAU103_M3, ...LUAU103_M4, ...LUAU104_M1, ...LUAU104_M2, ...LUAU104_M3, ...LUAU104_M4],
+  version: '1.9.0',
+  title: L('Bahan Kursus Lua, Luau & Python — Keluaran 10', 'Lua, Luau & Python Course Materials — Release 10'),
+  glossary: [...GLOSSARY, ...LUA101_GLOSSARY, ...LUA102_GLOSSARY, ...LUA103_GLOSSARY, ...LUA104_GLOSSARY, ...LUAU101_GLOSSARY, ...LUAU102_GLOSSARY, ...LUAU103_GLOSSARY, ...LUAU104_GLOSSARY, ...PY101_GLOSSARY],
+  lectures: [LUA102_1_1, LUAU203_1_1, ...LUA101_M1, ...LUA101_M2, ...LUA101_M3, ...LUA101_M4, ...LUA102_M1, ...LUA102_M2, ...LUA102_M3, ...LUA102_M4, ...LUA103_M1, ...LUA103_M2, ...LUA103_M3, ...LUA103_M4, ...LUA104_M1, ...LUA104_M2, ...LUA104_M3, ...LUA104_M4, ...LUAU101_M1, ...LUAU101_M2, ...LUAU101_M3, ...LUAU101_M4, ...LUAU102_M1, ...LUAU102_M2, ...LUAU102_M3, ...LUAU102_M4, ...LUAU103_M1, ...LUAU103_M2, ...LUAU103_M3, ...LUAU103_M4, ...LUAU104_M1, ...LUAU104_M2, ...LUAU104_M3, ...LUAU104_M4, ...PY101_M1, ...PY101_M2, ...PY101_M3, ...PY101_M4],
+  modules: PY101_MODULES,
 };
 
 export const CONTENT_PACKAGES: ContentPackage[] = [LUA_LUAU_CONTENT];

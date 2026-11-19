@@ -1,8 +1,8 @@
 programme,semester,course,module,title_en,status,lectures,complete,needs_verification,partial,structure_only
-PY-PROG,1,PY101,1,"Computers, Programs and Programming Languages",STRUCTURE ONLY,3,0,0,0,3
-PY-PROG,1,PY101,2,The Python Development Environment,STRUCTURE ONLY,3,0,0,0,3
-PY-PROG,1,PY101,3,First Programs: Output and Input,STRUCTURE ONLY,3,0,0,0,3
-PY-PROG,1,PY101,4,Errors and Basic Debugging,STRUCTURE ONLY,3,0,0,0,3
+PY-PROG,1,PY101,1,"Computers, Programs and Programming Languages",COMPLETE,3,3,0,0,0
+PY-PROG,1,PY101,2,The Python Development Environment,COMPLETE,3,3,0,0,0
+PY-PROG,1,PY101,3,First Programs: Output and Input,COMPLETE,3,3,0,0,0
+PY-PROG,1,PY101,4,Errors and Basic Debugging,COMPLETE,3,3,0,0,0
 PY-PROG,1,PY102,1,Variables and Assignment,STRUCTURE ONLY,3,0,0,0,3
 PY-PROG,1,PY102,2,Core Data Types,STRUCTURE ONLY,3,0,0,0,3
 PY-PROG,1,PY102,3,Operators and Expressions,STRUCTURE ONLY,3,0,0,0,3

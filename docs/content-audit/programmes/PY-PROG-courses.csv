@@ -1,5 +1,5 @@
 semester,course_id,title_en,title_ms,credit_hours,difficulty,prerequisites,modules,lectures,lecture_minutes,lectures_written,modules_with_module_content,course_status
-1,PY101,Introduction to Programming and Python,Pengenalan Pengaturcaraan dan Python,3,absolute_beginner,none,4,12,720,0,0,STRUCTURE ONLY
+1,PY101,Introduction to Programming and Python,Pengenalan Pengaturcaraan dan Python,3,absolute_beginner,none,4,12,720,12,0,COMPLETE
 1,PY102,"Variables, Data Types and Operators","Pemboleh Ubah, Jenis Data dan Operator",3,absolute_beginner,PY101 (required),4,12,750,0,0,STRUCTURE ONLY
 1,PY103,Control Flow: Conditions and Loops,Aliran Kawalan: Syarat dan Gelung,4,beginner,PY102 (required),4,12,720,0,0,STRUCTURE ONLY
 1,PY104,Functions and Program Structure,Fungsi dan Struktur Program,3,beginner,PY103 (required),4,12,720,0,0,STRUCTURE ONLY

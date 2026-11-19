@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.8.0: PY-1 Phase A — PY101 pilot (course materials 1.9.0)
+
+The first Python content: course **PY101 Introduction to Programming and Python**, complete at both layers. No
+Lua/Luau lecture, module or glossary term changed; no curriculum ID, structure or database schema changed.
+
+- **12 lectures** (`src/content/lectures/py101/m1.ts` … `m4.ts`): the 24-section standard in Bahasa Melayu and
+  English; 98 working examples (8–9 per lecture) and 29 broken examples (2–3 per lecture), every one executed by
+  CPython 3.13 and matched to its documented output or exact first error line; line-by-line explanations for every
+  meaningful line; poor-versus-improved implementations, a mini project and 4–6 references per lecture.
+- **4 module materials** (`src/content/modules/py101.ts`, the first packaged module content): the 11-section
+  standard in both languages, written at module level (how the module's three lectures connect, integrated theory,
+  study notes, applications) and checked by the strict package rules — no text or code copied from PY101 lectures.
+  8 module examples (2 per module), identical in both languages, executed by CPython 3.13.
+- **18 glossary terms** (`src/content/glossary-py101.ts`): 11 Python-scoped (`cpython`, `python-script`,
+  `python-shell`, `print-function`, `input-function`, `string-literal`, `hash-comment`, `indentation`, `pep-8`,
+  `traceback`, `exception`) and 7 general (`source-code`, `compiler`, `ipo-model`, `terminal`, `code-editor`,
+  `statement`, `debugging`), each with a verified Python 3.13 example. Existing terms are unchanged.
+- **Course materials 1.9.0** ("Bahan Kursus Lua, Luau & Python — Keluaran 10", same package id): 109 lectures,
+  98 glossary terms, 4 modules. Installing it writes the PY101 module materials as `contentSource: 'package'` and
+  never overwrites module content written on the device. Verification manifest: 1,208 units (153 new Python units,
+  every Lua/Luau result unchanged).
+- **Audit tool fix:** per-lecture validation in `npm run audit:content` now excludes the package's module materials,
+  which otherwise reported module glossary links as lecture problems once a package carried modules.
+- Tests: the content standard test covers the 12 new lectures; content-installation tests count module materials and
+  assert that only the 4 packaged module records gain content fields; e2e updated for the new counts, and the modules
+  suite checks all 12 PY101 lectures in the Lecture Room, the packaged module page, Python glossary popovers, and
+  the PY101 lecture PDF, course PDF and course Markdown.
+- Report: `docs/PY101-PILOT-REPORT.md`.
+
 ## 0.7.0: PY-0 — Python infrastructure and packaged module content (course materials 1.8.1, unchanged)
 
 Infrastructure only: no Python lectures or modules are written, and no Lua/Luau content changed.

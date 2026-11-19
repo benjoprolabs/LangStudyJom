@@ -95,11 +95,12 @@ async function main() {
     await installPackage(page, 'Lua & Luau — Milestone 2', /Pakej dipasang: \d+ rekod dicipta\./);
     log('M1 then M2 installed through the UI; the M2 plan refreshes and reuses Faculty 01 + both academies (957 new, 3 reused)');
 
-    await contentCard.getByText('Akan ditulis: 97 kuliah dan 80 istilah glosari.').waitFor();
+    await contentCard.getByText('Akan ditulis: 109 kuliah dan 98 istilah glosari.').waitFor();
+    await contentCard.getByText('Kandungan modul: 4 akan ditulis · 0 dikekalkan kerana ditulis pada peranti ini.').waitFor();
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
-    await page.getByText('Bahan kursus dipasang: 177 item ditulis.').waitFor();
+    await page.getByText('Bahan kursus dipasang: 211 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials 1.8.1 installed (97 lectures: LUA101–LUA104 and LUAU101–LUAU104 ×12 each, LUAU203 1.1; 80 glossary terms); package then reports up to date');
+    log('Course materials 1.9.0 installed (109 lectures: LUA101–LUA104, LUAU101–LUAU104 and PY101 ×12 each, LUAU203 1.1; 98 glossary terms; 4 PY101 module materials); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -466,7 +467,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.8\.1/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.9\.0/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

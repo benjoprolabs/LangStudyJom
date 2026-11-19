@@ -73,7 +73,7 @@ function classify(course: CourseDef, m: number, l: number, def: LectureContentDe
   const present = new Set(def.sections.filter((s) => s.blocks.length > 0 || s.notApplicable).map((s) => s.kind));
   const missing = AUTHORED_SECTIONS.filter((k) => !present.has(k));
   const pkg = CONTENT_PACKAGES.find((p) => p.lectures.includes(def))!;
-  problems.push(...validateContentPackage({ ...pkg, glossary: [], lectures: [def] }).filter((e) => !/glossary|term '/.test(e)));
+  problems.push(...validateContentPackage({ ...pkg, glossary: [], lectures: [def], modules: [] }).filter((e) => !/glossary|term '/.test(e)));
   const blocks = def.sections.flatMap((s) => s.blocks);
   const codes = blocks.filter((b): b is Extract<ContentBlock, { type: 'code' }> => b.type === 'code');
   let executed = 0, errorMatched = 0, compiledOnly = 0, unverified = 0;

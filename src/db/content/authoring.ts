@@ -1,4 +1,4 @@
-import type { CodeDebug, CodeRuntime, ContentBlock, LectureSection, LectureSectionKind, LocalizedText } from '../types';
+import type { CodeDebug, CodeLanguage, CodeRuntime, ContentBlock, LectureSection, LectureSectionKind, LocalizedText } from '../types';
 
 /** Authoring helpers for course materials. Every text is [Bahasa Melayu, English]. */
 type T = [ms: string, en: string];
@@ -20,7 +20,7 @@ const trimCode = (code: string) => code.replace(/^\n/, '').replace(/\s+$/, '');
  */
 export function CODE(
   id: string,
-  language: 'lua' | 'luau',
+  language: CodeLanguage,
   runtime: CodeRuntime,
   title: T,
   code: string,

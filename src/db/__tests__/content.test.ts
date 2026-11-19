@@ -254,7 +254,10 @@ describe('content installation', () => {
   it('requires the curriculum structure first and writes nothing otherwise', async () => {
     const db = await freshDb();
     const plan = await planContentInstall(db, LUA_LUAU_CONTENT);
-    expect(plan.missing).toEqual(LUA_LUAU_CONTENT.lectures.map((l) => `${l.courseCode} ${l.module}.${l.lecture}`));
+    expect(plan.missing).toEqual([
+      ...LUA_LUAU_CONTENT.lectures.map((l) => `${l.courseCode} ${l.module}.${l.lecture}`),
+      ...(LUA_LUAU_CONTENT.modules ?? []).map((m) => `${m.courseCode} M${m.module}`),
+    ]);
     await expect(installContentPackage(db, LUA_LUAU_CONTENT)).rejects.toBeInstanceOf(ContentInstallError);
     expect(await db.glossaryTerms.count()).toBe(0);
   });
@@ -267,7 +270,7 @@ describe('content installation', () => {
     const before = await dumpTables(db);
 
     const result = await installContentPackage(db, LUA_LUAU_CONTENT);
-    expect(result.written).toBe(LUA_LUAU_CONTENT.glossary.length + LUA_LUAU_CONTENT.lectures.length);
+    expect(result.written).toBe(LUA_LUAU_CONTENT.glossary.length + LUA_LUAU_CONTENT.lectures.length + (LUA_LUAU_CONTENT.modules?.length ?? 0));
     expect((await db.snapshots.get(result.snapshotId!))?.reason).toBe('pre-seed');
 
     const course = (await db.courses.where('code').equals('LUA102').first())!;
@@ -278,11 +281,18 @@ describe('content installation', () => {
     expect(lecture.contentVersion).toBe(LUA_LUAU_CONTENT.version);
     expect(await db.glossaryTerms.count()).toBe(LUA_LUAU_CONTENT.glossary.length);
 
-    // Only lecture content changed: every other table (structure, student) is identical.
+    // Only lecture and module content changed: every other table (structure, student) is identical.
     const after = await dumpTables(db);
-    for (const table of ['faculties', 'academies', 'programmes', 'semesters', 'courses', 'modules', 'coursePrerequisites', 'students']) {
+    for (const table of ['faculties', 'academies', 'programmes', 'semesters', 'courses', 'coursePrerequisites', 'students']) {
       expect(after[table], table).toEqual(before[table]);
     }
+    // Module records keep every structure field; only the packaged modules (PY101 M1–M4) gain content fields.
+    const contentFields = ['sections', 'contentSource', 'contentVersion', 'contentUpdatedAt', 'updatedAt'];
+    const structureOf = (rows: unknown[]) => rows.map((r) => Object.fromEntries(Object.entries(r as object).filter(([k]) => !contentFields.includes(k))));
+    expect(structureOf(after.modules!)).toEqual(structureOf(before.modules!));
+    const withContent = (after.modules as { sections?: unknown; contentSource?: string; contentVersion?: string }[]).filter((m) => m.sections);
+    expect(withContent).toHaveLength(LUA_LUAU_CONTENT.modules?.length ?? 0);
+    expect(withContent.every((m) => m.contentSource === 'package' && m.contentVersion === LUA_LUAU_CONTENT.version)).toBe(true);
     expect(await db.students.get(student.id)).toEqual(student);
 
     // Glossary bookmarks are covered by the integrity rules.
@@ -308,7 +318,7 @@ describe('content installation', () => {
 
     // The old release contained exactly the lectures/terms of `old`; all of them are rewritten.
     expect(await planContentInstall(db, LUA_LUAU_CONTENT)).toMatchObject({ lecturesToWrite: LUA_LUAU_CONTENT.lectures.length, glossaryToWrite: LUA_LUAU_CONTENT.glossary.length });
-    expect((await installContentPackage(db, LUA_LUAU_CONTENT)).written).toBe(LUA_LUAU_CONTENT.lectures.length + LUA_LUAU_CONTENT.glossary.length);
+    expect((await installContentPackage(db, LUA_LUAU_CONTENT)).written).toBe(LUA_LUAU_CONTENT.lectures.length + LUA_LUAU_CONTENT.glossary.length + (LUA_LUAU_CONTENT.modules?.length ?? 0));
     const updated = (await db.lectures.get(lecture.id))!;
     expect(updated.contentVersion).toBe(LUA_LUAU_CONTENT.version);
     expect(JSON.stringify(updated.sections)).toContain('"29–37"');

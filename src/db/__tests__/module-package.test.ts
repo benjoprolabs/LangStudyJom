@@ -44,8 +44,13 @@ const withModules = (modules: ModuleContentDef[], version = '9.9.9-test'): Conte
 const problemsOf = (pkg: ContentPackage) => validateContentPackage(pkg).filter((e) => / M\d+: /.test(e));
 
 describe('package format and validation', () => {
-  it('packages without modules (every package before PY-0) remain valid and unchanged', () => {
-    expect(LUA_LUAU_CONTENT.modules).toBeUndefined();
+  it('packages without modules (every package before PY-0) remain valid', () => {
+    const { modules: _modules, ...withoutModules } = LUA_LUAU_CONTENT;
+    expect(validateContentPackage(withoutModules)).toEqual([]);
+  });
+
+  it('the shipped package (1.9.0) carries exactly the PY101 module materials, and they are strict-valid', () => {
+    expect(LUA_LUAU_CONTENT.modules?.map((m) => `${m.courseCode} M${m.module}`)).toEqual(['PY101 M1', 'PY101 M2', 'PY101 M3', 'PY101 M4']);
     expect(validateContentPackage(LUA_LUAU_CONTENT)).toEqual([]);
   });
 

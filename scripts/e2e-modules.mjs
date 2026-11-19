@@ -218,8 +218,10 @@ async function main() {
     const modulesAfter = await readStore(page, 'modules');
     const m1After = modulesAfter.find((m) => m.id === m1.id);
     assert.deepEqual([m1After.title, m1After.description, m1After.order, m1After.createdAt], [m1.title, m1.description, m1.order, m1.createdAt]);
-    assert.equal(modulesAfter.filter((m) => m.sections?.length).length, 1, 'only the edited module has materials');
-    log('Student record, progress, note and bookmark, all 984 lectures, glossary and record counts unchanged; module title/description kept; only one module has materials');
+    const withMaterials = modulesAfter.filter((m) => m.sections?.length);
+    assert.deepEqual(withMaterials.filter((m) => m.contentSource !== 'package').map((m) => m.id), [m1.id], 'only the edited module has locally written materials');
+    assert.equal(withMaterials.filter((m) => m.contentSource === 'package' && m.contentVersion === '1.9.0').length, 4, 'the 4 packaged PY101 module materials (1.9.0)');
+    log('Student record, progress, note and bookmark, all 984 lectures, glossary and record counts unchanged; module title/description kept; only the edited module has locally written materials (plus the 4 packaged PY101 modules)');
 
     // ── Desktop ──
     await context.close();
@@ -232,9 +234,82 @@ async function main() {
     await page.getByTestId('module-empty').waitFor();
     log('Desktop: content kept after a browser restart; "Modul seterusnya" opens Module 2 (empty state)');
 
-    // ── Python modules (PY-0): Python code is highlighted and its expected output shown (test content) ──
+    // ── PY101 packaged module materials (1.9.0): all 11 sections, Python code verified by execution ──
     const py101 = courses.find((c) => c.code === 'PY101');
-    const pyModule = modules.find((m) => m.courseId === py101.id && m.order === 1);
+    const py101m1 = modules.find((m) => m.courseId === py101.id && m.order === 1);
+    await page.goto(`${base}#/module?module=${py101m1.id}`);
+    await page.getByTestId('module-content').locator('[data-module-section]').nth(10).waitFor();
+    assert.equal(await page.getByTestId('module-status').getAttribute('data-status'), 'complete');
+    const packagedCode = page.getByTestId('module-content').locator('[data-module-code]');
+    assert.equal(await packagedCode.count(), 2);
+    assert.deepEqual(await packagedCode.evaluateAll((els) => els.map((e) => e.getAttribute('data-status'))), ['executed', 'executed']);
+    await packagedCode.first().getByText('Result when executed:', { exact: false }).first().waitFor();
+    assert.equal(await page.getByTestId('module-lecture-link').count(), 3);
+    if (SHOTS) await page.screenshot({ path: join(SHOTS, '5-py101-module-desktop.png') });
+    log('PY101 Module 1 (packaged): status complete, 11 sections, 2 Python examples marked executed with their output, 3 written lectures listed');
+
+    // ── PY101 lectures: all 12 open in the Lecture Room with 24 sections and only verified Python units ──
+    const py101Lectures = (await readStore(page, 'lectures')).filter((l) => modules.some((m) => m.id === l.moduleId && m.courseId === py101.id));
+    let pyUnits = 0;
+    for (let m = 1; m <= 4; m++) {
+      for (let l = 1; l <= 3; l++) {
+        const moduleRecord = modules.find((x) => x.courseId === py101.id && x.order === m);
+        const lectureRecord = py101Lectures.find((x) => x.moduleId === moduleRecord.id && x.order === l);
+        await page.goto(`${base}#/lecture-room?lecture=${lectureRecord.id}`);
+        await page.locator(`[data-testid^="status-PY101 ${m}.${l}#"]`).first().waitFor();
+        assert.equal(await page.getByTestId('lecture-article').locator('section[data-section]').count(), 24, `PY101 ${m}.${l} sections`);
+        const statuses = await page.locator(`[data-testid^="status-PY101 ${m}.${l}#"]`).evaluateAll((els) => els.map((e) => e.getAttribute('data-status')));
+        assert.ok(statuses.length >= 7 && statuses.every((x) => x === 'executed' || x === 'error-matched'), `PY101 ${m}.${l}: ${statuses.join()}`);
+        assert.ok(statuses.filter((x) => x === 'error-matched').length >= 2, `PY101 ${m}.${l}: at least 2 verified broken examples`);
+        assert.equal(await page.getByTestId('incomplete-badge').count(), 0, `PY101 ${m}.${l} is not labelled incomplete`);
+        assert.equal(await page.getByTestId('lecture-article').getByText('[[', { exact: false }).count(), 0, `PY101 ${m}.${l}: no raw glossary markup`);
+        pyUnits += statuses.length;
+      }
+    }
+    await page.getByTestId('lecture-article').getByText('Run untuk Python belum tersedia dalam pelayar', { exact: false }).first().waitFor();
+    // The last lecture opened is PY101 4.3: its Python-scoped glossary term opens with a Python example.
+    await page.getByTestId('lecture-article').locator('[data-term="debugging"]').first().click();
+    const pyPanel = page.getByTestId('glossary-panel');
+    await page.getByRole('dialog', { name: /Debugging/ }).waitFor();
+    await pyPanel.getByText('DEBUG price', { exact: false }).first().waitFor();
+    await pyPanel.locator('[data-term="traceback"]').click();
+    await page.getByRole('dialog', { name: /Traceback/ }).waitFor();
+    await page.keyboard.press('Escape');
+    log(`PY101 1.1–4.3: all 12 lectures open with 24 sections and ${pyUnits} verified Python units (each lecture ≥ 2 verified broken examples); Python Run labelled unavailable, verified with CPython 3.13; Python glossary terms (debugging → traceback) open with Python examples`);
+
+    // ── PY101 exports: lecture PDF, course PDF and course Markdown contain the complete pilot ──
+    const py101first = py101Lectures.find((l) => l.moduleId === py101m1.id && l.order === 1);
+    await page.goto(`${base}#/print?lecture=${py101first.id}`);
+    const pdoc = page.getByTestId('print-doc');
+    await pdoc.getByText(/Versi kandungan 1\.9\.0/).waitFor();
+    assert.equal(await pdoc.locator('section h3').count(), 24);
+    await page.goto(`${base}#/print?course=${py101.id}`);
+    await pdoc.getByTestId('print-lecture').nth(11).waitFor();
+    assert.equal(await pdoc.getByTestId('print-module').count(), 4);
+    assert.equal(await pdoc.getByTestId('print-module-empty').count(), 0);
+    assert.equal(await pdoc.getByText('[[', { exact: false }).count(), 0, 'no raw glossary markup in the PY101 PDF');
+    await page.emulateMedia({ media: 'print' });
+    const coursePdf = await page.pdf({ format: 'A4', printBackground: true, preferCSSPageSize: true });
+    await page.emulateMedia({ media: 'screen' });
+    const coursePages = (coursePdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) ?? []).length;
+    assert.ok(coursePdf.subarray(0, 5).toString() === '%PDF-' && coursePages >= 60, `PY101 course PDF pages ${coursePages}`);
+    if (process.env.E2E_PY101_OUT) writeFileSync(join(process.env.E2E_PY101_OUT, 'PY101-course.pdf'), coursePdf);
+    await page.goto(`${base}#/library?programme=${py101.programmeId}`);
+    await page.getByTestId('course-PY101').locator('summary').click();
+    const pyMd = await save(page, downloads, () => page.getByTestId('course-PY101').getByRole('button', { name: 'Kursus (.md)' }).click());
+    assert.equal(pyMd.text.split('### Kandungan Modul').length - 1, 4);
+    assert.equal(pyMd.text.split('_Kandungan peringkat modul belum ditulis_').length - 1, 0);
+    assert.ok(!pyMd.text.includes('belum disahkan'), 'every PY101 code example is verified');
+    assert.ok(!pyMd.text.includes('[['), 'no raw glossary markup in the PY101 Markdown');
+    const pythonFences = pyMd.text.split('```python').length - 1;
+    assert.ok(pythonFences >= 12 * 7 + 8, `python code blocks in PY101 Markdown: ${pythonFences}`);
+    assert.equal(await page.getByTestId('course-PY101').getByTestId('module-status-badge').evaluateAll((els) => els.map((e) => e.getAttribute('data-status')).join()), 'complete,complete,complete,complete');
+    if (process.env.E2E_PY101_OUT) writeFileSync(join(process.env.E2E_PY101_OUT, pyMd.name), pyMd.text);
+    log(`PY101 exports: lecture PDF (24 sections, version 1.9.0); course PDF ${coursePages} A4 pages with 4 module materials and 12 lectures; course .md with 4 module materials, ${pythonFences} Python blocks, nothing unverified or unwritten; 4 module badges "complete"`);
+
+    // ── Python modules (PY-0): code typed in the editor is highlighted, shown with its output, never "verified" (test content) ──
+    const py102 = courses.find((c) => c.code === 'PY102');
+    const pyModule = modules.find((m) => m.courseId === py102.id && m.order === 1);
     await page.goto(`${base}#/module?module=${pyModule.id}`);
     await page.getByTestId('module-empty').waitFor();
     await page.getByTestId('module-edit').click();
@@ -248,7 +323,7 @@ async function main() {
     assert.equal(await pyFigure.getAttribute('data-status'), 'unverified', 'code typed in the editor is never shown as verified');
     await pyFigure.getByText('3.0', { exact: true }).waitFor();
     if (SHOTS) await page.screenshot({ path: join(SHOTS, '6-python-module-desktop.png') });
-    log('PY101 Module 1: Python code highlighted (keyword, builtin, comment, number), expected output shown, labelled not verified');
+    log('PY102 Module 1 (editor test content): Python code highlighted (keyword, builtin, comment, number), expected output shown, labelled not verified');
 
     assert.deepEqual(consoleErrors, []);
     log('No console errors');

@@ -3906,6 +3906,514 @@
    "hash": "0e34deb0786faf",
    "status": "executed"
   },
+  "PY101 1.1#ipo-rectangle": {
+   "hash": "1f40e9266f60b8",
+   "status": "executed"
+  },
+  "PY101 1.1#ipo-greeting": {
+   "hash": "11afb95a2fb053",
+   "status": "executed"
+  },
+  "PY101 1.1#ipo-greeting:debug": {
+   "hash": "0541fe2d945da6",
+   "status": "error-matched"
+  },
+  "PY101 1.1#recipe-scaling": {
+   "hash": "051c6e1e1bcf48",
+   "status": "executed"
+  },
+  "PY101 1.1#recipe-scaling:debug": {
+   "hash": "04f1bd8ecf6b56",
+   "status": "error-matched"
+  },
+  "PY101 1.1#ipo-inline": {
+   "hash": "0591b6ef1f112c",
+   "status": "executed"
+  },
+  "PY101 1.1#trace-savings": {
+   "hash": "1975088376e8c6",
+   "status": "executed"
+  },
+  "PY101 1.1#ticket-poor": {
+   "hash": "0fc4882c5e8f5b",
+   "status": "executed"
+  },
+  "PY101 1.1#ticket-improved": {
+   "hash": "1a5b6f0fb8495c",
+   "status": "executed"
+  },
+  "PY101 1.1#step-tracker": {
+   "hash": "0880a2912c34ef",
+   "status": "executed"
+  },
+  "PY101 1.2#two-phases": {
+   "hash": "051690d7964600",
+   "status": "executed"
+  },
+  "PY101 1.2#whole-file-checked": {
+   "hash": "09cd421a65d5e7",
+   "status": "executed"
+  },
+  "PY101 1.2#whole-file-checked:debug": {
+   "hash": "09211f78e49ef8",
+   "status": "error-matched"
+  },
+  "PY101 1.2#runs-in-order": {
+   "hash": "0776cab37617e3",
+   "status": "executed"
+  },
+  "PY101 1.2#runs-in-order:debug": {
+   "hash": "072d4308647bbc",
+   "status": "error-matched"
+  },
+  "PY101 1.2#pyc-file": {
+   "hash": "0a7cf9351762d6",
+   "status": "executed"
+  },
+  "PY101 1.2#syntax-checker": {
+   "hash": "016f4d16781183",
+   "status": "executed"
+  },
+  "PY101 1.2#show-bytecode": {
+   "hash": "1c89f96941f968",
+   "status": "executed"
+  },
+  "PY101 1.2#eval-poor": {
+   "hash": "024bb48345e1ed",
+   "status": "executed"
+  },
+  "PY101 1.2#literal-improved": {
+   "hash": "0041e91cd7667f",
+   "status": "executed"
+  },
+  "PY101 1.2#token-viewer": {
+   "hash": "128894ed186d06",
+   "status": "executed"
+  },
+  "PY101 1.3#reads-like-english": {
+   "hash": "1b9ba162843dfe",
+   "status": "executed"
+  },
+  "PY101 1.3#batteries-included": {
+   "hash": "1afa655868af9e",
+   "status": "executed"
+  },
+  "PY101 1.3#batteries-included:debug": {
+   "hash": "100675a356e3a9",
+   "status": "error-matched"
+  },
+  "PY101 1.3#python3-division": {
+   "hash": "094aa3796538d9",
+   "status": "executed"
+  },
+  "PY101 1.3#python3-division:debug": {
+   "hash": "1f9207aabccbca",
+   "status": "error-matched"
+  },
+  "PY101 1.3#modules-loaded-once": {
+   "hash": "1fdbea6f4ffb5b",
+   "status": "executed"
+  },
+  "PY101 1.3#three-averages": {
+   "hash": "18d8a1a7599529",
+   "status": "executed"
+  },
+  "PY101 1.3#version-check": {
+   "hash": "0ece183cd3ab76",
+   "status": "executed"
+  },
+  "PY101 1.3#highest-poor": {
+   "hash": "02ed985a91be9c",
+   "status": "executed"
+  },
+  "PY101 1.3#highest-idiomatic": {
+   "hash": "1b14f74d8e0c5b",
+   "status": "executed"
+  },
+  "PY101 1.3#fact-card": {
+   "hash": "0da9818921b967",
+   "status": "executed"
+  },
+  "PY101 2.1#version-info": {
+   "hash": "0cca833d056aee",
+   "status": "executed"
+  },
+  "PY101 2.1#version-gate": {
+   "hash": "0508aa935584c5",
+   "status": "executed"
+  },
+  "PY101 2.1#version-gate:debug": {
+   "hash": "175426f0823ec5",
+   "status": "error-matched"
+  },
+  "PY101 2.1#path-search": {
+   "hash": "1b87b80645b375",
+   "status": "executed"
+  },
+  "PY101 2.1#path-search:debug": {
+   "hash": "0df1e1f93ca4ee",
+   "status": "error-matched"
+  },
+  "PY101 2.1#implementation-details": {
+   "hash": "04790229711e5f",
+   "status": "executed"
+  },
+  "PY101 2.1#feature-check": {
+   "hash": "1b3f9284e52f11",
+   "status": "executed"
+  },
+  "PY101 2.1#version-compare-poor": {
+   "hash": "15ca282a9c085d",
+   "status": "executed"
+  },
+  "PY101 2.1#version-compare-improved": {
+   "hash": "0d906f7bfb2f69",
+   "status": "executed"
+  },
+  "PY101 2.1#readiness-check": {
+   "hash": "056e9749ca0408",
+   "status": "executed"
+  },
+  "PY101 2.2#shell-echo": {
+   "hash": "12a8a7af205784",
+   "status": "executed"
+  },
+  "PY101 2.2#script-needs-print": {
+   "hash": "0633101344fb8f",
+   "status": "executed"
+  },
+  "PY101 2.2#script-needs-print:debug": {
+   "hash": "092c024e86adec",
+   "status": "error-matched"
+  },
+  "PY101 2.2#main-guard": {
+   "hash": "18fae7b835d75a",
+   "status": "executed"
+  },
+  "PY101 2.2#main-guard:debug": {
+   "hash": "100758efc95371",
+   "status": "error-matched"
+  },
+  "PY101 2.2#dash-c": {
+   "hash": "1881b022f0ff8e",
+   "status": "executed"
+  },
+  "PY101 2.2#cleaned-session": {
+   "hash": "18b270df8da677",
+   "status": "executed"
+  },
+  "PY101 2.2#cleaned-session:debug": {
+   "hash": "1ef7796c52cd32",
+   "status": "error-matched"
+  },
+  "PY101 2.2#top-level-poor": {
+   "hash": "14a8edacee6739",
+   "status": "executed"
+  },
+  "PY101 2.2#main-function-improved": {
+   "hash": "134410a03c8df4",
+   "status": "executed"
+  },
+  "PY101 2.2#calculator-log": {
+   "hash": "06ba9eb0b8ba25",
+   "status": "executed"
+  },
+  "PY101 2.3#project-folder": {
+   "hash": "11851cd4607aae",
+   "status": "executed"
+  },
+  "PY101 2.3#relative-paths": {
+   "hash": "1aaca6e694dba9",
+   "status": "executed"
+  },
+  "PY101 2.3#relative-paths:debug": {
+   "hash": "17b2cbc7934374",
+   "status": "error-matched"
+  },
+  "PY101 2.3#utf8-save": {
+   "hash": "0e7b68f984f077",
+   "status": "executed"
+  },
+  "PY101 2.3#utf8-save:debug": {
+   "hash": "1ebe3ff89a27fe",
+   "status": "error-matched"
+  },
+  "PY101 2.3#runpy-script": {
+   "hash": "0296bd9cdb1757",
+   "status": "executed"
+  },
+  "PY101 2.3#locate-error": {
+   "hash": "1af2182c506607",
+   "status": "executed"
+  },
+  "PY101 2.3#absolute-path-poor": {
+   "hash": "0986d2694b85b6",
+   "status": "executed"
+  },
+  "PY101 2.3#project-relative-improved": {
+   "hash": "1789f31c8ec357",
+   "status": "executed"
+  },
+  "PY101 2.3#scaffold-project": {
+   "hash": "02a28a696e0e01",
+   "status": "executed"
+  },
+  "PY101 3.1#print-basics": {
+   "hash": "080eb3d6e79888",
+   "status": "executed"
+  },
+  "PY101 3.1#string-forms": {
+   "hash": "1138f4addcc198",
+   "status": "executed"
+  },
+  "PY101 3.1#string-forms:debug": {
+   "hash": "067e0f8274143a",
+   "status": "error-matched"
+  },
+  "PY101 3.1#escape-sequences": {
+   "hash": "112721b405c585",
+   "status": "executed"
+  },
+  "PY101 3.1#escape-sequences:debug": {
+   "hash": "069581a8a3be36",
+   "status": "error-matched"
+  },
+  "PY101 3.1#three-formats": {
+   "hash": "12f520c2f9e18c",
+   "status": "executed"
+  },
+  "PY101 3.1#repr-debug": {
+   "hash": "196843b3c391f5",
+   "status": "executed"
+  },
+  "PY101 3.1#comments-poor": {
+   "hash": "1996a9c8e3c5b8",
+   "status": "executed"
+  },
+  "PY101 3.1#comments-improved": {
+   "hash": "09d86ab2dd49e8",
+   "status": "executed"
+  },
+  "PY101 3.1#receipt-printer": {
+   "hash": "05d4854d8c4611",
+   "status": "executed"
+  },
+  "PY101 3.2#input-is-text": {
+   "hash": "168f153d82b370",
+   "status": "executed"
+  },
+  "PY101 3.2#bmi-calculator": {
+   "hash": "1f7f6ccef7a41a",
+   "status": "executed"
+  },
+  "PY101 3.2#bmi-calculator:debug": {
+   "hash": "16773dd40e9bd7",
+   "status": "error-matched"
+  },
+  "PY101 3.2#clean-input": {
+   "hash": "1b991bf014a97b",
+   "status": "executed"
+  },
+  "PY101 3.2#clean-input:debug": {
+   "hash": "113d31dc8239ca",
+   "status": "error-matched"
+  },
+  "PY101 3.2#one-line-input": {
+   "hash": "0276adc439d136",
+   "status": "executed"
+  },
+  "PY101 3.2#two-questions": {
+   "hash": "0707e1f0780eef",
+   "status": "executed"
+  },
+  "PY101 3.2#two-questions:debug": {
+   "hash": "14fd39c451139c",
+   "status": "error-matched"
+  },
+  "PY101 3.2#prompts-poor": {
+   "hash": "118cc79c02d994",
+   "status": "executed"
+  },
+  "PY101 3.2#prompts-improved": {
+   "hash": "1082848516d005",
+   "status": "executed"
+  },
+  "PY101 3.2#bill-splitter": {
+   "hash": "1848de761982fb",
+   "status": "executed"
+  },
+  "PY101 3.3#sequence-order": {
+   "hash": "16afdd36fb1c39",
+   "status": "executed"
+  },
+  "PY101 3.3#swap-values": {
+   "hash": "1fae60df46c95d",
+   "status": "executed"
+  },
+  "PY101 3.3#swap-values:debug": {
+   "hash": "17c03102338c12",
+   "status": "error-matched"
+  },
+  "PY101 3.3#long-statement": {
+   "hash": "113744dc38d0ec",
+   "status": "executed"
+  },
+  "PY101 3.3#long-statement:debug": {
+   "hash": "0e82372101fff5",
+   "status": "error-matched"
+  },
+  "PY101 3.3#semicolon-statements": {
+   "hash": "043c844bbf7353",
+   "status": "executed"
+  },
+  "PY101 3.3#trace-interest": {
+   "hash": "1696dd457979ef",
+   "status": "executed"
+  },
+  "PY101 3.3#structure-poor": {
+   "hash": "0ee0c1557e0e42",
+   "status": "executed"
+  },
+  "PY101 3.3#structure-improved": {
+   "hash": "0a671daeaf6379",
+   "status": "executed"
+  },
+  "PY101 3.3#parking-machine": {
+   "hash": "0c7127fcd23a0d",
+   "status": "executed"
+  },
+  "PY101 4.1#syntax-error-anatomy": {
+   "hash": "1fdbfb9aab69fe",
+   "status": "executed"
+  },
+  "PY101 4.1#pass-check": {
+   "hash": "0f76434cc96535",
+   "status": "executed"
+  },
+  "PY101 4.1#pass-check:debug": {
+   "hash": "182a553550e071",
+   "status": "error-matched"
+  },
+  "PY101 4.1#matched-brackets": {
+   "hash": "08dc3416c631a7",
+   "status": "executed"
+  },
+  "PY101 4.1#matched-brackets:debug": {
+   "hash": "0433496b7283f1",
+   "status": "error-matched"
+  },
+  "PY101 4.1#traceback-frames": {
+   "hash": "0bede182ba2ae8",
+   "status": "executed"
+  },
+  "PY101 4.1#keyword-names": {
+   "hash": "0373c0ddd0e81e",
+   "status": "executed"
+  },
+  "PY101 4.1#keyword-names:debug": {
+   "hash": "0724dc1f69e1fa",
+   "status": "error-matched"
+  },
+  "PY101 4.1#nested-poor": {
+   "hash": "0bd664ccf3a438",
+   "status": "executed"
+  },
+  "PY101 4.1#steps-improved": {
+   "hash": "0405810e08b21d",
+   "status": "executed"
+  },
+  "PY101 4.1#syntax-doctor": {
+   "hash": "05551254b9cf25",
+   "status": "executed"
+  },
+  "PY101 4.2#error-catalogue": {
+   "hash": "013155128754fa",
+   "status": "executed"
+  },
+  "PY101 4.2#marks-index": {
+   "hash": "129ab9d87df5f0",
+   "status": "executed"
+  },
+  "PY101 4.2#marks-index:debug": {
+   "hash": "16d64682b1dcb9",
+   "status": "error-matched"
+  },
+  "PY101 4.2#menu-prices": {
+   "hash": "05e1a6d957a77f",
+   "status": "executed"
+  },
+  "PY101 4.2#menu-prices:debug": {
+   "hash": "1f96d11667ca4d",
+   "status": "error-matched"
+  },
+  "PY101 4.2#safe-lookup": {
+   "hash": "1a9f5786c5440b",
+   "status": "executed"
+  },
+  "PY101 4.2#attendance-total": {
+   "hash": "0be509e63d2ef8",
+   "status": "executed"
+  },
+  "PY101 4.2#attendance-total:debug": {
+   "hash": "0f788651c62d82",
+   "status": "error-matched"
+  },
+  "PY101 4.2#silent-except-poor": {
+   "hash": "0c13b243235415",
+   "status": "executed"
+  },
+  "PY101 4.2#specific-except-improved": {
+   "hash": "0b7e1d17bf8bf2",
+   "status": "executed"
+  },
+  "PY101 4.2#order-checker": {
+   "hash": "0b24dc49ac4571",
+   "status": "executed"
+  },
+  "PY101 4.3#print-debug-discount": {
+   "hash": "16ff97f802d07d",
+   "status": "executed"
+  },
+  "PY101 4.3#assert-assumptions": {
+   "hash": "1fdaa43c7fc974",
+   "status": "executed"
+  },
+  "PY101 4.3#assert-assumptions:debug": {
+   "hash": "05dfdcb1c706e9",
+   "status": "error-matched"
+  },
+  "PY101 4.3#shrink-input": {
+   "hash": "0fa0f9a13bb4dd",
+   "status": "executed"
+  },
+  "PY101 4.3#shrink-input:debug": {
+   "hash": "0ee008fe433a70",
+   "status": "error-matched"
+  },
+  "PY101 4.3#logging-levels": {
+   "hash": "1865ffc0211f55",
+   "status": "executed"
+  },
+  "PY101 4.3#normalise-numbers": {
+   "hash": "0160a2c735128e",
+   "status": "executed"
+  },
+  "PY101 4.3#normalise-numbers:debug": {
+   "hash": "0e3abe732c78a9",
+   "status": "error-matched"
+  },
+  "PY101 4.3#scattered-prints-poor": {
+   "hash": "19de9c8998da39",
+   "status": "executed"
+  },
+  "PY101 4.3#debug-switch-improved": {
+   "hash": "128ade4b11c1fc",
+   "status": "executed"
+  },
+  "PY101 4.3#grade-self-check": {
+   "hash": "14466c818feaff",
+   "status": "executed"
+  },
   "glossary#variable": {
    "hash": "0e6979dbad018c",
    "status": "executed"
@@ -4224,6 +4732,110 @@
   },
   "glossary#frozen-table": {
    "hash": "060afd71985557",
+   "status": "executed"
+  },
+  "glossary#source-code": {
+   "hash": "132384391b8e03",
+   "status": "executed"
+  },
+  "glossary#compiler": {
+   "hash": "009de59fd3493e",
+   "status": "executed"
+  },
+  "glossary#ipo-model": {
+   "hash": "0d6092ff0ae102",
+   "status": "executed"
+  },
+  "glossary#cpython": {
+   "hash": "0463ad542b6c17",
+   "status": "executed"
+  },
+  "glossary#python-script": {
+   "hash": "10c5aea319469c",
+   "status": "executed"
+  },
+  "glossary#python-shell": {
+   "hash": "1765bb88019bb1",
+   "status": "executed"
+  },
+  "glossary#terminal": {
+   "hash": "03be63cb5bba82",
+   "status": "executed"
+  },
+  "glossary#code-editor": {
+   "hash": "1f425826f2197a",
+   "status": "executed"
+  },
+  "glossary#print-function": {
+   "hash": "19ad3a05fb97f6",
+   "status": "executed"
+  },
+  "glossary#input-function": {
+   "hash": "0a89238545091b",
+   "status": "executed"
+  },
+  "glossary#string-literal": {
+   "hash": "1d318d0d014bda",
+   "status": "executed"
+  },
+  "glossary#hash-comment": {
+   "hash": "122c5c1996ad1d",
+   "status": "executed"
+  },
+  "glossary#statement": {
+   "hash": "1565c9b80d2f77",
+   "status": "executed"
+  },
+  "glossary#indentation": {
+   "hash": "086d9692484394",
+   "status": "executed"
+  },
+  "glossary#pep-8": {
+   "hash": "00ba9b3f8d4b60",
+   "status": "executed"
+  },
+  "glossary#traceback": {
+   "hash": "1546e43deb24da",
+   "status": "executed"
+  },
+  "glossary#exception": {
+   "hash": "17c064ea34159e",
+   "status": "executed"
+  },
+  "glossary#debugging": {
+   "hash": "1685a8bed93d3c",
+   "status": "executed"
+  },
+  "PY101 M1#examples-1": {
+   "hash": "1a8dc8acf48b5f",
+   "status": "executed"
+  },
+  "PY101 M1#examples-2": {
+   "hash": "04140a8e64ccae",
+   "status": "executed"
+  },
+  "PY101 M2#examples-1": {
+   "hash": "0386d4febf1717",
+   "status": "executed"
+  },
+  "PY101 M2#examples-2": {
+   "hash": "045f6d9ea68fe7",
+   "status": "executed"
+  },
+  "PY101 M3#examples-1": {
+   "hash": "141c4163da14b5",
+   "status": "executed"
+  },
+  "PY101 M3#examples-2": {
+   "hash": "057dbd9e59064c",
+   "status": "executed"
+  },
+  "PY101 M4#examples-1": {
+   "hash": "18b141c05957a8",
+   "status": "executed"
+  },
+  "PY101 M4#examples-2": {
+   "hash": "1a1cea4624030d",
    "status": "executed"
   }
  }

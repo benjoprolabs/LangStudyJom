@@ -78,7 +78,7 @@ async function main() {
     const confirm = page.getByRole('dialog', { name: 'Pasang semua pakej?' });
     await confirm.waitFor();
     const listed = await confirm.locator('ol li').allInnerTexts();
-    assert.deepEqual(listed, ['Teras Universiti — Milestone 1', 'Lua & Luau — Milestone 2', 'Bahan Kursus Lua & Luau — Keluaran 9']);
+    assert.deepEqual(listed, ['Teras Universiti — Milestone 1', 'Lua & Luau — Milestone 2', 'Bahan Kursus Lua, Luau & Python — Keluaran 10']);
     await confirm.getByRole('button', { name: 'Batal' }).click();
     assert.equal(await page.getByTestId('install-all-progress').count(), 0, 'cancel installs nothing');
     assert.equal((await readStore(page, 'programmes')).length, 1, 'still only the Python programme after cancel');
@@ -100,10 +100,10 @@ async function main() {
     const [lectures, glossary, programmes] = await Promise.all(['lectures', 'glossaryTerms', 'programmes'].map((s) => readStore(page, s)));
     assert.equal(lectures.length, 984);
     assert.equal(new Set(lectures.map((x) => `${x.moduleId}#${x.order}`)).size, 984, 'no duplicate lecture slot');
-    assert.equal(lectures.filter((x) => x.sections.length > 0).length, 97);
-    assert.equal(glossary.length, 80);
+    assert.equal(lectures.filter((x) => x.sections.length > 0).length, 109);
+    assert.equal(glossary.length, 98);
     assert.equal(programmes.length, 3);
-    log('Database: 984 lectures (no duplicates), 97 with full content, 80 glossary terms, 3 programmes');
+    log('Database: 984 lectures (no duplicates), 109 with full content, 98 glossary terms, 3 programmes');
 
     // ── Library opens on LUA-PROG; notice gone ──
     await outcome.getByRole('link', { name: 'Buka Perpustakaan Kursus' }).click();

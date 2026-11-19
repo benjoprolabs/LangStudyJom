@@ -1,5 +1,5 @@
 programme,semester,course,title_en,modules,lecture_material_status,lectures,complete,needs_verification,partial,structure_only,lectures_written,course_description,course_objectives,course_outcomes,course_references,prerequisites,exercises_and_assessments
-PY-PROG,1,PY101,Introduction to Programming and Python,4,STRUCTURE ONLY,12,0,0,0,12,0.0%,yes,4,3,2,0,none (Practice Center not built)
+PY-PROG,1,PY101,Introduction to Programming and Python,4,COMPLETE,12,12,0,0,0,100.0%,yes,4,3,2,0,none (Practice Center not built)
 PY-PROG,1,PY102,"Variables, Data Types and Operators",4,STRUCTURE ONLY,12,0,0,0,12,0.0%,yes,4,3,2,1,none (Practice Center not built)
 PY-PROG,1,PY103,Control Flow: Conditions and Loops,4,STRUCTURE ONLY,12,0,0,0,12,0.0%,yes,4,3,2,1,none (Practice Center not built)
 PY-PROG,1,PY104,Functions and Program Structure,4,STRUCTURE ONLY,12,0,0,0,12,0.0%,yes,4,3,2,1,none (Practice Center not built)
