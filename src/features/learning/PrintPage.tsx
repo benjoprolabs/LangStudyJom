@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/Button';
 import { Blocks, CodeScopeProvider, explainsOf, GlossaryProvider, RichText } from './ContentRenderer';
 import { loadCourseBundle, loadLectureBundle, type CourseBundle } from './data';
 import { useGlossaryTerms } from './glossary';
+import { hasModuleContent } from '@/db/content/module';
+import { ModuleMaterials } from './module-view';
 
 /**
  * Print / PDF document (Part H): /print?lecture=ID | ?module=ID | ?course=ID.
@@ -85,12 +87,38 @@ export function PrintPage() {
             </nav>
           )}
 
-          {doc.items.map(({ module, lecture }, i) => (
-            <PrintedLecture key={lecture.id} module={module} lecture={lecture} breakBefore={i > 0 || doc.items.length > 1} courseCode={course.code} />
-          ))}
+          {doc.items.map(({ module, lecture }, i) => {
+            // Module and course documents: each module's own materials come before its lectures.
+            const firstOfModule = doc.scope !== 'lecture' && (i === 0 || doc.items[i - 1]!.module.id !== module.id);
+            return (
+              <div key={lecture.id}>
+                {firstOfModule && <PrintedModule module={module} courseCode={course.code} breakBefore={i > 0} />}
+                <PrintedLecture module={module} lecture={lecture} breakBefore={firstOfModule || i > 0 || doc.items.length > 1} courseCode={course.code} />
+              </div>
+            );
+          })}
         </main>
       </div>
     </GlossaryProvider>
+  );
+}
+
+function PrintedModule({ module, courseCode, breakBefore }: { module: Module; courseCode: string; breakBefore: boolean }) {
+  const { t, l } = useI18n();
+  return (
+    <section className={breakBefore ? 'page-break mt-10' : 'mt-8'} data-testid="print-module" aria-labelledby={`pm-${module.id}`}>
+      <h2 id={`pm-${module.id}`} className="text-xl font-bold">
+        <span className="font-mono text-note">{courseCode} · {t('learning.reader.module', { n: module.order })}</span> {l(module.title)}
+      </h2>
+      <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-primary">{t('learning.module.layerTitle')}</p>
+      <div className="mt-4">
+        {hasModuleContent(module.sections) ? (
+          <ModuleMaterials sections={module.sections} level={3} idPrefix={`pm-${module.order}`} />
+        ) : (
+          <p className="text-sm italic text-muted" data-testid="print-module-empty">{t('learning.module.emptyTitle')}</p>
+        )}
+      </div>
+    </section>
   );
 }
 

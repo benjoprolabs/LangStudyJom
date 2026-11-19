@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { ArrowLeft, ArrowRight, Bookmark, BookmarkCheck, CheckCircle2, Download, Dumbbell, FileCode2, FileDown, NotebookPen, Printer } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Bookmark, BookmarkCheck, CheckCircle2, Download, Dumbbell, FileCode2, FileDown, NotebookPen, Printer, Layers } from 'lucide-react';
 import { db } from '@/db/client';
 import { completeLecture, getLectureNote, recordReading, saveLectureNote, toggleBookmark } from '@/db/repositories/learning';
 import { APP_VERSION } from '@/db/backup/backup';
@@ -123,7 +123,10 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
         <nav className="mb-2 text-xs text-muted" aria-label="breadcrumb">
           <Link to={`/library?programme=${programme?.id ?? ''}`} className="hover:underline">{l(programme?.name)}</Link>
           {' › '}
-          <span className="font-mono">{course.code}</span> › {t('learning.reader.module', { n: module.order })}
+          <span className="font-mono">{course.code}</span> ›{' '}
+          <Link to={`/module?module=${module.id}`} className="hover:underline" data-testid="lecture-module-crumb">
+            {t('learning.reader.module', { n: module.order })} · {l(module.title)}
+          </Link>
         </nav>
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           <span className="mr-2 font-mono text-note">{bundle.number}</span>
@@ -154,6 +157,9 @@ function Reader({ bundle, studentId }: { bundle: LectureBundle; studentId: strin
           {hasContent && <Button size="sm" variant="outline" onClick={downloadCode} icon={<FileCode2 className="h-4 w-4" />}>{t('learning.reader.downloadCode')}</Button>}
           <Link to={`/print?lecture=${lectureId}`}>
             <Button size="sm" variant="outline" icon={<Printer className="h-4 w-4" />}>{t('learning.reader.print')}</Button>
+          </Link>
+          <Link to={`/module?module=${module.id}`} data-testid="lecture-module-link">
+            <Button size="sm" variant="outline" icon={<Layers className="h-4 w-4" />}>{t('learning.module.open')}</Button>
           </Link>
         </div>
 

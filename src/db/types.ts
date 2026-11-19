@@ -164,6 +164,38 @@ export interface Module extends BaseEntity {
   order: number;
   title: LocalizedText;
   description: LocalizedText;
+  /**
+   * Module-level learning materials (MODULE_SECTIONS), separate from the lectures' own content.
+   * Optional and not indexed: stored on the existing record, so no schema change; absent = not written.
+   */
+  sections?: ModuleSection[];
+  /** When the module materials were last saved. */
+  contentUpdatedAt?: string;
+}
+
+/**
+ * The module content standard: a module teaches its overall topic and connects its lectures. Each section is
+ * bilingual text in the module text format (paragraphs, "- " / "1. " lists, ``` code fences, and the inline syntax
+ * **bold**, `code`, [[glossary]], [label](https://…)). It must not copy lecture text or examples.
+ */
+export const MODULE_SECTIONS = [
+  'module_overview',
+  'learning_objectives',
+  'prerequisites',
+  'core_theory',
+  'learning_notes',
+  'key_concepts',
+  'terminology',
+  'examples',
+  'applications',
+  'module_summary',
+  'references',
+] as const;
+export type ModuleSectionKind = (typeof MODULE_SECTIONS)[number];
+
+export interface ModuleSection {
+  kind: ModuleSectionKind;
+  body: LocalizedText;
 }
 
 /**

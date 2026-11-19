@@ -1,7 +1,7 @@
 {
   "name": "qhaze-tech-university",
   "private": true,
-  "version": "0.5.9",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,7 +11,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:e2e": "node scripts/e2e-smoke.mjs && node scripts/e2e-university.mjs && node scripts/e2e-curriculum.mjs && node scripts/e2e-learning.mjs && node scripts/e2e-packages.mjs",
+    "test:e2e": "node scripts/e2e-smoke.mjs && node scripts/e2e-university.mjs && node scripts/e2e-curriculum.mjs && node scripts/e2e-learning.mjs && node scripts/e2e-packages.mjs && node scripts/e2e-modules.mjs",
     "verify:code": "vitest run --config tools/code-verification/vitest.config.ts",
     "audit:content": "vitest run --config tools/content-audit/vitest.config.ts",
     "docs:curriculum": "vitest run --config tools/curriculum-docs/vitest.config.ts"

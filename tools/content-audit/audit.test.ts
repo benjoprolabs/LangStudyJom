@@ -229,7 +229,7 @@ it('audits the whole university', () => {
   md.push('', '## Modules', '', '| Module | Status | Lectures | Complete | Needs verification | Partial | Structure only |', '|---|---|---|---|---|---|---|');
   for (const r of moduleRows) md.push(`| ${r[2]} M${r[3]} ${r[4]} | ${r[5]} | ${r[6]} | ${r[7]} | ${r[8]} | ${r[9]} | ${r[10]} |`);
   md.push('', '## Module-level content', '',
-    `Module-content feature: ${moduleContentSupported ? 'present' : '**absent**: modules carry a title and a lecture list only; no format, storage, page or export exists for module materials'}.`, '',
+    `Module-content feature: **present in the app** (0.6.0: Module Learning Page, editor, \`Module.sections\`, module and course PDF/Markdown). Module materials delivered by content packages: ${moduleContentSupported ? 'yes' : '**none yet** (writing them is phase M-2)'}. Module materials typed into a device with the editor live only in that device and are not audited here.`, '',
     '| Module content status | Modules |', '|---|---|',
     ...STATUSES.map((st) => `| ${st} | ${moduleContent.filter((r) => r[6] === st).length} |`), '',
     'Per module (Faculty, Academy, Programme, Course, Module ID, title, module content status, lecture content status, missing sections): `module-content.csv`.');

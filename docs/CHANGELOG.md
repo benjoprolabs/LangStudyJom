@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.6.0: Module content system — M-1 (course materials 1.8.1, unchanged)
+
+Modules could only show a title and a lecture list: no format, storage, page or export existed for module-level
+materials (see MODULE-CONTENT-AUDIT.md). This release builds the feature; it writes no module content.
+
+- **Module content standard:** 11 bilingual sections (overview, learning objectives, prerequisites, detailed core
+  theory, complete learning notes, key concepts and principles, terminology, subject-specific examples, practical
+  applications, summary, references) with minimum depth per section and discipline-aware examples
+  (programming: code; mathematics: worked solutions; design: workflows), derived from the course's faculty.
+- **Separate layers, no copying:** the validator flags module paragraphs or list items whose 8-word sequences mostly
+  occur in the course's lecture text, and module code that is a lecture example (naming the lecture).
+- **Storage:** `Module.sections` and `contentUpdatedAt` on the existing module record — not indexed, so no IndexedDB
+  schema change or migration; title and description are kept; backups and restore carry it; course-materials
+  updates never touch it.
+- **Module Learning Page** (`/module`): the module layer ("Kandungan Modul", or a clear "belum ditulis" empty state)
+  and the lecture layer ("Kuliah dalam Modul Ini", each lecture with its status) shown separately; status (Belum
+  ditulis / Separa / Perlu pengesahan / Lengkap) with a quality check; previous/next module; responsive; Malay by
+  default, English supported.
+- **Editor:** the 11 sections in Malay and English, live quality check, drafts allowed, save and reload. Module code
+  is labelled "not yet verified by execution" and keeps a module at "Perlu pengesahan", never "Lengkap".
+- **Navigation:** Library module titles (with a module-status badge), the Lecture Room breadcrumb and a "Kandungan
+  modul" button, and the course outline link to the module page.
+- **Exports:** Module PDF and Module .md start with the module materials, then the lectures; course PDF and course
+  .md include every module's materials (or "belum ditulis") before its lectures.
+- Tests: `module-content.test.ts` (format, validation, duplication, status, saving changes nothing else, backup and
+  restore, content updates, Markdown) and `scripts/e2e-modules.mjs` (clean profile with test content only: empty
+  state, navigation, copy detection, save/reload/edit, glossary, PDF and Markdown, student data and all 984 lectures
+  unchanged, phone and desktop), now part of `npm run test:e2e`.
+
 ## 0.5.9: P0 fixes from the content audit (course materials 1.8.1)
 
 - **Bold text with glossary links or inline code now renders correctly** in the Lecture Room, the PDF/print view and

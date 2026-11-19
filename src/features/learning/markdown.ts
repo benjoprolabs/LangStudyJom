@@ -1,5 +1,6 @@
 import { parseInline, type InlineToken } from '@/db/content/inline';
-import { GENERATED_SECTIONS, type ContentBlock, type GlossaryTerm, type LanguageCode, type Lecture, type LocalizedText, type Note } from '@/db/types';
+import { parseModuleBody } from '@/db/content/module';
+import { GENERATED_SECTIONS, MODULE_SECTIONS, type ContentBlock, type GlossaryTerm, type LanguageCode, type Lecture, type LocalizedText, type Module, type Note } from '@/db/types';
 import type { CourseBundle, LectureBundle } from './data';
 import { verificationOf, type VerificationStatus } from '@/content/verification';
 
@@ -28,6 +29,11 @@ export interface ExportLabels {
   brokenCode: string;
   errorMessage: string;
   fix: string;
+  /** Module-level materials (optional so older label sets keep working; English defaults). */
+  moduleContent?: string;
+  moduleSection?: (kind: string) => string;
+  moduleNotWritten?: string;
+  moduleUnverifiedCode?: string;
 }
 
 const pick = (t: LocalizedText | undefined, lang: LanguageCode) => (t ? (lang === 'en' ? t.en || t.ms : t.ms) : '');
@@ -147,6 +153,8 @@ export function courseMarkdown(b: CourseBundle, lang: LanguageCode, glossary: Ma
   const body = modules.flatMap((m) => [
     `## ${m.module.order}. ${pick(m.module.title, lang)}`,
     '',
+    moduleMarkdown(m.module, lang, glossary, labels, 3),
+    '',
     ...m.lectures.flatMap((l) => [
       `### ${m.module.order}.${l.order} ${pick(l.title, lang)}`,
       '',
@@ -196,4 +204,26 @@ export function codeFiles(lectures: { prefix: string; lecture: Lecture }[], lang
     }
   }
   return files;
+}
+
+/**
+ * A module's own learning materials (module layer), written before its lectures in module and course documents.
+ * Sections follow MODULE_SECTIONS; an unwritten module says so explicitly rather than being silently empty.
+ */
+export function moduleMarkdown(module: Module, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, headingLevel = 3): string {
+  const h = '#'.repeat(headingLevel);
+  const title = labels.moduleContent ?? 'Module content';
+  const byKind = new Map((module.sections ?? []).map((s) => [s.kind, s]));
+  const present = MODULE_SECTIONS.filter((k) => pick(byKind.get(k)?.body, lang).trim());
+  if (!present.length) return [`${h} ${title}`, '', `_${labels.moduleNotWritten ?? 'Module-level content has not been written yet.'}_`].join('\n');
+  const out: string[] = [`${h} ${title}`, ''];
+  present.forEach((kind, i) => {
+    out.push(`${h}# ${i + 1}. ${labels.moduleSection ? labels.moduleSection(kind) : kind}`, '');
+    for (const b of parseModuleBody(pick(byKind.get(kind)!.body, lang))) {
+      if (b.type === 'paragraph') out.push(inline(b.text, glossary), '');
+      else if (b.type === 'list') out.push(...b.items.map((item, j) => `${b.ordered ? `${j + 1}.` : '-'} ${inline(item, glossary)}`), '');
+      else out.push(`_${labels.moduleUnverifiedCode ?? 'Module code example · not yet verified by execution'}_`, '', `\`\`\`${b.language === 'text' ? '' : b.language}`, b.code, '```', '');
+    }
+  });
+  return out.join('\n').trimEnd();
 }

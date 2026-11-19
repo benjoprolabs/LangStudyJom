@@ -169,5 +169,9 @@ export function useExportLabels(): ExportLabels {
     brokenCode: t('learning.code.brokenCode'),
     errorMessage: t('learning.code.errorMessage'),
     fix: t('learning.code.fix'),
+    moduleContent: t('learning.module.layerTitle'),
+    moduleSection: (kind) => t(`learning.module.sections.${kind}` as never),
+    moduleNotWritten: t('learning.module.emptyTitle'),
+    moduleUnverifiedCode: t('learning.module.unverifiedCode'),
   };
 }

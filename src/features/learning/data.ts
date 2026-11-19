@@ -56,3 +56,29 @@ export async function loadLectureBundle(db: QhazeDatabase, lectureId: string): P
 export async function loadGlossary(db: QhazeDatabase): Promise<Map<string, GlossaryTerm>> {
   return new Map((await db.glossaryTerms.toArray()).map((g) => [g.key, g]));
 }
+
+export interface ModuleBundle extends CourseBundle {
+  module: Module;
+  lectures: Lecture[];
+  prevModule?: Module;
+  nextModule?: Module;
+  /** Code of the faculty the course belongs to (decides the module discipline profile). */
+  facultyCode?: string;
+}
+
+export async function loadModuleBundle(db: QhazeDatabase, moduleId: string): Promise<ModuleBundle | undefined> {
+  const module = await db.modules.get(moduleId);
+  if (!module) return undefined;
+  const bundle = await loadCourseBundle(db, module.courseId);
+  if (!bundle) return undefined;
+  const index = bundle.modules.findIndex((m) => m.module.id === moduleId);
+  const faculty = bundle.academy ? await db.faculties.get(bundle.academy.facultyId) : undefined;
+  return {
+    ...bundle,
+    module: bundle.modules[index]!.module,
+    lectures: bundle.modules[index]!.lectures,
+    prevModule: bundle.modules[index - 1]?.module,
+    nextModule: bundle.modules[index + 1]?.module,
+    facultyCode: faculty?.code,
+  };
+}

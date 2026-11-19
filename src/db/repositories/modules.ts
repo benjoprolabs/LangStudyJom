@@ -3,7 +3,7 @@ import { nowIso } from '@/lib/time';
 import type { QhazeDatabase } from '../database';
 import { guardedWrite } from '../guards';
 import { assertValidReferences } from '../integrity';
-import { DIFFICULTY_LEVELS, type DifficultyLevel, type Lecture, type LocalizedText, type Module } from '../types';
+import { DIFFICULTY_LEVELS, MODULE_SECTIONS, type DifficultyLevel, type Lecture, type LocalizedText, type Module, type ModuleSection } from '../types';
 import { LIMITS, ValidationError, type FieldErrors } from './university';
 
 /**
@@ -67,6 +67,42 @@ export async function createModule(db: QhazeDatabase, input: ModuleInput): Promi
     };
     await assertValidReferences(db, 'modules', row as never);
     await db.modules.add(row);
+    return row;
+  });
+}
+
+// ─── Module learning materials ─────────────────────────────────────────────
+
+/** Longest accepted body per section and language (characters). */
+export const MODULE_SECTION_MAX = 40_000;
+
+/**
+ * Save a module's own learning materials (MODULE_SECTIONS). Writes only `sections` and its timestamps on the
+ * existing module record: title, description, order and every other record (lectures, progress, notes, bookmarks)
+ * are untouched. Drafts are allowed — completeness is judged by `validateModuleContent`, not enforced on save.
+ * Sections left empty in both languages are not stored.
+ */
+export async function saveModuleContent(db: QhazeDatabase, moduleId: string, sections: ModuleSection[]): Promise<Module> {
+  const errors: FieldErrors = {};
+  const seen = new Set<string>();
+  const kept: ModuleSection[] = [];
+  for (const s of sections) {
+    if (!(MODULE_SECTIONS as readonly string[]).includes(s.kind)) errors[`sections.${s.kind}`] = 'invalid_choice';
+    else if (seen.has(s.kind)) errors[`sections.${s.kind}`] = 'order_taken';
+    seen.add(s.kind);
+    const ms = typeof s.body?.ms === 'string' ? s.body.ms.trim() : '';
+    const en = typeof s.body?.en === 'string' ? s.body.en.trim() : '';
+    if (ms.length > MODULE_SECTION_MAX || en.length > MODULE_SECTION_MAX) errors[`sections.${s.kind}`] = 'too_long';
+    if (ms || en) kept.push({ kind: s.kind, body: en ? { ms, en } : { ms } });
+  }
+  if (Object.keys(errors).length) throw new ValidationError(errors);
+  kept.sort((a, b) => MODULE_SECTIONS.indexOf(a.kind) - MODULE_SECTIONS.indexOf(b.kind));
+  return guardedWrite(db, async () => {
+    const existing = await db.modules.get(moduleId);
+    if (!existing) throw new ValidationError({ moduleId: 'not_found' });
+    const now = nowIso();
+    const row: Module = { ...existing, sections: kept, contentUpdatedAt: now, updatedAt: now };
+    await db.modules.put(row);
     return row;
   });
 }

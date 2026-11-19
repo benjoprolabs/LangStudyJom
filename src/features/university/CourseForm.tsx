@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BookOpen, Link2, Plus, Trash2 } from 'lucide-react';
 import { db } from '@/db/client';
@@ -319,7 +320,7 @@ function CourseStructure({ courseId }: { courseId: string }) {
             <li key={module.id} className="rounded-lg border border-border p-3">
               <p className="text-sm font-medium">
                 <span className="text-muted">{t('university.courses.moduleN', { n: module.order })} · </span>
-                {l(module.title)}
+                <Link to={`/module?module=${module.id}`} className="hover:text-accent hover:underline">{l(module.title)}</Link>
               </p>
               <ol className="mt-2 space-y-1 text-sm">
                 {lectures.map((lecture) => (

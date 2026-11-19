@@ -13,6 +13,7 @@ import { ProgrammesPage } from '@/features/university/ProgrammesPage';
 import { SemestersPage } from '@/features/university/SemestersPage';
 import { LectureRoomPage } from '@/features/learning/LectureRoomPage';
 import { LibraryPage } from '@/features/learning/LibraryPage';
+import { ModulePage } from '@/features/learning/ModulePage';
 import { PrintPage } from '@/features/learning/PrintPage';
 import { NotFound } from './NotFound';
 
@@ -43,6 +44,8 @@ export const routes: RouteObject[] = [
           element: Page ? <Page /> : <PlannedModulePage item={item as NavItem & { key: PlannedModuleKey }} />,
         };
       }),
+      // Module Learning Page (reached from the Library, the Lecture Room and the course outline; not a menu item).
+      { path: '/module', element: <ModulePage /> },
       { path: '*', element: <NotFound /> },
     ],
   },
