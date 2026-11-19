@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { BookOpenText, Bug, Check, Copy, Download, ExternalLink, Info, KeyRound, Play, ShieldAlert, ShieldCheck, TriangleAlert, X } from 'lucide-react';
-import { VERIFICATION, verificationOf } from '@/content/verification';
+import { VERIFICATION, verificationOf, verificationTool } from '@/content/verification';
 import type { RunOutcome } from '@/lib/lua-runtime';
 import { parseInline, type InlineToken } from '@/db/content/inline';
 import type { ContentBlock, GlossaryTerm, LocalizedText } from '@/db/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import { downloadText } from '@/lib/download';
-import { highlight } from '@/lib/highlight';
+import { highlight, type HighlightLanguage } from '@/lib/highlight';
+import { sourceExtension } from './markdown';
 import { cn } from '@/lib/cn';
 
 /** Glossary lookup + "open term" action, provided by the reader / library / print pages. */
@@ -66,7 +67,7 @@ export function RichText({ text }: { text: LocalizedText | string }) {
  * explanation can be found at a glance. Numbers are not selectable: selecting and copying the code
  * (or the Copy button) gives the code only. Wrapped lines (print) stay indented under their number.
  */
-export function HighlightedCode({ code, language }: { code: string; language: 'lua' | 'luau' }) {
+export function HighlightedCode({ code, language }: { code: string; language: HighlightLanguage }) {
   const lines: { kind: string; text: string }[][] = [[]];
   for (const tok of highlight(code, language)) {
     tok.text.split('\n').forEach((part, i) => {
@@ -110,7 +111,7 @@ const btn = 'inline-flex items-center gap-1 rounded px-2 py-1 text-xs text-muted
 function VerificationBadge({ unit, runtime }: { unit: Parameters<typeof verificationOf>[1] & { key: string }; runtime: string }) {
   const { t, formatDate } = useI18n();
   const status = verificationOf(unit.key, unit);
-  const tool = runtime === 'lua54' ? VERIFICATION.tools.lua54 : VERIFICATION.tools.luau;
+  const tool = verificationTool(runtime);
   const date = VERIFICATION.generatedAt ? formatDate(VERIFICATION.generatedAt) : '';
   const [label, cls, Icon] =
     status === 'executed' ? [t('learning.code.status.executed', { tool, date }), 'text-success', ShieldCheck]
@@ -191,7 +192,7 @@ export function CodeBlock({ block, interactive = true }: { block: Extract<Conten
   const [explaining, setExplaining] = useState(false);
   const key = `${scope}#${block.id}`;
   const explanation = explains.get(block.id);
-  const ext = block.language;
+  const ext = sourceExtension(block.language);
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(block.code);
@@ -249,7 +250,7 @@ export function CodeBlock({ block, interactive = true }: { block: Extract<Conten
         <RunPanel code={block.code} input={block.input} expectedOutput={block.expectedOutput} label={t('learning.code.run')} />
       ) : (
         <p className="border-t border-border px-4 py-2 text-xs text-muted" data-print-hide>
-          {block.runtime === 'luau' ? t('learning.code.runUnavailableLuau') : t('learning.code.runUnavailableRoblox')}
+          {block.runtime === 'luau' ? t('learning.code.runUnavailableLuau') : block.runtime === 'python' ? t('learning.code.runUnavailablePython') : t('learning.code.runUnavailableRoblox')}
         </p>
       ))}
       {interactive && explaining && explanation && (

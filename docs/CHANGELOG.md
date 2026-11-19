@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.7.0: PY-0 — Python infrastructure and packaged module content (course materials 1.8.1, unchanged)
+
+Infrastructure only: no Python lectures or modules are written, and no Lua/Luau content changed.
+
+- **Python in the lecture format:** code runtime `python` and language `python` (`CodeLanguage`), pathway `python`
+  for every `PY` course, a `python` glossary scope, "Python 3.13" runtime labels, `.py` source downloads with `#`
+  header comments, and an honest "no browser Run for Python yet" note on Python examples.
+- **Python 3.13 verification:** `tools/code-verification/run-python.py` runs each example as `example.py` with
+  CPython 3.13 only (it refuses other versions), in its own temporary directory, with stdin input and
+  `PYTHONHASHSEED=0`. Errors are reported on one line as `example.py:<line>: <Exception>: <message>`, so broken
+  examples are verified exactly like Lua's `example:<line>: <message>`. The runners are shared in
+  `tools/code-verification/runners.ts`; the manifest records the Python tool (`tools.python`, optional so older
+  manifests remain valid).
+- **Python syntax highlighting:** Python 3.13 hard keywords, built-ins, `#` comments, prefixed and triple-quoted
+  strings and number literals; Lua/Luau highlighting unchanged.
+- **Python validation rules:** Python lectures may contain only Python code (runtime `python`), with no Lua syntax
+  or Roblox APIs and no links to Lua/Luau/Roblox glossary terms; Lua and Luau lectures may not contain Python code
+  or link Python terms; Python glossary terms need Python examples; line-by-line coverage ignores `#` comments and
+  bare `else:` / `try:` / `finally:`.
+- **Module content in course-materials packages:** `ContentPackage.modules` (optional — existing packages are
+  unchanged) delivers module materials by course code and module number. Strict package validation (all 11 sections,
+  the pathway's code language, an ```` ```output ```` fence per example, identical code in both languages, glossary
+  separation, no copying from that course's lectures). Module code examples become verification units
+  (`LUA101 M1#examples-1`) and a module is COMPLETE only when every one is executed by the verifier. The installer
+  writes module materials onto existing modules (`contentSource: 'package'`, `contentVersion`), is idempotent, and
+  never overwrites module content written with the editor on the device (kept and reported). Module page, Library
+  badge, PDF and Markdown show each module code example's verification status and expected output.
+- Tests: `python-support.test.ts`, `module-package.test.ts`, `tools/code-verification/python-runner.test.ts`
+  (15 runner tests, run by `npm run verify:code`), and the modules e2e checks Python highlighting.
+
 ## 0.6.0: Module content system — M-1 (course materials 1.8.1, unchanged)
 
 Modules could only show a title and a lecture list: no format, storage, page or export existed for module-level

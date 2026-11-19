@@ -4,7 +4,7 @@ import { CheckCircle2, CircleDashed, Layers, Loader2, PackageOpen, ShieldCheck, 
 import { db } from '@/db/client';
 import { installPackage, planInstall, type InstallPlan } from '@/db/seed/install';
 import type { CurriculumPackage } from '@/db/seed/types';
-import { installContentPackage, planContentInstall, type ContentPlan } from '@/db/content/install';
+import { contentToWrite, installContentPackage, planContentInstall, type ContentPlan } from '@/db/content/install';
 import type { ContentPackage } from '@/db/content/types';
 import { countPackage } from '@/db/seed/validate';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -207,7 +207,7 @@ function ContentPackageCard({
   };
 
   // Ready to install (structure present, content not yet written): this is the learner's next step.
-  const isNext = Boolean(plan && !plan.errors.length && !plan.missing.length && plan.lecturesToWrite + plan.glossaryToWrite > 0);
+  const isNext = Boolean(plan && !plan.errors.length && !plan.missing.length && contentToWrite(plan) > 0);
   useEffect(() => {
     if (scrollIntoView && plan) {
       ref.current?.scrollIntoView({ block: 'center' });
@@ -229,7 +229,10 @@ function ContentPackageCard({
         <Badge tone="success">{t('learning.packages.content')}</Badge>
         {isNext && <Badge tone="success">{t('packages.nextStep')}</Badge>}
       </div>
-      <p className="mt-2 text-xs text-muted">{t('learning.packages.contentCounts', { lectures: pkg.lectures.length, terms: pkg.glossary.length })}</p>
+      <p className="mt-2 text-xs text-muted">
+        {t('learning.packages.contentCounts', { lectures: pkg.lectures.length, terms: pkg.glossary.length })}
+        {pkg.modules?.length ? ` · ${t('learning.packages.contentModules', { count: pkg.modules.length })}` : ''}
+      </p>
       <div className="mt-3 text-sm" data-testid="content-package-status" role="status">
         {!plan ? (
           <p className="text-muted">{t('packages.checking')}</p>
@@ -237,11 +240,14 @@ function ContentPackageCard({
           <Problems icon={<XCircle className="h-4 w-4" />} title={t('packages.invalid')} items={plan.errors} tone="text-danger" />
         ) : plan.missing.length > 0 ? (
           <Problems icon={<TriangleAlert className="h-4 w-4" />} title={t('learning.packages.contentMissing')} items={plan.missing} tone="text-warning" />
-        ) : plan.lecturesToWrite + plan.glossaryToWrite === 0 ? (
+        ) : contentToWrite(plan) === 0 ? (
           <p className="flex items-center gap-2 text-success"><CheckCircle2 className="h-4 w-4" aria-hidden />{t('learning.packages.contentComplete')}</p>
         ) : (
           <div className="space-y-3">
             <p>{t('learning.packages.contentWillWrite', { lectures: plan.lecturesToWrite, terms: plan.glossaryToWrite })}</p>
+            {(plan.modulesToWrite > 0 || plan.modulesKeptLocal > 0) && (
+              <p data-testid="content-modules-plan">{t('learning.packages.contentModulesPlan', { write: plan.modulesToWrite, kept: plan.modulesKeptLocal })}</p>
+            )}
             <p className="flex items-start gap-2 text-xs text-muted">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-success" aria-hidden />
               {t('packages.safety')}
@@ -306,7 +312,7 @@ function InstallAll({
       }
       for (const p of content) {
         const plan = await planContentInstall(db, p);
-        if (plan.missing.length || plan.lecturesToWrite + plan.glossaryToWrite > 0) return !cancelled && setPending(true);
+        if (plan.missing.length || contentToWrite(plan) > 0) return !cancelled && setPending(true);
       }
       if (!cancelled) setPending(false);
     })();
@@ -341,7 +347,7 @@ function InstallAll({
           const pkg = content.find((p) => p.id === step.id)!;
           const plan = await planContentInstall(db, pkg);
           if (plan.errors.length || plan.missing.length) throw new Error('blocked');
-          if (plan.lecturesToWrite + plan.glossaryToWrite === 0) mark(i, 'skipped');
+          if (contentToWrite(plan) === 0) mark(i, 'skipped');
           else {
             await installContentPackage(db, pkg);
             mark(i, 'done');

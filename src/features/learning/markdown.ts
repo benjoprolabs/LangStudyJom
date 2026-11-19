@@ -1,5 +1,8 @@
 import { parseInline, type InlineToken } from '@/db/content/inline';
-import { parseModuleBody } from '@/db/content/module';
+import { moduleUnitKey, parseModuleBody } from '@/db/content/module';
+import { moduleUnitStatus } from '@/content/verification';
+
+const MODULE_RUNTIME: Record<string, string> = { lua: 'lua54', luau: 'luau', python: 'python' };
 import { GENERATED_SECTIONS, MODULE_SECTIONS, type ContentBlock, type GlossaryTerm, type LanguageCode, type Lecture, type LocalizedText, type Module, type Note } from '@/db/types';
 import type { CourseBundle, LectureBundle } from './data';
 import { verificationOf, type VerificationStatus } from '@/content/verification';
@@ -153,7 +156,7 @@ export function courseMarkdown(b: CourseBundle, lang: LanguageCode, glossary: Ma
   const body = modules.flatMap((m) => [
     `## ${m.module.order}. ${pick(m.module.title, lang)}`,
     '',
-    moduleMarkdown(m.module, lang, glossary, labels, 3),
+    moduleMarkdown(m.module, lang, glossary, labels, 3, b.course.code),
     '',
     ...m.lectures.flatMap((l) => [
       `### ${m.module.order}.${l.order} ${pick(l.title, lang)}`,
@@ -184,6 +187,10 @@ export function notesMarkdown(title: string, notes: Note[], labels: ExportLabels
 }
 
 /** Source files for a ZIP download: one file per code example, with a header comment. */
+/** File extension and line-comment syntax of each code language (source downloads). */
+export const sourceExtension = (language: string) => (language === 'python' ? 'py' : language === 'lua' ? 'lua' : 'luau');
+export const commentPrefix = (language: string) => (language === 'python' ? '#' : '--');
+
 export function codeFiles(lectures: { prefix: string; lecture: Lecture }[], lang: LanguageCode, labels: ExportLabels) {
   const files: { name: string; content: string }[] = [];
   for (const { prefix, lecture } of lectures) {
@@ -191,14 +198,15 @@ export function codeFiles(lectures: { prefix: string; lecture: Lecture }[], lang
     for (const s of lecture.sections) for (const b of s.blocks) {
       if (b.type !== 'code') continue;
       n++;
-      const ext = b.language === 'lua' ? 'lua' : 'luau';
-      const header = [`-- ${pick(b.title, lang)}`, `-- ${labels.runtime(b.runtime)}`];
-      if (b.expectedOutput !== undefined) header.push(`-- ${labels.expectedOutput}:`, ...b.expectedOutput.split('\n').map((line) => `--   ${line}`));
+      const ext = sourceExtension(b.language);
+      const c = commentPrefix(b.language);
+      const header = [`${c} ${pick(b.title, lang)}`, `${c} ${labels.runtime(b.runtime)}`];
+      if (b.expectedOutput !== undefined) header.push(`${c} ${labels.expectedOutput}:`, ...b.expectedOutput.split('\n').map((line) => `${c}   ${line}`));
       const base = `${prefix}${String(n).padStart(2, '0')}-${b.id}`;
       files.push({ name: `${base}.${ext}`, content: `${header.join('\n')}\n\n${b.code}\n` });
       if (b.input !== undefined) files.push({ name: `${base}.input.txt`, content: `${b.input}\n` });
       if (b.debug) {
-        const h = [`-- ${pick(b.title, lang)} — ${labels.brokenCode}`, `-- ${labels.errorMessage}: ${b.debug.error}`];
+        const h = [`${c} ${pick(b.title, lang)} — ${labels.brokenCode}`, `${c} ${labels.errorMessage}: ${b.debug.error}`];
         files.push({ name: `${base}.buggy.${ext}`, content: `${h.join('\n')}\n\n${b.debug.code}\n` });
       }
     }
@@ -210,7 +218,7 @@ export function codeFiles(lectures: { prefix: string; lecture: Lecture }[], lang
  * A module's own learning materials (module layer), written before its lectures in module and course documents.
  * Sections follow MODULE_SECTIONS; an unwritten module says so explicitly rather than being silently empty.
  */
-export function moduleMarkdown(module: Module, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, headingLevel = 3): string {
+export function moduleMarkdown(module: Module, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, headingLevel = 3, courseCode?: string): string {
   const h = '#'.repeat(headingLevel);
   const title = labels.moduleContent ?? 'Module content';
   const byKind = new Map((module.sections ?? []).map((s) => [s.kind, s]));
@@ -219,10 +227,18 @@ export function moduleMarkdown(module: Module, lang: LanguageCode, glossary: Map
   const out: string[] = [`${h} ${title}`, ''];
   present.forEach((kind, i) => {
     out.push(`${h}# ${i + 1}. ${labels.moduleSection ? labels.moduleSection(kind) : kind}`, '');
+    let codeIndex = 0;
     for (const b of parseModuleBody(pick(byKind.get(kind)!.body, lang))) {
       if (b.type === 'paragraph') out.push(inline(b.text, glossary), '');
       else if (b.type === 'list') out.push(...b.items.map((item, j) => `${b.ordered ? `${j + 1}.` : '-'} ${inline(item, glossary)}`), '');
-      else out.push(`_${labels.moduleUnverifiedCode ?? 'Module code example · not yet verified by execution'}_`, '', `\`\`\`${b.language === 'text' ? '' : b.language}`, b.code, '```', '');
+      else {
+        codeIndex++;
+        const runtime = MODULE_RUNTIME[b.language];
+        const status = courseCode && runtime ? moduleUnitStatus({ key: moduleUnitKey(courseCode, module.order, kind, codeIndex), runtime, code: b.code, expectedOutput: b.expectedOutput }) : null;
+        const label = status === 'executed' && runtime ? labels.status(runtime, status) : (labels.moduleUnverifiedCode ?? 'Module code example · not yet verified by execution');
+        out.push(`_${label}_`, '', `\`\`\`${b.language === 'text' ? '' : b.language}`, b.code, '```', '');
+        if (b.expectedOutput !== undefined) out.push(`${labels.expectedOutput}:`, '', '```', b.expectedOutput, '```', '');
+      }
     }
   });
   return out.join('\n').trimEnd();

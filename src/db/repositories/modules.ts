@@ -101,7 +101,7 @@ export async function saveModuleContent(db: QhazeDatabase, moduleId: string, sec
     const existing = await db.modules.get(moduleId);
     if (!existing) throw new ValidationError({ moduleId: 'not_found' });
     const now = nowIso();
-    const row: Module = { ...existing, sections: kept, contentUpdatedAt: now, updatedAt: now };
+    const row: Module = { ...existing, sections: kept, contentSource: 'local', contentUpdatedAt: now, updatedAt: now };
     await db.modules.put(row);
     return row;
   });

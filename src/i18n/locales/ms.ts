@@ -553,6 +553,7 @@ export const ms = {
       lua54: 'Lua 5.4',
       luau: 'Luau',
       roblox: 'Roblox (Luau) · Roblox Studio sahaja',
+      python: 'Python 3.13',
     },
     code: {
       run: 'Jalankan',
@@ -565,6 +566,7 @@ export const ms = {
       timeout: 'Dihentikan selepas {seconds} saat — mungkin gelung tanpa henti.',
       runUnavailableLuau: 'Run tidak tersedia dalam pelayar untuk Luau. Contoh ini disahkan dengan VM Luau rasmi semasa pengesahan kandungan.',
       runUnavailableRoblox: 'Kod ini menggunakan API Roblox dan hanya boleh berjalan dalam Roblox Studio.',
+      runUnavailablePython: 'Run untuk Python belum tersedia dalam pelayar. Contoh ini disahkan dengan CPython 3.13 semasa pengesahan kandungan.',
       explain: 'Terangkan kod ini',
       hideExplain: 'Sembunyikan penerangan',
       input: 'Input (stdin) yang digunakan',
@@ -671,6 +673,10 @@ export const ms = {
         unknown_term: '{section} ({lang}): istilah glosari tidak wujud — [[{detail}]]',
         copied_text: '{section} ({lang}): teks banyak disalin daripada kuliah {detail}',
         copied_code: '{section} ({lang}): contoh kod disalin daripada kuliah {detail}',
+        code_language: '{section} ({lang}): bahasa kod tidak sesuai dengan program ini — {detail}',
+        missing_output: '{section} ({lang}): contoh kod perlukan blok ```output dengan output yang dijangka',
+        code_differs: '{section}: kod dalam Bahasa Melayu dan English mesti sama',
+        term_scope: '{section} ({lang}): istilah glosari daripada laluan lain — [[{detail}]]',
       },
     },
     library: {
@@ -736,7 +742,7 @@ export const ms = {
     },
     glossary: {
       title: 'Glosari',
-      scope: { general: 'Umum', lua: 'Lua', luau: 'Luau', roblox: 'Roblox sahaja' },
+      scope: { general: 'Umum', lua: 'Lua', luau: 'Luau', roblox: 'Roblox sahaja', python: 'Python' },
       definition: 'Definisi ringkas',
       explanation: 'Penerangan terperinci',
       example: 'Contoh kod',
@@ -762,6 +768,8 @@ export const ms = {
       contentMissing: 'Pasang pakej kurikulum yang berkaitan dahulu — kuliah berikut belum wujud:',
       contentComplete: 'Dipasang — semua kandungan sudah terkini.',
       contentInstalled: 'Bahan kursus dipasang: {count} item ditulis.',
+      contentModules: '{count} modul berkandungan',
+      contentModulesPlan: 'Kandungan modul: {write} akan ditulis · {kept} dikekalkan kerana ditulis pada peranti ini.',
     },
   },
   planned: {

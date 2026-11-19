@@ -13,7 +13,8 @@ import { flattenInline, parseInline } from './inline';
 export type ModuleBlock =
   | { type: 'paragraph'; text: string }
   | { type: 'list'; ordered: boolean; items: string[] }
-  | { type: 'code'; language: string; code: string };
+  /** `expectedOutput` comes from an ```output fence placed right after the code fence (needed to verify it). */
+  | { type: 'code'; language: string; code: string; expectedOutput?: string };
 
 const LIST_ITEM = /^\s*(?:([-*])|(\d+)[.)])\s+(.*)$/;
 
@@ -37,7 +38,10 @@ export function parseModuleBody(text: string): ModuleBlock[] {
       const code: string[] = [];
       i++;
       while (i < lines.length && !/^\s*```\s*$/.test(lines[i]!)) code.push(lines[i++]!);
-      blocks.push({ type: 'code', language: fence[1] || 'text', code: code.join('\n') });
+      const language = fence[1] || 'text';
+      const last = blocks[blocks.length - 1];
+      if (language === 'output' && last?.type === 'code' && last.expectedOutput === undefined) last.expectedOutput = code.join('\n');
+      else blocks.push({ type: 'code', language, code: code.join('\n') });
       continue;
     }
     if (!line.trim()) {
@@ -98,6 +102,10 @@ export function disciplineOfFaculty(facultyCode: string | undefined): Discipline
 // ─── Validation ────────────────────────────────────────────────────────────
 
 export type ModuleProblemCode =
+  | 'code_language'
+  | 'missing_output'
+  | 'code_differs'
+  | 'term_scope'
   | 'missing_section'
   | 'missing_language'
   | 'too_short'
@@ -229,6 +237,48 @@ export interface ModuleValidationContext {
   /** Known glossary keys; omitted = glossary links are not checked. */
   glossaryKeys?: Set<string>;
   corpus?: LectureCorpus;
+  /**
+   * Course-materials package mode (strict): code fences must be the pathway's language and carry an ```output
+   * fence, the Malay and English versions must contain the same code, and glossary links must respect the
+   * Lua / Luau / Python separation (`glossaryScope`).
+   */
+  pathway?: 'lua' | 'luau' | 'python' | 'other';
+  glossaryScope?: Map<string, string>;
+  /** Whether a module code unit has been verified by execution (from the verification manifest). */
+  isVerified?: (unit: ModuleCodeUnit) => boolean;
+}
+
+/** The only code language each pathway's modules may contain (package mode). */
+const PATHWAY_LANGUAGE: Record<string, string> = { lua: 'lua', luau: 'luau', python: 'python' };
+const FORBIDDEN_SCOPES: Record<string, string[]> = { lua: ['luau', 'roblox', 'python'], luau: ['python'], python: ['lua', 'luau', 'roblox'] };
+const RUNTIME_OF: Record<string, 'lua54' | 'luau' | 'python'> = { lua: 'lua54', luau: 'luau', python: 'python' };
+
+/** A runnable module code example, keyed for the verification manifest: "LUA101 M1#examples-1". */
+export interface ModuleCodeUnit {
+  key: string;
+  section: ModuleSectionKind;
+  index: number;
+  language: 'lua' | 'luau' | 'python';
+  runtime: 'lua54' | 'luau' | 'python';
+  code: string;
+  expectedOutput?: string;
+}
+
+export const moduleUnitKey = (courseCode: string, moduleOrder: number, section: ModuleSectionKind, index: number) => `${courseCode} M${moduleOrder}#${section}-${index}`;
+
+/** Runnable code of a module (from the Malay text; package mode requires the English code to be identical). */
+export function moduleCodeUnits(courseCode: string, moduleOrder: number, sections: ModuleSection[] | undefined): ModuleCodeUnit[] {
+  const units: ModuleCodeUnit[] = [];
+  for (const s of sections ?? []) {
+    let index = 0;
+    for (const b of parseModuleBody(s.body.ms ?? '')) {
+      if (b.type !== 'code') continue;
+      index++;
+      const runtime = RUNTIME_OF[b.language];
+      if (runtime) units.push({ key: moduleUnitKey(courseCode, moduleOrder, s.kind, index), section: s.kind, index, language: b.language as ModuleCodeUnit['language'], runtime, code: b.code, expectedOutput: b.expectedOutput });
+    }
+  }
+  return units;
 }
 
 export function validateModuleContent(sections: ModuleSection[] | undefined, ctx: ModuleValidationContext): ModuleProblem[] {
@@ -264,8 +314,24 @@ export function validateModuleContent(sections: ModuleSection[] | undefined, ctx
         problems.push({ code: 'too_few_references', section: kind, lang, detail: `${links.length}/${MIN_REFERENCES}` });
       if (ctx.glossaryKeys)
         for (const t of tokens) if (t.kind === 'term' && !ctx.glossaryKeys.has(t.key)) problems.push({ code: 'unknown_term', section: kind, lang, detail: t.key });
+      if (ctx.pathway && ctx.glossaryScope)
+        for (const t of tokens)
+          if (t.kind === 'term' && FORBIDDEN_SCOPES[ctx.pathway]?.includes(ctx.glossaryScope.get(t.key) ?? '')) problems.push({ code: 'term_scope', section: kind, lang, detail: t.key });
+      if (ctx.pathway) {
+        const expected = PATHWAY_LANGUAGE[ctx.pathway];
+        for (const b of blocks) {
+          if (b.type !== 'code') continue;
+          if (expected && b.language !== expected) problems.push({ code: 'code_language', section: kind, lang, detail: b.language });
+          if (b.expectedOutput === undefined) problems.push({ code: 'missing_output', section: kind, lang });
+        }
+      }
     }
   }
+  if (ctx.pathway)
+    for (const s of sections ?? []) {
+      const codes = (lang: 'ms' | 'en') => parseModuleBody(s.body[lang] ?? '').flatMap((b) => (b.type === 'code' ? [`${b.language}\n${b.code}\n${b.expectedOutput ?? ''}`] : []));
+      if (JSON.stringify(codes('ms')) !== JSON.stringify(codes('en'))) problems.push({ code: 'code_differs', section: s.kind });
+    }
   if (ctx.corpus) problems.push(...findDuplication(sections ?? [], ctx.corpus));
   return problems;
 }
@@ -285,16 +351,28 @@ export function hasModuleContent(sections: ModuleSection[] | undefined): boolean
   return Boolean(sections?.some((s) => s.body.ms?.trim() || s.body.en?.trim()));
 }
 
-export function moduleContentStatus(sections: ModuleSection[] | undefined, problems: ModuleProblem[]): ModuleContentStatus {
+export function moduleContentStatus(
+  sections: ModuleSection[] | undefined,
+  problems: ModuleProblem[],
+  verification?: { units: ModuleCodeUnit[]; isVerified: (unit: ModuleCodeUnit) => boolean },
+): ModuleContentStatus {
   if (!hasModuleContent(sections)) return 'not_written';
   if (problems.length) return 'partial';
-  const hasCode = (sections ?? []).some((s) => [s.body.ms, s.body.en].some((t) => parseModuleBody(t ?? '').some((b) => b.type === 'code')));
-  return hasCode ? 'needs_verification' : 'complete';
+  const codeBlocks = (sections ?? []).reduce((n, s) => n + parseModuleBody(s.body.ms ?? '').filter((b) => b.type === 'code').length, 0);
+  const hasCode = codeBlocks > 0 || (sections ?? []).some((s) => parseModuleBody(s.body.en ?? '').some((b) => b.type === 'code'));
+  if (!hasCode) return 'complete';
+  // COMPLETE only when every code block is a runnable unit that the verifier executed with this exact code.
+  const verified = verification && verification.units.length === codeBlocks && verification.units.every(verification.isVerified);
+  return verified ? 'complete' : 'needs_verification';
 }
 
 /** Validation and status together — the single rule used by the module page, the Library and the exports. */
-export function evaluateModule(sections: ModuleSection[] | undefined, ctx: ModuleValidationContext): { problems: ModuleProblem[]; status: ModuleContentStatus } {
+export function evaluateModule(
+  sections: ModuleSection[] | undefined,
+  ctx: ModuleValidationContext & { units?: ModuleCodeUnit[] },
+): { problems: ModuleProblem[]; status: ModuleContentStatus } {
   if (!hasModuleContent(sections)) return { problems: validateModuleContent(sections, { discipline: ctx.discipline }), status: 'not_written' };
   const problems = validateModuleContent(sections, ctx);
-  return { problems, status: moduleContentStatus(sections, problems) };
+  const verification = ctx.units && ctx.isVerified ? { units: ctx.units, isVerified: ctx.isVerified } : undefined;
+  return { problems, status: moduleContentStatus(sections, problems, verification) };
 }

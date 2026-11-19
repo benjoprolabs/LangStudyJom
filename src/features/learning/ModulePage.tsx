@@ -48,7 +48,7 @@ function ModuleView({ bundle }: { bundle: ModuleBundle }) {
   const labels = useExportLabels();
   const [editing, setEditing] = useState(false);
   const { module, lectures, course, programme } = bundle;
-  const { status, problems, discipline } = useModuleEvaluation(bundle, module.sections, bundle.facultyCode);
+  const { status, problems, discipline } = useModuleEvaluation(bundle, module.sections, bundle.facultyCode, module.order);
   const problemText = useProblemText();
   const written = new Set((module.sections ?? []).filter((s) => s.body.ms?.trim() || s.body.en?.trim()).map((s) => s.kind));
   const missing = MODULE_SECTIONS.filter((k) => !written.has(k));
@@ -110,7 +110,7 @@ function ModuleView({ bundle }: { bundle: ModuleBundle }) {
             </div>
           ) : (
             <>
-              <ModuleMaterials sections={module.sections} />
+              <ModuleMaterials sections={module.sections} courseCode={course.code} moduleOrder={module.order} />
               {missing.length > 0 && (
                 <p className="mt-6 rounded-lg border border-dashed border-border p-3 text-sm text-muted" data-testid="module-missing">
                   {t('learning.module.missingSections', { list: missing.map((k) => sectionLabel(t, k)).join(' · ') })}
@@ -193,7 +193,7 @@ function ModuleEditor({ bundle, onDone }: { bundle: ModuleBundle; onDone: () => 
     return Object.fromEntries(MODULE_SECTIONS.map((k) => [k, { ms: byKind.get(k)?.body.ms ?? '', en: byKind.get(k)?.body.en ?? '' }])) as Draft;
   });
   const sections: ModuleSection[] = useMemo(() => MODULE_SECTIONS.map((kind) => ({ kind, body: draft[kind] })), [draft]);
-  const { problems, discipline } = useModuleEvaluation(bundle, sections, bundle.facultyCode);
+  const { problems, discipline } = useModuleEvaluation(bundle, sections, bundle.facultyCode, bundle.module.order);
   const problemText = useProblemText();
   const set = (kind: ModuleSectionKind, lang: 'ms' | 'en', value: string) => setDraft((d) => ({ ...d, [kind]: { ...d[kind], [lang]: value } }));
 

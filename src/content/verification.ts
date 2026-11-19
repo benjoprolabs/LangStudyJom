@@ -16,11 +16,24 @@ export type VerificationStatus = 'executed' | 'error-matched' | 'compiled' | 'fa
 
 export interface VerificationManifest {
   generatedAt: string;
-  tools: { lua54: string; luau: string };
+  /** `python` is absent in manifests written before Python support (backward compatible). */
+  tools: { lua54: string; luau: string; python?: string };
   results: Record<string, { hash: string; status: VerificationStatus }>;
 }
 
 export const VERIFICATION = manifest as VerificationManifest;
+
+/** Status of a module code example (key from moduleUnitKey), tied to its exact code and expected output. */
+export function moduleUnitStatus(unit: { key: string; runtime: string; code: string; expectedOutput?: string }): VerificationStatus | null {
+  return verificationOf(unit.key, { runtime: unit.runtime as CodeExample['runtime'], code: unit.code, expectedOutput: unit.expectedOutput });
+}
+
+/** The reference tool that verified a runtime's examples, as recorded in the manifest. */
+export function verificationTool(runtime: string): string {
+  if (runtime === 'lua54') return VERIFICATION.tools.lua54;
+  if (runtime === 'python') return VERIFICATION.tools.python ?? 'Python 3.13';
+  return VERIFICATION.tools.luau;
+}
 
 /** Hash of everything that determines a verification result. */
 export function exampleHash(e: Pick<CodeExample, 'runtime' | 'code' | 'expectedOutput' | 'input' | 'expectedError'>): string {

@@ -171,6 +171,12 @@ export interface Module extends BaseEntity {
   sections?: ModuleSection[];
   /** When the module materials were last saved. */
   contentUpdatedAt?: string;
+  /**
+   * Where the materials came from: a course-materials package (`contentVersion` says which version) or the editor
+   * on this device. Locally written materials are never overwritten by a package.
+   */
+  contentSource?: 'package' | 'local';
+  contentVersion?: string;
 }
 
 /**
@@ -244,9 +250,12 @@ export const OPTIONAL_SECTIONS: readonly LectureSectionKind[] = ['memory_behavio
  * Where a code example can run:
  *  - `lua54`  — standard Lua 5.4 (verified with the reference interpreter),
  *  - `luau`   — the Luau language VM outside Roblox (verified with the Luau VM),
- *  - `roblox` — uses Roblox engine APIs; runs only in Roblox Studio and is NEVER claimed as executed.
+ *  - `roblox` — uses Roblox engine APIs; runs only in Roblox Studio and is NEVER claimed as executed,
+ *  - `python` — CPython 3.13 (verified with the reference interpreter, standard library only unless stated).
  */
-export type CodeRuntime = 'lua54' | 'luau' | 'roblox';
+export type CodeRuntime = 'lua54' | 'luau' | 'roblox' | 'python';
+/** Source language of a code example (decides highlighting and the source-file extension). */
+export type CodeLanguage = 'lua' | 'luau' | 'python';
 
 /**
  * Inline text syntax inside LocalizedText: **bold**, `code`, [[glossary-key]] or
@@ -266,7 +275,7 @@ export type ContentBlock =
       type: 'code';
       /** Unique within the lecture; referenced by `explain` blocks and source downloads. */
       id: string;
-      language: 'lua' | 'luau';
+      language: CodeLanguage;
       runtime: CodeRuntime;
       title: LocalizedText;
       /** Never translated: keywords, APIs and identifiers stay as written. */
@@ -506,7 +515,7 @@ export interface Bookmark extends BaseEntity {
 }
 
 /** Which pathway a glossary concept belongs to (keeps Lua and Roblox concepts apart). */
-export type GlossaryScope = 'general' | 'lua' | 'luau' | 'roblox';
+export type GlossaryScope = 'general' | 'lua' | 'luau' | 'roblox' | 'python';
 
 /** Click-to-Learn glossary entry (Part F). */
 export interface GlossaryTerm extends BaseEntity {
@@ -519,7 +528,7 @@ export interface GlossaryTerm extends BaseEntity {
   scope: GlossaryScope;
   definition: LocalizedText;
   explanation: LocalizedText;
-  example?: { language: 'lua' | 'luau'; runtime: CodeRuntime; code: string; expectedOutput?: string };
+  example?: { language: CodeLanguage; runtime: CodeRuntime; code: string; expectedOutput?: string };
   /** Keys of related glossary terms. */
   related: string[];
   /** Related lectures, by curriculum position (resolved at display time). */

@@ -1,5 +1,6 @@
-import { AUTHORED_SECTIONS, OPTIONAL_SECTIONS, type CodeRuntime, type ContentBlock, type LectureSection, type LocalizedText } from '../types';
+import { AUTHORED_SECTIONS, OPTIONAL_SECTIONS, type CodeLanguage, type CodeRuntime, type ContentBlock, type LectureSection, type LocalizedText } from '../types';
 import { flattenInline, parseInline } from './inline';
+import { lectureCorpus, moduleCodeUnits, validateModuleContent } from './module';
 import { pathwayOf, type ContentPackage, type GlossaryTermDef } from './types';
 
 /**
@@ -29,6 +30,9 @@ export function stripLiterals(code: string, keepBackticks = false): string {
 }
 
 const usesRobloxApi = (code: string) => ROBLOX_API.test(stripLiterals(code));
+/** Lua/Luau syntax that has no place in Python code (a Lua example pasted into a Python lecture). */
+const LUA_SYNTAX_IN_PYTHON = /^\s*(?:local\s+\w|(?:local\s+)?function\s+[\w.:]+\s*\(|end\s*$|--|elseif\b|repeat\s*$|until\b)/m;
+
 /** Luau-only syntax that standard Lua does not accept. */
 const LUAU_ONLY_SYNTAX = /(\+=|-=|\*=|\/=|\.\.=|`[^`]*\{[^}]*\}[^`]*`|\bcontinue\b|:\s*(number|string|boolean)\b|\btype\s+\w+\s*=)/;
 
@@ -56,17 +60,21 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
   const checkTerm = (w: string, key: string) => {
     if (!glossaryKeys.has(key)) errors.push(where(`${w}: glossary link [[${key}]] does not resolve`));
     const scope = glossaryScope.get(key);
-    if (pathway === 'lua' && (scope === 'roblox' || scope === 'luau')) errors.push(where(`${w}: Lua lecture links ${scope} concept [[${key}]]`));
+    if (pathway === 'lua' && (scope === 'roblox' || scope === 'luau' || scope === 'python')) errors.push(where(`${w}: Lua lecture links ${scope} concept [[${key}]]`));
+    if (pathway === 'luau' && scope === 'python') errors.push(where(`${w}: Luau lecture links python concept [[${key}]]`));
+    if (pathway === 'python' && (scope === 'lua' || scope === 'luau' || scope === 'roblox')) errors.push(where(`${w}: Python lecture links ${scope} concept [[${key}]]`));
   };
 
   const codeIds = new Set<string>();
   const codeById = new Map<string, string>();
+  const codeLanguageById = new Map<string, string>();
   const coveredById = new Map<string, Set<number>>();
   const allBlocks = sections.flatMap((s) => s.blocks.map((b) => ({ section: s.kind, block: b })));
   for (const { block } of allBlocks) if (block.type === 'code') {
     if (codeIds.has(block.id)) errors.push(where(`duplicate code id ${block.id}`));
     codeIds.add(block.id);
     codeById.set(block.id, block.code);
+    codeLanguageById.set(block.id, block.language);
   }
 
   for (const section of sections) {
@@ -95,7 +103,14 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
         text(`${cw} title`, block.title);
         if (!block.code.trim()) errors.push(where(`${cw}: empty code`));
         if (block.language === 'lua' && block.runtime !== 'lua54') errors.push(where(`${cw}: Lua code must use runtime lua54`));
-        if (block.language === 'luau' && block.runtime === 'lua54') errors.push(where(`${cw}: Luau code cannot use runtime lua54`));
+        if (block.language === 'luau' && (block.runtime === 'lua54' || block.runtime === 'python')) errors.push(where(`${cw}: Luau code must use runtime luau or roblox`));
+        if ((block.language === 'python') !== (block.runtime === 'python')) errors.push(where(`${cw}: Python code must use runtime python, and runtime python must hold Python code`));
+        if (pathway === 'python') {
+          if (block.language !== 'python') errors.push(where(`${cw}: Python lecture contains ${block.language} code`));
+          if (LUA_SYNTAX_IN_PYTHON.test(block.code)) errors.push(where(`${cw}: Python code contains Lua syntax`));
+          if (usesRobloxApi(block.code)) errors.push(where(`${cw}: Python code uses a Roblox identifier`));
+        }
+        if ((pathway === 'lua' || pathway === 'luau') && block.language === 'python') errors.push(where(`${cw}: ${pathway === 'lua' ? 'Lua' : 'Luau'} lecture contains python code`));
         if (block.runtime !== 'roblox' && block.expectedOutput === undefined) errors.push(where(`${cw}: runnable code needs expectedOutput`));
         if (pathway === 'lua') {
           if (block.language !== 'lua') errors.push(where(`${cw}: Lua lecture contains ${block.language} code`));
@@ -103,13 +118,14 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
           if (LUAU_ONLY_SYNTAX.test(stripLiterals(block.code, true))) errors.push(where(`${cw}: Lua code uses Luau-only syntax`));
         }
         if (block.runtime === 'luau' && usesRobloxApi(block.code)) errors.push(where(`${cw}: code marked "luau" (runs outside Roblox) uses a Roblox API`));
-        if (block.input !== undefined && block.runtime !== 'lua54') errors.push(where(`${cw}: input (stdin) is only supported for lua54 examples`));
+        if (block.input !== undefined && block.runtime !== 'lua54' && block.runtime !== 'python') errors.push(where(`${cw}: input (stdin) is only supported for lua54 and python examples`));
         if (block.debug) {
           const d = block.debug;
           text(`${cw} debug explanation`, d.explanation);
           if (!d.code.trim() || d.code === block.code) errors.push(where(`${cw}: debug variant must be a changed copy of the code`));
           if (!d.error.trim() || d.error.includes('\n')) errors.push(where(`${cw}: debug error must be the single first line of the error message`));
           if (pathway === 'lua' && (usesRobloxApi(d.code) || LUAU_ONLY_SYNTAX.test(stripLiterals(d.code, true)))) errors.push(where(`${cw}: debug variant breaks the Lua/Luau separation`));
+          if (pathway === 'python' && (LUA_SYNTAX_IN_PYTHON.test(d.code) || usesRobloxApi(d.code))) errors.push(where(`${cw}: debug variant breaks the Python separation`));
         }
         return;
       }
@@ -151,7 +167,10 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
   }
 
   for (const [id, covered] of coveredById) {
-    const missing = codeLines(codeById.get(id)!).map((l, i) => [l.trim(), i + 1] as const).filter(([l, n]) => l && !l.startsWith('--') && !TRIVIAL_LINE.test(l) && !covered.has(n));
+    const python = codeLanguageById.get(id) === 'python';
+    const missing = codeLines(codeById.get(id)!)
+      .map((l, i) => [l.trim(), i + 1] as const)
+      .filter(([l, n]) => l && !l.startsWith(python ? '#' : '--') && !(python ? PY_TRIVIAL_LINE : TRIVIAL_LINE).test(l) && !covered.has(n));
     if (missing.length) errors.push(where(`${id} lines not explained: ${missing.map(([, n]) => n).join(', ')}`));
   }
 
@@ -177,6 +196,8 @@ export const MIN_DEBUG_VARIANTS = 2;
 
 /** A lone closing token needs no explanation of its own ("end", "end)", "},", "until x" does). */
 const TRIVIAL_LINE = /^(end[,)]*|[}\])]+[,)]*;?|else)$/;
+/** Python: closing brackets and the bare block openers "else:", "try:", "finally:". */
+const PY_TRIVIAL_LINE = /^([}\])]+[,)]*|else:|try:|finally:)$/;
 
 /** Code lines as displayed and numbered in the reader (the leading newline of a template literal is dropped). */
 export function codeLines(code: string): string[] {
@@ -204,6 +225,9 @@ export function validateGlossaryTerm(t: GlossaryTermDef, keys: Set<string>): str
     if (t.scope === 'roblox' && t.example.runtime !== 'roblox') e.push(`${w}: Roblox concept must use a Roblox example`);
     if (t.scope !== 'roblox' && t.example.runtime === 'roblox') e.push(`${w}: non-Roblox concept uses a Roblox-only example`);
     if (t.example.language === 'lua' && t.example.runtime !== 'lua54') e.push(`${w}: Lua example must use lua54`);
+    if ((t.example.language === 'python') !== (t.example.runtime === 'python')) e.push(`${w}: Python example must use runtime python, and runtime python must hold Python code`);
+    if (t.scope === 'python' && t.example.runtime !== 'python') e.push(`${w}: Python concept must use a Python example`);
+    if (t.scope !== 'python' && t.scope !== 'general' && t.example.runtime === 'python') e.push(`${w}: ${t.scope} concept uses a Python example`);
   }
   return e;
 }
@@ -224,6 +248,34 @@ export function validateContentPackage(pkg: ContentPackage): string[] {
     seen.add(id);
     errors.push(...validateLectureSections(l.sections, id, keys, scope));
   }
+  errors.push(...validatePackageModules(pkg, keys, scope));
+  return errors;
+}
+
+/**
+ * Module materials in a package must meet the module standard in strict (package) mode with zero problems:
+ * every section, minimum depth, the pathway's code language with an ```output fence, identical code in both
+ * languages, glossary separation, and no copying from that course's lectures in the same package.
+ */
+export function validatePackageModules(pkg: ContentPackage, keys: Set<string>, scope: Map<string, string>): string[] {
+  const errors: string[] = [];
+  const seen = new Set<string>();
+  for (const m of pkg.modules ?? []) {
+    const id = `${m.courseCode} M${m.module}`;
+    if (!/^[A-Z]+\d+$/.test(m.courseCode) || !Number.isInteger(m.module) || m.module < 1) errors.push(`${id}: invalid module address`);
+    if (seen.has(id)) errors.push(`${id}: listed twice`);
+    seen.add(id);
+    const pathway = pathwayOf(m.courseCode);
+    const corpus = lectureCorpus(pkg.lectures.filter((l) => l.courseCode === m.courseCode).map((l) => ({ order: l.lecture, module: l.module, sections: l.sections })));
+    const problems = validateModuleContent(m.sections, {
+      discipline: pathway === 'other' ? 'general' : 'programming',
+      glossaryKeys: keys,
+      glossaryScope: scope,
+      corpus,
+      pathway,
+    });
+    for (const p of problems) errors.push(`${id}: ${p.code} in ${p.section}${p.lang ? ` (${p.lang})` : ''}${p.detail ? `: ${p.detail}` : ''}`);
+  }
   return errors;
 }
 
@@ -234,7 +286,7 @@ export interface CodeExample {
   key: string;
   where: string;
   id: string;
-  language: 'lua' | 'luau';
+  language: CodeLanguage;
   runtime: CodeRuntime;
   code: string;
   expectedOutput?: string;
@@ -255,6 +307,12 @@ export function collectCodeExamples(pkg: ContentPackage): CodeExample[] {
   }
   for (const t of pkg.glossary) {
     if (t.example) add('glossary', { type: 'code', id: t.key, title: { ms: t.term, en: t.term }, ...t.example });
+  }
+  // Module materials: each runnable code block (taken from the Malay text; the English code must be identical).
+  for (const m of pkg.modules ?? []) {
+    for (const u of moduleCodeUnits(m.courseCode, m.module, m.sections)) {
+      out.push({ key: u.key, where: `${m.courseCode} M${m.module}`, id: `${u.section}-${u.index}`, language: u.language, runtime: u.runtime, code: u.code, expectedOutput: u.expectedOutput });
+    }
   }
   return out;
 }

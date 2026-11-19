@@ -551,6 +551,7 @@ export const en: Messages = {
       lua54: 'Lua 5.4',
       luau: 'Luau',
       roblox: 'Roblox (Luau) · Roblox Studio only',
+      python: 'Python 3.13',
     },
     code: {
       run: 'Run',
@@ -563,6 +564,7 @@ export const en: Messages = {
       timeout: 'Stopped after {seconds} s — possibly an endless loop.',
       runUnavailableLuau: 'Run is not available in the browser for Luau. This example was verified with the official Luau VM during content verification.',
       runUnavailableRoblox: 'This code uses Roblox APIs and can only run in Roblox Studio.',
+      runUnavailablePython: 'Run for Python is not available in the browser yet. This example was verified with CPython 3.13 during content verification.',
       explain: 'Explain this code',
       hideExplain: 'Hide explanation',
       input: 'Input (stdin) used',
@@ -669,6 +671,10 @@ export const en: Messages = {
         unknown_term: '{section} ({lang}): glossary term does not exist — [[{detail}]]',
         copied_text: '{section} ({lang}): text largely copied from lecture {detail}',
         copied_code: '{section} ({lang}): code example copied from lecture {detail}',
+        code_language: '{section} ({lang}): code language does not match this programme — {detail}',
+        missing_output: '{section} ({lang}): code example needs an ```output block with its expected output',
+        code_differs: '{section}: the Malay and English code must be identical',
+        term_scope: '{section} ({lang}): glossary term from another pathway — [[{detail}]]',
       },
     },
     library: {
@@ -734,7 +740,7 @@ export const en: Messages = {
     },
     glossary: {
       title: 'Glossary',
-      scope: { general: 'General', lua: 'Lua', luau: 'Luau', roblox: 'Roblox only' },
+      scope: { general: 'General', lua: 'Lua', luau: 'Luau', roblox: 'Roblox only', python: 'Python' },
       definition: 'Simple definition',
       explanation: 'Detailed explanation',
       example: 'Code example',
@@ -760,6 +766,8 @@ export const en: Messages = {
       contentMissing: 'Install the related curriculum package first — these lectures do not exist yet:',
       contentComplete: 'Installed — all content is up to date.',
       contentInstalled: 'Course materials installed: {count} items written.',
+      contentModules: '{count} modules with content',
+      contentModulesPlan: 'Module content: {write} to write · {kept} kept because they were written on this device.',
     },
   },
   planned: {

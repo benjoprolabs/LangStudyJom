@@ -10,80 +10,28 @@
  *                       override the binary with LUAU_RUNNER=/path/to/luau-runner
  * - runtime 'roblox' → COMPILED ONLY with the Luau compiler (`luau-runner --check`): proves the
  *                       syntax, never executes. Roblox APIs exist only in Roblox Studio.
- * - debug variants   → must FAIL with exactly the documented first error line (lua54 / luau);
+ * - runtime 'python' → CPython 3.13 via tools/code-verification/run-python.py (input on stdin); the
+ *                       interpreter must be 3.13 (override with PYTHON313=/path/to/python3.13).
+ * - debug variants   → must FAIL with exactly the documented first error line (lua54 / luau / python);
  *                       Roblox variants are compiled only.
  *
  * Outputs: docs/CODE-VERIFICATION.md (human report) and src/content/verification.json (manifest the
  * reader uses for "Actual Execution Status"; each entry is tied to a hash of the exact code).
  */
-import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { CONTENT_PACKAGES } from '@/content';
 import { exampleHash, type VerificationManifest, type VerificationStatus } from '@/content/verification';
-import { collectCodeExamples, type CodeExample } from '@/db/content/validate';
+import { collectCodeExamples } from '@/db/content/validate';
+import { ROOT, toolVersions, verifyExample, type Outcome, type Result } from './runners';
 
-const ROOT = resolve(__dirname, '../..');
-const LUAU_RUNNER = process.env.LUAU_RUNNER ?? join(ROOT, 'tools/luau-runner/target/release/luau-runner');
-const LUA_RUNNER = join(ROOT, 'tools/code-verification/run-lua54.py');
-
-type Outcome = VerificationStatus | 'tool-missing';
-type Result = { e: CodeExample; outcome: Outcome; detail?: string };
-
-function lupaVersion(): string | null {
-  const r = spawnSync('python3', ['-c', 'import lupa, lupa.lua54 as m, os, re; so=[f for f in os.listdir(os.path.dirname(m.__file__)) if f.startswith("lua54")][0]; d=open(os.path.join(os.path.dirname(m.__file__), so),"rb").read(); v=re.search(rb"Lua 5\\.4\\.\\d+", d); print((v.group().decode() if v else "Lua 5.4") + " (lupa " + lupa.__version__ + ")")'], { encoding: 'utf-8' });
-  return r.status === 0 ? r.stdout.trim() : null;
-}
-
-function luauVersion(): string | null {
-  if (!existsSync(LUAU_RUNNER)) return null;
-  const lock = readFileSync(join(ROOT, 'tools/luau-runner/Cargo.lock'), 'utf-8');
-  const v = /name = "luau0-src"\nversion = "[^"+]*\+luau(\d+)"/.exec(lock)?.[1];
-  return `Luau 0.${v ?? '?'} (luau-runner, mlua)`;
-}
-
-/** First line of an interpreter error, without the runner's "runtime error: " / "syntax error: " prefix. */
-export function firstErrorLine(stderr: string): string {
-  return (stderr.trim().split('\n')[0] ?? '').replace(/^(runtime|syntax) error: /, '').trim();
-}
-
-function run(e: CodeExample, checkOnly = false) {
-  const dir = mkdtempSync(join(tmpdir(), 'qhaze-code-'));
-  const file = join(dir, e.language === 'lua' ? 'example.lua' : 'example.luau');
-  writeFileSync(file, e.code);
-  const r = e.runtime === 'lua54'
-    ? spawnSync('python3', [LUA_RUNNER, file], { input: e.input ?? '', encoding: 'utf-8', timeout: 20_000 })
-    : spawnSync(LUAU_RUNNER, checkOnly ? ['--check', file] : [file], { encoding: 'utf-8', timeout: 20_000 });
-  return { stdout: (r.stdout ?? '').replace(/\r\n/g, '\n').replace(/\n$/, ''), stderr: r.stderr ?? '', status: r.status };
-}
+export { firstErrorLine } from './runners';
 
 const examples = CONTENT_PACKAGES.flatMap((pkg) => collectCodeExamples(pkg));
-const tools = { lua54: lupaVersion(), luau: luauVersion() };
+const tools = toolVersions();
 const results: Result[] = [];
-
-function verify(e: CodeExample): Result {
-  const tool = e.runtime === 'lua54' ? tools.lua54 : tools.luau;
-  if (!tool) return { e, outcome: 'tool-missing' };
-  if (e.runtime === 'roblox') {
-    const r = run(e, true);
-    if (e.expectedError !== undefined) {
-      // A Roblox debug variant either compiles (its error happens in Studio) or is a syntax error we can check.
-      if (r.status === 0) return { e, outcome: 'compiled' };
-      return firstErrorLine(r.stderr) === e.expectedError ? { e, outcome: 'error-matched' } : { e, outcome: 'failed', detail: `compile error ${JSON.stringify(firstErrorLine(r.stderr))}` };
-    }
-    return r.status === 0 ? { e, outcome: 'compiled' } : { e, outcome: 'failed', detail: `does not compile: ${firstErrorLine(r.stderr)}` };
-  }
-  const r = run(e);
-  if (e.expectedError !== undefined) {
-    const got = firstErrorLine(r.stderr);
-    return r.status !== 0 && got === e.expectedError ? { e, outcome: 'error-matched' } : { e, outcome: 'failed', detail: `exit ${r.status}; error ${JSON.stringify(got)}` };
-  }
-  return r.status === 0 && r.stdout === (e.expectedOutput ?? '')
-    ? { e, outcome: 'executed' }
-    : { e, outcome: 'failed', detail: `exit ${r.status}; stdout ${JSON.stringify(r.stdout)}; stderr ${JSON.stringify(firstErrorLine(r.stderr))}` };
-}
+const verify = (e: Parameters<typeof verifyExample>[0]) => verifyExample(e, tools);
 
 const LABEL: Record<Outcome, string> = {
   executed: '✅ executed, output matched',
@@ -105,7 +53,7 @@ describe('course-material code examples', () => {
     const date = new Date().toISOString().slice(0, 10);
     const manifest: VerificationManifest = {
       generatedAt: date,
-      tools: { lua54: tools.lua54 ?? 'missing', luau: tools.luau ?? 'missing' },
+      tools: { lua54: tools.lua54 ?? 'missing', luau: tools.luau ?? 'missing', python: tools.python ?? 'missing' },
       results: Object.fromEntries(
         results.filter((r) => r.outcome !== 'tool-missing').map((r) => [r.e.key, { hash: exampleHash(r.e), status: r.outcome as VerificationStatus }]),
       ),
@@ -114,13 +62,14 @@ describe('course-material code examples', () => {
     const lines = [
       '# Code example verification',
       '',
-      `Generated by \`npm run verify:code\` on ${date} with ${tools.lua54 ?? 'Lua 5.4: MISSING'} and ${tools.luau ?? 'Luau: MISSING'}.`,
+      `Generated by \`npm run verify:code\` on ${date} with ${tools.lua54 ?? 'Lua 5.4: MISSING'}, ${tools.luau ?? 'Luau: MISSING'} and ${tools.python ?? 'Python 3.13: MISSING'}.`,
       '',
       '| Runtime | How it is verified |',
       '|---|---|',
       '| `lua54` | Executed with the official Lua 5.4 C interpreter (via `lupa`), with the example\'s `input` on stdin; stdout must match exactly |',
       '| `luau` | Executed with the official Luau VM (`tools/luau-runner`); stdout must match exactly. **The type checker (luau-analyze) is not run** |',
       '| `roblox` | **Not executed.** Compiled with the Luau compiler (`luau-runner --check`) to prove the syntax; behaviour in Roblox Studio is described, not verified |',
+      '| `python` | Executed with CPython 3.13 (`tools/code-verification/run-python.py`) in its own temporary directory, with the example\'s `input` on stdin and `PYTHONHASHSEED=0`; stdout must match exactly. Errors are reported as `example.py:<line>: <Exception>: <message>` |',
       '| debug variants | Executed and must fail with exactly the documented first error line (Roblox variants: compiled only) |',
       '',
       `**Summary:** ${results.length} units · ${count('executed')} executed · ${count('error-matched')} debug variants failed as documented · ${count('compiled')} Roblox units compiled only · ${count('failed')} failed · ${count('tool-missing')} not verified (tool missing)`,

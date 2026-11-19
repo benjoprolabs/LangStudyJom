@@ -10,7 +10,8 @@
 import { it } from 'vitest';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { CONTENT_PACKAGES } from '@/content';
-import { validateContentPackage } from '@/db/content/validate';
+import { moduleCodeUnits } from '@/db/content/module';
+import { validateContentPackage, validatePackageModules } from '@/db/content/validate';
 import type { LectureContentDef } from '@/db/content/types';
 import { CURRICULUM_PACKAGES } from '@/db/seed/packages';
 import type { AcademyDef, CourseDef, FacultyDef, ProgrammeDef } from '@/db/seed/types';
@@ -184,7 +185,18 @@ it('audits the whole university', () => {
   // description; content packages address lectures only. So no module has, or can yet hold, its own materials.
   const MODULE_SECTIONS = ['overview and introduction', 'learning objectives', 'detailed theory', 'learning notes', 'key concepts and principles',
     'terminology', 'rules, syntax or formulas', 'examples and demonstrations', 'real-world applications', 'module summary', 'references'];
-  const moduleContentSupported = CONTENT_PACKAGES.some((p) => 'modules' in p);
+  const moduleContentSupported = CONTENT_PACKAGES.some((p) => (p.modules?.length ?? 0) > 0);
+  // Module materials delivered by packages: judged by the package validator (strict) and the verification manifest.
+  const packagedModules = new Map(CONTENT_PACKAGES.flatMap((p) => (p.modules ?? []).map((m) => [`${m.courseCode} M${m.module}`, { pkg: p, def: m }] as const)));
+  const moduleStatusOf = (courseCode: string, order: number): { status: Status; missing: string } => {
+    const entry = packagedModules.get(`${courseCode} M${order}`);
+    if (!entry) return { status: 'STRUCTURE ONLY', missing: `ALL ${MODULE_SECTIONS.length}: ${MODULE_SECTIONS.join('; ')}` };
+    const problems = validatePackageModules({ ...entry.pkg, modules: [entry.def] }, new Set(entry.pkg.glossary.map((g) => g.key)), new Map(entry.pkg.glossary.map((g) => [g.key, g.scope])));
+    if (problems.length) return { status: 'PARTIAL', missing: problems.join('; ') };
+    const units = moduleCodeUnits(courseCode, order, entry.def.sections);
+    const verified = units.every((u) => verification[u.key]?.status === 'executed');
+    return { status: verified ? 'COMPLETE' : 'NEEDS VERIFICATION', missing: verified ? 'none' : 'module code not verified by execution' };
+  };
   const moduleContent: (string | number)[][] = [];
   for (const { programme, course } of allCourses) {
     const prog = programmes.get(programme)!;
@@ -193,7 +205,7 @@ it('audits the whole university', () => {
     course.modules.forEach((m, mi) => {
       const t = tally(lectures.filter((l) => l.course === course.code && l.module === mi + 1));
       moduleContent.push([`${faculty.code} ${en(faculty.name)}`, `${academy.code} ${en(academy.name)}`, programme, course.code, `${course.code}-M${mi + 1}`, en(m.title),
-        'STRUCTURE ONLY', rollStatus(t), `ALL ${MODULE_SECTIONS.length}: ${MODULE_SECTIONS.join('; ')}`, `${written(t)}/${t.total}`]);
+        moduleStatusOf(course.code, mi + 1).status, rollStatus(t), moduleStatusOf(course.code, mi + 1).missing, `${written(t)}/${t.total}`]);
     });
   }
   writeFileSync(`${OUT}/module-content.csv`, csv([['faculty', 'academy', 'programme', 'course', 'module_id', 'module_title_en', 'module_content_status', 'lecture_content_status', 'missing_module_sections', 'lectures_written'], ...moduleContent]));
@@ -219,7 +231,7 @@ it('audits the whole university', () => {
         const rows = lectures.filter((l) => l.course === course.code && l.module === mi + 1);
         const t = tally(rows);
         return [semester, course.code, `${course.code}-M${mi + 1}`, en(m.title), m.title.ms, rows.map((r) => `${course.code}-${r.module}.${r.lecture}`).join(' '),
-          'STRUCTURE ONLY', rollStatus(t), `${written(t)}/${t.total}`];
+          moduleStatusOf(course.code, mi + 1).status, rollStatus(t), `${written(t)}/${t.total}`];
       })),
     ]));
     writeFileSync(`${base}-lectures.csv`, csv([

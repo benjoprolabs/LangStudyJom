@@ -10,7 +10,7 @@ import { useI18n } from '@/i18n/I18nProvider';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
-import { VERIFICATION } from '@/content/verification';
+import { VERIFICATION, verificationTool } from '@/content/verification';
 import { CodeBlock, CodeScopeProvider, GlossaryProvider, RichText } from './ContentRenderer';
 import { loadGlossary } from './data';
 import type { ExportLabels } from './markdown';
@@ -157,7 +157,7 @@ export function useExportLabels(): ExportLabels {
     externalLink: t('learning.reader.externalLink'),
     notes: t('learning.reader.notes'),
     status: (runtime, status) => {
-      const tool = runtime === 'lua54' ? VERIFICATION.tools.lua54 : VERIFICATION.tools.luau;
+      const tool = verificationTool(runtime);
       const date = VERIFICATION.generatedAt;
       if (status === 'executed') return t('learning.code.status.executed', { tool, date });
       if (status === 'error-matched') return t('learning.code.status.errorMatched', { tool, date });

@@ -232,6 +232,24 @@ async function main() {
     await page.getByTestId('module-empty').waitFor();
     log('Desktop: content kept after a browser restart; "Modul seterusnya" opens Module 2 (empty state)');
 
+    // ── Python modules (PY-0): Python code is highlighted and its expected output shown (test content) ──
+    const py101 = courses.find((c) => c.code === 'PY101');
+    const pyModule = modules.find((m) => m.courseId === py101.id && m.order === 1);
+    await page.goto(`${base}#/module?module=${pyModule.id}`);
+    await page.getByTestId('module-empty').waitFor();
+    await page.getByTestId('module-edit').click();
+    const pyExample = '[KANDUNGAN UJIAN] Contoh Python.\n\n```python\ndef purata(nombor):  # ujian\n    return sum(nombor) / len(nombor)\nprint(purata([2, 4]))\n```\n\n```output\n3.0\n```';
+    await page.getByLabel('Contoh Khusus Subjek — Bahasa Melayu').fill(pyExample);
+    await page.getByTestId('module-save').click();
+    const pyFigure = page.getByTestId('module-content').locator('[data-module-code]').first();
+    await pyFigure.waitFor();
+    const tokenKinds = await pyFigure.locator('pre [class^="tok-"]').evaluateAll((els) => [...new Set(els.map((e) => e.className))].sort());
+    assert.deepEqual(tokenKinds, ['tok-builtin', 'tok-comment', 'tok-keyword', 'tok-number']);
+    assert.equal(await pyFigure.getAttribute('data-status'), 'unverified', 'code typed in the editor is never shown as verified');
+    await pyFigure.getByText('3.0', { exact: true }).waitFor();
+    if (SHOTS) await page.screenshot({ path: join(SHOTS, '6-python-module-desktop.png') });
+    log('PY101 Module 1: Python code highlighted (keyword, builtin, comment, number), expected output shown, labelled not verified');
+
     assert.deepEqual(consoleErrors, []);
     log('No console errors');
     await context.close();

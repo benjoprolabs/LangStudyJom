@@ -14,7 +14,8 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Input, Select } from '@/components/ui/Field';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { GlossaryProvider, RichText, useGlossary } from './ContentRenderer';
-import { disciplineOfFaculty, evaluateModule, hasModuleContent, lectureCorpus, type Discipline } from '@/db/content/module';
+import { disciplineOfFaculty, evaluateModule, hasModuleContent, lectureCorpus, moduleCodeUnits, type Discipline } from '@/db/content/module';
+import { moduleUnitStatus } from '@/content/verification';
 import type { Lecture, Module } from '@/db/types';
 import { loadCourseBundle } from './data';
 import { MODULE_STATUS_TONE } from './ModulePage';
@@ -136,7 +137,7 @@ export function LibraryPage() {
                                       <Link to={`/module?module=${m.id}`} className="text-sm font-semibold text-fg hover:text-accent hover:underline" data-testid={`module-link-${c.code}-${m.order}`}>
                                         {t('learning.reader.module', { n: m.order })} · {l(m.title)}
                                       </Link>
-                                      <LibraryModuleStatus module={m} courseLectures={lectures} courseModules={modules} discipline={discipline} />
+                                      <LibraryModuleStatus module={m} courseCode={c.code} courseLectures={lectures} courseModules={modules} discipline={discipline} />
                                       <CourseActions courseId={c.id} code={c.code} moduleId={m.id} moduleOrder={m.order} />
                                     </div>
                                     <ol className="mt-1 space-y-1">
@@ -251,15 +252,16 @@ export function defaultProgrammeId(programmes: { id: string; code: string }[], w
 }
 
 /** The module's own content status (same rule as the module page, including the no-copying check). */
-function LibraryModuleStatus({ module, courseLectures, courseModules, discipline }: { module: Module; courseLectures: Lecture[]; courseModules: Module[]; discipline: Discipline }) {
+function LibraryModuleStatus({ module, courseCode, courseLectures, courseModules, discipline }: { module: Module; courseCode?: string; courseLectures: Lecture[]; courseModules: Module[]; discipline: Discipline }) {
   const { t } = useI18n();
   const { terms } = useGlossary();
   const status = useMemo(() => {
     if (!hasModuleContent(module.sections)) return 'not_written' as const;
     const order = new Map(courseModules.map((m) => [m.id, m.order]));
     const corpus = lectureCorpus(courseLectures.map((x) => ({ order: x.order, module: order.get(x.moduleId), sections: x.sections })));
-    return evaluateModule(module.sections, { discipline, glossaryKeys: terms.size ? new Set(terms.keys()) : undefined, corpus }).status;
-  }, [module.sections, courseLectures, courseModules, discipline, terms]);
+    const units = courseCode ? moduleCodeUnits(courseCode, module.order, module.sections) : undefined;
+    return evaluateModule(module.sections, { discipline, glossaryKeys: terms.size ? new Set(terms.keys()) : undefined, corpus, units, isVerified: (u) => moduleUnitStatus(u) === 'executed' }).status;
+  }, [module.sections, module.order, courseCode, courseLectures, courseModules, discipline, terms]);
   return (
     <span data-testid="module-status-badge" data-status={status}>
       <Badge tone={MODULE_STATUS_TONE[status]}>{t('learning.module.statusLabel')}: {t(`learning.module.status.${status}` as 'learning.module.status.complete')}</Badge>

@@ -113,7 +113,7 @@ function PrintedModule({ module, courseCode, breakBefore }: { module: Module; co
       <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-primary">{t('learning.module.layerTitle')}</p>
       <div className="mt-4">
         {hasModuleContent(module.sections) ? (
-          <ModuleMaterials sections={module.sections} level={3} idPrefix={`pm-${module.order}`} />
+          <ModuleMaterials sections={module.sections} level={3} idPrefix={`pm-${module.order}`} courseCode={courseCode} moduleOrder={module.order} />
         ) : (
           <p className="text-sm italic text-muted" data-testid="print-module-empty">{t('learning.module.emptyTitle')}</p>
         )}

@@ -1,8 +1,9 @@
 {
- "generatedAt": "2026-11-18",
+ "generatedAt": "2026-11-19",
  "tools": {
   "lua54": "Lua 5.4.8 (lupa 2.8)",
-  "luau": "Luau 0.663 (luau-runner, mlua)"
+  "luau": "Luau 0.663 (luau-runner, mlua)",
+  "python": "Python 3.13.18 (CPython)"
  },
  "results": {
   "LUA102 1.1#demo-basic": {

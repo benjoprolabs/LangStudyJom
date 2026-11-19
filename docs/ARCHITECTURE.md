@@ -117,6 +117,7 @@ the install) and installed in one `guardedWrite` after a `pre-seed` recovery poi
 | Rendering | `ContentRenderer.tsx`: blocks, highlighted code, glossary links (`GlossaryProvider`) |
 | Exports | `markdown.ts` (lecture/module/course Markdown, code files) + `lib/zip.ts` |
 | Module content | `db/content/module.ts` (text format, validation, duplication check, status), `saveModuleContent` in `repositories/modules.ts`, `features/learning/ModulePage.tsx` + `module-view.tsx`; stored as `Module.sections` (not indexed) |
+| Python support | runtime `python` (`CodeLanguage`), pathway `python` for `PY` courses, `GlossaryScope` `python`; verifier `tools/code-verification/run-python.py` + `runners.ts` (CPython 3.13 only); `highlight(code, 'python')`; module materials in `ContentPackage.modules`, installed by `db/content/install.ts` (`contentSource` package/local) |
 
 **Print/PDF.** `/print?lecture=|module=|course=` renders outside the app shell. `@page` sets A4, margins,
 page counters and branding; `@media print` forces the light tokens and hides `[data-print-hide]` (toolbars,
