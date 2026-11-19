@@ -178,6 +178,25 @@ it('audits the whole university', () => {
     courseRows.push([programme, semester, course.code, en(course.title), course.modules.length, rollStatus(t), t.total, t.COMPLETE, t['NEEDS VERIFICATION'], t.PARTIAL, t['STRUCTURE ONLY'], pct(written(t), t.total), course.description.en ? 'yes' : 'no', course.objectives.length, course.outcomes.length, course.references.length, course.prerequisites.length, 'none (Practice Center not built)']);
   }
   writeFileSync(`${OUT}/modules.csv`, csv([['programme', 'semester', 'course', 'module', 'title_en', 'status', 'lectures', 'complete', 'needs_verification', 'partial', 'structure_only'], ...moduleRows]));
+
+  // ─── Module-level content (separate from lecture content) ───
+  // The curriculum format (ModuleDef) carries only a title and lectures; the installer writes an empty module
+  // description; content packages address lectures only. So no module has, or can yet hold, its own materials.
+  const MODULE_SECTIONS = ['overview and introduction', 'learning objectives', 'detailed theory', 'learning notes', 'key concepts and principles',
+    'terminology', 'rules, syntax or formulas', 'examples and demonstrations', 'real-world applications', 'module summary', 'references'];
+  const moduleContentSupported = CONTENT_PACKAGES.some((p) => 'modules' in p);
+  const moduleContent: (string | number)[][] = [];
+  for (const { programme, course } of allCourses) {
+    const prog = programmes.get(programme)!;
+    const academy = academies.get(prog.academyCode)!;
+    const faculty = faculties.get(academy.facultyCode)!;
+    course.modules.forEach((m, mi) => {
+      const t = tally(lectures.filter((l) => l.course === course.code && l.module === mi + 1));
+      moduleContent.push([`${faculty.code} ${en(faculty.name)}`, `${academy.code} ${en(academy.name)}`, programme, course.code, `${course.code}-M${mi + 1}`, en(m.title),
+        'STRUCTURE ONLY', rollStatus(t), `ALL ${MODULE_SECTIONS.length}: ${MODULE_SECTIONS.join('; ')}`, `${written(t)}/${t.total}`]);
+    });
+  }
+  writeFileSync(`${OUT}/module-content.csv`, csv([['faculty', 'academy', 'programme', 'course', 'module_id', 'module_title_en', 'module_content_status', 'lecture_content_status', 'missing_module_sections', 'lectures_written'], ...moduleContent]));
   writeFileSync(`${OUT}/courses.csv`, csv([['programme', 'semester', 'course', 'title_en', 'modules', 'lecture_material_status', 'lectures', 'complete', 'needs_verification', 'partial', 'structure_only', 'lectures_written', 'course_description', 'course_objectives', 'course_outcomes', 'course_references', 'prerequisites', 'exercises_and_assessments'], ...courseRows]));
 
   // SUMMARY.md
@@ -209,6 +228,11 @@ it('audits the whole university', () => {
   for (const { programme, semester, course } of allCourses) md.push(row(`${programme} S${semester} ${course.code} ${en(course.title)}`, tally(lectures.filter((l) => l.course === course.code))));
   md.push('', '## Modules', '', '| Module | Status | Lectures | Complete | Needs verification | Partial | Structure only |', '|---|---|---|---|---|---|---|');
   for (const r of moduleRows) md.push(`| ${r[2]} M${r[3]} ${r[4]} | ${r[5]} | ${r[6]} | ${r[7]} | ${r[8]} | ${r[9]} | ${r[10]} |`);
+  md.push('', '## Module-level content', '',
+    `Module-content feature: ${moduleContentSupported ? 'present' : '**absent**: modules carry a title and a lecture list only; no format, storage, page or export exists for module materials'}.`, '',
+    '| Module content status | Modules |', '|---|---|',
+    ...STATUSES.map((st) => `| ${st} | ${moduleContent.filter((r) => r[6] === st).length} |`), '',
+    'Per module (Faculty, Academy, Programme, Course, Module ID, title, module content status, lecture content status, missing sections): `module-content.csv`.');
   md.push('', '## Written lectures in detail', '', '| Lecture | Status | Sections | Code units (executed / error matched / compiled only / unverified) | Words (ms+en) |', '|---|---|---|---|---|');
   for (const l of lectures.filter((x) => x.status !== 'STRUCTURE ONLY'))
     md.push(`| ${l.course} ${l.module}.${l.lecture} ${l.title} | ${l.status} | ${l.sections}/24 | ${l.executed} / ${l.errorMatched} / ${l.compiledOnly} / ${l.unverified} | ${l.words} |`);
