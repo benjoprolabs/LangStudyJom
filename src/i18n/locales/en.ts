@@ -647,6 +647,7 @@ export const en: Messages = {
       example: 'Code example',
       related: 'Related concepts',
       lectures: 'Related lectures',
+      notWritten: 'not written yet',
       references: 'Further reading',
       bookmark: 'Bookmark this concept',
       bookmarked: 'Concept bookmarked',

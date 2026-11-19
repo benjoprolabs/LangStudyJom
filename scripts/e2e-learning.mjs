@@ -99,7 +99,7 @@ async function main() {
     await contentCard.getByRole('button', { name: 'Pasang pakej' }).click();
     await page.getByText('Bahan kursus dipasang: 177 item ditulis.').waitFor();
     await contentCard.getByText('Dipasang — semua kandungan sudah terkini.').waitFor();
-    log('Course materials 1.8.0 installed (97 lectures: LUA101–LUA104 and LUAU101–LUAU104 ×12 each, LUAU203 1.1; 80 glossary terms); package then reports up to date');
+    log('Course materials 1.8.1 installed (97 lectures: LUA101–LUA104 and LUAU101–LUAU104 ×12 each, LUAU203 1.1; 80 glossary terms); package then reports up to date');
     await page.getByRole('dialog').getByRole('button', { name: 'Tutup' }).first().click();
 
     const programmes = await readStore(page, 'programmes');
@@ -466,7 +466,7 @@ async function main() {
     const doc = page.getByTestId('print-doc');
     await doc.getByText('QHAZE TECH UNIVERSITY').waitFor();
     assert.equal(await doc.locator('section h3').count(), 24);
-    await doc.getByText(/Versi kandungan 1\.8\.0/).waitFor();
+    await doc.getByText(/Versi kandungan 1\.8\.1/).waitFor();
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.getByRole('button', { name: 'Cetak / Simpan sebagai PDF' }).isVisible(), false, 'toolbar hidden in print');
     const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

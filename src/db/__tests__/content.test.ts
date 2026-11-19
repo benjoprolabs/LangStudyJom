@@ -5,7 +5,8 @@ import { GLOSSARY } from '@/content/glossary';
 import { VERIFICATION, verificationOf } from '@/content/verification';
 import { LUA102_1_1 } from '@/content/lectures/lua102-1-1';
 import { ContentInstallError, installContentPackage, planContentInstall } from '@/db/content/install';
-import { inlineToPlain, parseInline } from '@/db/content/inline';
+import { flattenInline, inlineToPlain, parseInline } from '@/db/content/inline';
+import type { ContentBlock } from '@/db/types';
 import type { ContentPackage } from '@/db/content/types';
 import { collectCodeExamples, validateContentPackage } from '@/db/content/validate';
 import { checkDatabaseIntegrity, dumpTables } from '@/db/integrity';
@@ -76,6 +77,38 @@ describe('content package', () => {
     expect(parseInline('Use **local** and `print`, see [[scope|skop]] and [docs](https://www.lua.org/)').map((t) => t.kind)).toEqual([
       'text', 'bold', 'text', 'code', 'text', 'term', 'text', 'link',
     ]);
+  });
+
+  it('glossary lecture links point to written lectures, unless no written lecture teaches the term yet', () => {
+    const written = CONTENT_PACKAGES.flatMap((p) => p.lectures);
+    const writtenKeys = new Set(written.map((l) => `${l.courseCode} ${l.module}.${l.lecture}`));
+    const texts = (b: ContentBlock): string[] =>
+      (b.type === 'paragraph' ? [b.text.ms, b.text.en]
+      : b.type === 'list' ? b.items.flatMap((i) => [i.ms, i.en])
+      : b.type === 'callout' ? [b.text.ms, b.text.en]
+      : b.type === 'explain' ? b.items.flatMap((i) => [i.text.ms, i.text.en])
+      : []).map((t) => t ?? '');
+    const taughtIn = (key: string) =>
+      written.filter((l) => {
+        const blocks = l.sections.flatMap((s) => s.blocks);
+        return blocks.some((b) => b.type === 'terms' && b.keys.includes(key)) ||
+          blocks.flatMap(texts).some((t) => flattenInline(parseInline(t)).some((k) => k.kind === 'term' && k.key === key));
+      });
+    const stale: string[] = [];
+    for (const g of GLOSSARY) {
+      const unwritten = g.lectures.filter((r) => !writtenKeys.has(`${r.courseCode} ${r.module}.${r.lecture}`));
+      if (unwritten.length && taughtIn(g.key).length) stale.push(`${g.key} → ${unwritten.map((r) => `${r.courseCode} ${r.module}.${r.lecture}`).join(', ')}`);
+    }
+    expect(stale).toEqual([]);
+  });
+
+  it('inline syntax: glossary links, code and links inside bold text are parsed, not shown raw', () => {
+    const [bold] = parseInline('**[[chunk|Chunk]]:** and');
+    expect(bold).toMatchObject({ kind: 'bold', children: [{ kind: 'term', key: 'chunk', label: 'Chunk' }, { kind: 'text', text: ':' }] });
+    const [code] = parseInline('**always use `local`**');
+    expect(code).toMatchObject({ kind: 'bold', children: [{ kind: 'text', text: 'always use ' }, { kind: 'code', text: 'local' }] });
+    expect(flattenInline(parseInline('**see [[scope]]**')).map((t) => t.kind)).toEqual(['bold', 'text', 'term']);
+    expect(inlineToPlain('**[[chunk|Chunk]]:** unit', () => 'x')).toBe('Chunk: unit');
   });
 });
 

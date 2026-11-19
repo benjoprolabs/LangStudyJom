@@ -79,3 +79,47 @@ describe('install order and repeat installs', () => {
     expect(new Set(keys).size).toBe(keys.length); // no duplicate lecture in any module slot
   }, 120_000);
 });
+
+describe('updating installed course materials (1.8.0 → 1.8.1)', () => {
+  it('re-points glossary links, keeps every lecture text identical, and leaves student data untouched', async () => {
+    const db = await freshDb();
+    const student = await createStudent(db, { fullName: 'Nur Aisyah', preferredName: 'Aisyah' });
+    for (const pkg of CURRICULUM_PACKAGES) await installPackage(db, pkg);
+    // What a device installed before: the same lectures, the old glossary link for `table`, version 1.8.0.
+    const oldGlossary = LUA_LUAU_CONTENT.glossary.map((g) =>
+      g.key === 'table' ? { ...g, lectures: [{ courseCode: 'LUA111', module: 1, lecture: 1 }, { courseCode: 'LUAU104', module: 1, lecture: 1 }] } : g,
+    );
+    await installContentPackage(db, { ...LUA_LUAU_CONTENT, version: '1.8.0', glossary: oldGlossary });
+
+    const course = (await db.courses.where('code').equals('LUA101').first())!;
+    const module = (await db.modules.where('[courseId+order]').equals([course.id, 3]).first())!;
+    const lecture = (await db.lectures.where('[moduleId+order]').equals([module.id, 1]).first())!;
+    await completeLecture(db, student.id, lecture.id);
+    await saveLectureNote(db, student.id, lecture.id, 'Nota', 'Chunk ialah unit kod.');
+    await toggleBookmark(db, student.id, 'lecture', lecture.id);
+    const tableTerm = (await db.glossaryTerms.where('key').equals('table').first())!;
+    await toggleBookmark(db, student.id, 'glossary', tableTerm.id);
+
+    const studentData = async () => ({
+      students: await db.students.toArray(),
+      progress: await db.progress.toArray(),
+      notes: await db.notes.toArray(),
+      bookmarks: await db.bookmarks.toArray(),
+    });
+    const sections = async () => new Map((await db.lectures.toArray()).map((x) => [x.id, JSON.stringify(x.sections)]));
+    const before = await studentData();
+    const sectionsBefore = await sections();
+
+    const plan = await planContentInstall(db, LUA_LUAU_CONTENT);
+    expect(plan.lecturesToWrite).toBe(LUA_LUAU_CONTENT.lectures.length);
+    await installContentPackage(db, LUA_LUAU_CONTENT);
+
+    expect(await studentData()).toEqual(before);
+    expect(await sections()).toEqual(sectionsBefore); // lecture text identical
+    const updated = (await db.glossaryTerms.where('key').equals('table').first())!;
+    expect(updated.id).toBe(tableTerm.id); // same record, so the glossary bookmark still resolves
+    expect(updated.lectures.map((r) => `${r.courseCode} ${r.module}.${r.lecture}`)).toEqual(['LUA102 2.3', 'LUAU104 1.1']);
+    expect(await db.glossaryTerms.count()).toBe(LUA_LUAU_CONTENT.glossary.length);
+  }, 120_000);
+});
+

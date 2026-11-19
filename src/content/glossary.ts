@@ -83,7 +83,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: '1\t2\t3',
     },
     related: ['function', 'scope'],
-    lectures: [{ courseCode: 'LUA201', module: 1, lecture: 1 }, { courseCode: 'LUAU103', module: 4, lecture: 1 }],
+    lectures: [{ courseCode: 'LUA104', module: 4, lecture: 3 }, { courseCode: 'LUAU103', module: 4, lecture: 1 }],
     references: [{ title: 'Programming in Lua (1st ed., Lua 5.0) — Closures', url: 'https://www.lua.org/pil/6.1.html' }],
   },
   {
@@ -101,7 +101,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
     },
     example: { language: 'lua', runtime: 'lua54', code: 'local player = { name = "Aisyah", scores = { 10, 20 } }\nprint(player.name, #player.scores, player.scores[1])', expectedOutput: 'Aisyah\t2\t10' },
     related: ['metatable', 'iterator'],
-    lectures: [{ courseCode: 'LUA111', module: 1, lecture: 1 }, { courseCode: 'LUAU104', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUA102', module: 2, lecture: 3 }, { courseCode: 'LUAU104', module: 1, lecture: 1 }],
     references: [{ title: 'Lua 5.4 Reference Manual §2.1 — Values and Types', url: `${MANUAL}#2.1` }],
   },
   {
@@ -124,7 +124,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: '(4, 6)',
     },
     related: ['table'],
-    lectures: [{ courseCode: 'LUA211', module: 1, lecture: 1 }, { courseCode: 'LUAU114', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU103', module: 2, lecture: 2 }],
     references: [{ title: 'Lua 5.4 Reference Manual §2.4 — Metatables and Metamethods', url: `${MANUAL}#2.4` }],
   },
   {
@@ -147,7 +147,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: '3\n2\n1',
     },
     related: ['closure', 'table'],
-    lectures: [{ courseCode: 'LUA112', module: 2, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU103', module: 2, lecture: 2 }, { courseCode: 'LUAU104', module: 2, lecture: 2 }],
     references: [{ title: 'Lua 5.4 Reference Manual §3.3.5 — For Statement', url: `${MANUAL}#3.3.5` }],
   },
   {
@@ -170,7 +170,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: 'true\titem 1\ntrue\titem 2\ntrue\titem 3\ntrue\tdone',
     },
     related: ['function'],
-    lectures: [{ courseCode: 'LUA301', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUA102', module: 2, lecture: 3 }],
     references: [{ title: 'Lua 5.4 Reference Manual §2.6 — Coroutines', url: `${MANUAL}#2.6` }],
   },
   {
@@ -193,7 +193,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: 'Hello, Aisyah\ntrue',
     },
     related: ['table', 'function'],
-    lectures: [{ courseCode: 'LUA212', module: 1, lecture: 1 }, { courseCode: 'LUAU113', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU101', module: 2, lecture: 3 }, { courseCode: 'LUAU104', module: 4, lecture: 2 }],
     references: [{ title: 'Lua 5.4 Reference Manual §6.3 — Modules', url: `${MANUAL}#6.3` }],
   },
   {
@@ -216,7 +216,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: 'Aisyah (level 3)',
     },
     related: ['variable', 'function'],
-    lectures: [{ courseCode: 'LUAU111', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU101', module: 1, lecture: 2 }, { courseCode: 'LUAU103', module: 3, lecture: 1 }],
     references: [{ title: 'Luau — Type checking', url: 'https://luau.org/typecheck' }],
   },
   {
@@ -239,7 +239,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: 'Workspace.Platform',
     },
     related: ['event', 'replication'],
-    lectures: [{ courseCode: 'LUAU201', module: 1, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU101', module: 1, lecture: 3 }, { courseCode: 'LUAU101', module: 2, lecture: 2 }],
     references: [{ title: 'Instance (Engine API reference)', url: `${DOCS}/reference/engine/classes/Instance` }],
   },
   {
@@ -285,7 +285,7 @@ export const GLOSSARY: GlossaryTermDef[] = [
       expectedOutput: 'Stopped after 2 seconds',
     },
     related: ['event', 'closure'],
-    lectures: [{ courseCode: 'LUAU203', module: 2, lecture: 1 }],
+    lectures: [{ courseCode: 'LUAU203', module: 1, lecture: 1 }],
     references: [{ title: 'RBXScriptConnection (Engine API reference)', url: `${DOCS}/reference/engine/datatypes/RBXScriptConnection` }],
   },
   {

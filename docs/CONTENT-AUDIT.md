@@ -57,6 +57,16 @@ Point 15 is the one systematic gap: no course in the university has graded exerc
 because the Practice Center (Phase 5) does not exist yet. The tables below therefore report **lecture materials**;
 every course's exercises-and-assessments component is **not started**.
 
+## Update after the P0 fixes (0.5.9, course materials 1.8.1)
+
+- **Fixed:** problem 1 (bold text with glossary links or inline code) in the Lecture Room, PDF view and Markdown
+  exports; all 97 written lectures now export cleanly in both languages (194 of 194).
+- **Fixed:** problem 2. The 11 links of 9 terms that pointed to unwritten lectures although written lectures teach the
+  term now point to those written lectures. The 3 Roblox terms not taught yet (remote-event, datastore, replication)
+  keep their planned lecture, shown as "not written yet" rather than as a link.
+- **Unchanged by design:** the 7 Roblox lectures stay NEEDS VERIFICATION until tested in Roblox Studio. Lecture
+  statuses, counts and the roadmap below are otherwise unchanged.
+
 ## A. Totals
 
 | Faculties | Academies | Programmes | Semesters | Courses | Modules | Lectures | Glossary terms |

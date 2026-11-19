@@ -124,12 +124,17 @@ it('audits the whole university', () => {
     for (const [t, n] of seen) if (n > 1) dupTitlesInCourse.push(`${course.code}: "${t}" ×${n}`);
   }
   const glossaryProblems: string[] = [];
+  const glossaryPlanned: string[] = [];
   for (const g of glossary) {
     for (const r of g.related) if (!glossaryKeys.has(r)) glossaryProblems.push(`${g.key}: related term '${r}' does not exist`);
     for (const ref of g.lectures) {
       const k = `${ref.courseCode} ${ref.module}.${ref.lecture}`;
       if (!lectureKeys.has(k)) glossaryProblems.push(`${g.key}: points to missing lecture ${k}`);
-      else if (!content.has(k)) glossaryProblems.push(`${g.key}: points to structure-only lecture ${k}`);
+      else if (!content.has(k)) {
+        const taught = [...content.values()].some((l) => termRefs(l.sections.flatMap((x) => x.blocks)).includes(g.key));
+        if (taught) glossaryProblems.push(`${g.key}: points to structure-only lecture ${k} although written lectures teach it`);
+        else glossaryPlanned.push(`${g.key} → ${k}`);
+      }
     }
   }
   const glossaryDupes = glossary.map((g) => g.key).filter((k, i, a) => a.indexOf(k) !== i);
@@ -214,7 +219,8 @@ it('audits the whole university', () => {
     `- Repeated lecture titles inside one course: ${dupTitlesInCourse.length ? dupTitlesInCourse.join('; ') : 'none'}`,
     `- Prerequisites pointing to a missing course: ${prereqProblems.length ? prereqProblems.join(', ') : 'none'}`,
     `- Glossary keys defined twice: ${glossaryDupes.length ? glossaryDupes.join(', ') : 'none'}`,
-    `- Glossary references (related terms, lectures): ${glossaryProblems.length ? glossaryProblems.join('; ') : 'all resolve to existing terms and written lectures'}`,
+    `- Glossary references (related terms, lectures): ${glossaryProblems.length ? glossaryProblems.join('; ') : 'all resolve to existing terms; every lecture link of a term taught in written lectures points to a written lecture'}`,
+    `- Glossary references to planned lectures (term not taught in any written lecture yet; shown as "not written yet", never as a link): ${glossaryPlanned.length ? glossaryPlanned.join(', ') : 'none'}`,
     `- Problems inside written lectures (validator, glossary links): ${lectureProblems.length ? lectureProblems.join('; ') : 'none'}`,
     `- Verification records without a written lecture: ${unitsWithoutLecture.length ? unitsWithoutLecture.join(', ') : 'none'}`,
     `- Code units without a verification record: ${lectures.reduce((n, l) => n + l.unverified, 0)}`,

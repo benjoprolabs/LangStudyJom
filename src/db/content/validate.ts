@@ -1,5 +1,5 @@
 import { AUTHORED_SECTIONS, OPTIONAL_SECTIONS, type CodeRuntime, type ContentBlock, type LectureSection, type LocalizedText } from '../types';
-import { parseInline } from './inline';
+import { flattenInline, parseInline } from './inline';
 import { pathwayOf, type ContentPackage, type GlossaryTermDef } from './types';
 
 /**
@@ -47,7 +47,7 @@ export function validateLectureSections(sections: LectureSection[], courseCode: 
     if (!t?.ms?.trim()) errors.push(where(`${w}: Malay text missing`));
     if (!t?.en?.trim()) errors.push(where(`${w}: English text missing`));
     for (const lang of ['ms', 'en'] as const) {
-      for (const token of parseInline(t?.[lang] ?? '')) {
+      for (const token of flattenInline(parseInline(t?.[lang] ?? ''))) {
         if (token.kind === 'term') checkTerm(w, token.key);
         if (token.kind === 'link' && !token.url.startsWith('https://')) errors.push(where(`${w}: external link must use https (${token.url})`));
       }

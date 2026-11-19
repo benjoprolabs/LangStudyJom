@@ -117,6 +117,72 @@ async function main() {
     assert.ok((await horizontalOverflow(page)) <= 0);
     log('Library opens on LUA-PROG with LUA101–LUA104 at 12/12; the notice is gone');
 
+    // ── P0: glossary links and inline code inside bold text render properly (Lecture Room and PDF view) ──
+    const AFFECTED = [['LUA101', 2, 3], ['LUA101', 3, 1], ['LUA101', 3, 2], ['LUA101', 3, 3], ['LUA101', 4, 3], ['LUA102', 2, 1], ['LUA102', 2, 3], ['LUA102', 3, 2], ['LUA103', 2, 1], ['LUA103', 4, 1], ['LUAU101', 2, 2], ['LUAU101', 4, 2]];
+    const [allCourses, allModules] = await Promise.all([readStore(page, 'courses'), readStore(page, 'modules')]);
+    const idOf = (code, m, l) => {
+      const c = allCourses.find((x) => x.code === code);
+      const mod = allModules.find((x) => x.courseId === c.id && x.order === m);
+      return lectures.find((x) => x.moduleId === mod.id && x.order === l).id;
+    };
+    // Prose only: Lua code may legitimately contain [[long strings]] and backticks never appear in it.
+    // Text outside code: Lua lectures legitimately show long comments such as `--[[ … ]]` as inline code.
+    const proseOf = (root) =>
+      root.evaluate((el) =>
+        [...el.querySelectorAll('p, li, dd, dt, h2, h3, blockquote')]
+          .filter((n) => !n.closest('pre, figure'))
+          .map((n) => {
+            const copy = n.cloneNode(true);
+            copy.querySelectorAll('code').forEach((c) => c.remove());
+            return copy.textContent;
+          })
+          .join('\n'),
+      );
+    for (const [code, m, l] of AFFECTED) {
+      const id = idOf(code, m, l);
+      await page.goto(`${base}#/lecture-room?lecture=${id}`);
+      const art = page.getByTestId('lecture-article');
+      await art.locator('section[data-section]').nth(23).waitFor();
+      const text = await proseOf(art);
+      assert.ok(!/\[\[[^\]]*\]\]/.test(text), `${code} ${m}.${l}: raw glossary syntax in the Lecture Room`);
+      assert.ok((await art.locator('strong button[data-term]').count()) > 0, `${code} ${m}.${l}: glossary term inside bold text is a clickable term`);
+      await page.goto(`${base}#/print?lecture=${id}`);
+      const doc = page.getByTestId('print-doc');
+      await doc.locator('section h3').nth(23).waitFor();
+      assert.ok(!/\[\[[^\]]*\]\]/.test(await proseOf(doc)), `${code} ${m}.${l}: raw glossary syntax in the PDF view`);
+      assert.ok((await doc.locator('strong').filter({ hasText: /\S/ }).count()) > 0);
+    }
+    await page.goto(`${base}#/lecture-room?lecture=${idOf('LUA101', 3, 1)}`);
+    const chunkTerm = page.getByTestId('lecture-article').locator('strong button[data-term="chunk"]').first();
+    await chunkTerm.click();
+    await page.getByTestId('glossary-panel').waitFor();
+    await page.keyboard.press('Escape');
+    await page.goto(`${base}#/lecture-room?lecture=${idOf('LUAU101', 2, 1)}`);
+    const luauArt = page.getByTestId('lecture-article');
+    await luauArt.locator('section[data-section]').nth(23).waitFor();
+    assert.ok((await luauArt.locator('strong code').count()) > 0, 'inline code inside bold renders as code');
+    assert.ok(!(await proseOf(luauArt)).includes('`'), 'no literal backticks in prose');
+    log('12 affected lectures: no raw [[…]] in the Lecture Room or PDF view; terms inside bold are clickable (LUA101 3.1 "Chunk" opens the glossary); bold inline code renders as code');
+
+    // ── P0: glossary lecture links lead to written lectures; planned ones are not links ──
+    await page.goto(`${base}#/library?programme=${lua.id}`);
+    await page.getByTestId('glossary-list').locator('[data-term="table"]').click();
+    const panel = page.getByTestId('glossary-panel');
+    const tableLink = panel.locator('[data-glossary-lecture="written"]', { hasText: 'LUA102 2.3' });
+    await tableLink.waitFor();
+    assert.equal(await panel.locator('[data-glossary-lecture="planned"]').count(), 0);
+    await tableLink.click();
+    await page.getByTestId('lecture-article').locator('section[data-section]').nth(23).waitFor();
+    assert.equal(await page.getByTestId('incomplete-badge').count(), 0, 'the glossary link opens a written lecture');
+    await page.goto(`${base}#/library?programme=${programmes.find((p) => p.code === 'LUAU-PROG').id}`);
+    await page.getByTestId('glossary-list').locator('[data-term="remote-event"]').click();
+    const planned = page.getByTestId('glossary-panel').locator('[data-glossary-lecture="planned"]');
+    await planned.getByText('LUAU301 1.1').waitFor();
+    await planned.getByText('belum ditulis', { exact: false }).waitFor();
+    assert.equal(await page.getByTestId('glossary-panel').getByRole('link', { name: /LUAU301/ }).count(), 0, 'no link to an unwritten lecture');
+    await page.keyboard.press('Escape');
+    log('Glossary: "table" links to the written lecture LUA102 2.3; "remote-event" shows LUAU301 1.1 as "belum ditulis" without a link');
+
     // ── Student data: unchanged by installs; progress, note and bookmark survive re-checks and a restart ──
     assert.deepEqual((await readStore(page, 'students'))[0], studentBefore, 'student record unchanged by Install all');
     const course = (await readStore(page, 'courses')).find((c) => c.code === 'LUA101');

@@ -37,12 +37,12 @@ function GlossaryPanel({ termKey, terms, onNavigate, onClose }: { termKey: strin
   const term = terms.get(termKey);
   const lectureLinks = useLiveQuery(async () => {
     if (!term) return [];
-    const out: { id: string; label: string }[] = [];
+    const out: { id: string; label: string; written: boolean }[] = [];
     for (const ref of term.lectures) {
       const course = await db.courses.where('code').equals(ref.courseCode).first();
       const mod = course && (await db.modules.where('[courseId+order]').equals([course.id, ref.module]).first());
       const lecture = mod && (await db.lectures.where('[moduleId+order]').equals([mod.id, ref.lecture]).first());
-      if (lecture) out.push({ id: lecture.id, label: `${ref.courseCode} ${ref.module}.${ref.lecture}` });
+      if (lecture) out.push({ id: lecture.id, label: `${ref.courseCode} ${ref.module}.${ref.lecture}`, written: lecture.sections.length > 0 });
     }
     return out;
   }, [term?.id]);
@@ -102,9 +102,17 @@ function GlossaryPanel({ termKey, terms, onNavigate, onClose }: { termKey: strin
                 <ul className="flex flex-wrap gap-2">
                   {lectureLinks.map((link) => (
                     <li key={link.id}>
-                      <Link to={`/lecture-room?lecture=${link.id}`} onClick={onClose} className="rounded border border-border px-2 py-1 font-mono text-xs hover:bg-surface-2">
-                        {link.label}
-                      </Link>
+                      {link.written ? (
+                        <Link to={`/lecture-room?lecture=${link.id}`} onClick={onClose} className="inline-flex min-h-[2rem] items-center rounded border border-border px-2 py-1 font-mono text-xs hover:bg-surface-2" data-glossary-lecture="written">
+                          {link.label}
+                        </Link>
+                      ) : (
+                        // Planned lecture that has no content yet: shown for information, never as a link to an empty page.
+                        <span className="inline-flex min-h-[2rem] items-center gap-1.5 rounded border border-dashed border-border px-2 py-1 text-xs text-muted" data-glossary-lecture="planned">
+                          <span className="font-mono">{link.label}</span>
+                          <span>· {t('learning.glossary.notWritten')}</span>
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>

@@ -649,6 +649,7 @@ export const ms = {
       example: 'Contoh kod',
       related: 'Konsep berkaitan',
       lectures: 'Kuliah berkaitan',
+      notWritten: 'belum ditulis',
       references: 'Bacaan lanjut',
       bookmark: 'Tanda konsep ini',
       bookmarked: 'Konsep ditanda',

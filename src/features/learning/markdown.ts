@@ -1,4 +1,4 @@
-import { parseInline } from '@/db/content/inline';
+import { parseInline, type InlineToken } from '@/db/content/inline';
 import { GENERATED_SECTIONS, type ContentBlock, type GlossaryTerm, type LanguageCode, type Lecture, type LocalizedText, type Note } from '@/db/types';
 import type { CourseBundle, LectureBundle } from './data';
 import { verificationOf, type VerificationStatus } from '@/content/verification';
@@ -33,22 +33,27 @@ export interface ExportLabels {
 const pick = (t: LocalizedText | undefined, lang: LanguageCode) => (t ? (lang === 'en' ? t.en || t.ms : t.ms) : '');
 
 function inline(text: string, glossary: Map<string, GlossaryTerm>): string {
-  return parseInline(text)
-    .map((tok) => {
-      switch (tok.kind) {
-        case 'bold':
-          return `**${tok.text}**`;
-        case 'code':
-          return `\`${tok.text}\``;
-        case 'term':
-          return `**${tok.label ?? glossary.get(tok.key)?.term ?? tok.key}**`;
-        case 'link':
-          return `[${tok.label}](${tok.url})`;
-        default:
-          return tok.text;
-      }
-    })
-    .join('');
+  const md = (tokens: InlineToken[], inBold: boolean): string =>
+    tokens
+      .map((tok) => {
+        switch (tok.kind) {
+          case 'bold':
+            return `**${md(tok.children, true)}**`;
+          case 'code':
+            return `\`${tok.text}\``;
+          case 'term': {
+            // A glossary term is written in bold; inside bold text it is already bold.
+            const label = tok.label ?? glossary.get(tok.key)?.term ?? tok.key;
+            return inBold ? label : `**${label}**`;
+          }
+          case 'link':
+            return `[${tok.label}](${tok.url})`;
+          default:
+            return tok.text;
+        }
+      })
+      .join('');
+  return md(parseInline(text), false);
 }
 
 function block(b: ContentBlock, lang: LanguageCode, glossary: Map<string, GlossaryTerm>, labels: ExportLabels, scope: string): string {

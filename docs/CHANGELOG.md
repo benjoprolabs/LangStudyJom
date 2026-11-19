@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.5.9: P0 fixes from the content audit (course materials 1.8.1)
+
+- **Bold text with glossary links or inline code now renders correctly** in the Lecture Room, the PDF/print view and
+  the Markdown downloads. The shared inline parser treated `**…**` as plain text, so `**[[chunk|Chunk]]:**` was shown
+  literally in 12 written lectures (LUA101 2.3, 3.1, 3.2, 3.3, 4.3; LUA102 2.1, 2.3, 3.2; LUA103 2.1, 4.1; LUAU101
+  2.2, 4.2), and bold inline code showed literal backticks. Bold text is now parsed for code, glossary links and
+  links; terms inside bold are clickable; the Markdown export writes them as bold labels; and the validator now
+  checks glossary links inside bold text (all 32 resolve and respect the Lua/Luau separation). No lecture text
+  changed.
+- **Glossary lecture links:** 11 links in 9 terms (closure, table, metatable, iterator, coroutine, module,
+  type-annotation, instance, connection) pointed to lectures not written yet; they now point to the written lectures
+  that teach the term. The 3 Roblox terms not taught in any written lecture yet (remote-event, datastore,
+  replication) keep their planned lecture, which the glossary panel now shows as "belum ditulis / not written yet"
+  instead of a link to an empty page — for any term, automatically. No glossary term removed.
+- Course materials 1.8.1 (glossary change). Installing it rewrites the 97 lectures with identical text; student
+  progress, notes and bookmarks are stored separately and are not touched.
+- The 7 Roblox lectures stay **NEEDS VERIFICATION** (compiled only, not run in Roblox Studio).
+- Tests: parser test for nested inline syntax; all 97 lectures × 2 languages export without raw glossary syntax; a
+  rule that a glossary term taught in written lectures may not link to an unwritten one (it fails on the old data);
+  e2e opens the 12 affected lectures in the Lecture Room and the PDF view and checks the glossary panel. The content
+  audit now separates stale links from planned references.
+
 ## 0.5.8: Curriculum delivery — clearer package installation (course materials 1.8.0, unchanged)
 
 Found while testing the phone preview: Milestone 1 and 2 install structure only, the lecture content comes from the

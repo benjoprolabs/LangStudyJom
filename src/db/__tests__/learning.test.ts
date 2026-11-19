@@ -141,6 +141,27 @@ describe('course-material exports (Part H)', () => {
     await db.exercises.delete('ex-secret');
   });
 
+  it('every written lecture exports without raw glossary syntax, in both languages (also inside bold text)', async () => {
+    const glossary = await loadGlossary(db);
+    const prose = (md: string) => md.replace(/^```[\s\S]*?^```$/gm, '').replace(/`[^`\n]*`/g, ''); // Lua [[long strings]] are fine in code
+    const problems: string[] = [];
+    for (const def of LUA_LUAU_CONTENT.lectures) {
+      const lecture = await lectureAt(def.courseCode, def.module, def.lecture);
+      const bundle = (await loadLectureBundle(db, lecture.id))!;
+      for (const lang of ['ms', 'en'] as const) {
+        const md = lectureMarkdown(bundle, lang, glossary, labels, meta);
+        const withoutFences = md.replace(/^```[\s\S]*?^```$/gm, '');
+        for (const m of prose(md).matchAll(/.{0,30}\[\[[^\]]*\]\].{0,30}/g)) problems.push(`${def.courseCode} ${def.module}.${def.lecture} ${lang}: ${m[0]}`);
+        // A term inside bold must not produce nested bold markers (****).
+        for (const m of withoutFences.matchAll(/.{0,30}\*\*\*\*.{0,30}/g)) problems.push(`${def.courseCode} ${def.module}.${def.lecture} ${lang}: ${m[0]}`);
+      }
+    }
+    expect(problems).toEqual([]);
+    // The previously affected form renders as bold text with the term's label.
+    const chunk = (await loadLectureBundle(db, (await lectureAt('LUA101', 3, 1)).id))!;
+    expect(lectureMarkdown(chunk, 'en', glossary, labels, meta)).toContain('**Chunk:**');
+  }, 60_000);
+
   it('course and module Markdown include structure-only lectures honestly', async () => {
     // Lua Semester 1 (LUA101–LUA104) is fully written; LUA111 is not written yet (structure only).
     for (const code of ['LUA101', 'LUA102', 'LUA103', 'LUA104']) {

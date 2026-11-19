@@ -2,7 +2,7 @@ import { createContext, useContext, useState, type ReactNode } from 'react';
 import { BookOpenText, Bug, Check, Copy, Download, ExternalLink, Info, KeyRound, Play, ShieldAlert, ShieldCheck, TriangleAlert, X } from 'lucide-react';
 import { VERIFICATION, verificationOf } from '@/content/verification';
 import type { RunOutcome } from '@/lib/lua-runtime';
-import { parseInline } from '@/db/content/inline';
+import { parseInline, type InlineToken } from '@/db/content/inline';
 import type { ContentBlock, GlossaryTerm, LocalizedText } from '@/db/types';
 import { useI18n } from '@/i18n/I18nProvider';
 import { downloadText } from '@/lib/download';
@@ -18,49 +18,47 @@ const GlossaryContext = createContext<GlossaryApi>({ terms: new Map() });
 export const GlossaryProvider = GlossaryContext.Provider;
 export const useGlossary = () => useContext(GlossaryContext);
 
-/** Inline text: **bold**, `code`, [[term]] (Click-to-Learn) and external links. */
+/** Inline text: **bold**, `code`, [[term]] (Click-to-Learn) and external links. Bold text may contain the others. */
 export function RichText({ text }: { text: LocalizedText | string }) {
   const { l, t } = useI18n();
   const { terms, open } = useGlossary();
   const raw = typeof text === 'string' ? text : l(text);
-  return (
-    <>
-      {parseInline(raw).map((tok, i) => {
-        switch (tok.kind) {
-          case 'bold':
-            return <strong key={i} className="font-semibold text-fg">{tok.text}</strong>;
-          case 'code':
-            return <code key={i} className="rounded bg-surface-2 px-1 py-0.5 font-mono text-[0.9em] text-fg">{tok.text}</code>;
-          case 'term': {
-            const term = terms.get(tok.key);
-            const label = tok.label ?? term?.term ?? tok.key;
-            if (!open) return <strong key={i} className="font-semibold text-note">{label}</strong>;
-            return (
-              <button
-                key={i}
-                type="button"
-                onClick={() => open(tok.key)}
-                className="rounded font-semibold text-note underline decoration-note/50 decoration-dotted underline-offset-4 hover:decoration-solid"
-                data-term={tok.key}
-              >
-                {label}
-              </button>
-            );
-          }
-          case 'link':
-            return (
-              <a key={i} href={tok.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-baseline gap-0.5 text-note underline underline-offset-2">
-                {tok.label}
-                <ExternalLink className="h-3 w-3 self-center" aria-hidden />
-                <span className="sr-only"> {t('learning.reader.externalLink')}</span>
-              </a>
-            );
-          default:
-            return <span key={i}>{tok.text}</span>;
+  const render = (tokens: InlineToken[]): ReactNode[] =>
+    tokens.map((tok, i) => {
+      switch (tok.kind) {
+        case 'bold':
+          return <strong key={i} className="font-semibold text-fg">{render(tok.children)}</strong>;
+        case 'code':
+          return <code key={i} className="rounded bg-surface-2 px-1 py-0.5 font-mono text-[0.9em] text-fg">{tok.text}</code>;
+        case 'term': {
+          const term = terms.get(tok.key);
+          const label = tok.label ?? term?.term ?? tok.key;
+          if (!open) return <strong key={i} className="font-semibold text-note">{label}</strong>;
+          return (
+            <button
+              key={i}
+              type="button"
+              onClick={() => open(tok.key)}
+              className="rounded font-semibold text-note underline decoration-note/50 decoration-dotted underline-offset-4 hover:decoration-solid"
+              data-term={tok.key}
+            >
+              {label}
+            </button>
+          );
         }
-      })}
-    </>
-  );
+        case 'link':
+          return (
+            <a key={i} href={tok.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-baseline gap-0.5 text-note underline underline-offset-2">
+              {tok.label}
+              <ExternalLink className="h-3 w-3 self-center" aria-hidden />
+              <span className="sr-only"> {t('learning.reader.externalLink')}</span>
+            </a>
+          );
+        default:
+          return <span key={i}>{tok.text}</span>;
+      }
+    });
+  return <>{render(parseInline(raw))}</>;
 }
 
 /**
