@@ -1,0 +1,373 @@
+semester,course_id,module_id,lecture_id,title_en,minutes,status,authored_sections_present,missing
+1,PY101,PY101-M1,PY101-1.1,"What is a program? Input, process and output",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M1,PY101-1.2,Programming languages: compiled versus interpreted,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M1,PY101-1.3,Why Python? History and application areas,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M2,PY101-2.1,Installing Python and checking the version,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M2,PY101-2.2,The REPL (interactive shell) versus .py scripts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M2,PY101-2.3,Using a code editor and the terminal,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M3,PY101-3.1,"print(), string literals and comments",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M3,PY101-3.2,input() and user interaction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M3,PY101-3.3,Program structure: sequences of statements,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M4,PY101-4.1,Syntax errors and reading tracebacks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M4,PY101-4.2,Common runtime errors,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY101,PY101-M4,PY101-4.3,Debugging strategies for beginners,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M1,PY102-1.1,Variables as names for values,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M1,PY102-1.2,"Assignment, reassignment and multiple assignment",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M1,PY102-1.3,Naming rules and PEP 8,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M2,PY102-2.1,Numbers: int and float,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M2,PY102-2.2,Text: str and escape characters,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M2,PY102-2.3,Logical values: bool and None,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M3,PY102-3.1,"Arithmetic operators: //, % and **",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M3,PY102-3.2,"Comparison and logical operators (and, or, not)",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M3,PY102-3.3,Operator precedence and parentheses,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M4,PY102-4.1,"type(), int(), float() and str()",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M4,PY102-4.2,"Rounding, round() and float precision issues",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY102,PY102-M4,PY102-4.3,Mini project: unit conversion calculator,90,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M1,PY103-1.1,if blocks and indentation in Python,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M1,PY103-1.2,if–elif–else and multi-branch conditions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M1,PY103-1.3,Nested conditions and truthiness,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M2,PY103-2.1,Pseudocode and flowcharts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M2,PY103-2.2,Breaking problems into small steps,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M2,PY103-2.3,Tracing programs by hand,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M3,PY103-3.1,Condition-controlled loops,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M3,PY103-3.2,Sentinel loops and input validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M3,PY103-3.3,Avoiding infinite loops,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M4,PY103-4.1,for and iterating over sequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M4,PY103-4.2,"range(), steps and accumulators",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY103,PY103-M4,PY103-4.3,"break, continue and nested loops",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M1,PY104-1.1,Why functions? The DRY principle,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M1,PY104-1.2,"def, parameters and arguments",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M1,PY104-1.3,return versus print(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M2,PY104-2.1,Local and global scope,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M2,PY104-2.2,The call stack and flow of execution,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M2,PY104-2.3,Recursion: a gentle introduction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M3,PY104-3.1,Default and keyword arguments,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M3,PY104-3.2,*args and **kwargs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M3,PY104-3.3,The mutable default argument pitfall,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M4,PY104-4.1,Docstrings and function documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M4,PY104-4.2,"The main() function and if __name__ == ""__main__""",60,STRUCTURE ONLY,0/24,all 24 authored sections
+1,PY104,PY104-M4,PY104-4.3,Testing functions with assert,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M1,PY111-1.1,"Creating lists, indexing and len()",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M1,PY111-1.2,Slicing and negative indexes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M1,PY111-1.3,Iterating lists with for and enumerate(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M2,PY111-2.1,"append, extend, insert, remove and pop",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M2,PY111-2.2,Sorting: sort() versus sorted(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M2,PY111-2.3,"Mutability, aliasing and copying",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M3,PY111-3.1,Tuples as immutable sequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M3,PY111-3.2,"Unpacking, swapping and zip()",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M3,PY111-3.3,When to use a tuple versus a list,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M4,PY111-4.1,List comprehension syntax,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M4,PY111-4.2,Comprehensions with conditions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY111,PY111-M4,PY111-4.3,Nested lists and simple matrices,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M1,PY112-1.1,Key–value pairs and dict syntax,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M1,PY112-1.2,"get(), updating and deleting keys",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M1,PY112-1.3,Iterating with items(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M2,PY112-2.1,Dicts in lists and lists in dicts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M2,PY112-2.2,Dictionary comprehensions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M2,PY112-2.3,Modelling real-world records,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M3,PY112-3.1,Sets and element uniqueness,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M3,PY112-3.2,"Set operations: union, intersection and difference",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M3,PY112-3.3,frozenset and hashability,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M4,PY112-4.1,Counter for frequency counting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M4,PY112-4.2,defaultdict and OrderedDict,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY112,PY112-M4,PY112-4.3,namedtuple and deque,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M1,PY113-1.1,"Indexing, slicing and string immutability",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M1,PY113-1.2,"Search methods: find, in and startswith",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M1,PY113-1.3,"Transformation methods: upper, lower, strip and replace",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M2,PY113-2.1,f-strings and expressions inside f-strings,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M2,PY113-2.2,"Format specifiers: width, alignment and decimals",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M2,PY113-2.3,split() and join() for building text,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M3,PY113-3.1,"Code points, Unicode and UTF-8",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M3,PY113-3.2,"encode(), decode() and bytes",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M3,PY113-3.3,Handling multilingual text,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M4,PY113-4.1,"Basic patterns: characters, classes and quantifiers",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M4,PY113-4.2,"re.search, re.findall and re.sub",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY113,PY113-M4,PY113-4.3,Groups and input validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M1,PY114-1.1,"open(), file modes and encodings",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M1,PY114-1.2,Reading line by line and writing files,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M1,PY114-1.3,Context managers and the with statement,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M2,PY114-2.1,pathlib.Path and cross-platform paths,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M2,PY114-2.2,"Listing, creating and deleting files and folders",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M2,PY114-2.3,Binary files and bytes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M3,PY114-3.1,The csv module: reading and writing tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M3,PY114-3.2,The json module: serialisation and deserialisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M3,PY114-3.3,Choosing a suitable storage format,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M4,PY114-4.1,The Python exception hierarchy,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M4,PY114-4.2,"try, except, else and finally",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,PY114,PY114-M4,PY114-4.3,"raise, custom exceptions and the EAFP principle",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M1,PY201-1.1,"The OOP paradigm: objects, state and behaviour",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M1,PY201-1.2,Defining classes and __init__,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M1,PY201-1.3,self and instance methods,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M2,PY201-2.1,Class versus instance attributes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M2,PY201-2.2,The _private convention and name mangling,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M2,PY201-2.3,"@property, getters and setters",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M3,PY201-3.1,classmethod as an alternative constructor,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M3,PY201-3.2,staticmethod and utility functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M3,PY201-3.3,__str__ and __repr__,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M4,PY201-4.1,Identifying classes from requirements,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M4,PY201-4.2,Interactions between objects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY201,PY201-M4,PY201-4.3,Case study: a library system,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M1,PY202-1.1,"Subclasses, superclasses and super()",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M1,PY202-1.2,Method overriding and the MRO,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M1,PY202-1.3,Multiple inheritance and mixins,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M2,PY202-2.1,Polymorphism through a common interface,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M2,PY202-2.2,Duck typing in Python,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M2,PY202-2.3,isinstance() and when to avoid it,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M3,PY202-3.1,"Comparison: __eq__, __lt__ and functools.total_ordering",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M3,PY202-3.2,"The container protocol: __len__, __getitem__ and __contains__",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M3,PY202-3.3,Operator overloading,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M4,PY202-4.1,Composition versus inheritance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M4,PY202-4.2,"@dataclass: fields, defaults and frozen",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY202,PY202-M4,PY202-4.3,enum.Enum for named values,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M1,PY203-1.1,"import, from … import and aliases",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M1,PY203-1.2,sys.path and how modules are found,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M1,PY203-1.3,Circular imports and how to avoid them,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M2,PY203-2.1,Package structure and __init__.py,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M2,PY203-2.2,Relative versus absolute imports,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M2,PY203-2.3,The src/ layout for projects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M3,PY203-3.1,venv: why and how,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M3,PY203-3.2,"pip, requirements and version pinning",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M3,PY203-3.3,pyproject.toml and modern build tools,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M4,PY203-4.1,"A tour of the Standard Library: os, sys, datetime, math and random",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M4,PY203-4.2,Reading the official documentation effectively,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY203,PY203-M4,PY203-4.3,Choosing between the Standard Library and PyPI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M1,PY204-1.1,Functions as values and higher-order functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M1,PY204-1.2,"lambda, map, filter and key functions",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M1,PY204-1.3,functools.partial and reduce,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M2,PY204-2.1,Nested scopes and the LEGB rule,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M2,PY204-2.2,Closures and nonlocal,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M2,PY204-2.3,Function factories,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M3,PY204-3.1,The iterator protocol: __iter__ and __next__,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M3,PY204-3.2,"Generators, yield and lazy evaluation",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M3,PY204-3.3,Generator expressions and itertools,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M4,PY204-4.1,Decorators as functions that wrap functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M4,PY204-4.2,functools.wraps and parameterised decorators,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,PY204,PY204-M4,PY204-4.3,"Practical decorators: timing, caching (lru_cache) and retry",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M1,PY211-1.1,Why test? Kinds of tests,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M1,PY211-1.2,pytest: test functions and assert,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M1,PY211-1.3,Organising and running a test suite,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M2,PY211-2.1,Fixtures and fixture scope,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M2,PY211-2.2,parametrize and edge-case testing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M2,PY211-2.3,"Mocks, monkeypatch and isolated tests",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M3,PY211-3.1,The red–green–refactor cycle,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M3,PY211-3.2,Coverage and the limits of coverage metrics,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M3,PY211-3.3,Testing legacy code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M4,PY211-4.1,"breakpoint(), pdb and IDE debuggers",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M4,PY211-4.2,The scientific method in debugging,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY211,PY211-M4,PY211-4.3,"The logging module: levels, handlers and formatting",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M1,PY212-1.1,"Big-O, Big-Θ and the worst case",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M1,PY212-1.2,Costs of Python's built-in data structures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M1,PY212-1.3,Measuring performance with timeit,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M2,PY212-2.1,Linear search and binary search (bisect),60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M2,PY212-2.2,"Sorting: insertion, merge and quick sort",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M2,PY212-2.3,Timsort and key functions in sorted(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M3,PY212-3.1,"Recursion, base cases and depth limits",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M3,PY212-3.2,Divide and conquer,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M3,PY212-3.3,Memoization and an introduction to dynamic programming,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M4,PY212-4.1,Stacks and queues with lists and deque,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M4,PY212-4.2,Priority queues with heapq,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY212,PY212-M4,PY212-4.3,Simple graphs: BFS and DFS,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M1,PY213-1.1,Function and variable annotations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M1,PY213-1.2,"Collection types: list[int] and dict[str, float]",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M1,PY213-1.3,"Optional, Union and None",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M2,PY213-2.1,Generics and TypeVar,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M2,PY213-2.2,Protocol and structural typing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M2,PY213-2.3,"TypedDict, Literal and Callable",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M3,PY213-3.1,mypy: configuration and strict mode,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M3,PY213-3.2,PEP 8 and PEP 257,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M3,PY213-3.3,Linters and formatters: ruff,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M4,PY213-4.1,Common code smells,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M4,PY213-4.2,"Refactoring techniques: extract function, rename and inline",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY213,PY213-M4,PY213-4.3,Refactoring with a test safety net,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M1,PY214-1.1,"sys.argv, stdin, stdout and exit codes",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M1,PY214-1.2,"argparse: arguments, options and help",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M1,PY214-1.3,Subcommands and good CLI design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M2,PY214-2.1,"pathlib, glob and shutil",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M2,PY214-2.2,Batch processing and renaming files,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M2,PY214-2.3,Idempotent scripts and dry-run mode,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M3,PY214-3.1,subprocess.run and shell safety,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M3,PY214-3.2,Environment variables and configuration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M3,PY214-3.3,"Dates, times and task scheduling",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M4,PY214-4.1,Console scripts in pyproject.toml,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M4,PY214-4.2,User-friendly output: colour and progress bars,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,PY214,PY214-M4,PY214-4.3,Mini project: a file organiser tool,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M1,PY301-1.1,abc.ABC and abstractmethod,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M1,PY301-1.2,Protocol versus ABC,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M1,PY301-1.3,Designing good interfaces,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M2,PY301-2.1,Single Responsibility and Open/Closed,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M2,PY301-2.2,Liskov Substitution and Interface Segregation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M2,PY301-2.3,Dependency Inversion and dependency injection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M3,PY301-3.1,Strategy and Factory with first-class functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M3,PY301-3.2,Observer and Adapter,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M3,PY301-3.3,Anti-patterns and over-engineering,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M4,PY301-4.1,The Python data model and attribute lookup,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M4,PY301-4.2,"Descriptors: __get__, __set__ and __set_name__",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY301,PY301-M4,PY301-4.3,Metaclasses and __init_subclass__,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M1,PY302-1.1,Concurrency versus parallelism,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M1,PY302-1.2,I/O-bound versus CPU-bound,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M1,PY302-1.3,The Global Interpreter Lock (GIL),60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M2,PY302-2.1,threading and ThreadPoolExecutor,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M2,PY302-2.2,multiprocessing and ProcessPoolExecutor,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M2,PY302-2.3,"Locks, queues and race conditions",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M3,PY302-3.1,"Coroutines, async and await",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M3,PY302-3.2,"The event loop, tasks and gather",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M3,PY302-3.3,"Timeouts, cancellation and error handling",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M4,PY302-4.1,Asynchronous HTTP with httpx,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M4,PY302-4.2,Producer–consumer with asyncio.Queue,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY302,PY302-M4,PY302-4.3,Testing and debugging concurrent code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M1,PY303-1.1,"Tables, rows and primary keys",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M1,PY303-1.2,"SELECT, WHERE and ORDER BY",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M1,PY303-1.3,JOINs and aggregate functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M2,PY303-2.1,"Connections, cursors and fetching",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M2,PY303-2.2,Parameterised queries and SQL injection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M2,PY303-2.3,"Transactions, commit and rollback",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M3,PY303-3.1,Basic normalisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M3,PY303-3.2,Foreign keys and referential integrity,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M3,PY303-3.3,Schema migrations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M4,PY303-4.1,Declarative models and sessions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M4,PY303-4.2,Relationships and ORM queries,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY303,PY303-M4,PY303-4.3,The N+1 problem and ORM performance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M1,PY304-1.1,The first rule of optimisation: measure first,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M1,PY304-1.2,timeit and fair benchmarks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M1,PY304-1.3,"cProfile, pstats and profile visualisation",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M2,PY304-2.1,Python's memory model and reference counting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M2,PY304-2.2,tracemalloc and sys.getsizeof,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M2,PY304-2.3,__slots__ and generators for saving memory,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M3,PY304-3.1,Better algorithms and data structures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M3,PY304-3.2,Caching and memoization,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M3,PY304-3.3,Avoiding repeated work in loops,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M4,PY304-4.1,Vectorisation with NumPy: an introduction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M4,PY304-4.2,"PyPy, Cython and Numba",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,PY304,PY304-M4,PY304-4.3,When performance does not matter,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M1,PY311-1.1,"HTTP: methods, status codes and headers",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M1,PY311-1.2,"Clients, servers and URLs",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M1,PY311-1.3,WSGI and ASGI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M2,PY311-2.1,"Routes, view functions and requests",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M2,PY311-2.2,Jinja2 templates and template inheritance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M2,PY311-2.3,Blueprints and application structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M3,PY311-3.1,Forms and input validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M3,PY311-3.2,"Cookies, sessions and user authentication",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M3,PY311-3.3,Database integration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M4,PY311-4.1,XSS and auto-escaping,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M4,PY311-4.2,CSRF and tokens,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY311,PY311-M4,PY311-4.3,Storing passwords securely (hashing),60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M1,PY312-1.1,REST principles and resource design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M1,PY312-1.2,"Status codes, errors and API versioning",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M1,PY312-1.3,OpenAPI as a contract,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M2,PY312-2.1,Path operations and parameters,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M2,PY312-2.2,Pydantic models: requests and responses,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M2,PY312-2.3,Async endpoints and dependency injection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M3,PY312-3.1,Database integration in FastAPI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M3,PY312-3.2,"OAuth2, JWT and authorisation",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M3,PY312-3.3,"CORS, rate limiting and API security",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M4,PY312-4.1,Testing with TestClient,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M4,PY312-4.2,Background tasks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY312,PY312-M4,PY312-4.3,Running APIs with Uvicorn,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M1,PY313-1.1,"Naming, small functions and meaningful comments",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M1,PY313-1.2,Coupling and cohesion,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M1,PY313-1.3,Managing complexity,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M2,PY313-2.1,Layered architecture,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M2,PY313-2.2,Hexagonal: ports and adapters,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M2,PY313-2.3,Event-driven architecture and message buses,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M3,PY313-3.1,Domain modelling and entities,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M3,PY313-3.2,The Repository pattern,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M3,PY313-3.3,Unit of Work and transactions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M4,PY313-4.1,Module boundaries and dependencies,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M4,PY313-4.2,Architecture Decision Records (ADRs),60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY313,PY313-M4,PY313-4.3,Effective code review,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M1,PY314-1.1,"pyproject.toml, metadata and semantic versioning",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M1,PY314-1.2,"Wheels, sdists and build backends",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M1,PY314-1.3,Publishing to PyPI and TestPyPI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M2,PY314-2.1,CI/CD concepts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M2,PY314-2.2,"GitHub Actions: workflows, jobs and matrices",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M2,PY314-2.3,Pre-commit hooks and quality gates,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M3,PY314-3.1,"Docker: images, containers and Dockerfiles",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M3,PY314-3.2,"Small, secure Python images",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M3,PY314-3.3,docker compose for multi-service applications,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M4,PY314-4.1,Twelve-factor configuration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M4,PY314-4.2,Deployment strategies and rollback,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,PY314,PY314-M4,PY314-4.3,Health checks and basic monitoring,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M1,PY401-1.1,"ndarray, dtype and shape",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M1,PY401-1.2,"Indexing, slicing and boolean masks",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M1,PY401-1.3,Vectorisation and broadcasting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M2,PY401-2.1,Series and DataFrame,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M2,PY401-2.2,"Reading CSV, Excel and SQL",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M2,PY401-2.3,Selecting data: loc and iloc,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M3,PY401-3.1,Missing values and duplicates,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M3,PY401-3.2,"Data types, apply and string operations",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M3,PY401-3.3,Time series and dates,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M4,PY401-4.1,groupby and aggregation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M4,PY401-4.2,pivot_table and reshaping,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY401,PY401-M4,PY401-4.3,"merge, join and concat",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M1,PY402-1.1,"Figures, Axes and chart anatomy",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M1,PY402-1.2,"Line, bar, histogram and scatter charts",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M1,PY402-1.3,Customisation and saving figures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M2,PY402-2.1,seaborn and statistical charts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M2,PY402-2.2,"Distributions, box plots and heatmaps",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M2,PY402-2.3,"Principles of honest, clear visualisation",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M3,PY402-3.1,Measures of central tendency and spread,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M3,PY402-3.2,Correlation and relationships between variables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M3,PY402-3.3,Outliers and data quality,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M4,PY402-4.1,Framing analysis questions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M4,PY402-4.2,Reproducible Jupyter Notebooks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY402,PY402-M4,PY402-4.3,Writing and presenting data reports,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M1,PY403-1.1,What is machine learning? Types of learning,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M1,PY403-1.2,"Training data, test data and train_test_split",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M1,PY403-1.3,The scikit-learn estimator API: fit and predict,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M2,PY403-2.1,Linear regression and regularisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M2,PY403-2.2,"Classification: logistic regression, k-NN and decision trees",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M2,PY403-2.3,Ensembles: random forests and gradient boosting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M3,PY403-3.1,"Scaling, categorical encoding and missing values",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M3,PY403-3.2,Pipeline and ColumnTransformer,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M3,PY403-3.3,Data leakage and how to avoid it,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M4,PY403-4.1,"Metrics: accuracy, precision, recall, F1 and RMSE",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M4,PY403-4.2,Cross-validation and GridSearchCV,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY403,PY403-M4,PY403-4.3,Clustering with k-means and dimensionality reduction (PCA),60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M1,PY404-1.1,"requests and httpx: GET, POST and headers",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M1,PY404-1.2,Authentication: API keys and OAuth,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M1,PY404-1.3,"Pagination, rate limits and retries",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M2,PY404-2.1,HTML structure and CSS selectors,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M2,PY404-2.2,BeautifulSoup for data extraction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M2,PY404-2.3,Dynamic pages and alternatives to scraping,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M3,PY404-3.1,robots.txt and terms of use,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M3,PY404-3.2,Personal data and data protection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M3,PY404-3.3,Attribution and data licences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M4,PY404-4.1,"ETL concepts: extract, transform and load",60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M4,PY404-4.2,Scheduling and monitoring pipelines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,PY404,PY404-M4,PY404-4.3,Mini project: a daily data collector,90,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M1,PY411-1.1,"How LLMs work: tokens, context and sampling",60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M1,PY411-1.2,Calling LLM APIs from Python,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M1,PY411-1.3,Prompts in code and structured output,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M2,PY411-2.1,Embeddings and semantic similarity,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M2,PY411-2.2,Vector databases and indexes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M2,PY411-2.3,Document chunking,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M3,PY411-3.1,End-to-end Retrieval-Augmented Generation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M3,PY411-3.2,Tool calling and simple agent workflows,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M3,PY411-3.3,Handling failures and hallucinations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M4,PY411-4.1,Evaluating LLM applications: test sets and metrics,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M4,PY411-4.2,"Cost, latency and caching",60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY411,PY411-M4,PY411-4.3,"Safety, privacy and responsible use",60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M1,PY412-1.1,The OWASP Top 10 for Python developers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M1,PY412-1.2,"Input validation, injection and unsafe deserialisation",60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M1,PY412-1.3,Practical cryptography: hashing and encryption,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M2,PY412-2.1,Auditing dependencies with pip-audit,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M2,PY412-2.2,Lock files and reproducible builds,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M2,PY412-2.3,Secrets management,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M3,PY412-3.1,Structured logging,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M3,PY412-3.2,Metrics and alerting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M3,PY412-3.3,Distributed tracing with OpenTelemetry,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M4,PY412-4.1,Upgrading Python and library versions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M4,PY412-4.2,Incident handling and post-mortems,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY412,PY412-M4,PY412-4.3,"Documentation, runbooks and knowledge transfer",60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M1,PY490-1.1,Choosing a problem and defining scope,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M1,PY490-1.2,Functional and non-functional requirements,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M1,PY490-1.3,Success criteria and risk plan,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M2,PY490-2.1,Architecture and data model,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M2,PY490-2.2,Test plan and quality strategy,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M2,PY490-2.3,Sprint plan and milestones,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M3,PY490-3.1,Sprint 1: functional core,180,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M3,PY490-3.2,Sprint 2: integration and interfaces,180,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M3,PY490-3.3,"Sprint 3: quality, security and performance",180,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M4,PY490-4.1,Deployment and monitoring,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M4,PY490-4.2,Technical and user documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+8,PY490,PY490-M4,PY490-4.3,Final presentation and reflection,90,STRUCTURE ONLY,0/24,all 24 authored sections

@@ -1,0 +1,289 @@
+semester,course_id,module_id,lecture_id,title_en,minutes,status,authored_sections_present,missing
+1,LUA101,LUA101-M1,LUA101-1.1,The history and design philosophy of Lua,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M1,LUA101-1.2,"Lua as an embedded language: games, applications and devices",60,COMPLETE,24/24,none
+1,LUA101,LUA101-M1,LUA101-1.3,"Lua 5.1–5.4, LuaJIT and Luau: what differs",60,COMPLETE,24/24,none
+1,LUA101,LUA101-M2,LUA101-2.1,Installing the lua interpreter and checking the version,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M2,LUA101-2.2,The interactive REPL versus .lua script files,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M2,LUA101-2.3,Code editors and Lua language extensions,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M3,LUA101-3.1,"Chunks, compilation and bytecode (luac)",60,COMPLETE,24/24,none
+1,LUA101,LUA101-M3,LUA101-3.2,The Lua virtual machine and the execution stack,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M3,LUA101-3.3,"Basic syntax: statements, blocks and comments",60,COMPLETE,24/24,none
+1,LUA101,LUA101-M4,LUA101-4.1,"print(), string literals and escape sequences",60,COMPLETE,24/24,none
+1,LUA101,LUA101-M4,LUA101-4.2,io.read() for user input,60,COMPLETE,24/24,none
+1,LUA101,LUA101-M4,LUA101-4.3,Reading error messages and stack tracebacks,60,COMPLETE,24/24,none
+1,LUA102,LUA102-M1,LUA102-1.1,Global and local variables,60,COMPLETE,24/24,none
+1,LUA102,LUA102-M1,LUA102-1.2,Multiple assignment and swapping values,60,COMPLETE,24/24,none
+1,LUA102,LUA102-M1,LUA102-1.3,Naming conventions and reserved words,60,COMPLETE,24/24,none
+1,LUA102,LUA102-M2,LUA102-2.1,"nil, boolean and truthiness",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M2,LUA102-2.2,number: the integer and float subtypes (5.3+),60,COMPLETE,24/24,none
+1,LUA102,LUA102-M2,LUA102-2.3,"string, table, function, userdata and thread: an overview",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M3,LUA102-3.1,"Arithmetic operators: +, -, *, /, //, % and ^",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M3,LUA102-3.2,"Relational (==, ~=) and logical (and, or, not) operators",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M3,LUA102-3.3,"Concatenation (..), length (#) and operator precedence",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M4,LUA102-4.1,"tonumber(), tostring() and automatic coercion",60,COMPLETE,24/24,none
+1,LUA102,LUA102-M4,LUA102-4.2,Calculator design: requirements and program flow,60,COMPLETE,24/24,none
+1,LUA102,LUA102-M4,LUA102-4.3,Building and testing the calculator,90,COMPLETE,24/24,none
+1,LUA103,LUA103-M1,LUA103-1.1,"if, then and end",60,COMPLETE,24/24,none
+1,LUA103,LUA103-M1,LUA103-1.2,elseif and multi-branch conditions,60,COMPLETE,24/24,none
+1,LUA103,LUA103-M1,LUA103-1.3,"The ""a and b or c"" idiom and its pitfall",60,COMPLETE,24/24,none
+1,LUA103,LUA103-M2,LUA103-2.1,while loops,60,COMPLETE,24/24,none
+1,LUA103,LUA103-M2,LUA103-2.2,repeat–until and the scope of its condition,60,COMPLETE,24/24,none
+1,LUA103,LUA103-M2,LUA103-2.3,"Numeric for: start, limit and step",60,COMPLETE,24/24,none
+1,LUA103,LUA103-M3,LUA103-3.1,break to leave a loop,60,COMPLETE,24/24,none
+1,LUA103,LUA103-M3,LUA103-3.2,goto and labels: the continue pattern (5.2+),60,COMPLETE,24/24,none
+1,LUA103,LUA103-M3,LUA103-3.3,Nested loops and algorithmic thinking,60,COMPLETE,24/24,none
+1,LUA103,LUA103-M4,LUA103-4.1,"Requirements, design and pseudocode",60,COMPLETE,24/24,none
+1,LUA103,LUA103-M4,LUA103-4.2,"math.random, math.randomseed and input validation",60,COMPLETE,24/24,none
+1,LUA103,LUA103-M4,LUA103-4.3,"Building, testing and improving the game",90,COMPLETE,24/24,none
+1,LUA104,LUA104-M1,LUA104-1.1,"function, parameters and return",60,COMPLETE,24/24,none
+1,LUA104,LUA104-M1,LUA104-1.2,Functions as first-class values,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M1,LUA104-1.3,More or fewer arguments than parameters,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M2,LUA104-2.1,"return a, b and multiple assignment",60,COMPLETE,24/24,none
+1,LUA104,LUA104-M2,LUA104-2.2,Value adjustment rules in expressions,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M2,LUA104-2.3,"table.unpack and the (nil, message) error pattern",60,COMPLETE,24/24,none
+1,LUA104,LUA104-M3,LUA104-3.1,"... and select(""#"", ...)",60,COMPLETE,24/24,none
+1,LUA104,LUA104-M3,LUA104-3.2,table.pack and the n field,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M3,LUA104-3.3,Designing flexible function APIs,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M4,LUA104-4.1,Block scope and do … end,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M4,LUA104-4.2,local function and recursion,60,COMPLETE,24/24,none
+1,LUA104,LUA104-M4,LUA104-4.3,An introduction to upvalues,60,COMPLETE,24/24,none
+2,LUA111,LUA111-M1,LUA111-1.1,"Table constructors, keys and fields",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M1,LUA111-1.2,Dot syntax versus square brackets,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M1,LUA111-1.3,Tables as references: aliasing and copying,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M2,LUA111-2.1,1-based arrays,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M2,LUA111-2.2,The # operator and sequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M2,LUA111-2.3,Holes in arrays and their consequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M3,LUA111-3.1,"String, number and table keys",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M3,LUA111-3.2,Removing fields with nil,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M3,LUA111-3.3,Nested tables for modelling records,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M4,LUA111-4.1,table.insert and table.remove,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M4,LUA111-4.2,table.concat and table.unpack,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA111,LUA111-M4,LUA111-4.3,table.sort and comparison functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M1,LUA112-1.1,ipairs and sequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M1,LUA112-1.2,pairs and undefined order,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M1,LUA112-1.3,Iterating keys in sorted order,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M2,LUA112-2.1,How the generic for works behind the scenes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M2,LUA112-2.2,next and table iteration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M2,LUA112-2.3,Modifying a table during iteration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M3,LUA112-3.1,Stateless iterators,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M3,LUA112-3.2,Closure-based iterators,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M3,LUA112-3.3,Iterators for nested structures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M4,LUA112-4.1,string.gmatch as an iterator,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M4,LUA112-4.2,io.lines as an iterator,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA112,LUA112-M4,LUA112-4.3,Building iterator pipelines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M1,LUA113-1.1,Immutable strings and escape sequences,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M1,LUA113-1.2,Long strings [[ ]] and multiline text,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M1,LUA113-1.3,"sub, rep, upper, lower, byte and char",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M2,LUA113-2.1,string.format and format specifiers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M2,LUA113-2.2,Method syntax: s:upper(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M2,LUA113-2.3,Building strings with table.concat,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M3,LUA113-3.1,"Character classes, quantifiers and anchors",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M3,LUA113-3.2,"find, match and captures",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M3,LUA113-3.3,gmatch and gsub with replacement functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M4,LUA113-4.1,Bytes versus characters in Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M4,LUA113-4.2,The utf8 library (5.3+),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA113,LUA113-M4,LUA113-4.3,Cleaning and validating text input,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M1,LUA114-1.1,Functional requirements and use cases,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M1,LUA114-1.2,Data model: student records as tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M1,LUA114-1.3,Function architecture and folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M2,LUA114-2.1,Adding and displaying records,90,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M2,LUA114-2.2,Updating and deleting records,90,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M2,LUA114-2.3,Searching and sorting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M3,LUA114-3.1,Input validation and error messages,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M3,LUA114-3.2,"Averages, grades and statistics",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M3,LUA114-3.3,Formatted text reports,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M4,LUA114-4.1,Testing with assert and test cases,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M4,LUA114-4.2,Refactoring: poor versus improved code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUA114,LUA114-M4,LUA114-4.3,Final evaluation and reflection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M1,LUA201-1.1,What is a closure?,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M1,LUA201-1.2,"Upvalues: shared, not copied",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M1,LUA201-1.3,Closures inside for loops,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M2,LUA201-2.1,"map, filter and reduce",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M2,LUA201-2.2,Functions as arguments and return values,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M2,LUA201-2.3,Function composition,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M3,LUA201-3.1,Function factories and counters,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M3,LUA201-3.2,Closure-based objects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M3,LUA201-3.3,Callbacks and event listeners,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M4,LUA201-4.1,Memoization with a table cache,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M4,LUA201-4.2,The memory cost of closures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA201,LUA201-M4,LUA201-4.3,When to use closures versus tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M1,LUA202-1.1,error() and error levels,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M1,LUA202-1.2,assert() for conditions that must hold,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M1,LUA202-1.3,"The (nil, message) pattern versus error()",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M2,LUA202-2.1,pcall: protected calls,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M2,LUA202-2.2,xpcall and message handlers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M2,LUA202-2.3,Structured error objects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M3,LUA202-3.1,Reading tracebacks carefully,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M3,LUA202-3.2,The debug library: traceback and getinfo,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M3,LUA202-3.3,The scientific method in debugging,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M4,LUA202-4.1,Input validation at system boundaries,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M4,LUA202-4.2,Where errors should be caught,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA202,LUA202-M4,LUA202-4.3,Error logs and user-friendly messages,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M1,LUA203-1.1,io.open and file modes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M1,LUA203-1.2,file:read and read formats,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M1,LUA203-1.3,"file:write, file:close and io.lines",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M2,LUA203-2.1,Handling a failed io.open,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M2,LUA203-2.2,Closing files reliably,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M2,LUA203-2.3,Temporary files and atomic writes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M3,LUA203-3.1,"os.time, os.date and os.clock",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M3,LUA203-3.2,"os.getenv, os.remove and os.rename",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M3,LUA203-3.3,Limits of the os library in embedded environments,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M4,LUA203-4.1,Writing tables as Lua code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M4,LUA203-4.2,A simple CSV format,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA203,LUA203-M4,LUA203-4.3,Loading data safely: load and its dangers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M1,LUA204-1.1,Inventory requirements and use cases,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M1,LUA204-1.2,Data model and file format,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M1,LUA204-1.3,Layered architecture and folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M2,LUA204-2.1,Loading the inventory from a file,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M2,LUA204-2.2,Saving safely,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M2,LUA204-2.3,Handling corrupted files,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M3,LUA204-3.1,"Stock operations: add, reduce and transfer",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M3,LUA204-3.2,Console menu and input validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M3,LUA204-3.3,Low-stock and inventory value reports,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M4,LUA204-4.1,Testing the logic layer,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M4,LUA204-4.2,Debugging and optimising search,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUA204,LUA204-M4,LUA204-4.3,Final project evaluation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M1,LUA211-1.1,setmetatable and getmetatable,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M1,LUA211-1.2,How Lua finds metamethods,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M1,LUA211-1.3,__tostring and __len,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M2,LUA211-2.1,__index: table or function,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M2,LUA211-2.2,__newindex and tracking writes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M2,LUA211-2.3,"rawget, rawset and read-only tables",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M3,LUA211-3.1,"__add, __sub, __mul and friends",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M3,LUA211-3.2,"__eq, __lt and __le",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M3,LUA211-3.3,__call and __concat,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M4,LUA211-4.1,Default-value tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M4,LUA211-4.2,Proxies and access monitoring,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA211,LUA211-M4,LUA211-4.3,__close and <close> variables (5.4),60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M1,LUA212-1.1,The module-table pattern,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M1,LUA212-1.2,"require, package.path and package.loaded",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M1,LUA212-1.3,Avoiding global variables in modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M2,LUA212-2.1,Public interfaces and private functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M2,LUA212-2.2,Circular dependencies and their solutions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M2,LUA212-2.3,Module configuration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M3,LUA212-3.1,Folder structure for Lua projects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M3,LUA212-3.2,Entry points and bootstrapping,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M3,LUA212-3.3,Separation of concerns between modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M4,LUA212-4.1,LuaRocks: installing and managing packages,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M4,LUA212-4.2,Rockspecs and publishing a module,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA212,LUA212-M4,LUA212-4.3,Evaluating third-party libraries,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M1,LUA213-1.1,Objects as tables with methods,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M1,LUA213-1.2,Colon (:) syntax and self,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M1,LUA213-1.3,The class pattern with __index and constructors,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M2,LUA213-2.1,Chained single inheritance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M2,LUA213-2.2,Overriding methods and calling the parent class,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M2,LUA213-2.3,Polymorphism,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M3,LUA213-3.1,Mixins and multiple inheritance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M3,LUA213-3.2,Composition versus inheritance,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M3,LUA213-3.3,Interfaces through duck typing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M4,LUA213-4.1,Privacy through closures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M4,LUA213-4.2,Class design: cohesion and responsibility,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA213,LUA213-M4,LUA213-4.3,Poor versus improved code: refactoring classes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M1,LUA214-1.1,POS system requirements,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M1,LUA214-1.2,Architecture diagram and folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M1,LUA214-1.3,"Data model: Product, Cart and Sale",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M2,LUA214-2.1,The Product class and catalogue,90,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M2,LUA214-2.2,"The Cart class: add, remove and total",90,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M2,LUA214-2.3,"Tax, discounts and rounding money",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M3,LUA214-3.1,Console menu and sales flow,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M3,LUA214-3.2,Formatted receipts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M3,LUA214-3.3,Storing transactions and sales reports,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M4,LUA214-4.1,Testing financial calculations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M4,LUA214-4.2,Debugging and refactoring,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUA214,LUA214-M4,LUA214-4.3,Final project evaluation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M1,LUA301-1.1,coroutine.create and resume,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M1,LUA301-1.2,yield and coroutine status,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M1,LUA301-1.3,coroutine.wrap,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M2,LUA301-2.1,Values through resume and yield,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M2,LUA301-2.2,Generators with coroutines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M2,LUA301-2.3,Errors inside coroutines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M3,LUA301-3.1,Producer–consumer,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M3,LUA301-3.2,Filters and pipelines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M3,LUA301-3.3,A cooperative task scheduler,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M4,LUA301-4.1,coroutine.close and resource cleanup (5.4),60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M4,LUA301-4.2,Coroutines versus operating-system threads,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA301,LUA301-M4,LUA301-4.3,Coroutines in game engines and servers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M1,LUA302-1.1,Values and collectable objects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M1,LUA302-1.2,References and reachability,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M1,LUA302-1.3,Measuring memory,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M2,LUA302-2.1,Incremental mark-and-sweep,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M2,LUA302-2.2,Generational mode (5.4),60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M2,LUA302-2.3,collectgarbage and tuning,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M3,LUA302-3.1,Weak tables and __mode,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M3,LUA302-3.2,Caches and memoization with weak tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M3,LUA302-3.3,__gc finalizers,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M4,LUA302-4.1,Common memory-leak patterns,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M4,LUA302-4.2,Reusing tables (pooling),60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA302,LUA302-M4,LUA302-4.3,Case study: reducing memory usage,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M1,LUA303-1.1,os.clock and fair benchmarks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M1,LUA303-1.2,Finding bottlenecks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M1,LUA303-1.3,The first rule: measure first,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M2,LUA303-2.1,Locals versus globals,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M2,LUA303-2.2,Table pre-allocation and reuse,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M2,LUA303-2.3,Building strings with table.concat,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M3,LUA303-3.1,Algorithmic complexity in Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M3,LUA303-3.2,The cost of metamethods and closures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M3,LUA303-3.3,Choosing suitable data structures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M4,LUA303-4.1,LuaJIT: JIT and FFI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M4,LUA303-4.2,LuaJIT's compatibility with Lua 5.1,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA303,LUA303-M4,LUA303-4.3,When performance does not matter,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M1,LUA304-1.1,Why test and kinds of tests,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M1,LUA304-1.2,"busted: describe, it and assert",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M1,LUA304-1.3,Organising and running a test suite,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M2,LUA304-2.1,Boundary cases and parameterised tests,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M2,LUA304-2.2,"Spies, stubs and mocks",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M2,LUA304-2.3,Testing code that uses files and time,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M3,LUA304-3.1,luacheck and global detection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M3,LUA304-3.2,Code style and naming conventions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M3,LUA304-3.3,Documentation with LDoc comments,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M4,LUA304-4.1,Code smells in Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M4,LUA304-4.2,Safe refactoring techniques,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUA304,LUA304-M4,LUA304-4.3,Case study: improving legacy code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M1,LUA311-1.1,Problem decomposition and algorithm design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M1,LUA311-1.2,Data modelling,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M1,LUA311-1.3,Interfaces and contracts between components,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M2,LUA311-2.1,Separation of concerns and layered architecture,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M2,LUA311-2.2,Dependency injection in Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M2,LUA311-2.3,Event systems and the observer pattern,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M3,LUA311-3.1,"Strategy, factory and command",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M3,LUA311-3.2,State machines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M3,LUA311-3.3,Poor versus improved designs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M4,LUA311-4.1,Error strategy and input validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M4,LUA311-4.2,Security fundamentals: untrusted input,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA311,LUA311-M4,LUA311-4.3,Architecture documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M1,LUA312-1.1,_ENV and globals (5.2+),60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M1,LUA312-1.2,"load, loadfile and dofile",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M1,LUA312-1.3,Custom environments,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M2,LUA312-2.1,Running untrusted code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M2,LUA312-2.2,Restricting libraries and resources,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M2,LUA312-2.3,Threats and mitigations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M3,LUA312-3.1,The architecture of embedded Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M3,LUA312-3.2,The virtual stack and exchanging values,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M3,LUA312-3.3,Registering C functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M4,LUA312-4.1,Configuration files in Lua,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M4,LUA312-4.2,Plugin systems,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA312,LUA312-M4,LUA312-4.3,Case study: Lua in game engines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M1,LUA313-1.1,Requirements and data model,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M1,LUA313-1.2,Storage format and serialisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M1,LUA313-1.3,Indexes and fast lookups,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M2,LUA313-2.1,CRUD operations on files,90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M2,LUA313-2.2,A simple query layer,90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M2,LUA313-2.3,Durability: atomic writes and recovery,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M3,LUA313-3.1,Plugin architecture and architecture diagram,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M3,LUA313-3.2,"Separating the core, storage and interface",90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M3,LUA313-3.3,Configuration and module loading,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M4,LUA313-4.1,A test suite with busted,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M4,LUA313-4.2,Profiling and optimisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA313,LUA313-M4,LUA313-4.3,Final evaluation and documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M1,LUA390-1.1,Choosing a problem and defining scope,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M1,LUA390-1.2,Functional and non-functional requirements,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M1,LUA390-1.3,Success criteria and risk plan,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M2,LUA390-2.1,"Architecture, diagrams and folder structure",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M2,LUA390-2.2,Data model and storage format,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M2,LUA390-2.3,Test plan and development stages,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M3,LUA390-3.1,Stage 1: functional core,180,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M3,LUA390-3.2,Stage 2: integration and interface,180,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M3,LUA390-3.3,"Stage 3: quality, security and performance",180,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M4,LUA390-4.1,Final testing and debugging,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M4,LUA390-4.2,User and technical documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUA390,LUA390-M4,LUA390-4.3,Final presentation and reflection,90,STRUCTURE ONLY,0/24,all 24 authored sections

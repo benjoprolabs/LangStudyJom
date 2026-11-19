@@ -1,0 +1,325 @@
+semester,course_id,module_id,lecture_id,title_en,minutes,status,authored_sections_present,missing
+1,LUAU101,LUAU101-M1,LUAU101-1.1,From Lua 5.1 to Luau,60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M1,LUAU101-1.2,What Luau adds and what it removes,60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M1,LUAU101-1.3,The Luau language versus the Roblox engine API,60,NEEDS VERIFICATION,24/24,none
+1,LUAU101,LUAU101-M2,LUAU101-2.1,The luau CLI for pure-language code,60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M2,LUAU101-2.2,A tour of Roblox Studio,60,NEEDS VERIFICATION,24/24,none
+1,LUAU101,LUAU101-M2,LUAU101-2.3,"Script, LocalScript and ModuleScript: an overview",60,NEEDS VERIFICATION,24/24,none
+1,LUAU101,LUAU101-M3,LUAU101-3.1,print() and the Output window,60,NEEDS VERIFICATION,24/24,none
+1,LUAU101,LUAU101-M3,LUAU101-3.2,"Comments, blocks and basic syntax",60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M3,LUAU101-3.3,Script Analysis and editor warnings,60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M4,LUAU101-4.1,Syntax errors and runtime errors,60,COMPLETE,24/24,none
+1,LUAU101,LUAU101-M4,LUAU101-4.2,Reading stack traces,60,NEEDS VERIFICATION,24/24,none
+1,LUAU101,LUAU101-M4,LUAU101-4.3,Debugging strategies for beginners,60,NEEDS VERIFICATION,24/24,none
+1,LUAU102,LUAU102-M1,LUAU102-1.1,local and global in Luau,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M1,LUAU102-1.2,Assignment and multiple assignment,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M1,LUAU102-1.3,Roblox-style naming conventions,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M2,LUAU102-2.1,"nil, boolean, number and string",60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M2,LUAU102-2.2,type() versus typeof(),60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M2,LUAU102-2.3,vector and buffer: an overview,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M3,LUAU102-3.1,Arithmetic operators and floor division (//),60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M3,LUAU102-3.2,Comparison and logical operators,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M3,LUAU102-3.3,"Compound assignment: +=, -=, *= and ..=",60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M4,LUAU102-4.1,Backtick string interpolation,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M4,LUAU102-4.2,if-expressions,60,COMPLETE,24/24,none
+1,LUAU102,LUAU102-M4,LUAU102-4.3,string.format and type conversion,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M1,LUAU103-1.1,"if, elseif and else",60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M1,LUAU103-1.2,Truthiness: only nil and false are falsy,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M1,LUAU103-1.3,Guard clauses and early returns,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M2,LUAU103-2.1,"Numeric for, while and repeat–until",60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M2,LUAU103-2.2,"Generalized iteration: for k, v in t",60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M2,LUAU103-2.3,break and continue,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M3,LUAU103-3.1,Defining and calling functions,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M3,LUAU103-3.2,Multiple return values,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M3,LUAU103-3.3,Varargs and table.pack,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M4,LUAU103-4.1,Closures and upvalues,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M4,LUAU103-4.2,Functions as arguments and callbacks,60,COMPLETE,24/24,none
+1,LUAU103,LUAU103-M4,LUAU103-4.3,Mini project: a score counter with closures,90,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M1,LUAU104-1.1,1-based arrays and the # operator,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M1,LUAU104-1.2,"table.insert, table.remove and table.find",60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M1,LUAU104-1.3,table.sort and comparison functions,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M2,LUAU104-2.1,Keys and values,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M2,LUAU104-2.2,Iterating dictionaries,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M2,LUAU104-2.3,Nested tables for game data,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M3,LUAU104-3.1,Tables are references,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M3,LUAU104-3.2,table.clone and deep copies,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M3,LUAU104-3.3,table.freeze and table.isfrozen,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M4,LUAU104-4.1,Recording player statistics,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M4,LUAU104-4.2,Game configuration data,60,COMPLETE,24/24,none
+1,LUAU104,LUAU104-M4,LUAU104-4.3,Mini project: an inventory in pure Luau,90,COMPLETE,24/24,none
+2,LUAU111,LUAU111-M1,LUAU111-1.1,Variable and function annotations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M1,LUAU111-1.2,Type inference,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M1,LUAU111-1.3,Primitive types and any,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M2,LUAU111-2.1,Table types and array types {T},60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M2,LUAU111-2.2,Dictionary types {[K]: V},60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M2,LUAU111-2.3,Optional fields and optional types (T?),60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M3,LUAU111-3.1,Unions and intersections,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M3,LUAU111-3.2,String literal and singleton types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M3,LUAU111-3.3,Function types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M4,LUAU111-4.1,type aliases,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M4,LUAU111-4.2,export type for modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU111,LUAU111-M4,LUAU111-4.3,Designing game data types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M1,LUAU112-1.1,"--!strict, --!nonstrict and --!nocheck",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M1,LUAU112-1.2,Reading type errors,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M1,LUAU112-1.3,Unknown types: any and unknown,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M2,LUAU112-2.1,nil checks and assert,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M2,LUAU112-2.2,typeof and refinement,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M2,LUAU112-2.3,Type casts (::) and their risks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M3,LUAU112-3.1,Generic functions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M3,LUAU112-3.2,Generic types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M3,LUAU112-3.3,Generics in data structures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M4,LUAU112-4.1,Common type errors and their fixes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M4,LUAU112-4.2,Upgrading code gradually,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU112,LUAU112-M4,LUAU112-4.3,Types as documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M1,LUAU113-1.1,Returning a module table,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M1,LUAU113-1.2,require and the module cache,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M1,LUAU113-1.3,Shared state in modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M2,LUAU113-2.1,"ReplicatedStorage, ServerScriptService and ServerStorage",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M2,LUAU113-2.2,"Client, server and shared modules",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M2,LUAU113-2.3,Why secret code must stay on the server,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M3,LUAU113-3.1,Separation of concerns,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M3,LUAU113-3.2,Circular dependencies and their solutions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M3,LUAU113-3.3,Roblox project folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M4,LUAU113-4.1,export type across modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M4,LUAU113-4.2,Configuration and constant modules,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU113,LUAU113-M4,LUAU113-4.3,Poor versus improved modular code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M1,LUAU114-1.1,"setmetatable, __index and __newindex",60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M1,LUAU114-1.2,Metamethods supported by Luau,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M1,LUAU114-1.3,Differences from standard Lua: no __gc,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M2,LUAU114-2.1,The class pattern with __index,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M2,LUAU114-2.2,Typing classes: object and method types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M2,LUAU114-2.3,Inheritance and when to avoid it,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M3,LUAU114-3.1,Custom signals,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M3,LUAU114-3.2,State machines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M3,LUAU114-3.3,Component composition,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M4,LUAU114-4.1,Objects versus plain data tables,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M4,LUAU114-4.2,Cleaning up objects: the destroy pattern,60,STRUCTURE ONLY,0/24,all 24 authored sections
+2,LUAU114,LUAU114-M4,LUAU114-4.3,Poor versus improved code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M1,LUAU201-1.1,"game, services and the Instance hierarchy",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M1,LUAU201-1.2,"Classes, class inheritance and IsA",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M1,LUAU201-1.3,Explorer and Properties in Studio,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M2,LUAU201-2.1,"Instance.new, Parent and Destroy",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M2,LUAU201-2.2,FindFirstChild versus WaitForChild,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M2,LUAU201-2.3,"GetChildren, GetDescendants and iteration",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M3,LUAU201-3.1,Properties and Roblox data types,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M3,LUAU201-3.2,Attributes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M3,LUAU201-3.3,Value objects and when to avoid them,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M4,LUAU201-4.1,CollectionService and tags,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M4,LUAU201-4.2,Processing tagged objects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU201,LUAU201-M4,LUAU201-4.3,"The ""one script, many objects"" pattern",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M1,LUAU202-1.1,game:GetService and the main services,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M1,LUAU202-1.2,Workspace and Parts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M1,LUAU202-1.3,"Part properties: size, colour and material",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M2,LUAU202-2.1,Vector3,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M2,LUAU202-2.2,CFrame: position and rotation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M2,LUAU202-2.3,Local versus world space,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M3,LUAU202-3.1,"Anchored, CanCollide and gravity",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M3,LUAU202-3.2,The Touched event and debouncing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M3,LUAU202-3.3,Basic constraints,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M4,LUAU202-4.1,RunService: Heartbeat and Stepped,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M4,LUAU202-4.2,Time-based motion (delta time),60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU202,LUAU202-M4,LUAU202-4.3,Moving platforms,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M1,LUAU203-1.1,RBXScriptSignal and Connect,60,NEEDS VERIFICATION,24/24,none
+3,LUAU203,LUAU203-M1,LUAU203-1.2,Once and Wait,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M1,LUAU203-1.3,Event parameters,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M2,LUAU203-2.1,Disconnect and RBXScriptConnection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M2,LUAU203-2.2,Memory leaks from connections,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M2,LUAU203-2.3,Cleanup patterns,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M3,LUAU203-3.1,task.wait versus wait(),60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M3,LUAU203-3.2,"task.spawn, task.defer and task.delay",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M3,LUAU203-3.3,The Roblox scheduler and coroutines,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M4,LUAU203-4.1,BindableEvent for internal communication,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M4,LUAU203-4.2,Custom signals versus BindableEvent,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU203,LUAU203-M4,LUAU203-4.3,Poor versus improved code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M1,LUAU204-1.1,Requirements and level design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M1,LUAU204-1.2,Script architecture and folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M1,LUAU204-1.3,Kill parts with CollectionService,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M2,LUAU204-2.1,Checkpoints and respawning,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M2,LUAU204-2.2,Moving and rotating platforms,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M2,LUAU204-2.3,Testing and difficulty tuning,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M3,LUAU204-3.1,Data model and coin design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M3,LUAU204-3.2,Collection with Touched and debouncing,90,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M3,LUAU204-3.3,Coin respawning and leaderstats,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M4,LUAU204-4.1,Debugging common Touched bugs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M4,LUAU204-4.2,"Optimisation: many coins, one script",60,STRUCTURE ONLY,0/24,all 24 authored sections
+3,LUAU204,LUAU204-M4,LUAU204-4.3,Final evaluation and publishing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M1,LUAU211-1.1,PlayerAdded and PlayerRemoving,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M1,LUAU211-1.2,Players already present when the script starts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M1,LUAU211-1.3,Player object properties,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M2,LUAU211-2.1,Character and CharacterAdded,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M2,LUAU211-2.2,"Humanoid: health, speed and jumping",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M2,LUAU211-2.3,Death and respawning,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M3,LUAU211-3.1,Creating leaderstats,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M3,LUAU211-3.2,Updating statistics safely,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M3,LUAU211-3.3,Leaderstats versus internal data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M4,LUAU211-4.1,A player manager module,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M4,LUAU211-4.2,Cleaning up when players leave,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU211,LUAU211-M4,LUAU211-4.3,Poor versus improved code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M1,LUAU212-1.1,InputBegan and InputEnded,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M1,LUAU212-1.2,gameProcessedEvent,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M1,LUAU212-1.3,The mouse and screen positions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M2,LUAU212-2.1,BindAction and UnbindAction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M2,LUAU212-2.2,Automatic touch buttons,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M2,LUAU212-2.3,Action priorities,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M3,LUAU212-3.1,Detecting the input type,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M3,LUAU212-3.2,Gamepad support,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M3,LUAU212-3.3,Cross-device control design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M4,LUAU212-4.1,CurrentCamera and CameraType,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M4,LUAU212-4.2,Scripted cameras,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU212,LUAU212-M4,LUAU212-4.3,Mini project: a top-down camera,90,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M1,LUAU213-1.1,ScreenGui and PlayerGui,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M1,LUAU213-1.2,"Frame, TextLabel and ImageLabel",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M1,LUAU213-1.3,TextButton and the Activated event,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M2,LUAU213-2.1,UDim2: scale versus offset,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M2,LUAU213-2.2,UIListLayout and UIGridLayout,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M2,LUAU213-2.3,Safe areas and multiple screen sizes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M3,LUAU213-3.1,TweenService and TweenInfo,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M3,LUAU213-3.2,Polished UI animations,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M3,LUAU213-3.3,Visual feedback for player actions,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M4,LUAU213-4.1,Separating UI from game logic,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M4,LUAU213-4.2,Updating UI from data changes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU213,LUAU213-M4,LUAU213-4.3,Mini project: a HUD and pause menu,90,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M1,LUAU214-1.1,"Server, client and authority",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M1,LUAU214-1.2,"Script, LocalScript and RunContext",60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M1,LUAU214-1.3,Where each kind of script runs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M2,LUAU214-2.1,What replicates and what does not,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M2,LUAU214-2.2,Client changes that do not replicate,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M2,LUAU214-2.3,Physics network ownership,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M3,LUAU214-3.1,Server logic versus client presentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M3,LUAU214-3.2,Responsiveness and client prediction,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M3,LUAU214-3.3,Game data-flow diagrams,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M4,LUAU214-4.1,Why the client cannot be trusted,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M4,LUAU214-4.2,Common exploit examples,60,STRUCTURE ONLY,0/24,all 24 authored sections
+4,LUAU214,LUAU214-M4,LUAU214-4.3,Preparing for network communication,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M1,LUAU301-1.1,FireServer and OnServerEvent,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M1,LUAU301-1.2,FireClient and FireAllClients,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M1,LUAU301-1.3,UnreliableRemoteEvent for frequent data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M2,LUAU301-2.1,InvokeServer and OnServerInvoke,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M2,LUAU301-2.2,The danger of InvokeClient,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M2,LUAU301-2.3,Errors and timeouts in remote calls,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M3,LUAU301-3.1,Validating payload types and ranges,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M3,LUAU301-3.2,Server-side sanity checks,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M3,LUAU301-3.3,Rate limiting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M4,LUAU301-4.1,Naming and organising remotes,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M4,LUAU301-4.2,Payload size and bandwidth,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU301,LUAU301-M4,LUAU301-4.3,Poor versus improved code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M1,LUAU302-1.1,DataStoreService and GetDataStore,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M1,LUAU302-1.2,GetAsync and SetAsync,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M1,LUAU302-1.3,Testing DataStores in Studio,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M2,LUAU302-2.1,pcall and retries with backoff,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M2,LUAU302-2.2,UpdateAsync and concurrent safety,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M2,LUAU302-2.3,Limits and request budgets,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M3,LUAU302-3.1,Loading when a player joins,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M3,LUAU302-3.2,Saving on leave and BindToClose,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M3,LUAU302-3.3,Periodic autosave,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M4,LUAU302-4.1,Session locking,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M4,LUAU302-4.2,Data versioning and schema migration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU302,LUAU302-M4,LUAU302-4.3,OrderedDataStore for leaderboards,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M1,LUAU303-1.1,Requirements and a typed player data model,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M1,LUAU303-1.2,Data service module architecture,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M1,LUAU303-1.3,Save and load flow diagram,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M2,LUAU303-2.1,Loading data with session locking,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M2,LUAU303-2.2,A data API for other systems,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M2,LUAU303-2.3,Synchronising data with the UI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M3,LUAU303-3.1,Safe saving and autosave,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M3,LUAU303-3.2,BindToClose and server shutdown,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M3,LUAU303-3.3,Data version migration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M4,LUAU303-4.1,Simulating DataStore failures,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M4,LUAU303-4.2,Debugging lost or corrupted data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU303,LUAU303-M4,LUAU303-4.3,Final project evaluation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M1,LUAU304-1.1,Inventory data model and architecture,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M1,LUAU304-1.2,Server-authoritative transactions,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M1,LUAU304-1.3,The inventory UI,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M2,LUAU304-2.1,Currency and the shop catalogue,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M2,LUAU304-2.2,Purchases through validated remotes,90,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M2,LUAU304-2.3,The shop UI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M3,LUAU304-3.1,"MarketplaceService, developer products and game passes",60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M3,LUAU304-3.2,ProcessReceipt and idempotency,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M3,LUAU304-3.3,Recording purchases safely,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M4,LUAU304-4.1,Testing exploit and duplication attempts,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M4,LUAU304-4.2,Debugging and optimisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+5,LUAU304,LUAU304-M4,LUAU304-4.3,Final project evaluation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M1,LUAU311-1.1,What exploiters can do,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M1,LUAU311-1.2,Assets that need protection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M1,LUAU311-1.3,Never trust the client,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M2,LUAU311-2.1,Validating remotes and payloads,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M2,LUAU311-2.2,Hit and distance validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M2,LUAU311-2.3,Movement and speed validation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M3,LUAU311-3.1,Preventing item and currency duplication,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M3,LUAU311-3.2,Atomic transactions in game logic,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M3,LUAU311-3.3,Protecting DataStores from bad data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M4,LUAU311-4.1,Logging suspicious behaviour,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M4,LUAU311-4.2,Graduated responses and false positives,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU311,LUAU311-M4,LUAU311-4.3,Security review: a checklist,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M1,LUAU312-1.1,The Developer Console and performance stats,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M1,LUAU312-1.2,The MicroProfiler,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M1,LUAU312-1.3,Setting performance targets,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M2,LUAU312-2.1,Script and connection costs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M2,LUAU312-2.2,Object pooling,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M2,LUAU312-2.3,Native code generation (@native),60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M3,LUAU312-3.1,Bandwidth and remote frequency,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M3,LUAU312-3.2,Instance streaming,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M3,LUAU312-3.3,Optimising parts and physics,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M4,LUAU312-4.1,Mobile device limits,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M4,LUAU312-4.2,Testing on multiple devices,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU312,LUAU312-M4,LUAU312-4.3,An optimisation case study,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M1,LUAU313-1.1,Quest data model and state machine,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M1,LUAU313-1.2,"Objectives, progress and rewards",90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M1,LUAU313-1.3,Quest UI and player data integration,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M2,LUAU313-2.1,Combat system architecture,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M2,LUAU313-2.2,Hit detection with raycasts,90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M2,LUAU313-2.3,"Damage, health and death",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M3,LUAU313-3.1,Server-side hit validation,90,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M3,LUAU313-3.2,Cooldowns and rate limits,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M3,LUAU313-3.3,Client-side animations and effects,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M4,LUAU313-4.1,Testing balance and exploits,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M4,LUAU313-4.2,Optimisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU313,LUAU313-M4,LUAU313-4.3,Final project evaluation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M1,LUAU314-1.1,The service and controller pattern,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M1,LUAU314-1.2,Single-script architecture and module loaders,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M1,LUAU314-1.3,Initialisation lifecycle: init and start,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M2,LUAU314-2.1,Game state management,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M2,LUAU314-2.2,Dependency injection,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M2,LUAU314-2.3,Communication between systems,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M3,LUAU314-3.1,Separating pure logic from the engine,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M3,LUAU314-3.2,Unit tests for Luau code,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M3,LUAU314-3.3,Testing in Studio with multiple clients,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M4,LUAU314-4.1,Rojo and file synchronisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M4,LUAU314-4.2,"Git, branches and code review",60,STRUCTURE ONLY,0/24,all 24 authored sections
+6,LUAU314,LUAU314-M4,LUAU314-4.3,Architecture documentation and ADRs,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M1,LUAU401-1.1,The server lifecycle,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M1,LUAU401-1.2,Multi-place games,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M1,LUAU401-1.3,TeleportService and teleport data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M2,LUAU401-2.1,Queues and sorted maps,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M2,LUAU401-2.2,Matchmaking,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M2,LUAU401-2.3,Limits and quotas,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M3,LUAU401-3.1,Cross-server publish and subscribe,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M3,LUAU401-3.2,Global announcements and live events,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M3,LUAU401-3.3,Message reliability,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M4,LUAU401-4.1,Fault tolerance and graceful degradation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M4,LUAU401-4.2,Cross-server data: DataStore versus MemoryStore,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU401,LUAU401-M4,LUAU401-4.3,Multiplayer architecture diagrams,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M1,LUAU402-1.1,Requirements and game design,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M1,LUAU402-1.2,Architecture diagram and folder structure,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M1,LUAU402-1.3,Data model and network flow,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M2,LUAU402-2.1,Lobby and matchmaking,90,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M2,LUAU402-2.2,Round system and teams,90,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M2,LUAU402-2.3,Leaderboards and persistent data,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M3,LUAU402-3.1,Integrating combat and quests,90,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M3,LUAU402-3.2,Game UI,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M3,LUAU402-3.3,Network security,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M4,LUAU402-4.1,Multi-client testing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M4,LUAU402-4.2,Profiling and optimisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU402,LUAU402-M4,LUAU402-4.3,Final evaluation and publishing,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M1,LUAU490-1.1,The game design document,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M1,LUAU490-1.2,System architecture and diagrams,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M1,LUAU490-1.3,Data model and development stage plan,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M2,LUAU490-2.1,The open world and instance streaming,180,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M2,LUAU490-2.2,"Player data, inventory and shop",180,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M2,LUAU490-2.3,Quests and combat,180,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M3,LUAU490-3.1,Security review,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M3,LUAU490-3.2,Profiling and optimisation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M3,LUAU490-3.3,Analytics and playtesting,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M4,LUAU490-4.1,Publishing and the game page,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M4,LUAU490-4.2,Technical documentation,60,STRUCTURE ONLY,0/24,all 24 authored sections
+7,LUAU490,LUAU490-M4,LUAU490-4.3,Final presentation and reflection,90,STRUCTURE ONLY,0/24,all 24 authored sections

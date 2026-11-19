@@ -197,6 +197,37 @@ it('audits the whole university', () => {
     });
   }
   writeFileSync(`${OUT}/module-content.csv`, csv([['faculty', 'academy', 'programme', 'course', 'module_id', 'module_title_en', 'module_content_status', 'lecture_content_status', 'missing_module_sections', 'lectures_written'], ...moduleContent]));
+
+  // ─── Per-programme detail with stable IDs (course code, CODE-Mn, CODE-m.l) ───
+  mkdirSync(`${OUT}/programmes`, { recursive: true });
+  for (const prog of programmes.values()) {
+    const progCourses = allCourses.filter((c) => c.programme === prog.code);
+    const base = `${OUT}/programmes/${prog.code}`;
+    writeFileSync(`${base}-courses.csv`, csv([
+      ['semester', 'course_id', 'title_en', 'title_ms', 'credit_hours', 'difficulty', 'prerequisites', 'modules', 'lectures', 'lecture_minutes', 'lectures_written', 'modules_with_module_content', 'course_status'],
+      ...progCourses.map(({ semester, course }) => {
+        const rows = lectures.filter((l) => l.course === course.code);
+        const t = tally(rows);
+        return [semester, course.code, en(course.title), course.title.ms, course.creditHours, course.difficulty,
+          course.prerequisites.map((r) => `${r.code} (${r.kind})`).join('; ') || 'none', course.modules.length, rows.length,
+          rows.reduce((n, r) => n + r.minutes, 0), written(t), 0, rollStatus(t)];
+      }),
+    ]));
+    writeFileSync(`${base}-modules.csv`, csv([
+      ['semester', 'course_id', 'module_id', 'title_en', 'title_ms', 'lecture_ids', 'module_content_status', 'lecture_content_status', 'lectures_written'],
+      ...progCourses.flatMap(({ semester, course }) => course.modules.map((m, mi) => {
+        const rows = lectures.filter((l) => l.course === course.code && l.module === mi + 1);
+        const t = tally(rows);
+        return [semester, course.code, `${course.code}-M${mi + 1}`, en(m.title), m.title.ms, rows.map((r) => `${course.code}-${r.module}.${r.lecture}`).join(' '),
+          'STRUCTURE ONLY', rollStatus(t), `${written(t)}/${t.total}`];
+      })),
+    ]));
+    writeFileSync(`${base}-lectures.csv`, csv([
+      ['semester', 'course_id', 'module_id', 'lecture_id', 'title_en', 'minutes', 'status', 'authored_sections_present', 'missing'],
+      ...lectures.filter((l) => l.programme === prog.code).map((l) => [l.semester, l.course, `${l.course}-M${l.module}`, `${l.course}-${l.module}.${l.lecture}`, l.title, l.minutes, l.status, `${l.sections}/24`,
+        l.status === 'STRUCTURE ONLY' ? 'all 24 authored sections' : l.missing.join('; ') || 'none']),
+    ]));
+  }
   writeFileSync(`${OUT}/courses.csv`, csv([['programme', 'semester', 'course', 'title_en', 'modules', 'lecture_material_status', 'lectures', 'complete', 'needs_verification', 'partial', 'structure_only', 'lectures_written', 'course_description', 'course_objectives', 'course_outcomes', 'course_references', 'prerequisites', 'exercises_and_assessments'], ...courseRows]));
 
   // SUMMARY.md

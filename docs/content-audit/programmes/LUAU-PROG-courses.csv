@@ -1,0 +1,28 @@
+semester,course_id,title_en,title_ms,credit_hours,difficulty,prerequisites,modules,lectures,lecture_minutes,lectures_written,modules_with_module_content,course_status
+1,LUAU101,Introduction to Luau and the Development Environment,Pengenalan Luau dan Persekitaran Pembangunan,3,absolute_beginner,none,4,12,720,12,0,NEEDS VERIFICATION
+1,LUAU102,"Luau Syntax: Variables, Types and Operators","Sintaks Luau: Pemboleh Ubah, Jenis dan Operator",3,absolute_beginner,LUAU101 (required),4,12,720,12,0,COMPLETE
+1,LUAU103,Control Flow and Functions in Luau,Aliran Kawalan dan Fungsi dalam Luau,4,beginner,LUAU102 (required),4,12,750,12,0,COMPLETE
+1,LUAU104,Tables in Luau,Table dalam Luau,3,beginner,LUAU103 (required),4,12,750,12,0,COMPLETE
+2,LUAU111,Type Annotations and Type Inference,Type Annotation dan Type Inference,3,intermediate,LUAU104 (required),4,12,720,0,0,STRUCTURE ONLY
+2,LUAU112,Strict Mode and Type Checking,Strict Mode dan Semakan Jenis,3,intermediate,LUAU111 (required),4,12,720,0,0,STRUCTURE ONLY
+2,LUAU113,ModuleScripts and Modular Code,ModuleScript dan Kod Modular,3,intermediate,LUAU104 (required); LUAU111 (recommended),4,12,720,0,0,STRUCTURE ONLY
+2,LUAU114,"Metatables, OOP and Design Patterns in Luau","Metatable, OOP dan Design Pattern dalam Luau",3,intermediate,LUAU112 (required),4,12,720,0,0,STRUCTURE ONLY
+3,LUAU201,Roblox Instances and the Data Model,Instance dan Data Model Roblox,4,intermediate,LUAU113 (required); LUAU114 (required),4,12,720,0,0,STRUCTURE ONLY
+3,LUAU202,"Workspace, Services and Basic Physics","Workspace, Service dan Fizik Asas",3,intermediate,LUAU201 (required),4,12,750,0,0,STRUCTURE ONLY
+3,LUAU203,"Events, Connections and the task Library","Event, Connection dan Pustaka task",3,intermediate,LUAU201 (required),4,12,720,1,0,PARTIAL
+3,LUAU204,Project Studio: Interactive Obby and Coin Collection,Studio Projek: Obby Interaktif dan Sistem Kutip Syiling,3,intermediate,LUAU202 (required); LUAU203 (required),4,12,810,0,0,STRUCTURE ONLY
+4,LUAU211,Players and the Player Lifecycle,Players dan Kitaran Hayat Pemain,3,upper_intermediate,LUAU203 (required),4,12,720,0,0,STRUCTURE ONLY
+4,LUAU212,User Input and Camera,Input Pengguna dan Kamera,3,upper_intermediate,LUAU211 (required),4,12,750,0,0,STRUCTURE ONLY
+4,LUAU213,UI Programming,Pengaturcaraan UI,3,upper_intermediate,LUAU203 (required); LUAU212 (recommended),4,12,750,0,0,STRUCTURE ONLY
+4,LUAU214,Client–Server Architecture and Replication,Seni Bina Client–Server dan Replikasi,4,upper_intermediate,LUAU211 (required),4,12,720,0,0,STRUCTURE ONLY
+5,LUAU301,RemoteEvents and RemoteFunctions,RemoteEvent dan RemoteFunction,4,advanced,LUAU214 (required),4,12,720,0,0,STRUCTURE ONLY
+5,LUAU302,DataStores and Player Data Management,DataStore dan Pengurusan Data Pemain,4,advanced,LUAU214 (required); LUAU301 (recommended),4,12,720,0,0,STRUCTURE ONLY
+5,LUAU303,Project Studio: Player Data and Save/Load System,Studio Projek: Sistem Data Pemain dan Simpan/Muat,3,advanced,LUAU302 (required),4,12,780,0,0,STRUCTURE ONLY
+5,LUAU304,Project Studio: Inventory and Shop Systems,Studio Projek: Sistem Inventori dan Kedai,4,advanced,LUAU301 (required); LUAU303 (required); LUAU213 (recommended),4,12,810,0,0,STRUCTURE ONLY
+6,LUAU311,Security and Exploit Prevention,Keselamatan dan Pencegahan Eksploit,3,advanced,LUAU301 (required),4,12,720,0,0,STRUCTURE ONLY
+6,LUAU312,Roblox Performance Optimisation,Pengoptimuman Prestasi Roblox,3,advanced,LUAU214 (required),4,12,720,0,0,STRUCTURE ONLY
+6,LUAU313,Project Studio: Quest and Combat Systems,Studio Projek: Sistem Quest dan Sistem Pertempuran,4,advanced,LUAU304 (required); LUAU311 (required),4,12,810,0,0,STRUCTURE ONLY
+6,LUAU314,Game Architecture and Professional Workflow,Seni Bina Permainan dan Aliran Kerja Profesional,3,advanced,LUAU114 (required); LUAU303 (required),4,12,720,0,0,STRUCTURE ONLY
+7,LUAU401,Multiplayer Game Architecture,Seni Bina Permainan Berbilang Pemain,4,professional,LUAU302 (required); LUAU314 (required),4,12,720,0,0,STRUCTURE ONLY
+7,LUAU402,Project Studio: Multiplayer Game,Studio Projek: Permainan Berbilang Pemain,4,professional,LUAU313 (required); LUAU401 (required),4,12,810,0,0,STRUCTURE ONLY
+7,LUAU490,Capstone: Complete Open-World RPG,Projek Akhir: RPG Dunia Terbuka Lengkap,6,professional,LUAU312 (required); LUAU402 (required),4,12,1110,0,0,STRUCTURE ONLY

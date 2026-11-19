@@ -1,0 +1,32 @@
+semester,course_id,title_en,title_ms,credit_hours,difficulty,prerequisites,modules,lectures,lecture_minutes,lectures_written,modules_with_module_content,course_status
+1,PY101,Introduction to Programming and Python,Pengenalan Pengaturcaraan dan Python,3,absolute_beginner,none,4,12,720,0,0,STRUCTURE ONLY
+1,PY102,"Variables, Data Types and Operators","Pemboleh Ubah, Jenis Data dan Operator",3,absolute_beginner,PY101 (required),4,12,750,0,0,STRUCTURE ONLY
+1,PY103,Control Flow: Conditions and Loops,Aliran Kawalan: Syarat dan Gelung,4,beginner,PY102 (required),4,12,720,0,0,STRUCTURE ONLY
+1,PY104,Functions and Program Structure,Fungsi dan Struktur Program,3,beginner,PY103 (required),4,12,720,0,0,STRUCTURE ONLY
+2,PY111,Sequence Collections: Lists and Tuples,Koleksi Berjujukan: List dan Tuple,3,beginner,PY104 (required),4,12,720,0,0,STRUCTURE ONLY
+2,PY112,Dictionaries and Sets,Dictionary dan Set,3,beginner,PY111 (required),4,12,720,0,0,STRUCTURE ONLY
+2,PY113,String and Text Processing,Pemprosesan String dan Teks,3,beginner,PY111 (required),4,12,720,0,0,STRUCTURE ONLY
+2,PY114,File Handling and Exception Handling,Pengendalian Fail dan Exception,4,beginner,PY112 (required); PY113 (required),4,12,720,0,0,STRUCTURE ONLY
+3,PY201,Object-Oriented Programming I: Classes and Objects,Pengaturcaraan Berorientasikan Objek I: Kelas dan Objek,4,intermediate,PY114 (required),4,12,750,0,0,STRUCTURE ONLY
+3,PY202,"Object-Oriented Programming II: Inheritance, Polymorphism and Composition","Pengaturcaraan Berorientasikan Objek II: Pewarisan, Polimorfisme dan Komposisi",3,intermediate,PY201 (required),4,12,720,0,0,STRUCTURE ONLY
+3,PY203,"Modules, Packages and Python Environments","Modul, Pakej dan Persekitaran Python",3,intermediate,PY114 (required),4,12,720,0,0,STRUCTURE ONLY
+3,PY204,"Advanced Functions, Iterators, Generators and Decorators","Fungsi Lanjutan, Iterator, Generator dan Decorator",4,intermediate,PY201 (required),4,12,720,0,0,STRUCTURE ONLY
+4,PY211,Software Testing and Debugging,Pengujian dan Debugging Perisian,3,upper_intermediate,PY202 (required); PY203 (required),4,12,720,0,0,STRUCTURE ONLY
+4,PY212,Applied Algorithms in Python,Algoritma Gunaan dalam Python,4,upper_intermediate,PY204 (required),4,12,720,0,0,STRUCTURE ONLY
+4,PY213,Type Hints and Code Quality,Type Hint dan Kualiti Kod,3,upper_intermediate,PY202 (required),4,12,720,0,0,STRUCTURE ONLY
+4,PY214,Command-Line Applications and Automation,Aplikasi Command-Line dan Automasi,3,upper_intermediate,PY203 (required),4,12,750,0,0,STRUCTURE ONLY
+5,PY301,Advanced Object-Oriented Design and Design Patterns,Reka Bentuk Berorientasikan Objek Lanjutan dan Design Pattern,4,advanced,PY202 (required); PY213 (required),4,12,720,0,0,STRUCTURE ONLY
+5,PY302,Concurrent and Asynchronous Programming,Pengaturcaraan Serentak dan Asynchronous,4,advanced,PY204 (required); PY211 (required),4,12,720,0,0,STRUCTURE ONLY
+5,PY303,Python and Databases,Python dan Pangkalan Data,3,advanced,PY202 (required),4,12,720,0,0,STRUCTURE ONLY
+5,PY304,Python Performance and Profiling,Prestasi dan Profiling Python,3,advanced,PY212 (required),4,12,720,0,0,STRUCTURE ONLY
+6,PY311,Web Development with Python,Pembangunan Web dengan Python,3,advanced,PY303 (required),4,12,720,0,0,STRUCTURE ONLY
+6,PY312,Building REST APIs with FastAPI,Membina REST API dengan FastAPI,4,advanced,PY311 (required); PY302 (required),4,12,720,0,0,STRUCTURE ONLY
+6,PY313,Software Architecture and Clean Code in Python,Seni Bina Perisian dan Kod Bersih dalam Python,3,advanced,PY301 (required); PY211 (required),4,12,720,0,0,STRUCTURE ONLY
+6,PY314,"Packaging, CI/CD and Deployment","Pembungkusan, CI/CD dan Deployment",3,advanced,PY214 (required); PY211 (required),4,12,720,0,0,STRUCTURE ONLY
+7,PY401,Scientific Python: NumPy and pandas,Python Saintifik: NumPy dan pandas,4,professional,PY212 (required); PY303 (required),4,12,720,0,0,STRUCTURE ONLY
+7,PY402,Data Visualisation and Exploratory Data Analysis,Visualisasi Data dan Analisis Data Penerokaan,3,professional,PY401 (required),4,12,720,0,0,STRUCTURE ONLY
+7,PY403,Machine Learning with scikit-learn,Machine Learning dengan scikit-learn,4,professional,PY402 (required),4,12,720,0,0,STRUCTURE ONLY
+7,PY404,"Data Acquisition: APIs, Web Scraping and Data Pipelines","Pengumpulan Data: API, Web Scraping dan Saluran Data",3,professional,PY302 (required); PY401 (required),4,12,750,0,0,STRUCTURE ONLY
+8,PY411,AI Engineering with Python,Kejuruteraan AI dengan Python,4,professional,PY403 (required); PY312 (required),4,12,720,0,0,STRUCTURE ONLY
+8,PY412,"Professional Python Practice: Security, Observability and Maintenance","Amalan Python Profesional: Keselamatan, Observability dan Penyelenggaraan",3,professional,PY313 (required); PY314 (required),4,12,720,0,0,STRUCTURE ONLY
+8,PY490,Capstone Project,Projek Akhir (Capstone),6,professional,PY313 (required); PY314 (required); PY403 (required); PY411 (recommended),4,12,1110,0,0,STRUCTURE ONLY
