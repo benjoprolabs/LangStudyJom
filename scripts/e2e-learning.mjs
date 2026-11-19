@@ -32,6 +32,18 @@ const readStore = (page, store) =>
     store,
   );
 
+/** A progress record once the reader's delayed save (position, last access) has landed: two reads 1s apart agree. */
+async function settledProgress(page, entityId) {
+  let previous = JSON.stringify((await readStore(page, 'progress')).find((p) => p.entityId === entityId));
+  for (let i = 0; i < 10; i++) {
+    await page.waitForTimeout(1000);
+    const current = JSON.stringify((await readStore(page, 'progress')).find((p) => p.entityId === entityId));
+    if (current === previous) return current === undefined ? undefined : JSON.parse(current);
+    previous = current;
+  }
+  throw new Error(`progress for ${entityId} kept changing`);
+}
+
 async function save(page, downloadsDir, click) {
   const [download] = await Promise.all([page.waitForEvent('download'), click()]);
   const path = join(downloadsDir, download.suggestedFilename());
@@ -271,7 +283,7 @@ async function main() {
     log('Next/previous navigation (LUA102 1.1 → 1.2); LUA111 1.1 (unwritten) is labelled incomplete, offers no completion and records no progress');
 
     // ── LUA102: all 12 lectures open, render fully and can be completed; earlier progress is kept ──
-    const before102 = (await readStore(page, 'progress')).find((p) => p.entityId === luaLecture);
+    let before102 = await settledProgress(page, luaLecture);
     let units102 = 0;
     for (let m = 1; m <= 4; m++) {
       for (let l = 1; l <= 3; l++) {
@@ -292,7 +304,14 @@ async function main() {
     const lastId = await lectureId(page, 'LUA102', 4, 3);
     const progressAfter = await readStore(page, 'progress');
     assert.equal(progressAfter.find((p) => p.entityId === lastId).status, 'completed');
-    assert.deepEqual(progressAfter.find((p) => p.entityId === luaLecture), before102, 'LUA102 1.1 progress unchanged');
+    // The loop above re-opens LUA102 1.1, so the reader may legitimately update its last-access time and scroll
+    // position. The learner's progress itself — the record, completion, percent — must not change.
+    const kept = ({ id, studentId, entityType, entityId, status, percent, createdAt, completedAt }) => ({ id, studentId, entityType, entityId, status, percent, createdAt, completedAt });
+    const after102 = progressAfter.find((p) => p.entityId === luaLecture);
+    assert.deepEqual(kept(after102), kept(before102), `LUA102 1.1 progress unchanged:\nbefore ${JSON.stringify(before102)}\nafter  ${JSON.stringify(after102)}`);
+    assert.equal(after102.status, 'completed');
+    // From here on nothing re-opens LUA102 1.1, so later checks compare the whole record strictly against this.
+    before102 = await settledProgress(page, luaLecture);
     assert.ok((await readStore(page, 'notes')).some((n) => n.entityId === luaLecture && n.body === 'Guna local secara lalai.'), 'note kept');
     log(`LUA102 1.1–4.3: all 12 lectures open with 24 sections and ${units102} verified code units; LUA102 4.3 completed; earlier progress and notes unchanged`);
 
@@ -313,8 +332,7 @@ async function main() {
     log(`LUA101 1.1–4.3: all 12 lectures open with 24 sections and ${units101} verified code units`);
 
     // ── LUA103: all 12 lectures open, render fully and can be completed; earlier progress is kept ──
-    await page.waitForTimeout(1500); // let the reader finish recording its last-access time for LUA102 4.3
-    const before102Last = (await readStore(page, 'progress')).find((p) => p.entityId === lastId);
+    const before102Last = await settledProgress(page, lastId); // after the reader's last-access save for LUA102 4.3
     let units103 = 0;
     for (let m = 1; m <= 4; m++) {
       for (let l = 1; l <= 3; l++) {

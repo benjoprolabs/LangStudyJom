@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.5.8: Curriculum delivery — clearer package installation (course materials 1.8.0, unchanged)
+
+Found while testing the phone preview: Milestone 1 and 2 install structure only, the lecture content comes from the
+separate course-materials package, and the Library opened on the Python programme (no written lectures), so a learner
+who installed only the first two packages saw "0/12 lectures with content" everywhere.
+
+- **Library** opens on `LUA-PROG` when it has written lectures (otherwise the first programme with content). When
+  courses exist but no lecture content is installed, it shows "Bahan kursus belum dipasang — pasang Bahan Kursus" with a
+  button that opens the packages dialog at the course-materials card.
+- **Packages dialog:** Milestone 1 and 2 are labelled "Struktur sahaja — tiada kandungan kuliah"; the course-materials
+  card is highlighted as the next step once the structure exists.
+- **Install all:** one confirmation, then the three packages in dependency order with per-step progress (waiting,
+  installing, installed, already installed — skipped, failed) and a success or failure message. Each step re-plans and
+  skips packages with nothing to write, uses the same validated transactional installers, and the cards' own install
+  buttons are disabled while it runs. No duplicate records or lectures; student records, progress, notes and
+  bookmarks are not touched. No schema change.
+- **Fix:** every confirm dialog used the same `confirm-title` element id, so with two dialogs on one page a dialog
+  could be announced with the other's title. Each dialog now has its own id.
+- Tests: `install-all.test.ts` (default programme rule; a second full install leaves students, progress, notes,
+  bookmarks and lectures identical, with no duplicate lecture slot) and `scripts/e2e-packages.mjs` (clean profile at
+  390px: labels, notice and link, Install all with Cancel, skip and success, 984 lectures / 97 written / 80 terms,
+  Library on LUA-PROG, data unchanged after a restart at desktop width), now part of `npm run test:e2e`.
+
 ## 0.5.7: Milestone 3 — LUAU104 complete; Luau Semester 1 complete (course materials 1.8.0)
 
 - **Luau Semester 1 checkpoint** ([LUAU-SEMESTER-1-CHECKPOINT.md](LUAU-SEMESTER-1-CHECKPOINT.md)): LUAU101–LUAU104 are

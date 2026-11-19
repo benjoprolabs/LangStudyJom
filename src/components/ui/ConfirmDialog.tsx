@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { AlertTriangle } from 'lucide-react';
 import { useI18n } from '@/i18n/I18nProvider';
 import { Button } from './Button';
@@ -32,6 +32,7 @@ export function ConfirmDialog({
   const { t } = useI18n();
   const ref = useRef<HTMLDialogElement>(null);
   const [typed, setTyped] = useState('');
+  const titleId = useId();
 
   useEffect(() => {
     const dialog = ref.current;
@@ -55,7 +56,7 @@ export function ConfirmDialog({
         e.preventDefault();
         if (!busy) onCancel();
       }}
-      aria-labelledby="confirm-title"
+      aria-labelledby={titleId}
       className="w-[min(92vw,30rem)] rounded-xl border border-border bg-surface p-0 text-fg shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
     >
       <form
@@ -71,7 +72,7 @@ export function ConfirmDialog({
             <AlertTriangle className="h-5 w-5" aria-hidden />
           </div>
           <div className="min-w-0 space-y-2">
-            <h2 id="confirm-title" className="text-lg font-semibold">
+            <h2 id={titleId} className="text-lg font-semibold">
               {title}
             </h2>
             <div className="text-sm text-muted">{children}</div>

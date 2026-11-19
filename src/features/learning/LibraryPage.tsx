@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { BookOpen, FileCode2, FileDown, Printer, Search } from 'lucide-react';
+import { BookOpen, FileCode2, FileDown, PackageOpen, Printer, Search, TriangleAlert } from 'lucide-react';
 import { db } from '@/db/client';
 import { APP_VERSION } from '@/db/backup/backup';
 import { useI18n } from '@/i18n/I18nProvider';
@@ -25,9 +25,27 @@ export function LibraryPage() {
   const programmeId = params.get('programme') ?? '';
   const programme = programmes?.find((p) => p.id === programmeId);
 
+  // Which programmes have written lecture content, and whether any lecture content is installed at all.
+  const contentStatus = useLiveQuery(async () => {
+    const [courses, lectureCount, written] = await Promise.all([
+      db.courses.toArray(),
+      db.lectures.count(),
+      db.lectures.filter((x) => x.sections.length > 0).toArray(),
+    ]);
+    const programmeOf = new Map(courses.map((c) => [c.id, c.programmeId]));
+    return {
+      lectureCount,
+      writtenCount: written.length,
+      programmesWithContent: new Set(written.map((x) => programmeOf.get(x.courseId)).filter(Boolean) as string[]),
+    };
+  }, []);
+
   useEffect(() => {
-    if (programmes?.length && !programme) setParams({ programme: programmes[0]!.id }, { replace: true });
-  }, [programmes, programme, setParams]);
+    if (!programmes?.length || programme || !contentStatus) return;
+    setParams({ programme: defaultProgrammeId(programmes, contentStatus.programmesWithContent) }, { replace: true });
+  }, [programmes, programme, contentStatus, setParams]);
+
+  const contentMissing = Boolean(contentStatus && contentStatus.lectureCount > 0 && contentStatus.writtenCount === 0);
 
   const data = useLiveQuery(async () => {
     if (!programmeId) return null;
@@ -57,6 +75,23 @@ export function LibraryPage() {
       ) : (
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_20rem]">
           <div className="min-w-0">
+            {contentMissing && (
+              <div className="mb-4 rounded-lg border border-warning/50 bg-warning/10 p-4" role="alert" data-testid="content-missing">
+                <p className="flex items-start gap-2 font-semibold text-warning">
+                  <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                  {t('learning.library.contentMissingTitle')}
+                </p>
+                <p className="mt-1 text-sm text-muted">{t('learning.library.contentMissingBody')}</p>
+                <Link
+                  to="/faculties?packages=content"
+                  className="mt-3 inline-flex min-h-[2.75rem] w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-fg hover:bg-primary/90 sm:w-auto"
+                  data-testid="install-content-link"
+                >
+                  <PackageOpen className="h-4 w-4" aria-hidden />
+                  {t('learning.library.installContent')}
+                </Link>
+              </div>
+            )}
             <Select aria-label={t('learning.library.programme')} className="mb-4 w-full sm:w-[28rem]" value={programmeId} onChange={(e) => setParams({ programme: e.target.value })}>
               {(programmes ?? []).map((p) => (
                 <option key={p.id} value={p.id}>{p.code} — {l(p.name)}</option>
@@ -192,4 +227,11 @@ function GlossaryList() {
       </Card>
     </aside>
   );
+}
+
+/** The programme the Library opens on: LUA-PROG when it has written lectures, else the first programme with content, else the first. */
+export function defaultProgrammeId(programmes: { id: string; code: string }[], withContent: Set<string>): string {
+  const lua = programmes.find((p) => p.code === 'LUA-PROG');
+  if (lua && withContent.has(lua.id)) return lua.id;
+  return (programmes.find((p) => withContent.has(p.id)) ?? programmes[0]!).id;
 }
